@@ -301,8 +301,9 @@ func _handle_message(parsed_message : ParsedMessage) -> void:
 			var channel_name = parsed_message.channel;
 			received_roomstate.emit(channel_name, roomstate_tags)
 
-			var channel = channel_maps[channel_name] as ChannelData;
-			channel.room_state = roomstate_tags;
+			if channel_maps.has(channel_name):
+				var channel = channel_maps[channel_name] as ChannelData;
+				channel.room_state = roomstate_tags;
 
 		"USERNOTICE":
 			var user_notice_tags = TwitchTags.Usernotice.new(parsed_message.tags);
