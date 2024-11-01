@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://pr2cr6wubeyt"]
+
+[ext_resource type="Theme" uid="uid://bwa6a5abww8i3" path="res://ui/alert_overlay.theme" id="1_iynrc"]
+[ext_resource type="Script" path="res://instances/alert_bar.gd" id="2_2k78h"]
+[ext_resource type="Texture2D" uid="uid://dpyn121ra1pa" path="res://ui/sprites/close.png" id="2_n20qi"]
+
+[node name="bar" type="PanelContainer"]
+offset_right = 604.0
+offset_bottom = 110.0
+theme = ExtResource("1_iynrc")
+script = ExtResource("2_2k78h")
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="message" type="RichTextLabel" parent="vb"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "[wave][color=f00]ciao[/color] da me!"
+fit_content = true
+
+[node name="progress_time_left" type="ProgressBar" parent="vb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 6
+value = 37.4
+show_percentage = false
+
+[node name="btn_close" type="Button" parent="vb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("2_n20qi")
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="pressed" from="vb/btn_close" to="." method="cancel"]

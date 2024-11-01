@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://bx227yojtu2d5"]
+
+[ext_resource type="Script" path="res://instances/the_wheel_of_random.gd" id="1_5ce5g"]
+[ext_resource type="Texture2D" uid="uid://mchkrubsccqb" path="res://ui/wheel_rim.png" id="2_tl2t1"]
+[ext_resource type="Texture2D" uid="uid://dpyn121ra1pa" path="res://ui/sprites/close.png" id="2_xhdku"]
+[ext_resource type="Texture2D" uid="uid://bhrvwishvid8f" path="res://ui/sprites/arrow.png" id="3_cutpc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tmk4d"]
+radius = 405.377
+
+[node name="the_wheel_of_random" type="PanelContainer"]
+custom_minimum_size = Vector2(512, 512)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5ce5g")
+metadata/_edit_lock_ = true
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="btn_kill" type="Button" parent="vb"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 8
+icon = ExtResource("2_xhdku")
+icon_alignment = 1
+expand_icon = true
+
+[node name="cnt_center" type="CenterContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+
+[node name="center_node" type="Control" parent="cnt_center"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="cnt_center/center_node"]
+visible = false
+scale = Vector2(0.454327, 0.454327)
+shape = SubResource("CircleShape2D_tmk4d")
+
+[node name="rotating" type="RigidBody2D" parent="cnt_center/center_node"]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 0
+gravity_scale = 0.0
+center_of_mass_mode = 1
+inertia = 1.0
+angular_damp = 0.005
+
+[node name="rim" type="Sprite2D" parent="cnt_center/center_node"]
+unique_name_in_owner = true
+scale = Vector2(0.465116, 0.480769)
+texture = ExtResource("2_tl2t1")
+
+[node name="arrow" type="Sprite2D" parent="cnt_center/center_node"]
+unique_name_in_owner = true
+modulate = Color(0.968627, 0.215686, 0.815686, 1)
+position = Vector2(192, 0)
+scale = Vector2(0.148437, 0.148437)
+texture = ExtResource("3_cutpc")
+
+[node name="sfx_alert" type="AudioStreamPlayer" parent="."]
+
+[connection signal="pressed" from="vb/btn_kill" to="." method="_on_btn_kill_pressed"]

@@ -1,0 +1,110 @@
+[gd_scene load_steps=11 format=3 uid="uid://dl8kh0lkb2wm4"]
+
+[ext_resource type="Theme" uid="uid://byc6dqa0se0lp" path="res://ui/floating_menu.theme" id="1_3n6x8"]
+[ext_resource type="Texture2D" uid="uid://x1kro6q7tj46" path="res://ui/gravity.png" id="2_nwlca"]
+[ext_resource type="Script" path="res://instances/btn_physics.gd" id="3_ls7lh"]
+[ext_resource type="Texture2D" uid="uid://cg84ubdpyr75" path="res://ui/beans.png" id="4_vd6au"]
+[ext_resource type="Texture2D" uid="uid://dtm1fmijn2676" path="res://ui/laser.png" id="5_826vi"]
+[ext_resource type="Texture2D" uid="uid://d1aln31is10do" path="res://ui/nuke.png" id="6_fhy2b"]
+[ext_resource type="Texture2D" uid="uid://d0js7uqs6nswe" path="res://ui/zerog.png" id="7_ek5tf"]
+[ext_resource type="Texture2D" uid="uid://h1by403q5s8f" path="res://ui/sword.png" id="8_xe46q"]
+[ext_resource type="Texture2D" uid="uid://brjnbmesobfjv" path="res://ui/granade.png" id="9_5blyp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ag8w1"]
+font_size = 10
+
+[node name="btn_physics" type="Button"]
+custom_minimum_size = Vector2(48, 48)
+offset_left = 42.0
+offset_top = 42.0
+offset_right = 50.0
+offset_bottom = 82.0
+focus_mode = 0
+theme = ExtResource("1_3n6x8")
+icon = ExtResource("2_nwlca")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_ls7lh")
+
+[node name="btn_beans" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("4_vd6au")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_laser" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("5_826vi")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_nuke" type="Button" parent="."]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("6_fhy2b")
+icon_alignment = 1
+expand_icon = true
+
+[node name="lb_count" type="Label" parent="btn_nuke"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 4.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "1300"
+label_settings = SubResource("LabelSettings_ag8w1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="btn_zerog" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("7_ek5tf")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_names" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("8_xe46q")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_granade" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("9_5blyp")
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="pressed" from="btn_beans" to="." method="_on_btn_beans_pressed"]
+[connection signal="pressed" from="btn_laser" to="." method="_on_btn_laser_pressed"]
+[connection signal="pressed" from="btn_nuke" to="." method="_on_btn_nuke_pressed"]
+[connection signal="pressed" from="btn_zerog" to="." method="_on_btn_zerog_pressed"]
+[connection signal="pressed" from="btn_names" to="." method="_on_btn_names_pressed"]
+[connection signal="pressed" from="btn_granade" to="." method="_on_btn_granade_pressed"]

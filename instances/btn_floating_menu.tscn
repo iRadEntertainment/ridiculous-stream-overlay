@@ -1,0 +1,348 @@
+[gd_scene load_steps=29 format=3 uid="uid://bf5cmv0cqio2n"]
+
+[ext_resource type="Theme" uid="uid://byc6dqa0se0lp" path="res://ui/floating_menu.theme" id="1_kl6sw"]
+[ext_resource type="Script" path="res://instances/btn_floating_menu.gd" id="1_osqlv"]
+[ext_resource type="Texture2D" uid="uid://brq45fxn0wqha" path="res://ui/sprites/menu.png" id="2_y16f1"]
+[ext_resource type="Texture2D" uid="uid://x1kro6q7tj46" path="res://ui/gravity.png" id="4_bia5b"]
+[ext_resource type="Texture2D" uid="uid://chau12dlx6shv" path="res://ui/mic_unmute.png" id="4_xbf4m"]
+[ext_resource type="Texture2D" uid="uid://ca6xdmc1afmql" path="res://ui/bootstrap_icons/x.svg" id="5_tfiwm"]
+[ext_resource type="Texture2D" uid="uid://cg84ubdpyr75" path="res://ui/beans.png" id="5_xcqun"]
+[ext_resource type="Texture2D" uid="uid://dtm1fmijn2676" path="res://ui/laser.png" id="6_0cxqy"]
+[ext_resource type="Texture2D" uid="uid://ceh17coxgqqnr" path="res://ui/icon.png" id="6_3t7q5"]
+[ext_resource type="Texture2D" uid="uid://hqibc1sfinhq" path="res://ui/bootstrap_icons/stars.svg" id="6_jsivt"]
+[ext_resource type="Texture2D" uid="uid://d1aln31is10do" path="res://ui/nuke.png" id="7_dobih"]
+[ext_resource type="Texture2D" uid="uid://dr3a3o2jhf2if" path="res://ui/bootstrap_icons/window.svg" id="7_y65x8"]
+[ext_resource type="Texture2D" uid="uid://d0js7uqs6nswe" path="res://ui/zerog.png" id="8_56bnq"]
+[ext_resource type="Script" path="res://classes/RSSubMenuButton.gd" id="8_nsbul"]
+[ext_resource type="Texture2D" uid="uid://h1by403q5s8f" path="res://ui/sword.png" id="9_d5ryv"]
+[ext_resource type="Texture2D" uid="uid://brjnbmesobfjv" path="res://ui/granade.png" id="10_xo0od"]
+[ext_resource type="Texture2D" uid="uid://dvynskgheu0ei" path="res://ui/bootstrap_icons/bug-fill.svg" id="11_e26wg"]
+[ext_resource type="Texture2D" uid="uid://dstucawoabusd" path="res://ui/obs_logo.png" id="13_tyq2w"]
+[ext_resource type="Texture2D" uid="uid://6weky3a0q5r5" path="res://ui/bootstrap_icons/person-heart.svg" id="14_c0fut"]
+[ext_resource type="Texture2D" uid="uid://c4mqp3a5kugku" path="res://ui/mic_mute.png" id="15_gmvp0"]
+[ext_resource type="Texture2D" uid="uid://dhp7ktnjoufuf" path="res://ui/bootstrap_icons/display.svg" id="15_nr2c5"]
+[ext_resource type="Texture2D" uid="uid://wggm0epa6h7y" path="res://ui/brave_on.png" id="16_2b4wq"]
+[ext_resource type="Texture2D" uid="uid://c3j1vy6m3nk6o" path="res://ui/rewards_icons/remove the cig break overlay1.png" id="17_6ofjk"]
+[ext_resource type="Texture2D" uid="uid://sleoevcdhxgh" path="res://ui/bootstrap_icons/record2-fill.svg" id="19_3caay"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8cnys"]
+bg_color = Color(0.14902, 0.054902, 0.0745098, 0.913725)
+border_color = Color(0.0176409, 0.633753, 0.394838, 1)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_igiu5"]
+bg_color = Color(0.0850918, 0.0792672, 0.0792826, 0.505882)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6j3sw"]
+bg_color = Color(0.0850918, 0.0792672, 0.0792826, 0.505882)
+border_color = Color(0.0176409, 0.633753, 0.394838, 1)
+border_blend = true
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_ag8w1"]
+font_size = 10
+
+[node name="btn_floating_menu" type="Button"]
+auto_translate_mode = 1
+custom_minimum_size = Vector2(64, 64)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_top = 94.0
+offset_bottom = 158.0
+grow_horizontal = 0
+focus_mode = 0
+theme = ExtResource("1_kl6sw")
+theme_override_colors/font_color = Color(1, 1, 1, 0.368627)
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 0.368627)
+theme_override_colors/icon_hover_color = Color(1, 1, 1, 0.745098)
+theme_override_colors/icon_hover_pressed_color = Color(1, 0.627451, 0.478431, 1)
+theme_override_styles/hover = SubResource("StyleBoxFlat_8cnys")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_igiu5")
+theme_override_styles/normal = SubResource("StyleBoxFlat_6j3sw")
+icon = ExtResource("2_y16f1")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("1_osqlv")
+expand_on_hover = false
+is_radial = true
+offset_gap = 20.0
+anim_delay = 0.02
+
+[node name="indicators" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ico_stream" type="TextureRect" parent="indicators"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+offset_left = 16.0
+offset_top = 48.0
+offset_right = 32.0
+offset_bottom = 64.0
+texture = ExtResource("19_3caay")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ico_mic" type="TextureRect" parent="indicators"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+offset_left = 32.0
+offset_top = 48.0
+offset_right = 48.0
+offset_bottom = 64.0
+texture = ExtResource("4_xbf4m")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ico_brave" type="TextureRect" parent="indicators"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+offset_left = 48.0
+offset_top = 48.0
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("16_2b4wq")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="btn_physics" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+offset_right = 48.0
+offset_bottom = 48.0
+focus_mode = 0
+theme = ExtResource("1_kl6sw")
+icon = ExtResource("4_bia5b")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("8_nsbul")
+
+[node name="btn_beans" type="Button" parent="btn_physics"]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("5_xcqun")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_laser" type="Button" parent="btn_physics"]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("6_0cxqy")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_nuke" type="Button" parent="btn_physics"]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("7_dobih")
+icon_alignment = 1
+expand_icon = true
+
+[node name="lb_count" type="Label" parent="btn_physics/btn_nuke"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 4.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "1300"
+label_settings = SubResource("LabelSettings_ag8w1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="btn_zerog" type="Button" parent="btn_physics"]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("8_56bnq")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_names" type="Button" parent="btn_physics"]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("9_d5ryv")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_granade" type="Button" parent="btn_physics"]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("10_xo0od")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_panels" type="Button" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("7_y65x8")
+icon_alignment = 1
+script = ExtResource("8_nsbul")
+radial_angle = 104.5
+
+[node name="btn_obs" type="Button" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("13_tyq2w")
+icon_alignment = 1
+script = ExtResource("8_nsbul")
+radial_angle = 106.0
+anim_delay = 0.019
+
+[node name="btn_cig" type="Button" parent="btn_obs"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_right = 72.0
+offset_bottom = 72.0
+icon = ExtResource("17_6ofjk")
+icon_alignment = 1
+
+[node name="btn_mic" type="Button" parent="btn_obs"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_right = 72.0
+offset_bottom = 72.0
+icon = ExtResource("15_gmvp0")
+icon_alignment = 1
+
+[node name="btn_brave_sound" type="Button" parent="btn_obs"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_right = 72.0
+offset_bottom = 72.0
+icon = ExtResource("16_2b4wq")
+icon_alignment = 1
+
+[node name="btn_qol" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("6_jsivt")
+icon_alignment = 1
+script = ExtResource("8_nsbul")
+
+[node name="btn_spam_form" type="Button" parent="btn_qol"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_right = 72.0
+offset_bottom = 72.0
+icon = ExtResource("14_c0fut")
+icon_alignment = 1
+
+[node name="btn_test" type="Button" parent="btn_qol"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_right = 72.0
+offset_bottom = 72.0
+icon = ExtResource("19_3caay")
+icon_alignment = 1
+
+[node name="btn_display" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("15_nr2c5")
+icon_alignment = 1
+script = ExtResource("8_nsbul")
+offset_gap = 6.0
+radial_angle = 52.0
+anim_duration = 0.08
+
+[node name="btn_maximize" type="Button" parent="btn_display"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+icon = ExtResource("6_3t7q5")
+icon_alignment = 1
+
+[node name="btn_debug" type="Button" parent="btn_display"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_left = 173.0
+offset_top = 28.0
+offset_right = 213.0
+offset_bottom = 68.0
+icon = ExtResource("11_e26wg")
+icon_alignment = 1
+
+[node name="btn_close" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+icon = ExtResource("5_tfiwm")
+icon_alignment = 1
+
+[connection signal="pressed" from="btn_physics/btn_beans" to="." method="_on_btn_beans_pressed"]
+[connection signal="pressed" from="btn_physics/btn_laser" to="." method="_on_btn_laser_pressed"]
+[connection signal="pressed" from="btn_physics/btn_nuke" to="." method="_on_btn_nuke_pressed"]
+[connection signal="pressed" from="btn_physics/btn_zerog" to="." method="_on_btn_zerog_pressed"]
+[connection signal="pressed" from="btn_physics/btn_names" to="." method="_on_btn_names_pressed"]
+[connection signal="pressed" from="btn_physics/btn_granade" to="." method="_on_btn_granade_pressed"]
+[connection signal="pressed" from="btn_obs/btn_cig" to="." method="_on_btn_cig_pressed"]
+[connection signal="pressed" from="btn_obs/btn_mic" to="." method="_on_btn_mic_pressed"]
+[connection signal="pressed" from="btn_obs/btn_brave_sound" to="." method="_on_btn_brave_sound_pressed"]
+[connection signal="pressed" from="btn_qol/btn_spam_form" to="." method="_on_btn_spam_form_pressed"]
+[connection signal="pressed" from="btn_qol/btn_test" to="." method="_on_btn_test_pressed"]
+[connection signal="pressed" from="btn_display/btn_maximize" to="." method="_on_btn_maximize_pressed"]
+[connection signal="pressed" from="btn_display/btn_debug" to="." method="_on_btn_debug_pressed"]
+[connection signal="pressed" from="btn_close" to="." method="_on_btn_close_pressed"]

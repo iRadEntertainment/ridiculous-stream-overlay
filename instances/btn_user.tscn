@@ -1,0 +1,112 @@
+[gd_scene load_steps=10 format=3 uid="uid://cbuj57b0j3cqq"]
+
+[ext_resource type="Texture2D" uid="uid://1ndihbuunqkm" path="res://ui/bootstrap_icons/megaphone-fill.svg" id="1_4vx60"]
+[ext_resource type="Script" path="res://instances/btn_user.gd" id="1_uxmoy"]
+[ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://ui/sprites/twitch_user_profile_pic.png" id="2_hunba"]
+[ext_resource type="Texture2D" uid="uid://eowifokyak3b" path="res://ui/bootstrap_icons/megaphone.svg" id="2_rng5j"]
+[ext_resource type="Texture2D" uid="uid://hqibc1sfinhq" path="res://ui/bootstrap_icons/stars.svg" id="4_8vciy"]
+[ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://ui/bootstrap_icons/arrow-repeat.svg" id="5_ga51h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1lnvw"]
+bg_color = Color(0.109804, 0.109804, 0.109804, 0.45098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.878431, 0.878431, 0.878431, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g2py5"]
+bg_color = Color(0.109804, 0.109804, 0.109804, 0.45098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.129412, 0.14902, 0.180392, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qd0h3"]
+
+[node name="btn_user" type="HBoxContainer"]
+script = ExtResource("1_uxmoy")
+
+[node name="user_pic" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("2_hunba")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="btn_open_streamer_page" type="Button" parent="user_pic"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1lnvw")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_g2py5")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_qd0h3")
+
+[node name="btn_user" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Seano4D"
+
+[node name="user_live_rect" type="ColorRect" parent="btn_user"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.509804, 0.0196078, 0.705882, 0.254902)
+
+[node name="btn_shoutout" type="Button" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("1_4vx60")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_promote" type="Button" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("2_rng5j")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_special" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("4_8vciy")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_reload" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("5_ga51h")
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="pressed" from="user_pic/btn_open_streamer_page" to="." method="_on_btn_open_streamer_page_pressed"]
+[connection signal="pressed" from="btn_user" to="." method="_on_btn_user_pressed"]
+[connection signal="pressed" from="btn_shoutout" to="." method="_on_btn_shoutout_pressed"]
+[connection signal="pressed" from="btn_promote" to="." method="_on_btn_promote_pressed"]
+[connection signal="pressed" from="btn_special" to="." method="_on_btn_special_pressed"]
+[connection signal="pressed" from="btn_reload" to="." method="_on_btn_reload_pressed"]

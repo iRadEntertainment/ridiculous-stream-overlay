@@ -1,0 +1,168 @@
+[gd_scene load_steps=16 format=3 uid="uid://dgrqu0yorfwsl"]
+
+[ext_resource type="Script" path="res://instances/physics_scene.gd" id="1_ya2xa"]
+[ext_resource type="PackedScene" uid="uid://cc7snq8wu8h2p" path="res://instances/label_renderer.tscn" id="2_hti4q"]
+[ext_resource type="AudioStream" uid="uid://cg6f7is47ykhs" path="res://local_res/sfx_alert_danger.wav" id="3_en15y"]
+[ext_resource type="AudioStream" uid="uid://bke7iiw8llqt6" path="res://local_res/sfx_boom.wav" id="4_ymobo"]
+[ext_resource type="AudioStream" uid="uid://igu2lkaqgmyd" path="res://local_res/sfx - Squeak.ogg" id="5_bxth3"]
+[ext_resource type="AudioStream" uid="uid://qlyulkklh8jw" path="res://local_res/sfx_notification_00.ogg" id="5_jeqqe"]
+
+[sub_resource type="Shader" id="Shader_jwju5"]
+code = "/*
+Original shader from Fubucci – https://www.febucci.com/2019/05/fire-shader/
+Converted to Godot Shader Language by Godot Shaders - godotshaders.com/shader/2D-fire/
+*/
+
+shader_type canvas_item;
+
+uniform sampler2D noise_tex : repeat_enable;
+uniform sampler2D gradient_tex;
+
+uniform float speed : hint_range(0.0, 3.0, 0.1) = 1.0;
+uniform vec4 brighter_color : source_color = vec4(1.0, 0.8, 0.0, 1.0);
+uniform vec4 middle_color : source_color  = vec4(1.0, 0.56, 0.0, 1.0);
+uniform vec4 darker_color : source_color  = vec4(0.64, 0.2, 0.05, 1.0);
+
+uniform float spread : hint_range(0.0, 1.0) = 0.5;
+
+void fragment()
+{
+	float noise_value = texture(noise_tex, UV + vec2(0.0, TIME*speed)).x;
+	// The .yx swizzle is when using the built in horizontal gradient texture. If you have a vertical gradient texture remove .yx
+	float gradient_value = texture(gradient_tex, UV.yx).x;
+
+	gradient_value -= smoothstep(spread, spread + 0.5, length(UV + vec2(-0.5, -0.5)) / spread);
+
+	float step1 = step(noise_value, gradient_value);
+	float step2 = step(noise_value, gradient_value - 0.2);
+	float step3 = step(noise_value, gradient_value - 0.4);
+
+	vec3 bd_color = mix(brighter_color.rgb, darker_color.rgb, step1 - step2);
+
+	vec4 color = vec4(bd_color, step1);
+	color.rgb = mix(color.rgb, middle_color.rgb, step2 - step3);
+
+	COLOR = color;
+}"
+
+[sub_resource type="Gradient" id="Gradient_abvuy"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hg3h8"]
+gradient = SubResource("Gradient_abvuy")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vfjty"]
+noise_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nxnwi"]
+height = 100
+generate_mipmaps = false
+seamless = true
+noise = SubResource("FastNoiseLite_vfjty")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mgehc"]
+shader = SubResource("Shader_jwju5")
+shader_parameter/speed = 0.9
+shader_parameter/brighter_color = Color(1, 0.8, 0, 1)
+shader_parameter/middle_color = Color(1, 0.56, 0, 1)
+shader_parameter/darker_color = Color(0.64, 0.2, 0.05, 1)
+shader_parameter/spread = 1.0
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_nxnwi")
+shader_parameter/gradient_tex = SubResource("GradientTexture1D_hg3h8")
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2lmko"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1a11g"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ejjmt"]
+
+[node name="physics_scene" type="Control"]
+auto_translate_mode = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ya2xa")
+metadata/_edit_lock_ = true
+
+[node name="fire" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_mgehc")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 438.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="label_renderer" parent="." instance=ExtResource("2_hti4q")]
+
+[node name="bordes" type="StaticBody2D" parent="."]
+
+[node name="left_coll" type="CollisionShape2D" parent="bordes"]
+shape = SubResource("WorldBoundaryShape2D_2lmko")
+
+[node name="right_coll" type="CollisionShape2D" parent="bordes"]
+unique_name_in_owner = true
+position = Vector2(1154, 0)
+shape = SubResource("WorldBoundaryShape2D_1a11g")
+
+[node name="bot_coll" type="CollisionShape2D" parent="bordes"]
+unique_name_in_owner = true
+position = Vector2(0, 650)
+shape = SubResource("WorldBoundaryShape2D_ejjmt")
+
+[node name="bodies" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="RigidBody2D" type="RigidBody2D" parent="bodies"]
+
+[node name="pick_up_mouse_body" type="StaticBody2D" parent="."]
+unique_name_in_owner = true
+
+[node name="pin" type="PinJoint2D" parent="pick_up_mouse_body"]
+unique_name_in_owner = true
+node_a = NodePath("..")
+
+[node name="sfx_list" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="sfx1" type="AudioStreamPlayer" parent="sfx_list"]
+playback_type = 1
+
+[node name="sfx2" type="AudioStreamPlayer" parent="sfx_list"]
+playback_type = 1
+
+[node name="sfx3" type="AudioStreamPlayer" parent="sfx_list"]
+playback_type = 1
+
+[node name="sfx4" type="AudioStreamPlayer" parent="sfx_list"]
+playback_type = 1
+
+[node name="sfx5" type="AudioStreamPlayer" parent="sfx_list"]
+playback_type = 1
+
+[node name="sfx_nuke" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_en15y")
+volume_db = -12.0
+
+[node name="sfx_boom" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_ymobo")
+volume_db = -24.0
+
+[node name="sfx_pluck" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_jeqqe")
+
+[node name="sfx_squeak" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_bxth3")

@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=3 uid="uid://gnorahmpya7e"]
+
+[ext_resource type="Script" path="res://instances/msg_notification.gd" id="1_xc0er"]
+[ext_resource type="Material" uid="uid://ja2qtim7ion6" path="res://shaders/part_msg_notification.material" id="2_fwhp7"]
+[ext_resource type="AudioStream" uid="uid://qlyulkklh8jw" path="res://local_res/sfx_notification_00.ogg" id="2_plkef"]
+
+[node name="msg_notification" type="Control"]
+z_index = 100
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_xc0er")
+
+[node name="part_1" type="GPUParticles2D" parent="."]
+scale = Vector2(4, 4)
+emitting = false
+amount = 70
+process_material = ExtResource("2_fwhp7")
+one_shot = true
+explosiveness = 0.81
+
+[node name="part_2" type="GPUParticles2D" parent="."]
+position = Vector2(559, 0)
+rotation = 1.5708
+scale = Vector2(4, 4)
+emitting = false
+amount = 70
+process_material = ExtResource("2_fwhp7")
+one_shot = true
+explosiveness = 0.81
+
+[node name="part_3" type="GPUParticles2D" parent="."]
+position = Vector2(559, 451)
+rotation = 3.14159
+scale = Vector2(4, 4)
+emitting = false
+amount = 70
+process_material = ExtResource("2_fwhp7")
+one_shot = true
+explosiveness = 0.81
+
+[node name="part_4" type="GPUParticles2D" parent="."]
+position = Vector2(0, 451)
+rotation = -1.5708
+scale = Vector2(4, 4)
+emitting = false
+amount = 70
+process_material = ExtResource("2_fwhp7")
+one_shot = true
+explosiveness = 0.81
+
+[node name="sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_plkef")
+autoplay = true
