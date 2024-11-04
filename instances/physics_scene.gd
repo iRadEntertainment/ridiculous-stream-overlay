@@ -17,6 +17,7 @@ const SHARD_BODIES_CAP = 1200
 var main : RSMain
 var laser_scene
 
+var default_gravity: float
 var duration = 30.0 #s
 var is_closing := false
 var is_nuking := false
@@ -32,6 +33,7 @@ signal count_updated(obj_count)
 func _ready() -> void:
 	resize_physic_borders()
 	resized.connect(resize_physic_borders)
+	default_gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
 func start(_main : RSMain):
@@ -43,7 +45,7 @@ func _physics_process(_d: float) -> void:
 	pick_up_mouse_body.global_position = get_global_mouse_position()
 
 
-func add_rigid(new_body : RigidBody2D, pos := Vector2(), linear_velocity := Vector2(), angular_velocity := 0.0, pickable := false):
+func _add_rigid(new_body : RigidBody2D, pos := Vector2(), linear_velocity := Vector2(), angular_velocity := 0.0, pickable := false):
 	# TODO do we want timers or not?
 	#reset_timers()
 	# input from the body
@@ -108,7 +110,7 @@ func generate_text_rigidbody(text : String, col : Color, lb_font_size : int):
 	var pos = Vector2(randf_range(safe ,size.x-safe*3), randf_range(safe, safe*3))
 	var linear_velocity = Vector2((randf()-0.5)*30, (randf()-0.5)*30)
 	var angular_velocity = (randf()-0.5)*10
-	call_deferred("add_rigid", lb_body, pos, linear_velocity, angular_velocity, true)
+	_add_rigid.call_deferred(lb_body, pos, linear_velocity, angular_velocity, true)
 
 
 func add_image_bodies(params : RSBeansParam, pos = null, linear_velocity = null, angular_velocity = null):
@@ -147,7 +149,7 @@ func add_image_bodies(params : RSBeansParam, pos = null, linear_velocity = null,
 		if not angular_velocity:
 			angular_velocity = (randf()-0.5)*10
 		
-		add_rigid(body, final_pos, linear_velocity, angular_velocity, true)
+		_add_rigid(body, final_pos, linear_velocity, angular_velocity, true)
 		await get_tree().physics_frame
 
 
@@ -161,7 +163,6 @@ func add_laser(angle: float) -> void:
 		laser_scene.play(angle)
 
 
-# TEST ONE
 func add_rigid_body_from_image(tex: Texture2D, body_scale: float = 1.0) -> RigidBody2D:
 	if !tex: return
 	var tex_size = tex.get_size() * body_scale
@@ -197,10 +198,19 @@ func add_rigid_body_from_image(tex: Texture2D, body_scale: float = 1.0) -> Rigid
 	bodies.add_child(new_body)
 	return new_body
 
+func zero_g() -> void:
+	interpolate_gravity(0)
+	shake_bodies()
+	var tw = create_tween()
+	tw.tween_callback(shake_bodies)
+	tw.tween_callback(shake_bodies).set_delay(duration)
+	tw.tween_method(interpolate_gravity, 0, default_gravity, 5.0)
 
 func interpolate_gravity(new_gravity: float):
-	ProjectSettings.set("physics/2d/default_gravity", new_gravity)
-	
+	var space: RID = bodies.get_world_2d().space
+	PhysicsServer2D.area_set_param(space, PhysicsServer2D.AREA_PARAM_GRAVITY, new_gravity)
+	#ProjectSettings.set("physics/2d/default_gravity_vector:y", new_gravity)
+
 
 func shake_bodies():
 	for body : RigidBody2D in get_tree().get_nodes_in_group("editor_bodies"):
@@ -282,11 +292,11 @@ func unpin_bodies():
 			body.apply_central_impulse(_relative_mouse_vel*10)
 	pin.node_b = NodePath()
 
-# TODO:
-func spawn_granade():
-	pass
-	#var granade := main.globals.granade_pack.instantiate()
-	#add_rigid(granade, Vector2(), Vector2(), randf_range(-5.0, 5.0), true)
+
+func spawn_grenade():
+	var granade := main.globals.granade_pack.instantiate()
+	_add_rigid(granade, Vector2(), Vector2(), randf_range(-5.0, 5.0), true)
+
 
 func nuke():
 	if is_nuking: return
@@ -297,7 +307,7 @@ func nuke():
 	start_bottom_fire(2.5)
 	for body: RigidBody2D in bodies.get_children():
 		body.queue_free()
-	if laser_scene:
+	if is_instance_valid(laser_scene):
 		laser_scene.queue_free()
 	await sfx_boom.finished
 	sfx_pluck.play()

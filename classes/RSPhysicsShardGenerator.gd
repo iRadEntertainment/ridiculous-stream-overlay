@@ -47,7 +47,7 @@ static func generate_shards(physics_scene : RSPhysicsScene, body : PhysicsBody2D
 		var pos = frac_spawn_pos + body_global_position - (size/2).rotated(body_global_rotation)
 		
 		#await physics_scene.get_tree().physics_frame
-		physics_scene.add_rigid(shard, pos, Vector2(), 0, false)
+		physics_scene._add_rigid(shard, pos, Vector2(), 0, false)
 		
 		var m = physics_scene.get_global_mouse_position()
 		var dir = (shard.global_position - m).normalized()

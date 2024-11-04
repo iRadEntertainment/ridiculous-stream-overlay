@@ -1,7 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://dgrqu0yorfwsl"]
+[gd_scene load_steps=16 format=3 uid="uid://gxr8ww6jok8i"]
 
 [ext_resource type="Script" path="res://instances/physics_scene.gd" id="1_ya2xa"]
-[ext_resource type="PackedScene" uid="uid://cc7snq8wu8h2p" path="res://instances/label_renderer.tscn" id="2_hti4q"]
+[ext_resource type="PackedScene" path="res://instances/label_renderer.tscn" id="2_hti4q"]
 [ext_resource type="AudioStream" uid="uid://cg6f7is47ykhs" path="res://local_res/sfx_alert_danger.wav" id="3_en15y"]
 [ext_resource type="AudioStream" uid="uid://bke7iiw8llqt6" path="res://local_res/sfx_boom.wav" id="4_ymobo"]
 [ext_resource type="AudioStream" uid="uid://igu2lkaqgmyd" path="res://local_res/sfx - Squeak.ogg" id="5_bxth3"]
