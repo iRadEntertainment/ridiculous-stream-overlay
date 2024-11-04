@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://cuflys3rlwkjc"]
+[gd_scene load_steps=3 format=3 uid="uid://che3syvs71fq3"]
 
 [ext_resource type="Script" path="res://instances/debug_view.gd" id="1_vmgr1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i2bg3"]
+content_margin_left = 8.0
+content_margin_right = 8.0
+bg_color = Color(0.294118, 0.478431, 0.223529, 1)
 
 [node name="debug_view" type="Control"]
 layout_mode = 3
@@ -81,20 +86,12 @@ vertical_alignment = 1
 auto_translate_mode = 1
 layout_mode = 2
 
-[node name="cl_hover" type="ColorRect" parent="frame/top/hb"]
+[node name="lb_hover" type="Label" parent="frame/top/hb"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-color = Color(0.295082, 0.478021, 0.223508, 1)
-
-[node name="lb2" type="Label" parent="frame/top/hb/cl_hover"]
 auto_translate_mode = 1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_i2bg3")
 text = "is on UI element"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -169,18 +166,7 @@ offset_bottom = -14.0
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="btn_launch_game" type="Button" parent="frame/mid/vb"]
-layout_mode = 2
-text = "Launch Game"
-
-[node name="btn_close_game" type="Button" parent="frame/mid/vb"]
-layout_mode = 2
-text = "Close Game"
-
 [node name="bot" type="ColorRect" parent="frame"]
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
 color = Color(0.396078, 0.121569, 0.0941176, 1)
-
-[connection signal="pressed" from="frame/mid/vb/btn_launch_game" to="." method="_on_btn_launch_game_pressed"]
-[connection signal="pressed" from="frame/mid/vb/btn_close_game" to="." method="_on_btn_close_game_pressed"]
