@@ -34,6 +34,7 @@ func start(_main : RSMain):
 	lb_chat.install_effect(sprite_effect)
 	pnl_connect.main = main
 	pnl_connect.start(main)
+	%lb_channel.text = TwitchSetting.irc_connect_to_channel.front()
 
 
 var badge_id = 0
@@ -128,3 +129,7 @@ func _on_ln_announce_text_submitted(new_text):
 func _on_sl_font_size_value_changed(value):
 	change_font_size(value as int)
 	%lb_font_size.text = str(value)
+
+
+func _on_btn_close_pressed() -> void:
+	hide()

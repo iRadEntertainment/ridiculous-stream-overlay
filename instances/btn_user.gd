@@ -34,7 +34,7 @@ func start(_main : RSMain):
 
 
 func reload_profile_pic():
-	profile_pic = await main.loader.load_texture_from_url(user.profile_image_url)
+	profile_pic = await main.loader.load_texture_from_url(user.profile_image_url, false)
 	if not is_node_ready(): await ready
 	if profile_pic: user_pic.texture = profile_pic
 func set_profile_pic(val):

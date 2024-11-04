@@ -1,12 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://dseoyhiylvwnu"]
+[gd_scene load_steps=16 format=3 uid="uid://dseoyhiylvwnu"]
 
 [ext_resource type="Script" path="res://instances/pnl_settings.gd" id="1_5rbjj"]
 [ext_resource type="PackedScene" path="res://instances/pnl_rs_setting.tscn" id="1_7lr6v"]
 [ext_resource type="StyleBox" uid="uid://c0aj4762xvg73" path="res://ui/editor_light_panel.stylebox" id="2_1hi6d"]
+[ext_resource type="Texture2D" uid="uid://ca6xdmc1afmql" path="res://ui/bootstrap_icons/x.svg" id="2_m57c4"]
 [ext_resource type="Texture2D" uid="uid://cfs6apvwuggtt" path="res://ui/bootstrap_icons/person-bounding-box.svg" id="3_7xqlq"]
 [ext_resource type="PackedScene" uid="uid://dhwexcg4happa" path="res://instances/pnl_twitch_user_fields.tscn" id="3_tus6h"]
 [ext_resource type="Texture2D" uid="uid://boa5ns6c4c07k" path="res://ui/bootstrap_icons/twitch.svg" id="4_7hk7t"]
-[ext_resource type="PackedScene" path="res://instances/pnl_twitch_user_list.tscn" id="4_j0n41"]
+[ext_resource type="PackedScene" uid="uid://bext4in78rfy6" path="res://instances/pnl_twitch_user_list.tscn" id="4_j0n41"]
 [ext_resource type="Texture2D" uid="uid://ctpfh3qqwicqq" path="res://ui/sprites/btn_settings.png" id="5_574cn"]
 [ext_resource type="Texture2D" uid="uid://bykc5hku6ubu8" path="res://ui/icon_irad.png" id="5_pus7l"]
 [ext_resource type="PackedScene" path="res://instances/pnl_rewards.tscn" id="6_d22ns"]
@@ -223,6 +224,15 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Polygon 2d fracture | by SoloBits"
 
+[node name="btn_close" type="Button" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+icon = ExtResource("2_m57c4")
+flat = true
+expand_icon = true
+
 [connection signal="pressed" from="vb/bot/hb/btn_hot_reload_plugin" to="." method="_on_btn_hot_reload_plugin_pressed"]
 [connection signal="pressed" from="vb/bot/hb/btn_hot_reload" to="." method="_on_btn_hot_reload_pressed"]
 [connection signal="pressed" from="vb/bot/hb/btn_open_irad_twitch" to="." method="_on_btn_open_irad_twitch_pressed"]
@@ -231,3 +241,4 @@ text = "Polygon 2d fracture | by SoloBits"
 [connection signal="pressed" from="vb/bot/hb/btn_credits_twitcher" to="." method="_on_btn_credits_twitcher_pressed"]
 [connection signal="pressed" from="vb/bot/hb/btn_credits_noobs" to="." method="_on_btn_credits_noobs_pressed"]
 [connection signal="pressed" from="vb/bot/hb/btn_credits_polygon" to="." method="_on_btn_credits_polygon_pressed"]
+[connection signal="pressed" from="btn_close" to="." method="_on_btn_close_pressed"]

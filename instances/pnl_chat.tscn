@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bbi521t8ayr48"]
+[gd_scene load_steps=5 format=3 uid="uid://jchfk7d78ss5"]
 
 [ext_resource type="Theme" uid="uid://b7xrw7crccrr7" path="res://ui/ridiculous_stream_main.theme" id="1_omsf0"]
 [ext_resource type="Script" path="res://instances/pnl_chat.gd" id="1_x2vuy"]
-[ext_resource type="PackedScene" uid="uid://bnvfuklj58uqa" path="res://instances/pnl_connect.tscn" id="3_e1ino"]
+[ext_resource type="PackedScene" uid="uid://csqa2q3atku2i" path="res://instances/pnl_connect.tscn" id="3_e1ino"]
+[ext_resource type="Texture2D" uid="uid://ca6xdmc1afmql" path="res://ui/bootstrap_icons/x.svg" id="3_i32xj"]
 
 [node name="pnl_chat" type="PanelContainer"]
 anchors_preset = 15
@@ -15,6 +16,24 @@ script = ExtResource("1_x2vuy")
 
 [node name="vb" type="VBoxContainer" parent="."]
 layout_mode = 2
+
+[node name="top" type="PanelContainer" parent="vb"]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="vb/top"]
+layout_mode = 2
+
+[node name="lb_channel" type="Label" parent="vb/top/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Channel name"
+vertical_alignment = 1
+
+[node name="btn_close" type="Button" parent="vb/top/hb"]
+layout_mode = 2
+icon = ExtResource("3_i32xj")
 
 [node name="lb_chat" type="RichTextLabel" parent="vb"]
 unique_name_in_owner = true
@@ -81,6 +100,7 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
+[connection signal="pressed" from="vb/top/hb/btn_close" to="." method="_on_btn_close_pressed"]
 [connection signal="text_submitted" from="vb/ln_msg" to="." method="_on_ln_msg_text_submitted"]
 [connection signal="text_submitted" from="vb/hb_msg/ln_announce" to="." method="_on_ln_announce_text_submitted"]
 [connection signal="value_changed" from="vb/hb/sl_font_size" to="." method="_on_sl_font_size_value_changed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cbuj57b0j3cqq"]
+[gd_scene load_steps=10 format=3 uid="uid://c10luse40ekhw"]
 
 [ext_resource type="Texture2D" uid="uid://1ndihbuunqkm" path="res://ui/bootstrap_icons/megaphone-fill.svg" id="1_4vx60"]
 [ext_resource type="Script" path="res://instances/btn_user.gd" id="1_uxmoy"]

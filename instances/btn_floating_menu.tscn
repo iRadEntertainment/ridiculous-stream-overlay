@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bf5cmv0cqio2n"]
+[gd_scene load_steps=29 format=3 uid="uid://cdgelqh5th1pl"]
 
 [ext_resource type="Theme" uid="uid://byc6dqa0se0lp" path="res://ui/floating_menu.theme" id="1_kl6sw"]
 [ext_resource type="Script" path="res://instances/btn_floating_menu.gd" id="1_osqlv"]
@@ -83,11 +83,11 @@ expand_icon = true
 script = ExtResource("1_osqlv")
 expand_on_hover = false
 is_radial = true
-offset_gap = 20.0
 anim_delay = 0.02
 
 [node name="indicators" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -241,8 +241,10 @@ offset_bottom = 8.0
 icon = ExtResource("13_tyq2w")
 icon_alignment = 1
 script = ExtResource("8_nsbul")
-radial_angle = 106.0
-anim_delay = 0.019
+offset_gap = 16.0
+radial_angle = 99.0
+anim_duration = 0.08
+anim_delay = 0.047
 
 [node name="btn_cig" type="Button" parent="btn_obs"]
 custom_minimum_size = Vector2(32, 32)
@@ -327,8 +329,10 @@ icon_alignment = 1
 visible = false
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -67.0
+offset_top = 3.0
+offset_right = -27.0
+offset_bottom = 43.0
 icon = ExtResource("5_tfiwm")
 icon_alignment = 1
 

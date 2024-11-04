@@ -16,8 +16,9 @@ var anchored_position: Vector2
 
 func start(_main: RSMain, _main_menu_button: RSSubMenuButton = null) -> void:
 	anchored_position = position
-	var parent : Control = get_parent()
-	parent.resized.connect(func(): calculate_anchored_pos(); is_anchored = false)
+	var _parent : Control = get_parent()
+	_parent.resized.connect(func(): calculate_anchored_pos(); is_anchored = false)
+	main = _main
 	generate_panels_buttons()
 	super(_main, self)
 	start_indicators()
@@ -42,11 +43,13 @@ func start_indicators() -> void:
 	ico_stream.modulate = COL_ON if main.no_obs_ws.is_stream_on else COL_OFF
 
 func generate_panels_buttons() -> void:
-	for win: Window in get_tree().get_nodes_in_group("UIWindows"):
+	if !main.is_node_ready():
+		await main.ready
+	for pnl: Control in main.pnls:
 		var btn := Button.new()
 		btn.focus_mode = Control.FOCUS_NONE
-		btn.text = win.name.lstrip("wn_").left(3)
-		btn.pressed.connect(func(): win.visible = !win.visible)
+		btn.text = pnl.name.lstrip("pnl_").left(3)
+		btn.pressed.connect(func(): pnl.visible = !pnl.visible)
 		btn_panels.add_child(btn)
 	for btn in get_children():
 		btn.custom_minimum_size = MIN_SIZE
@@ -110,7 +113,7 @@ func _on_btn_laser_pressed() -> void: main.custom.laser()
 func _on_btn_nuke_pressed() -> void: main.physic_scene.nuke()
 func _on_btn_zerog_pressed() -> void: main.custom.zero_g()
 func _on_btn_names_pressed() -> void: main.custom.destructibles_names()
-func _on_btn_granade_pressed() -> void: main.physic_scene.spawn_granade()
+func _on_btn_granade_pressed() -> void: main.physic_scene.spawn_grenade()
 
 func _on_btn_close_pressed() -> void:
 	main.quit()
@@ -132,7 +135,20 @@ func _on_btn_brave_sound_pressed() -> void:
 
 
 func _on_btn_test_pressed() -> void:
-	pass
+	var param := RSBeansParam.new()
+	param.img_paths = ["can.png"]
+	param.sfx_paths = ["sfx_boom.wav"]
+	param.scale = Vector2.ONE * 0.2
+	param.spawn_range = [5, 200]
+	param.is_pickable = true
+	param.is_destroy = true
+	
+	#param.destroy_shard_params
+	
+	
+	main.physic_scene.add_image_bodies(param)
+	
+	
 	#main.alert_scene.wheel_of_random_raid()
 	#var e_theme := EditorInterface.get_editor_theme()
 	#ResourceSaver.save(e_theme, "res://godot_4_3.theme")

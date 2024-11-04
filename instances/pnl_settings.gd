@@ -13,7 +13,7 @@ func start(_main : RSMain):
 	main = _main
 	reload_panels()
 	connect_tab_buttons_to_tab_container()
-	call_deferred("update_sidebar_pos")
+	visibility_changed.connect(update_sidebar_pos)
 	resized.connect(update_sidebar_pos)
 	%pnl_twitch_user_list.user_selected.connect(%pnl_twitch_user_fields.populate_fields)
 
@@ -80,3 +80,7 @@ func _on_btn_credits_noobs_pressed():
 	main.twitcher.chat("Yagich made no-OBS-ws! https://github.com/Yagich/no-obs-ws")
 func _on_btn_credits_polygon_pressed():
 	main.twitcher.chat("SoloByte made Polygon2d fracture! https://github.com/SoloByte/godot-polygon2d-fracture")
+
+
+func _on_btn_close_pressed() -> void:
+	hide()
