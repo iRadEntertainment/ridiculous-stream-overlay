@@ -7,7 +7,7 @@ func _run():
 	
 	ResourceSaver.save(EditorInterface.get_editor_theme() as Theme, "res://godot_theme.tres", ResourceSaver.FLAG_NONE)
 	#var folder_path = "res://ui/bootstrap_icons/"
-	#var file_paths = RSExternalLoader.list_file_in_folder(folder_path, ["svg"], true)
+	#var file_paths = RSLoader.list_file_in_folder(folder_path, ["svg"], true)
 	#for file_path in file_paths:
 		#print(file_path)
 		#modify_file(file_path)
