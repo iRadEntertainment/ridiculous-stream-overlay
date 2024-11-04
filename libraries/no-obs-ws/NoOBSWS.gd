@@ -27,7 +27,7 @@ var is_state_open : bool:
 		return _ws.get_ready_state() == WebSocketPeer.STATE_OPEN
 var is_stream_on := true:
 	get():
-		is_stream_on = await get_stream_status()
+		#is_stream_on = await get_stream_status()
 		return is_stream_on
 	set(val):
 		is_stream_on = val
@@ -44,6 +44,8 @@ var is_brave_muted := false:
 		is_brave_muted = val
 		scenes_updated.emit()
 
+
+
 func start(_main : RSMain):
 	main = _main
 	l = RSLogger.new(RSSettings.LOGGER_NAME_NOOBSWS)
@@ -56,9 +58,13 @@ func start(_main : RSMain):
 		
 		if has_all:
 			connect_to_obsws(RSSettings.obs_websocket_port, RSSettings.obs_websocket_password)
+	if _ws.get_ready_state() != WebSocketPeer.STATE_OPEN:
+		await connection_ready
+		await get_tree().process_frame
+	
 	is_mic_muted = await get_input_mute("Mic/Aux")
 	is_brave_muted = await get_input_mute("Brave")
-	#is_stream_on = await get_stream_status()
+	is_stream_on = await get_stream_status()
 
 func _on_event_received(event: NoOBSMessage) -> void:
 	var data := event.get_data()
@@ -142,9 +148,9 @@ func connect_to_obsws(port: int, password: String = "") -> void:
 	if err == OK:
 		if not _auth_required.is_connected(_authenticate):
 			_auth_required.connect(_authenticate.bind(password))
-		print("NoOBSWS: connected.")
+		l.i("Connected.")
 	else:
-		print("NoOBSWS: couldn't connect.")
+		l.e("Couldn't connect.")
 
 
 func make_generic_request(request_type: String, request_data: Dictionary = {}) -> NoOBSRequestResponse:
@@ -277,7 +283,7 @@ func _send_message(message: NoOBSMessage) -> void:
 	if not _ws:
 		l.e("WebSocket not initialized")
 		return
-	if not _ws.get_ready_state() == WebSocketPeer.STATE_OPEN:
+	if _ws.get_ready_state() != WebSocketPeer.STATE_OPEN:
 		l.e("WebSocket not open")
 		return
 	_ws.send_text(message.to_obsws_json())
