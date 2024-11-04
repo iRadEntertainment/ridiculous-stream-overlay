@@ -3,18 +3,18 @@
 [ext_resource type="Script" path="res://RSMain.gd" id="1_y2jdm"]
 [ext_resource type="Script" path="res://classes/RSMousePass.cs" id="2_4s2fq"]
 [ext_resource type="Script" path="res://classes/RSMouseTracker.gd" id="2_xjlao"]
-[ext_resource type="PackedScene" path="res://instances/physics_scene.tscn" id="3_d3yde"]
-[ext_resource type="PackedScene" path="res://instances/debug_view.tscn" id="5_j4imi"]
+[ext_resource type="PackedScene" uid="uid://gxr8ww6jok8i" path="res://instances/physics_scene.tscn" id="3_d3yde"]
+[ext_resource type="PackedScene" uid="uid://che3syvs71fq3" path="res://instances/debug_view.tscn" id="5_j4imi"]
 [ext_resource type="Script" path="res://classes/RSVetting.gd" id="5_joslx"]
 [ext_resource type="Script" path="res://classes/RSTwitcher.gd" id="5_wye2t"]
-[ext_resource type="PackedScene" path="res://instances/btn_floating_menu.tscn" id="5_xf57p"]
+[ext_resource type="PackedScene" uid="uid://cdgelqh5th1pl" path="res://instances/btn_floating_menu.tscn" id="5_xf57p"]
 [ext_resource type="Script" path="res://libraries/no-obs-ws/NoOBSWS.gd" id="7_oy4mo"]
 [ext_resource type="Script" path="res://classes/RSShoutoutMng.gd" id="8_ex7ik"]
-[ext_resource type="Script" path="res://classes/RSExternalLoader.gd" id="8_fol3s"]
+[ext_resource type="Script" path="res://classes/RSLoader.gd" id="8_fol3s"]
 [ext_resource type="Script" path="res://classes/RSCustom.gd" id="9_by474"]
 [ext_resource type="Script" path="res://classes/RSDisplay.gd" id="12_qc4sr"]
 [ext_resource type="PackedScene" uid="uid://dseoyhiylvwnu" path="res://instances/pnl_settings.tscn" id="15_8wfva"]
-[ext_resource type="PackedScene" path="res://instances/pnl_chat.tscn" id="16_ege2h"]
+[ext_resource type="PackedScene" uid="uid://jchfk7d78ss5" path="res://instances/pnl_chat.tscn" id="16_ege2h"]
 [ext_resource type="PackedScene" path="res://instances/pnl_notifications.tscn" id="17_sodyi"]
 [ext_resource type="PackedScene" path="res://instances/alert_overlay.tscn" id="19_gj13v"]
 [ext_resource type="AudioStream" uid="uid://cidanglkg6lrp" path="res://local_res/sfx_quack_01.ogg" id="21_637v1"]
@@ -40,7 +40,7 @@ script = ExtResource("2_xjlao")
 unique_name_in_owner = true
 script = ExtResource("2_4s2fq")
 
-[node name="RSExternalLoader" type="Node" parent="Modules"]
+[node name="RSLoader" type="Node" parent="Modules"]
 unique_name_in_owner = true
 script = ExtResource("8_fol3s")
 
@@ -71,52 +71,62 @@ script = ExtResource("5_joslx")
 unique_name_in_owner = true
 script = ExtResource("12_qc4sr")
 
-[node name="physics_scene" parent="." instance=ExtResource("3_d3yde")]
+[node name="sfx" type="Node" parent="."]
+
+[node name="quack" type="AudioStreamPlayer" parent="sfx"]
+stream = ExtResource("21_637v1")
+
+[node name="split_chat" type="HSplitContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="empty" type="Control" parent="split_chat"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="pnl_settings" parent="split_chat/empty" instance=ExtResource("15_8wfva")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="pnl_chat" parent="split_chat" instance=ExtResource("16_ege2h")]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="debug_view" parent="." instance=ExtResource("5_j4imi")]
 unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="alert_scene" parent="." instance=ExtResource("19_gj13v")]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 anchors_preset = 0
-
-[node name="windows" type="Node" parent="."]
-unique_name_in_owner = true
-
-[node name="wn_settings" type="Window" parent="windows"]
-title = "Hey this is the panel SETTINGS"
-initial_position = 1
-size = Vector2i(1640, 1024)
-visible = false
-
-[node name="pnl_settings" parent="windows/wn_settings" instance=ExtResource("15_8wfva")]
-
-[node name="wn_chat" type="Window" parent="windows"]
-auto_translate_mode = 1
-title = "Twitch Chat"
-initial_position = 1
-size = Vector2i(400, 1024)
-visible = false
-
-[node name="pnl_chat" parent="windows/wn_chat" instance=ExtResource("16_ege2h")]
-
-[node name="wn_mod_count" type="Window" parent="windows"]
-auto_translate_mode = 1
-title = "Twitch Chat"
-initial_position = 1
-size = Vector2i(512, 256)
-visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1152.0
+offset_bottom = 648.0
 
 [node name="pnl_notifications" parent="." instance=ExtResource("17_sodyi")]
 unique_name_in_owner = true
 visible = false
-layout_mode = 1
-anchors_preset = 11
+layout_mode = 2
+anchors_preset = 0
 anchor_left = 1.0
 offset_left = -337.0
 grow_horizontal = 0
 
-[node name="alert_scene" parent="." instance=ExtResource("19_gj13v")]
+[node name="physics_scene" parent="." instance=ExtResource("3_d3yde")]
 unique_name_in_owner = true
 layout_mode = 1
 
@@ -133,18 +143,3 @@ offset_top = 0.0
 offset_right = 32.0
 offset_bottom = 64.0
 grow_horizontal = 2
-
-[node name="game" type="Window" parent="."]
-unique_name_in_owner = true
-transparent_bg = true
-mode = 2
-title = "OneShot"
-position = Vector2i(526, 274)
-visible = false
-transparent = true
-force_native = true
-
-[node name="sfx" type="Node" parent="."]
-
-[node name="quack" type="AudioStreamPlayer" parent="sfx"]
-stream = ExtResource("21_637v1")

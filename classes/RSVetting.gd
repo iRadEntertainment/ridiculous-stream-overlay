@@ -101,13 +101,13 @@ func receive_response(callable : Callable, data: RSTwitchEventData, response: Re
 
 
 func load_user_vetting_list():
-	var path = RSExternalLoader.get_config_path() + RSGlobals.rs_vetting_file_name
+	var path = RSLoader.get_config_path() + RSGlobals.rs_vetting_file_name
 	if FileAccess.file_exists(path):
-		user_vetting_list = main.loader.load_json(path)
+		user_vetting_list = RSLoader.load_json(path)
 		l.i("List loaded (%s)" % path)
 func save_user_vetting_list():
-	var path = RSExternalLoader.get_config_path() + RSGlobals.rs_vetting_file_name
-	main.loader.save_to_json(path, user_vetting_list)
+	var path = RSLoader.get_config_path() + RSGlobals.rs_vetting_file_name
+	RSLoader.save_to_json(path, user_vetting_list)
 func clear(user, _reward_title) -> void:
 	if user_vetting_list.has(user):
 		#TODO: finish this

@@ -11,12 +11,12 @@ func start(_main : RSMain):
 	%ln_obs_pass.text = RSSettings.obs_websocket_password
 
 func _on_data_dir_pressed():
-	OS.shell_open(RSExternalLoader.get_config_path())
+	OS.shell_open(RSLoader.get_config_path())
 func _on_btn_open_user_dir_pressed():
 	OS.shell_open(OS.get_user_data_dir())
 
 func _on_btn_reload_twitcher_pressed():
-	main.call_deferred("reload_twitcher")
+	main.twitcher.connect_to_twitch()
 func _on_btn_reload_commands_pressed():
 	main.custom.add_commands()
 

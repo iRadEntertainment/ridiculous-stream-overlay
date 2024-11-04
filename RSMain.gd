@@ -8,15 +8,13 @@ class_name RSMain
 
 @onready var debug_view: Control = %debug_view
 
-#@onready var pnl_settings : RSPnlSettings = %pnl_settings
-
 var globals := RSGlobals.new()
 var http_request := HTTPRequest.new()
 
 # Modules
 @onready var mouse_tracker: RSMouseTracker = %RSMouseTracker
 @onready var mouse_pass: Node = %RSMousePass # C# class
-@onready var loader: RSExternalLoader = %RSExternalLoader
+@onready var loader: RSLoader = %RSLoader
 @onready var twitcher: RSTwitcher = %RSTwitcher
 @onready var no_obs_ws: NoOBSWS = %NoOBSWS
 @onready var shoutout_mng: RSShoutoutMng = %RSShoutoutMng
@@ -25,7 +23,6 @@ var http_request := HTTPRequest.new()
 @onready var display: RSDisplay = %RSDisplay
 
 @onready var btn_floating_menu: Button = %btn_floating_menu
-@onready var windows: Node = %windows
 @onready var pnl_notifications: PanelContainer = %pnl_notifications
 
 @onready var alert_scene : RSAlertOverlay = %alert_scene
@@ -33,13 +30,18 @@ var http_request := HTTPRequest.new()
 
 var wheel_of_random : RSWheelOfRandom
 
-var known_users := {}
+var pnls: Array[Control] = []
+var known_users := {} #{ user_login: RSTwitchUser }
 var unknown_users_cache := {}
 
 
 # ================================ INIT ========================================
 func _ready() -> void:
 	print("=================================== RIDICULOS STREAMING STARTED ===================================")
+	pnls = [
+		%pnl_settings,
+		%pnl_chat
+	]
 	setup_mouse_passthrough()
 	load_settings()
 	load_known_user()
@@ -54,12 +56,10 @@ func launch_game(val: bool):
 
 func setup_mouse_passthrough():
 	var ui_elements = get_all_control_nodes(self)
+	ui_elements.append(%split_chat)
 	for control: Control in ui_elements:
 		control.add_to_group("UI")
-	for window: Window in windows.get_children():
-		window.close_requested.connect(window.hide)
-		window.add_to_group("UIWindows")
-		window.hide()
+	
 	mouse_tracker.mouse_track_updated.connect(mouse_pass.SetClickThrough)
 	mouse_tracker.start(self)
 	mouse_pass.SetClickThrough(true)
@@ -94,10 +94,10 @@ func start_everything():
 	pnl_notifications.start(self)
 	alert_scene.start(self)
 	
-	for window: Window in get_tree().get_nodes_in_group("UIWindows"):
-		for child in window.get_children():
-			if child.has_method("start"):
-				child.start(self)
+	
+	for pnl: Control in pnls:
+		if pnl.has_method("start"):
+			pnl.start(self)
 
 
 
@@ -147,14 +147,6 @@ func quit():
 	get_tree().quit()
 
 # =============================== UTILS =======================================
-#func get_current_code_edit() -> CodeEdit:
-	#var editor_script := EditorInterface.get_script_editor().get_current_editor()
-	#return editor_script.get_base_editor() as CodeEdit
-#func get_2d_main_screen():
-	#return EditorInterface.get_editor_viewport_2d()
-#func get_main_control_editor_node():
-	#return EditorInterface.get_base_control()
-
 func play_sfx(which: String) -> void:
 	match which:
 		"quack":

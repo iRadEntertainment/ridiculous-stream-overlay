@@ -67,10 +67,10 @@ func start(_main : RSMain):
 
 func setup():
 	# override Twitcher paths with RS global path
-	TwitchSetting.auth_cache = RSExternalLoader.get_config_path() + "auth.conf"
-	TwitchSetting.cache_badge = RSExternalLoader.get_config_path() + "badges"
-	TwitchSetting.cache_cheermote = RSExternalLoader.get_config_path() + "cheermotes"
-	TwitchSetting.cache_emote = RSExternalLoader.get_config_path() + "emotes"
+	TwitchSetting.auth_cache = RSLoader.get_config_path() + "auth.conf"
+	TwitchSetting.cache_badge = RSLoader.get_config_path() + "badges"
+	TwitchSetting.cache_cheermote = RSLoader.get_config_path() + "cheermotes"
+	TwitchSetting.cache_emote = RSLoader.get_config_path() + "emotes"
 	
 	set_broadcaster_id_for_all_eventsub(TwitchSetting.broadcaster_id)
 	#TwitchSetting.log_enabled = TwitchSetting.ALL_LOGGERS
@@ -306,13 +306,12 @@ func is_magick_available() -> bool:
 
 func gather_user_info(username : String) -> RSTwitchUser:
 	var user = RSTwitchUser.new()
-	var response : TwitchGetUsersResponse = await( api.get_users([], [username]) )
-	var user_ids : Dictionary = response.to_dict()
-	if user_ids.data.is_empty(): return
-	user.user_id = user_ids.data[0]["id"]
-	user.display_name = user_ids.data[0]["display_name"]
-	user.username = user_ids.data[0]["login"]
-	user.profile_image_url = user_ids.data[0]["profile_image_url"]
+	var response : TwitchGetUsersResponse = await api.get_users([], [username]) 
+	if response.data.is_empty(): return
+	user.user_id = response.data[0]["id"]
+	user.display_name = response.data[0]["display_name"]
+	user.username = response.data[0]["login"]
+	user.profile_image_url = response.data[0]["profile_image_url"]
 	return user
 
 func get_live_streamers_data(user_names_or_ids : Array = []) -> Dictionary:

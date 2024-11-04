@@ -1,6 +1,6 @@
 
 extends Node
-class_name RSExternalLoader
+class_name RSLoader
 
 var HOST_PARSER = RegEx.create_from_string("(https://.*?)/")
 
@@ -21,11 +21,11 @@ func save_settings() -> void:
 	save_to_json(path, RSSettings.to_dict())
 
 
-func save_to_json(file_path: String, variant: Variant) -> void:
+static func save_to_json(file_path: String, variant: Variant) -> void:
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	file.store_string(JSON.stringify(variant, "\t"))
 	file.close()
-func load_json(file_path: String) -> Variant:
+static func load_json(file_path: String) -> Variant:
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	var content = file.get_as_text()
 	file.close()
@@ -86,7 +86,7 @@ func load_texture_from_url(url : String, use_cached := true) -> ImageTexture:
 		"webp": tex_image.load_webp_from_buffer(image_buffer)
 		"svg": tex_image.load_svg_from_buffer(image_buffer)
 		_:
-			push_error("RSExternalLoader: %s format not recognised."%file_type)
+			push_error("RSLoader: %s format not recognised."%file_type)
 			return
 	
 	var tex = ImageTexture.create_from_image(tex_image)
@@ -145,12 +145,12 @@ func save_all_user(dic):
 		save_userfile(user)
 
 
-func userfile_from_username(username : String) -> String:
+static func userfile_from_username(username : String) -> String:
 	return "user_%s.json" % username
-func username_from_userfile(userfile : String) -> String:
+static func username_from_userfile(userfile : String) -> String:
 	userfile = userfile.get_file()
 	return userfile.trim_prefix("user_").trim_suffix(".json")
-func get_user_filepath(username : String) -> String:
+static func get_user_filepath(username : String) -> String:
 	var user_file = "user_%s.json" % username
 	return get_users_path() + user_file
 #=========================================== USERSERSRESWRES ========================================================
@@ -233,7 +233,7 @@ static func populate_opt_btn_from_files_in_folder(opt_btn : OptionButton, folder
 	opt_btn.add_separator("External Resources")
 	for i in folder_paths.size():
 		var folder = folder_paths[i]
-		var list_of_files = RSExternalLoader.list_file_in_folder(folder, types, full_path)
+		var list_of_files = RSLoader.list_file_in_folder(folder, types, full_path)
 		for file in list_of_files:
 			opt_btn.add_item(file, opt_btn.item_count+1)
 		if i < folder_paths.size()-1:

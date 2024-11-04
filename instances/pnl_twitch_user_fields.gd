@@ -195,8 +195,8 @@ func gather_username_info_from_api():
 
 
 func update_dropdown_fields():
-	var sfx_paths : Array[String] = [RSExternalLoader.get_sfx_path(), RSGlobals.local_res_folder]
-	RSExternalLoader.populate_opt_btn_from_files_in_folder(%opt_custom_sfx, sfx_paths, ["ogg"])
+	var sfx_paths : Array[String] = [RSLoader.get_sfx_path(), RSGlobals.local_res_folder]
+	RSLoader.populate_opt_btn_from_files_in_folder(%opt_custom_sfx, sfx_paths, ["ogg"])
 	
 	var custom_script = ResourceLoader.load("res://classes/RSCustom.gd", "GDScript", ResourceLoader.CACHE_MODE_IGNORE) as GDScript
 	var functions_dics = custom_script.get_script_method_list()
@@ -236,9 +236,9 @@ func _on_opt_custom_sfx_item_selected(index):
 func _on_btn_save_pressed():
 	update_user()
 func _on_btn_open_file_pressed():
-	OS.shell_open(main.loader.get_user_filepath(%ln_username.text))
+	OS.shell_open(RSLoader.get_user_filepath(%ln_username.text))
 func _on_btn_open_folder_pressed():
-	OS.shell_open(RSExternalLoader.get_users_path())
+	OS.shell_open(RSLoader.get_users_path())
 
 func _on_btn_raid_current_pressed():
 	if not live_data: return
