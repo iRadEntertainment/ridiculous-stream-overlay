@@ -19,6 +19,10 @@ run/main_scene="res://rs_main.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+general/text_to_speech=true
+
 [autoload]
 
 HttpClientManager="*res://addons/twitcher/communication/http_client_manager.gd"
@@ -39,8 +43,9 @@ enabled=PackedStringArray("res://addons/twitcher/plugin.cfg")
 
 [physics]
 
-2d/physics_engine="GodotPhysics2D"
-2d/default_gravity=2940.0
+2d/run_on_separate_thread=true
+2d/physics_engine="Rapier2D"
+2d/default_gravity=4400.0
 
 [rendering]
 
@@ -50,7 +55,7 @@ viewport/transparent_background=true
 
 [twitch]
 
-general/logging/enabled=2047
+general/logging/enabled=1919
 general/images/image_magic="C:/Program Files/ImageMagick-7.1.1-Q16-HDRI/magick.exe"
 auth/broadcaster_id="443367221"
 auth/client_id="t0nkdk4ssr5mhvyj2939da8y4gngrp"
@@ -127,3 +132,4 @@ eventsub/channel_goal_progress/broadcaster_user_id="443367221"
 eventsub/channel_goal_end/broadcaster_user_id="443367221"
 eventsub/stream_online/broadcaster_user_id="443367221"
 eventsub/stream_offline/broadcaster_user_id="443367221"
+general/images/image_transformer="MagicImageTransformer"
