@@ -27,12 +27,17 @@ func add_commands() -> void:
 	main.twitcher.commands.add_command("pandano", pandano)
 	main.twitcher.commands.add_command("whostream", whostream)
 	
+	main.twitcher.commands.add_command("b", spawn_can)
+	
 	main.twitcher.commands.add_command("laser", laser, 0, 1)
 	main.twitcher.commands.add_command("nuke", nuke)
 	main.twitcher.commands.add_command("grenade", spawn_grenade)
 	main.twitcher.commands.add_alias("grenade", "granade")
 	main.twitcher.commands.add_alias("grenade", "grandma")
 	main.twitcher.commands.add_alias("grenade", "grenades")
+	
+	main.twitcher.commands.add_command("shake", shake_bodies)
+	
 	main.twitcher.commands.add_command("zeroG", zero_g)
 	main.twitcher.commands.add_alias("zeroG", "zerog")
 	main.twitcher.commands.add_alias("zeroG", "0g")
@@ -61,7 +66,7 @@ func chat_on_stream_off(username: String) -> void:
 	main.twitcher.chat(message)
 
 func on_first_session_message(username: String, _tags: TwitchTags.PrivMsg) -> void:
-	if !main.no_obs_ws.is_stream_on: return
+	if await !main.no_obs_ws.is_stream_on: return
 	var user := await main.user_from_username(username)
 	if username in main.known_users.keys():
 		user.twitch_chat_color = await main.twitcher.get_user_color(str(user.user_id))
@@ -75,7 +80,7 @@ func on_first_session_message(username: String, _tags: TwitchTags.PrivMsg) -> vo
 func on_channel_points_redeemed(data : RSTwitchEventData):
 	l.i("Channel points redeemed. %s -> %s" % [data.username, data.reward_title] )
 	var user := await main.user_from_username(data.username)
-	#if !main.no_obs_ws.is_stream_on: chat_on_stream_off(data.username); return
+	#if await !main.no_obs_ws.is_stream_on: chat_on_stream_off(data.username); return
 	match data.reward_title:
 		"beans": beans(data.username)
 		"open useless website": open_useless_website()
@@ -91,7 +96,7 @@ func on_channel_points_redeemed(data : RSTwitchEventData):
 		"Change Stream Title": main.vetting.custom_rewards_vetting(change_stream_title, data)
 		"Do it!": play_doit()
 		"Toggle mute mic on stream": main.no_obs_ws.toggle_mic_mute()
-		"Granades!": main.physic_scene.spawn_granade()
+		"Granades!": main.physic_scene.spawn_grenade()
 func on_followed(data : RSTwitchEventData):
 	destructibles_names(data.username)
 func on_raided(data : RSTwitchEventData):
@@ -124,17 +129,17 @@ func impersonate_iRad(data : RSTwitchEventData):
 	main.twitcher.irc.chat(msg, channel)
 
 func give_advice(data : RSTwitchEventData) -> void:
-	var folder_path = RSExternalLoader.get_config_path()
+	var folder_path = RSLoader.get_config_path()
 	var advice_file = folder_path + "advice_collection.json"
 	var advice_list : Array = []
 	check_if_advice_file_exists(advice_file)
-	advice_list = main.loader.load_json(advice_file)
+	advice_list = RSLoader.load_json(advice_file)
 	var new_advice = {
 		"adviser" : data.display_name,
 		"advice" : data.user_input,
 	}
 	advice_list.append(new_advice)
-	main.loader.save_to_json(advice_file, advice_list)
+	RSLoader.save_to_json(advice_file, advice_list)
 
 func check_if_advice_file_exists(advice_file : String):
 	if not FileAccess.file_exists(advice_file):
@@ -148,14 +153,14 @@ func check_if_advice_file_exists(advice_file : String):
 					"advice" : "If you want to go fast, go alone. If you want to go far, go together."
 				},
 			]
-		main.loader.save_to_json(advice_file, advice_list)
+		RSLoader.save_to_json(advice_file, advice_list)
 
 func get_advice(data : RSTwitchEventData) -> void:
-	var folder_path = RSExternalLoader.get_config_path()
+	var folder_path = RSLoader.get_config_path()
 	var advice_file = folder_path + "advice_collection.json"
 	var advice_list : Array
 	check_if_advice_file_exists(advice_file)
-	advice_list = main.loader.load_json(advice_file)
+	advice_list = RSLoader.load_json(advice_file)
 	
 	var advice = advice_list.pick_random()
 	
@@ -201,13 +206,12 @@ func zero_g(_info : TwitchCommandInfo = null, _args := [], duration := 20.0):
 	if not main.physic_scene:
 		main.twitcher.chat("Wait for the physic scene to be in first!")
 		return
-	var tw = create_tween()
-	tw.bind_node(self)
-	main.physic_scene.interpolate_gravity(0)
-	tw.tween_callback(main.physic_scene.shake_bodies)
-	tw.tween_callback(main.physic_scene.shake_bodies).set_delay(duration)
-	tw.tween_method(main.physic_scene.interpolate_gravity, 0, 4410, 5.0)
+	main.physic_scene.duration = duration
+	main.physic_scene.zero_g()
 
+
+func shake_bodies(_info : TwitchCommandInfo = null, _args := []) -> void:
+	main.physic_scene.shake_bodies()
 
 func laser(_info : TwitchCommandInfo = null, args := []):
 	if main.physic_scene.is_closing: return
@@ -215,8 +219,23 @@ func laser(_info : TwitchCommandInfo = null, args := []):
 	var angle: float = float(args[0] if args.size() >= 1 else ANGLE_DEFAULT)
 	main.physic_scene.add_laser(angle)
 
+func spawn_can(_info : TwitchCommandInfo = null, _args := []) -> void:
+	var param := RSBeansParam.new()
+	param.img_paths = ["can.png"]
+	param.sfx_paths = [
+			"sfx_can_01.ogg",
+			"sfx_can_02.ogg",
+			"sfx_can_03.ogg",
+			"sfx_can_04.ogg",
+		]
+	param.spawn_range = [1,1]
+	param.is_destroy = true
+	param.is_pickable = true
+	param.scale = Vector2.ONE * randf_range(0.15, 0.35)
+	main.physic_scene.add_image_bodies(param)
+
 func spawn_grenade(_info : TwitchCommandInfo = null, _args := []) -> void:
-	main.physic_scene.spawn_granade()
+	main.physic_scene.spawn_grenade()
 
 func nuke(_info : TwitchCommandInfo = null, _args := []):
 	main.physic_scene.nuke()
@@ -249,10 +268,12 @@ func destructibles_names(username := "", quantity : int = 1, font_size := 96):
 func pandano(_info : TwitchCommandInfo = null, _args := []):
 	main.no_obs_ws.restart_media("Panda_no")
 
-# TODO
-func whostream() -> void:
+func whostream(_info : TwitchCommandInfo = null, _args := []) -> void:
 	var streamers_live_data = await main.twitcher.get_live_streamers_data()
-	var _suggested_streamer = streamers_live_data.keys().pick_random()
+	var msg: String = "Currently streaming:"
+	for key in streamers_live_data.keys():
+		msg += " %s" % key
+	main.twitcher.chat(msg)
 
 #endregion
 
@@ -347,6 +368,7 @@ func iRad_follow_somebody(_data : RSTwitchEventData):
 
 func tts(text: String, localization := "en_GB") -> void:
 	var voices = DisplayServer.tts_get_voices()
+	if not voices: return
 	#print("================ TTS =================")
 	#for i in voices.size():
 		#var v = voices[i]
@@ -359,7 +381,6 @@ func tts(text: String, localization := "en_GB") -> void:
 	for v: Dictionary in voices:
 		if v.language == localization:
 			voice_ids.append(v.id)
-	
 	var voice_id
 	if voice_ids.is_empty():
 		voice_id = voices.pick_random().id
