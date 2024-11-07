@@ -1,7 +1,6 @@
 extends Node
 class_name RSVetting
 
-var main : RSMain
 var l : RSLogger
 
 var user_vetting_list : Dictionary = {}
@@ -10,8 +9,7 @@ enum Responses{ACCEPT, ACCEPT_ALL, DECLINE, DECLINE_WARN, DECLINE_ALL}
 signal notification_queued(callable : Callable, data: RSTwitchEventData, warnings: int)
 signal list_updated
 
-func start(_main : RSMain):
-	main = _main
+func start():
 	l = RSLogger.new(RSSettings.LOGGER_NAME_VETTING)
 	load_user_vetting_list()
 
@@ -60,7 +58,7 @@ func custom_rewards_vetting(callable : Callable, data : RSTwitchEventData):
 func is_allowed(data: RSTwitchEventData) -> bool:
 	if "Impersonate" in data.reward_title:
 		var broadcaster_login : String = data.user_input.split(" ", true, 1)[0]
-		var allowed = broadcaster_login.to_lower() in main.known_users
+		var allowed = broadcaster_login.to_lower() in RS.known_users
 		if allowed:
 			l.i("Impersonate allowed (to [color=#f00]{streamer}[/color]). {user}: {msg}".format({"streamer": broadcaster_login, "user": data.username, "msg": data.user_input}))
 		else:
@@ -101,13 +99,13 @@ func receive_response(callable : Callable, data: RSTwitchEventData, response: Re
 
 
 func load_user_vetting_list():
-	var path = RSLoader.get_config_path() + RSGlobals.rs_vetting_file_name
+	var path = RSSettings.get_data_folder() + RSSettings.RS_VETTING_FILE_NAME
 	if FileAccess.file_exists(path):
-		user_vetting_list = RSLoader.load_json(path)
+		user_vetting_list = RSUtl.load_json(path)
 		l.i("List loaded (%s)" % path)
 func save_user_vetting_list():
-	var path = RSLoader.get_config_path() + RSGlobals.rs_vetting_file_name
-	RSLoader.save_to_json(path, user_vetting_list)
+	var path = RSSettings.get_data_folder() + RSSettings.RS_VETTING_FILE_NAME
+	RSUtl.save_to_json(path, user_vetting_list)
 func clear(user, _reward_title) -> void:
 	if user_vetting_list.has(user):
 		#TODO: finish this

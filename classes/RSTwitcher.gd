@@ -1,22 +1,16 @@
-
 extends Node
 class_name RSTwitcher
 
-var main : RSMain
-#var http_client_manager : HttpClientManager
 
 var irc : TwitchIRC
 var api : TwitchRestAPI
 var eventsub: TwitchEventsub
 var commands: TwitchCommandHandler
-var l: TwitchLogger
+var l: RSLogger
 var auth: TwitchAuth
 var icon_loader: TwitchIconLoader
 var eventsub_debug: TwitchEventsub
 var cheer_repository: TwitchCheerRepository
-#var gif_importer_imagemagick: GifImporterImagemagick = GifImporterImagemagick.new();
-#var gif_importer_native: GifImporterNative = GifImporterNative.new();
-var generator: TwitchAPIGenerator = TwitchAPIGenerator.new();
 
 
 var is_ready := false
@@ -37,13 +31,13 @@ signal cheered(RSTwitchEventData)
 signal connected_to_twitch
 
 
-
-func start(_main : RSMain):
-	main = _main
-	setup()
+func start():
 	#---------------
-	l = TwitchLogger.new(TwitchSetting.LOGGER_NAME_SERVICE)
-	l.i("Setup")
+	l = RSLogger.new(RS.settings.LOGGER_NAME_SERVICE)
+	l.i("Starting...")
+	if !RS.settings.is_twitcher_setup():
+		
+		return
 	auth = await TwitchAuth.new()
 	api = TwitchRestAPI.new(auth)
 	icon_loader = TwitchIconLoader.new(api)
@@ -53,7 +47,6 @@ func start(_main : RSMain):
 	
 	#gif_importer_imagemagick = GifImporterImagemagick.new()
 	#gif_importer_native = GifImporterNative.new()
-	generator = TwitchAPIGenerator.new()
 	commands = TwitchCommandHandler.new()
 	#---------------
 	irc.received_privmsg.connect(_on_irc_received_privmsg)
@@ -61,25 +54,9 @@ func start(_main : RSMain):
 	received_chat_message.connect(check_first_msg)
 	first_session_message.connect(check_user_twitch_color)
 	is_ready = true
-	if RSSettings.auto_connect:
+	if RS.settings.auto_connect:
 		await connect_to_twitch()
 
-
-func setup():
-	# override Twitcher paths with RS global path
-	TwitchSetting.auth_cache = RSLoader.get_config_path() + "auth.conf"
-	TwitchSetting.cache_badge = RSLoader.get_config_path() + "badges"
-	TwitchSetting.cache_cheermote = RSLoader.get_config_path() + "cheermotes"
-	TwitchSetting.cache_emote = RSLoader.get_config_path() + "emotes"
-	
-	set_broadcaster_id_for_all_eventsub(TwitchSetting.broadcaster_id)
-	#TwitchSetting.log_enabled = TwitchSetting.ALL_LOGGERS
-	#RSSettings.assign_scopes_to_project_settings()
-	#RSSettings.assign_eventsub_to_project_settings()
-	
-	#main.add_import_plugin(gif_importer_native)
-	#if is_magick_available():
-		#main.add_import_plugin(gif_importer_imagemagick)
 
 func set_broadcaster_id_for_all_eventsub(broadcaster_id: String):
 	var all_properties : Array = ProjectSettings.get_property_list()
@@ -98,19 +75,19 @@ func set_broadcaster_id_for_all_eventsub(broadcaster_id: String):
 
 
 func connect_to_twitch():
-	l.i("Start")
+	l.i("Connecting...")
 	await auth.ensure_authentication()
-	print("Twitcher: auth ensured")
-	#if TwitchSetting.irc_username in [null, ""]:
-		#var user_response := await api.get_users([str(TwitchSetting.broadcaster_id)], [])
+	l.i("Auth ensured.")
+	#if RS.settings.irc_username in [null, ""]:
+		#var user_response := await api.get_users([str(RS.settings.broadcaster_id)], [])
 		#var user := user_response.data[0]
-		#RSSettings.user_login = user.login
-		#RSSettings.channel_name = user.login
+		#RS.settings.user_login = user.login
+		#RS.settings.channel_name = user.login
 	await _init_chat()
-	print("Twitcher: chat initialized")
+	l.i("Chat initialized.")
 	_init_eventsub()
-	if TwitchSetting.use_test_server:
-		eventsub_debug.connect_to_eventsub(TwitchSetting.eventsub_test_server_url)
+	if RS.settings.use_test_server:
+		eventsub_debug.connect_to_eventsub(RS.settings.eventsub_test_server_url)
 	_init_cheermotes()
 	l.i("Initialized and ready")
 	
@@ -122,25 +99,26 @@ func _init_chat() -> void:
 	irc.received_privmsg.connect(commands.handle_chat_command);
 	irc.received_whisper.connect(commands.handle_whisper_command);
 	irc.connect_to_irc();
-	if !TwitchSetting.irc_connect_to_channel.is_empty():
-		irc.join_channel(TwitchSetting.irc_connect_to_channel.front())
+	if !RS.settings.irc_connect_to_channel.is_empty():
+		irc.join_channel(RS.settings.irc_connect_to_channel.front())
 	icon_loader.do_preload();
 	await icon_loader.preload_done;
 
 func _init_eventsub() -> void:
-	eventsub.connect_to_eventsub(TwitchSetting.eventsub_live_server_url)
+	eventsub.connect_to_eventsub(RS.settings.eventsub_live_server_url)
 	if !eventsub.event.is_connected(on_event):
 		eventsub.event.connect(on_event)
 
 ## Get data about a user by USER_ID see get_user for by username
 func get_user_by_id(user_id: String) -> TwitchUser:
-	if user_id == null || user_id == "": return null;
+	if !api: return null
 	var user_data : TwitchGetUsersResponse = await api.get_users([user_id], []);
 	if user_data.data.is_empty(): return null;
 	return user_data.data[0];
 
 ## Get data about a user by USERNAME see get_user_by_id for by user_id
 func get_user(username: String) -> TwitchUser:
+	if !api: return null
 	var res : TwitchGetUsersResponse = await api.get_users([], [username])
 	if res.data.is_empty():
 		return null
@@ -208,8 +186,8 @@ func _on_irc_received_privmsg(channel_name: String, username: String, message: S
 
 func chat(msg : String, channel_name := ""):
 	if channel_name == "":
-		if !TwitchSetting.irc_connect_to_channel.is_empty():
-			irc.chat(msg, TwitchSetting.irc_connect_to_channel.front())
+		if !RS.settings.irc_connect_to_channel.is_empty():
+			irc.chat(msg, RS.settings.irc_connect_to_channel.front())
 	else:
 		irc.chat(msg, channel_name)
 
@@ -222,8 +200,8 @@ func announcement(msg : String, color := ""):
 	body.message = msg
 	body.color = color
 	var path = "/helix/chat/announcements?"
-	path += "broadcaster_id=" + str(TwitchSetting.broadcaster_id) + "&"
-	path += "moderator_id=" + str(TwitchSetting.broadcaster_id)
+	path += "broadcaster_id=" + str(RS.settings.broadcaster_id) + "&"
+	path += "moderator_id=" + str(RS.settings.broadcaster_id)
 	await api.request(path, HTTPClient.METHOD_POST, body, "application/json")
 
 ## Returns the definition of emotes for given channel or for the global emotes.
@@ -319,8 +297,8 @@ func get_live_streamers_data(user_names_or_ids : Array = []) -> Dictionary:
 		return {}
 
 	if user_names_or_ids.is_empty():
-		for key in main.known_users.keys():
-			var user : RSTwitchUser = main.known_users[key]
+		for key in RS.known_users.keys():
+			var user : RSTwitchUser = RS.known_users[key]
 			if user.get("is_streamer") != null:
 				if user.is_streamer:
 					user_names_or_ids.append(key)
@@ -355,21 +333,21 @@ func check_first_msg(_channel_name: String, username: String, _message: String, 
 
 func check_user_twitch_color(username : String, tags: TwitchTags.PrivMsg):
 	if tags.color.is_empty(): return
-	if username in main.known_users.keys():
-		if main.known_users[username].twitch_chat_color != Color(tags.color):
-			main.known_users[username].twitch_chat_color = Color(tags.color)
-			main.loader.save_userfile(main.known_users[username])
+	if username in RS.known_users.keys():
+		if RS.known_users[username].twitch_chat_color != Color(tags.color):
+			RS.known_users[username].twitch_chat_color = Color(tags.color)
+			RS.loader.save_userfile(RS.known_users[username])
 
 func raid(to_broadcaster_id : String):
 	var path = "/helix/raids?from_broadcaster_id={from}&to_broadcaster_id={to}".format(
-		{"from": str(TwitchSetting.broadcaster_id),
+		{"from": str(RS.settings.broadcaster_id),
 		"to":to_broadcaster_id})
 	await api.request(path, HTTPClient.METHOD_POST, "", "application/x-www-form-urlencoded");
 
 func get_follower_count() -> int:
 	var path = "/helix/channels/followers?"
 	path += "first=" + str(100) + "&"
-	path += "broadcaster_id=" + str(TwitchSetting.broadcaster_id)
+	path += "broadcaster_id=" + str(RS.settings.broadcaster_id)
 	var response = await api.request(path, HTTPClient.METHOD_GET, "", "application/json")
 	var result = JSON.parse_string(response.response_data.get_string_from_utf8())
 	var parsed := TwitchGetChannelFollowersResponse.from_json(result)
@@ -389,7 +367,7 @@ func get_moderators() -> Array[TwitchUserModerator]:
 	
 	var path = "/helix/moderation/moderators?"
 	path += "first=" + str(100) + "&"
-	path += "broadcaster_id=" + str(TwitchSetting.broadcaster_id)
+	path += "broadcaster_id=" + str(RS.settings.broadcaster_id)
 	
 	var response = await api.request(path, HTTPClient.METHOD_GET, "", "application/json")
 	var result = JSON.parse_string(response.response_data.get_string_from_utf8())

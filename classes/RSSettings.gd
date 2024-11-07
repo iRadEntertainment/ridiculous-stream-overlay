@@ -1,127 +1,183 @@
 @tool
-extends Object
+extends Resource
 class_name RSSettings
 
-# UI settings
-static var app_scale: float = 1
+const SETTING_FOLDER_KEY = "ridiculous_stream/general/data_folder"
+
+static var rs_data_folder: String:
+	get():
+		return ProjectSettings.get_setting(SETTING_FOLDER_KEY)
+	set(val):
+		ProjectSettings.set_setting(
+			SETTING_FOLDER_KEY, val
+		)
+
+static func _static_init() -> void:
+	var default_path = OS.get_data_dir() + "/RidiculousStream"
+	ProjectSettings.set_setting(SETTING_FOLDER_KEY, default_path)
+	ProjectSettings.add_property_info({
+			"name": SETTING_FOLDER_KEY,
+			"type": TYPE_STRING,
+			"hint": PROPERTY_HINT_GLOBAL_DIR,
+			"hint_string": "The global folder with all your Ridiculous Stream Data"
+		})
+
+const LOCAL_RES_FOLDER = "res://local_res/"
+const RS_SETTINGS_FILE_NAME = "settings.json"
+const RS_VETTING_FILE_NAME = "user_vetting_list.json"
+const RS_LOG_FOLDER = "logs/"
+const RS_USER_FOLDER = "users/"
+const RS_OBJ_FOLDER = "obj/"
+const RS_SFX_FOLDER = "sfx/"
 
 
-static var _auto_connect : TwitchSetting.Property
-static var auto_connect : bool :
-	get: return _auto_connect.get_val()
-	set(value): _auto_connect.set_val(value)
+## Uses the implicit auth flow see also: https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#implicit-grant-flow
+## @deprecated use AuthorizationCodeGrantFlow...
+const FLOW_IMPLICIT = "ImplicitGrantFlow";
+## Uses the client credentials auth flow see also: https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#client-credentials-grant-flow
+const FLOW_CLIENT_CREDENTIALS = "ClientCredentialsGrantFlow";
+## Uses the auth code flow see also: https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#authorization-code-grant-flow
+const FLOW_AUTHORIZATION_CODE = "AuthorizationCodeGrantFlow";
+## Uses an device code and no redirect url see: https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#device-code-grant-flow
+const FLOW_DEVICE_CODE_GRANT = "DeviceCodeGrantFlow";
 
-static var _max_messages_in_chat : TwitchSetting.Property
-static var max_messages_in_chat : int :
-	get: return _max_messages_in_chat.get_val()
-	set(value): _max_messages_in_chat.set_val(value)
+## Twitcher Loggers
+const LOGGER_NAME_AUTH = "TwitchAuthorization"
+const LOGGER_NAME_EVENT_SUB = "TwitchEventSub"
+const LOGGER_NAME_REST_API = "TwitchRestAPI"
+const LOGGER_NAME_IRC = "TwitchIRC"
+const LOGGER_NAME_IMAGE_LOADER = "TwitchImageLoader"
+const LOGGER_NAME_COMMAND_HANDLING = "TwitchCommandHandling"
+const LOGGER_NAME_SERVICE = "TwitchService"
+const LOGGER_NAME_HTTP_CLIENT = "TwitchHttpClient"
+const LOGGER_NAME_HTTP_SERVER = "TwitchHttpServer"
+const LOGGER_NAME_WEBSOCKET = "TwitchWebsocket"
+const LOGGER_NAME_CUSTOM_REWARDS = "TwitchCustomRewards"
 
-const SCOPES_DEFAULT_DIC := {
-			"twitch/auth/scopes/chat": int(0),
-			"twitch/auth/scopes/channel": int(0),
-			"twitch/auth/scopes/moderator": int(0),
-			"twitch/auth/scopes/user": int(0),
-		}
-static var scopes : Dictionary :
-	get: return get_scopes()
-	set(value): set_scopes(value)
-
-static var eventsubs : Dictionary :
-	get: return get_eventsubs()
-	set(value): set_eventsubs(value)
-
-
-## no-OBS-ws settings
-static var _obs_autoconnect: TwitchSetting.Property
-static var obs_autoconnect : bool :
-	get: return _obs_autoconnect.get_val()
-	set(val): _obs_autoconnect.set_val(val)
-
-static var _obs_websocket_url: TwitchSetting.Property
-static var obs_websocket_url : String :
-	get: return _obs_websocket_url.get_val()
-	set(val): _obs_websocket_url.set_val(val)
-
-static var _obs_websocket_port: TwitchSetting.Property
-static var obs_websocket_port : int :
-	get: return _obs_websocket_port.get_val()
-	set(val): _obs_websocket_port.set_val(val)
-
-static var _obs_websocket_password: TwitchSetting.Property
-static var obs_websocket_password : String : #= "YvFuw8DQxdxCAsvJ":
-	get: return _obs_websocket_password.get_val()
-	set(val): _obs_websocket_password.set_val(val)
-
-
-## RSLogger
-const LOGGER_NAME_RS = "Ridiculous Stream"
+## RS Loggers
+const LOGGER_NAME_MAIN = "RS"
 const LOGGER_NAME_NOOBSWS = "OBS Websocket"
 const LOGGER_NAME_SHOUTOUT = "Shoutout Manager"
 const LOGGER_NAME_CUSTOM = "RSCustom"
 const LOGGER_NAME_VETTING = "RSVetting"
 
-
 const ALL_LOGGERS: Array[String] = [
-	LOGGER_NAME_RS,
+	LOGGER_NAME_AUTH, # Twitcher Loggers
+	LOGGER_NAME_EVENT_SUB,
+	LOGGER_NAME_REST_API,
+	LOGGER_NAME_IRC,
+	LOGGER_NAME_IMAGE_LOADER,
+	LOGGER_NAME_COMMAND_HANDLING,
+	LOGGER_NAME_SERVICE,
+	LOGGER_NAME_HTTP_CLIENT,
+	LOGGER_NAME_HTTP_SERVER,
+	LOGGER_NAME_WEBSOCKET,
+	LOGGER_NAME_CUSTOM_REWARDS,
+	
+	LOGGER_NAME_MAIN, # RS Loggers
 	LOGGER_NAME_NOOBSWS,
 	LOGGER_NAME_SHOUTOUT,
 	LOGGER_NAME_CUSTOM,
 	LOGGER_NAME_VETTING,
 ]
 
-static var _log_enabled: TwitchSetting.Property
-static var log_enabled: Array:
-	get: return get_log_enabled()
+const SCOPES_DEFAULT_DIC := {
+			"chat": int(0),
+			"channel": int(0),
+			"moderator": int(0),
+			"user": int(0),
+		}
 
 
-static func _static_init() -> void:
-	setup()
-	TwitchSetting.setup()
-	set_broadcaster_id_for_all_eventsub(TwitchSetting.broadcaster_id)
+# RS settings
+var app_scale: float = 1.0
+
+var auto_connect : bool = false
+var max_messages_in_chat : int = 100
+var eventsubs : Dictionary
+
+# no-OBS-ws settings
+var obs_autoconnect : bool
+var obs_websocket_url : String
+var obs_websocket_port : int
+var obs_websocket_password : String
+
+var log_enabled: Array = ALL_LOGGERS
+
+# Twitcher settings
+var authorization_flow: String = FLOW_AUTHORIZATION_CODE
+var broadcaster_id: String
+var client_id: String
+var client_secret: String
+var redirect_url: String = "http://localhost:7170"
+var redirect_port: int = 7170
+
+var scopes : Dictionary = SCOPES_DEFAULT_DIC
+#var scopes: Array[String]
+
+var force_verify: String = "false"
+var subscriptions: Dictionary
+
+var image_transformers: Dictionary = {}
+var image_transformer: TwitchImageTransformer
 
 
-static func setup():
-	_auto_connect = TwitchSetting.Property.new("RidiculousStream/general/RSTwitch/auto_connect", false).as_bool().basic()
-	
-	_obs_autoconnect = TwitchSetting.Property.new("RidiculousStream/general/OBS Websocket/obs_autoconnect", false).as_bool().basic()
-	_obs_autoconnect = TwitchSetting.Property.new("RidiculousStream/general/OBS Websocket/obs_autoconnect", false).as_bool().basic()
-	_obs_websocket_url = TwitchSetting.Property.new("RidiculousStream/general/OBS Websocket/obs_websocket_url").as_str().basic()
-	_obs_websocket_port = TwitchSetting.Property.new("RidiculousStream/general/OBS Websocket/obs_websocket_port", 4455).as_num().basic()
-	_obs_websocket_password = TwitchSetting.Property.new("RidiculousStream/general/OBS Websocket/obs_websocket_password").as_password("Fetch the OBS web socket password from OBS").basic()
-	_log_enabled = TwitchSetting.Property.new("RidiculousStream/general/logging/enabled").as_bit_field(ALL_LOGGERS as Array[String])
-	
-	_max_messages_in_chat = TwitchSetting.Property.new("RidiculousStream/general/Others/max_messages_in_chat", 100).as_num().basic()
+var image_tranformer_path: String = "TwitchImageTransformer"
+var imagemagic_path: String
+var twitch_image_cdn_host: String = "https://static-cdn.jtvnw.net"
 
-static func get_log_enabled() -> Array[String]:
-	var result: Array[String] = [];
-	# Other classes can be initialized before the settings and use the log.
-	if _log_enabled == null:
-		return result;
-	var bitset = _log_enabled.get_val();
-	if typeof(bitset) == TYPE_STRING && bitset == "" || typeof(bitset) == TYPE_INT && bitset == 0:
-		return result
-	for logger_idx: int in range(ALL_LOGGERS.size()):
-		var bit_value = 1 << logger_idx;
-		if bitset & bit_value == bit_value:
-			result.append(ALL_LOGGERS[logger_idx])
-	return result
+var auth_cache: String = "user://auth.conf"
+#var secret_storage: String = "user://secrets.conf"
 
-static func is_log_enabled(logger: String) -> bool:
-	return log_enabled.find(logger) != -1
+var token_host: String = "https://id.twitch.tv"
+var token_endpoint: String = "/oauth2/token"
+
+# var fallback_texture2d: Texture2D
+# var fallback_profile: Texture2D
+
+var cache_emote: String = "user://emotes"
+var cache_badge: String = "user://badge"
+var cache_cheermote: String = "user://cheermote"
+var use_test_server: bool = false
+
+var eventsub_test_server_url: String = "ws://127.0.0.1:8081/ws"
+var eventsub_live_server_url: String = "wss://eventsub.wss.twitch.tv/ws"
+
+var irc_server_url: String = "wss://irc-ws.chat.twitch.tv:443"
+var irc_username: String
+var irc_main_channel: String
+var irc_connect_to_channel: Array[StringName]
+var irc_login_message: String = "Bot has successfully connected."
+var irc_send_message_delay: int = 320
+# var default_caps: Array[TwitchIrcCapabilities.Capability] = [TwitchIrcCapabilities.COMMANDS, TwitchIrcCapabilities.TAGS];
+# var default_cap_val = TwitchIrcCapabilities.get_bit_value(default_caps);
+var irc_capabilities: Array[TwitchIrcCapabilities.Capability] = [TwitchIrcCapabilities.COMMANDS, TwitchIrcCapabilities.TAGS]
+
+var api_host: String = "https://api.twitch.tv"
+
+var ignore_message_eventsub_in_seconds: int = 600
+var http_client_min: int = 2
+var http_client_max: int = 4
 
 
-static func get_scopes() -> Dictionary:
+
+
+func is_log_enabled(logger: String) -> bool:
+	return log_enabled.has(logger)
+
+
+func get_scopes() -> Dictionary:
 	var d = {}
 	for key in SCOPES_DEFAULT_DIC.keys():
-		var value : int = int(ProjectSettings.get_setting(key))
+		var value : int = int(scopes[key])
 		d[key] = value
 	return d
-static func set_scopes(values : Dictionary) -> void:
+func set_scopes(values : Dictionary) -> void:
 	for key in SCOPES_DEFAULT_DIC.keys():
 		var value := int(values[key])
 		ProjectSettings.set_setting(key, value)
 
-static func get_eventsubs() -> Dictionary:
+func get_eventsubs() -> Dictionary:
 	var keys = []
 	for property : Dictionary in ProjectSettings.get_property_list():
 		var key : String = str(property.name)
@@ -131,7 +187,7 @@ static func get_eventsubs() -> Dictionary:
 	for key in keys:
 		d[key] = ProjectSettings.get_setting(key)
 	return d
-static func set_eventsubs(values : Dictionary) -> void:
+func set_eventsubs(values : Dictionary) -> void:
 	for key in values.keys():
 		var value = values[key]
 		if typeof(value) in [TYPE_INT, TYPE_FLOAT]:
@@ -139,7 +195,7 @@ static func set_eventsubs(values : Dictionary) -> void:
 		ProjectSettings.set_setting(key, value)
 
 
-static func to_dict() -> Dictionary:
+func to_dict() -> Dictionary:
 	var d = {}
 	d["app_scale"] = app_scale
 	
@@ -157,24 +213,26 @@ static func to_dict() -> Dictionary:
 	d["max_messages_in_chat"] = max_messages_in_chat
 	return d
 
-static func from_json(d: Dictionary) -> void:
-	if d.has("app_scale") && d["app_scale"] != null: RSSettings.app_scale = d["app_scale"]
+static func from_json(d: Dictionary) -> RSSettings:
+	var _settings = RSSettings.new()
+	if d.has("app_scale") && d["app_scale"] != null: _settings.app_scale = d["app_scale"]
 	
-	if d.has("scopes") && d["scopes"] != null: RSSettings.scopes = d["scopes"]
-	if d.has("eventsubs") && d["eventsubs"] != null: RSSettings.eventsubs = d["eventsubs"]
+	if d.has("scopes") && d["scopes"] != null: _settings.scopes = d["scopes"]
+	if d.has("eventsubs") && d["eventsubs"] != null: _settings.eventsubs = d["eventsubs"]
 	
-	if d.has("auto_connect") && d["auto_connect"] != null: RSSettings.auto_connect = d["auto_connect"]
+	if d.has("auto_connect") && d["auto_connect"] != null: _settings.auto_connect = d["auto_connect"]
 	
-	if d.has("obs_autoconnect") && d["obs_autoconnect"] != null: RSSettings.obs_autoconnect = d["obs_autoconnect"]
-	if d.has("obs_websocket_url") && d["obs_websocket_url"] != null: RSSettings.obs_websocket_url = d["obs_websocket_url"]
-	if d.has("obs_websocket_port") && d["obs_websocket_port"] != null: RSSettings.obs_websocket_port = d["obs_websocket_port"]
-	if d.has("obs_websocket_password") && d["obs_websocket_password"] != null: RSSettings.obs_websocket_password = d["obs_websocket_password"]
-	if d.has("log_enabled") && d["log_enabled"] != null: RSSettings.log_enabled = d["log_enabled"]
+	if d.has("obs_autoconnect") && d["obs_autoconnect"] != null: _settings.obs_autoconnect = d["obs_autoconnect"]
+	if d.has("obs_websocket_url") && d["obs_websocket_url"] != null: _settings.obs_websocket_url = d["obs_websocket_url"]
+	if d.has("obs_websocket_port") && d["obs_websocket_port"] != null: _settings.obs_websocket_port = d["obs_websocket_port"]
+	if d.has("obs_websocket_password") && d["obs_websocket_password"] != null: _settings.obs_websocket_password = d["obs_websocket_password"]
+	if d.has("log_enabled") && d["log_enabled"] != null: _settings.log_enabled = d["log_enabled"]
 	
-	if d.has("max_messages_in_chat") && d["max_messages_in_chat"] != null: RSSettings.max_messages_in_chat = d["max_messages_in_chat"]
+	if d.has("max_messages_in_chat") && d["max_messages_in_chat"] != null: _settings.max_messages_in_chat = d["max_messages_in_chat"]
+	return _settings
 
 
-static func set_broadcaster_id_for_all_eventsub(broadcaster_id: String):
+func set_broadcaster_id_for_all_eventsub():
 	var all_properties : Array = ProjectSettings.get_property_list()
 	var keys = []
 	for d : Dictionary in all_properties:
@@ -189,3 +247,36 @@ static func set_broadcaster_id_for_all_eventsub(broadcaster_id: String):
 		if ProjectSettings.get_setting(key) == "":
 			print("TwitchSetting")
 			ProjectSettings.set_setting(key, broadcaster_id)
+
+
+# UTILITIES
+static func get_data_folder() -> String:
+	RSUtl.make_path(rs_data_folder)
+	return rs_data_folder
+static func get_settings_filepath() -> String:
+	var path := "%s/%s"%[get_data_folder(), RS_SETTINGS_FILE_NAME]
+	return path
+static func get_users_path() -> String:
+	var path := "%s%s"%[get_data_folder(), RS_USER_FOLDER]
+	RSUtl.make_path(path)
+	return path
+static func get_obj_path() -> String:
+	var path := "%s%s"%[get_data_folder(), RS_OBJ_FOLDER]
+	RSUtl.make_path(path)
+	return path
+static func get_sfx_path() -> String:
+	var path := "%s%s"%[get_data_folder(), RS_SFX_FOLDER]
+	RSUtl.make_path(path)
+	return path
+static func get_logs_path() -> String:
+	var path := "%s%s"%[get_data_folder(), RS_LOG_FOLDER]
+	RSUtl.make_path(path)
+	return path
+
+func is_twitcher_setup() -> bool:
+	if !broadcaster_id: return false
+	if !client_id: return false
+	if !client_secret: return false
+	if !redirect_url: return false
+	if !redirect_port: return false
+	return true

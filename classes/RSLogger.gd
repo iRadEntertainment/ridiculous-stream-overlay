@@ -3,6 +3,7 @@ extends RefCounted
 
 class_name RSLogger
 
+
 var context_name: String
 var suffix: String
 var enabled : bool
@@ -12,7 +13,7 @@ func _init(_context_name: String) -> void:
 	context_name = _context_name
 
 func is_enabled() -> bool:
-	return RSSettings.is_log_enabled(context_name)
+	return RS.settings.is_log_enabled(context_name)
 
 func set_enabled(status: bool) -> void:
 	enabled = status

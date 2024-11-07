@@ -6,11 +6,8 @@ class_name RSPnlSettings
 @onready var tabs = %tabs
 @onready var side_bar = %side_bar
 
-var main : RSMain
 
-
-func start(_main : RSMain):
-	main = _main
+func start():
 	reload_panels()
 	connect_tab_buttons_to_tab_container()
 	visibility_changed.connect(update_sidebar_pos)
@@ -25,9 +22,8 @@ func populate():
 func reload_panels():
 	for pnl in get_panels_to_reload(self):
 		if pnl is PanelContainer:
-			pnl.main = main
 			if pnl.has_method("start"):
-				pnl.start(main)
+				pnl.start()
 func get_panels_to_reload(node: Node) -> Array:
 	var pnls = []
 	for child in node.get_children():
@@ -62,24 +58,24 @@ func update_sidebar_pos():
 
 
 func _on_btn_hot_reload_plugin_pressed():
-	main.reload_plugin()
+	RS.reload_plugin()
 func _on_btn_hot_reload_pressed():
-	main.call_deferred("hot_reload_pnl_settings")
+	RS.call_deferred("hot_reload_pnl_settings")
 	queue_free()
 func _on_btn_open_irad_twitch_pressed():
 	OS.shell_open("https://twitch.tv/iraddev")
-	main.twitcher.chat("Ridiculous Stream has been provided kindly by iRadDev: https://twitch.tv/iraddev")
+	RS.twitcher.chat("Ridiculous Stream has been provided kindly by iRadDev: https://twitch.tv/iraddev")
 func _on_btn_open_github_pressed():
 	OS.shell_open("https://github.com/iRadEntertainment/Ridiculous-Stream")
-	main.twitcher.chat("Here is the repo for Ridiculous Stream, feel free to use, modify or contribute: https://github.com/iRadEntertainment/Ridiculous-Stream")
+	RS.twitcher.chat("Here is the repo for Ridiculous Stream, feel free to use, modify or contribute: https://github.com/iRadEntertainment/Ridiculous-Stream")
 func _on_btn_credits_gift_pressed():
-	main.twitcher.chat("Issork made Gift! The library I used before the Twitcher: https://github.com/issork/gift")
+	RS.twitcher.chat("Issork made Gift! The library I used before the Twitcher: https://github.com/issork/gift")
 func _on_btn_credits_twitcher_pressed():
-	main.twitcher.chat("Kanimaru made Twitcher! https://github.com/kanimaru/twitcher")
+	RS.twitcher.chat("Kanimaru made Twitcher! https://github.com/kanimaru/twitcher")
 func _on_btn_credits_noobs_pressed():
-	main.twitcher.chat("Yagich made no-OBS-ws! https://github.com/Yagich/no-obs-ws")
+	RS.twitcher.chat("Yagich made no-OBS-ws! https://github.com/Yagich/no-obs-ws")
 func _on_btn_credits_polygon_pressed():
-	main.twitcher.chat("SoloByte made Polygon2d fracture! https://github.com/SoloByte/godot-polygon2d-fracture")
+	RS.twitcher.chat("SoloByte made Polygon2d fracture! https://github.com/SoloByte/godot-polygon2d-fracture")
 
 
 func _on_btn_close_pressed() -> void:
