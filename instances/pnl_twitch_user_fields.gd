@@ -192,7 +192,7 @@ func gather_username_info_from_api():
 
 
 func update_dropdown_fields():
-	var sfx_paths : Array[String] = [RS.settings.get_sfx_path(), RSSettings.LOCAL_RES_FOLDER]
+	var sfx_paths : Array[String] = [RSSettings.get_sfx_path(), RSSettings.LOCAL_RES_FOLDER]
 	RSUtl.populate_opt_btn_from_files_in_folder(%opt_custom_sfx, sfx_paths, ["ogg"])
 	
 	var custom_script = ResourceLoader.load("res://classes/RSCustom.gd", "GDScript", ResourceLoader.CACHE_MODE_IGNORE) as GDScript

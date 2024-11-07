@@ -101,10 +101,10 @@ func set_item_opt_btn_from_string(opt_btn : OptionButton, value : String):
 
 
 func new_tex_opt_btn() -> OptionButton:
-	var tex_folders : Array[String] = [RS.settings.get_obj_path(), RSSettings.LOCAL_RES_FOLDER]
+	var tex_folders : Array[String] = [RSSettings.get_obj_path(), RSSettings.LOCAL_RES_FOLDER]
 	return RSUtl.opt_btn_from_files_in_folder(tex_folders, ["png", "jpg", "jpeg", "btm"])
 func new_sfx_opt_btn() -> OptionButton:
-	var sfx_folders : Array[String] = [RS.settings.get_sfx_path(), RSSettings.LOCAL_RES_FOLDER]
+	var sfx_folders : Array[String] = [RSSettings.get_sfx_path(), RSSettings.LOCAL_RES_FOLDER]
 	return RSUtl.opt_btn_from_files_in_folder(sfx_folders, ["ogg"])
 
 func _on_btn_add_tex_pressed():

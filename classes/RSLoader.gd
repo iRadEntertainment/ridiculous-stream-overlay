@@ -27,7 +27,7 @@ func load_sfx_from_sfx_folder(sfx_name : String) -> AudioStreamOggVorbis:
 	if ResourceLoader.exists(RSSettings.LOCAL_RES_FOLDER + sfx_name):
 		audio = ResourceLoader.load(RSSettings.LOCAL_RES_FOLDER + sfx_name)
 	else:
-		var sfx_global_path = RS.settings.get_sfx_path()
+		var sfx_global_path = RSSettings.get_sfx_path()
 		audio = AudioStreamOggVorbis.load_from_file(sfx_global_path+sfx_name)
 	cached[sfx_name] = audio
 	return audio
@@ -69,7 +69,7 @@ func load_texture_from_data_folder(texture_file_name : String) -> Texture2D:
 		tex = ResourceLoader.load(RSSettings.LOCAL_RES_FOLDER + texture_file_name)
 		
 	else:
-		var tex_path = RS.settings.get_obj_path()+texture_file_name
+		var tex_path = RSSettings.get_obj_path()+texture_file_name
 		var tex_image = Image.load_from_file(tex_path)
 		tex = ImageTexture.create_from_image(tex_image)
 	cached[texture_file_name] = tex
@@ -97,7 +97,7 @@ func save_userfile(user : RSTwitchUser) -> void:
 
 func load_all_user() -> Dictionary:
 	var dic = {}
-	var user_files = RSUtl.list_file_in_folder(RS.settings.get_users_path(), ["json"])
+	var user_files = RSUtl.list_file_in_folder(RSSettings.get_users_path(), ["json"])
 	
 	for user_file in user_files:
 		var username = username_from_userfile(user_file)
