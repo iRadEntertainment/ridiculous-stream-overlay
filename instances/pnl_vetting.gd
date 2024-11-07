@@ -5,14 +5,12 @@ extends PanelContainer
 @onready var infolist = %infolist
 @onready var warn_count = %warn_count
 
-var main : RSMain
 
 var selected_user : String
 
-func start(_main : RSMain):
-	main = _main
-	if !main.vetting.list_updated.is_connected(populate_list):
-		main.vetting.list_updated.connect(populate_list)
+func start():
+	if !RS.vetting.list_updated.is_connected(populate_list):
+		RS.vetting.list_updated.connect(populate_list)
 	populate_list()
 
 
@@ -20,7 +18,7 @@ func populate_list():
 	for child in userlist.get_children():
 		child.queue_free()
 	
-	for user in main.vetting.user_vetting_list.keys():
+	for user in RS.vetting.user_vetting_list.keys():
 		var btn := Button.new()
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btn.custom_minimum_size.y = 32
@@ -31,14 +29,14 @@ func populate_list():
 func populate_vetting_info(user: String):
 	selected_user = user
 	
-	var warnings : int = main.vetting.user_vetting_list[user]["warnings"]
+	var warnings : int = RS.vetting.user_vetting_list[user]["warnings"]
 	warn_count.value = warnings
 	
 	for child in infolist.get_children():
 		child.queue_free()
 	
-	var rewards = main.vetting.user_vetting_list[user]["rewards"]
-	print(main.vetting.user_vetting_list[user])
+	var rewards = RS.vetting.user_vetting_list[user]["rewards"]
+	print(RS.vetting.user_vetting_list[user])
 	for title in rewards.keys():
 		var status = rewards[title]
 		var lb = Label.new()

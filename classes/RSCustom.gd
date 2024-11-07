@@ -1,57 +1,55 @@
 extends Node
 class_name RSCustom
 
-var main : RSMain
 var l : RSLogger
 
 const STREAM_OVERLAY_SCENE = "Overlay Stream"
 # const STREAM_OVERLAY_VIDEOS = "Overlay Videos"
 
-func start(_main : RSMain):
-	main = _main
+func start():
 	l = RSLogger.new(RSSettings.LOGGER_NAME_CUSTOM)
 	l.i("Started")
-	main.twitcher.received_chat_message.connect(on_chat)
-	main.twitcher.channel_points_redeemed.connect(on_channel_points_redeemed)
-	main.twitcher.followed.connect(on_followed)
-	main.twitcher.raided.connect(on_raided)
-	main.twitcher.subscribed.connect(on_subscribed)
-	main.twitcher.cheered.connect(on_cheered)
-	main.twitcher.connected_to_twitch.connect(add_commands)
-	main.twitcher.first_session_message.connect(on_first_session_message)
+	RS.twitcher.received_chat_message.connect(on_chat)
+	RS.twitcher.channel_points_redeemed.connect(on_channel_points_redeemed)
+	RS.twitcher.followed.connect(on_followed)
+	RS.twitcher.raided.connect(on_raided)
+	RS.twitcher.subscribed.connect(on_subscribed)
+	RS.twitcher.cheered.connect(on_cheered)
+	RS.twitcher.connected_to_twitch.connect(add_commands)
+	RS.twitcher.first_session_message.connect(on_first_session_message)
 
 
 func add_commands() -> void:
-	main.twitcher.commands.add_command("discord", discord)
-	main.twitcher.commands.add_command("commands", chat_commands_help)
-	main.twitcher.commands.add_command("pandano", pandano)
-	main.twitcher.commands.add_command("whostream", whostream)
+	RS.twitcher.commands.add_command("discord", discord)
+	RS.twitcher.commands.add_command("commands", chat_commands_help)
+	RS.twitcher.commands.add_command("pandano", pandano)
+	RS.twitcher.commands.add_command("whostream", whostream)
 	
-	main.twitcher.commands.add_command("b", spawn_can)
+	RS.twitcher.commands.add_command("b", spawn_can)
 	
-	main.twitcher.commands.add_command("laser", laser, 0, 1)
-	main.twitcher.commands.add_command("nuke", nuke)
-	main.twitcher.commands.add_command("grenade", spawn_grenade)
-	main.twitcher.commands.add_alias("grenade", "granade")
-	main.twitcher.commands.add_alias("grenade", "grandma")
-	main.twitcher.commands.add_alias("grenade", "grenades")
+	RS.twitcher.commands.add_command("laser", laser, 0, 1)
+	RS.twitcher.commands.add_command("nuke", nuke)
+	RS.twitcher.commands.add_command("grenade", spawn_grenade)
+	RS.twitcher.commands.add_alias("grenade", "granade")
+	RS.twitcher.commands.add_alias("grenade", "grandma")
+	RS.twitcher.commands.add_alias("grenade", "grenades")
 	
-	main.twitcher.commands.add_command("shake", shake_bodies)
+	RS.twitcher.commands.add_command("shake", shake_bodies)
 	
-	main.twitcher.commands.add_command("zeroG", zero_g)
-	main.twitcher.commands.add_alias("zeroG", "zerog")
-	main.twitcher.commands.add_alias("zeroG", "0g")
-	main.twitcher.commands.add_alias("zeroG", "0G")
+	RS.twitcher.commands.add_command("zeroG", zero_g)
+	RS.twitcher.commands.add_alias("zeroG", "zerog")
+	RS.twitcher.commands.add_alias("zeroG", "0g")
+	RS.twitcher.commands.add_alias("zeroG", "0G")
 	
-	main.twitcher.commands.add_command("tts", parse_tts_command, 1, 256)
-	main.twitcher.commands.add_command("tts_gb", parse_tts_command.bind("en_GB"), 1, 256)
-	main.twitcher.commands.add_command("tts_us", parse_tts_command.bind("en_US"), 1, 256)
-	main.twitcher.commands.add_command("tts_it", parse_tts_command.bind("it_IT"), 1, 256)
-	main.twitcher.commands.add_command("tts_es", parse_tts_command.bind("es_ES"), 1, 256)
-	main.twitcher.commands.add_command("tts_fr", parse_tts_command.bind("fr_FR"), 1, 256)
-	main.twitcher.commands.add_command("tts_de", parse_tts_command.bind("de_DE"), 1, 256)
-	main.twitcher.commands.add_command("tts_pl", parse_tts_command.bind("pl_PL"), 1, 256)
-	main.twitcher.commands.add_command("tts_ru", parse_tts_command.bind("ru_RU"), 1, 256)
+	RS.twitcher.commands.add_command("tts", parse_tts_command, 1, 256)
+	RS.twitcher.commands.add_command("tts_gb", parse_tts_command.bind("en_GB"), 1, 256)
+	RS.twitcher.commands.add_command("tts_us", parse_tts_command.bind("en_US"), 1, 256)
+	RS.twitcher.commands.add_command("tts_it", parse_tts_command.bind("it_IT"), 1, 256)
+	RS.twitcher.commands.add_command("tts_es", parse_tts_command.bind("es_ES"), 1, 256)
+	RS.twitcher.commands.add_command("tts_fr", parse_tts_command.bind("fr_FR"), 1, 256)
+	RS.twitcher.commands.add_command("tts_de", parse_tts_command.bind("de_DE"), 1, 256)
+	RS.twitcher.commands.add_command("tts_pl", parse_tts_command.bind("pl_PL"), 1, 256)
+	RS.twitcher.commands.add_command("tts_ru", parse_tts_command.bind("ru_RU"), 1, 256)
 	l.i("Command added to the handler.")
 
 func on_chat(_channel_name: String, username: String, message: String, _tags: TwitchTags.PrivMsg):
@@ -59,44 +57,44 @@ func on_chat(_channel_name: String, username: String, message: String, _tags: Tw
 	if "kiwi" in message.to_lower(): OS.shell_open("https://cdn.discordapp.com/attachments/1221896398706835527/1296143099478933566/IMG_2351.jpg?ex=671136d4&is=670fe554&hm=a909489ef95bd303ec49c2c559d869fc1da209e9ae3eb9a25ed085e055cdb183&")
 	if username == "theyagich" and message == "wb!": yag_welcome_back()
 	if "dawdle" in message: destructibles_names("dawdle")
-	if message.begins_with("!quack"): main.play_sfx("quack")
+	if message.begins_with("!quack"): RS.play_sfx("quack")
 
 func chat_on_stream_off(username: String) -> void:
 	var message := "%s thank you for trying. The stream is off, but yeah, the plugin is still on..."%username
-	main.twitcher.chat(message)
+	RS.twitcher.chat(message)
 
 func on_first_session_message(username: String, _tags: TwitchTags.PrivMsg) -> void:
-	if await !main.no_obs_ws.is_stream_on: return
-	var user := await main.user_from_username(username)
-	if username in main.known_users.keys():
-		user.twitch_chat_color = await main.twitcher.get_user_color(str(user.user_id))
-		main.loader.save_userfile(user)
+	if !RS.no_obs_ws.is_stream_on: return
+	var user: RSTwitchUser = await RS.user_from_username(username)
+	if username in RS.known_users.keys():
+		user.twitch_chat_color = await RS.twitcher.get_user_color(str(user.user_id))
+		RS.loader.save_userfile(user)
 	destructibles_names(username)
 	if user.auto_shoutout:
-		main.shoutout_mng.add_shoutout(user)
+		RS.shoutout_mng.add_shoutout(user)
 	# let the physic name appear in the editor
 
 
 func on_channel_points_redeemed(data : RSTwitchEventData):
 	l.i("Channel points redeemed. %s -> %s" % [data.username, data.reward_title] )
-	var user := await main.user_from_username(data.username)
-	#if await !main.no_obs_ws.is_stream_on: chat_on_stream_off(data.username); return
+	var user: RSTwitchUser = await RS.user_from_username(data.username)
+	#if await !RS.no_obs_ws.is_stream_on: chat_on_stream_off(data.username); return
 	match data.reward_title:
 		"beans": beans(data.username)
 		"open useless website": open_useless_website()
 		"open browser history": open_browser_history()
 		"Activate CoPilot for 5min": activate_copilot(300)
 		"remove the cig break overlay": toggle_cig_overlay()
-		"Give advice": main.vetting.custom_rewards_vetting(give_advice, data)
+		"Give advice": RS.vetting.custom_rewards_vetting(give_advice, data)
 		"Get advice": get_advice(data)
 		"Shut down stream": alert_on_stop_streaming(user, data)
 		"Raid kani_dev": raid_kani(user, data)
-		"Force raid a random streamer": main.alert_scene.wheel_of_random_raid(user, data.user_input)
-		"Impersonate iRadDev": main.vetting.custom_rewards_vetting(impersonate_iRad, data)
-		"Change Stream Title": main.vetting.custom_rewards_vetting(change_stream_title, data)
+		"Force raid a random streamer": RS.alert_scene.wheel_of_random_raid(user, data.user_input)
+		"Impersonate iRadDev": RS.vetting.custom_rewards_vetting(impersonate_iRad, data)
+		"Change Stream Title": RS.vetting.custom_rewards_vetting(change_stream_title, data)
 		"Do it!": play_doit()
-		"Toggle mute mic on stream": main.no_obs_ws.toggle_mic_mute()
-		"Granades!": main.physic_scene.spawn_grenade()
+		"Toggle mute mic on stream": RS.no_obs_ws.toggle_mic_mute()
+		"Granades!": RS.physic_scene.spawn_grenade()
 func on_followed(data : RSTwitchEventData):
 	destructibles_names(data.username)
 func on_raided(data : RSTwitchEventData):
@@ -109,8 +107,8 @@ func on_cheered(_data : RSTwitchEventData):
 
 func add_notification_scene(username: String) -> void:
 	var new_notif_inst = RSGlobals.msg_notif_pack.instantiate()
-	main.add_child(new_notif_inst)
-	new_notif_inst.start(main, username)
+	RS.add_child(new_notif_inst)
+	new_notif_inst.start(username)
 
 func parse_tts_command(_info : TwitchCommandInfo = null, args := [], localizazion := "") -> void:
 	var text = " ".join(args)
@@ -119,27 +117,27 @@ func parse_tts_command(_info : TwitchCommandInfo = null, args := [], localizazio
 	tts(text, localizazion)
 
 func play_doit():
-	main.no_obs_ws.restart_media("do_it_%s.mp4" % randi_range(1,3))
+	RS.no_obs_ws.restart_media("do_it_%s.mp4" % randi_range(1,3))
 
 func impersonate_iRad(data : RSTwitchEventData):
 	var channel = data.user_input.split(" ", false, 1)[0].to_lower()
 	#var msg = data.username + " wants me to tell you: "
 	#msg += data.user_input.split(" ", false, 1)[1]
 	var msg = data.user_input.split(" ", false, 1)[1]
-	main.twitcher.irc.chat(msg, channel)
+	RS.twitcher.irc.chat(msg, channel)
 
 func give_advice(data : RSTwitchEventData) -> void:
-	var folder_path = RSLoader.get_config_path()
+	var folder_path = RSSettings.get_data_folder()
 	var advice_file = folder_path + "advice_collection.json"
 	var advice_list : Array = []
 	check_if_advice_file_exists(advice_file)
-	advice_list = RSLoader.load_json(advice_file)
+	advice_list = RSUtl.load_json(advice_file)
 	var new_advice = {
 		"adviser" : data.display_name,
 		"advice" : data.user_input,
 	}
 	advice_list.append(new_advice)
-	RSLoader.save_to_json(advice_file, advice_list)
+	RSUtl.save_to_json(advice_file, advice_list)
 
 func check_if_advice_file_exists(advice_file : String):
 	if not FileAccess.file_exists(advice_file):
@@ -153,14 +151,14 @@ func check_if_advice_file_exists(advice_file : String):
 					"advice" : "If you want to go fast, go alone. If you want to go far, go together."
 				},
 			]
-		RSLoader.save_to_json(advice_file, advice_list)
+		RSUtl.save_to_json(advice_file, advice_list)
 
 func get_advice(data : RSTwitchEventData) -> void:
-	var folder_path = RSLoader.get_config_path()
+	var folder_path = RSSettings.get_data_folder()
 	var advice_file = folder_path + "advice_collection.json"
 	var advice_list : Array
 	check_if_advice_file_exists(advice_file)
-	advice_list = RSLoader.load_json(advice_file)
+	advice_list = RSUtl.load_json(advice_file)
 	
 	var advice = advice_list.pick_random()
 	
@@ -177,47 +175,47 @@ func get_advice(data : RSTwitchEventData) -> void:
 		'{user} attentively listen to {adviser}: "{advice}"',
 		].pick_random()
 	
-	main.twitcher.chat(format_string.format(advice_dic) )
+	RS.twitcher.chat(format_string.format(advice_dic) )
 
 
 func discord(_info : TwitchCommandInfo = null, _args := []):
 	var msg = "Join Discord: https://discord.gg/4YhKaHkcMb"
-	main.twitcher.chat(msg)
+	RS.twitcher.chat(msg)
 
 
 func chat_commands_help(_info : TwitchCommandInfo = null, _args := []):
 	var msg = "Use a combination of ![command] for chat: hl (highlight), hd(hidden), rb(rainbow), big, small, wave, pulse, tornado, shake"
-	main.twitcher.chat(msg)
+	RS.twitcher.chat(msg)
 
 
 func beans(username : String):
-	#if main.physic_scene.is_closing: return
-	if username.is_empty():
-		username = main.known_users.keys().pick_random()
-	var beans_param := RSBeansParam.from_json(RSGlobals.params_can)
-	var user := main.get_known_user(username.to_lower()) as RSTwitchUser
+	#if RS.physic_scene.is_closing: return
+	if username.is_empty() and !RS.known_users.is_empty():
+		username = RS.known_users.keys().pick_random()
+	var beans_param := RSBeansParam.from_json(RSGlobals.PARAMS_CANS)
+	var user := RS.get_known_user(username.to_lower()) as RSTwitchUser
 	if user:
 		if user.custom_beans_params:
 			beans_param = user.custom_beans_params
-	main.physic_scene.add_image_bodies(beans_param)
+	RS.physic_scene.add_image_bodies(beans_param)
 
 
 func zero_g(_info : TwitchCommandInfo = null, _args := [], duration := 20.0):
-	if not main.physic_scene:
-		main.twitcher.chat("Wait for the physic scene to be in first!")
+	if not RS.physic_scene:
+		RS.twitcher.chat("Wait for the physic scene to be in first!")
 		return
-	main.physic_scene.duration = duration
-	main.physic_scene.zero_g()
+	RS.physic_scene.duration = duration
+	RS.physic_scene.zero_g()
 
 
 func shake_bodies(_info : TwitchCommandInfo = null, _args := []) -> void:
-	main.physic_scene.shake_bodies()
+	RS.physic_scene.shake_bodies()
 
 func laser(_info : TwitchCommandInfo = null, args := []):
-	if main.physic_scene.is_closing: return
+	if RS.physic_scene.is_closing: return
 	const ANGLE_DEFAULT = PI/2.85
 	var angle: float = float(args[0] if args.size() >= 1 else ANGLE_DEFAULT)
-	main.physic_scene.add_laser(angle)
+	RS.physic_scene.add_laser(angle)
 
 func spawn_can(_info : TwitchCommandInfo = null, _args := []) -> void:
 	var param := RSBeansParam.new()
@@ -228,28 +226,27 @@ func spawn_can(_info : TwitchCommandInfo = null, _args := []) -> void:
 			"sfx_can_03.ogg",
 			"sfx_can_04.ogg",
 		]
-	param.spawn_range = [1,1]
 	param.is_destroy = true
 	param.is_pickable = true
-	param.scale = Vector2.ONE * randf_range(0.15, 0.35)
-	main.physic_scene.add_image_bodies(param)
+	param.scale = randf_range(0.15, 0.35)
+	RS.physic_scene.add_image_bodies(param)
 
 func spawn_grenade(_info : TwitchCommandInfo = null, _args := []) -> void:
-	main.physic_scene.spawn_grenade()
+	RS.physic_scene.spawn_grenade()
 
 func nuke(_info : TwitchCommandInfo = null, _args := []):
-	main.physic_scene.nuke()
+	RS.physic_scene.nuke()
 
 func destructibles_names(username := "", quantity : int = 1, font_size := 96):
 	var user: RSTwitchUser
-	if username.is_empty():
-		username = main.known_users.keys().pick_random()
-		user = main.known_users[username]
+	if username.is_empty() and !RS.known_users.is_empty():
+		username = RS.known_users.keys().pick_random()
+		user = RS.known_users[username]
 		if user.twitch_chat_color == Color.BLACK:
-			user.twitch_chat_color = await main.twitcher.get_user_color(str(user.user_id))
-			main.loader.save_userfile(user)
+			user.twitch_chat_color = await RS.twitcher.get_user_color(str(user.user_id))
+			RS.loader.save_userfile(user)
 	else:
-		user = await main.user_from_username(username)
+		user = await RS.user_from_username(username)
 	
 	var col :=  Color("#00ec4f")
 	if user.twitch_chat_color != Color.BLACK:
@@ -263,57 +260,59 @@ func destructibles_names(username := "", quantity : int = 1, font_size := 96):
 	
 	for _i in quantity:
 		await get_tree().process_frame
-		main.physic_scene.generate_text_rigidbody(user.display_name, col, font_size)
+		RS.physic_scene.generate_text_rigidbody(user.display_name, col, font_size)
 
 func pandano(_info : TwitchCommandInfo = null, _args := []):
-	main.no_obs_ws.restart_media("Panda_no")
+	RS.no_obs_ws.restart_media("Panda_no")
 
 func whostream(_info : TwitchCommandInfo = null, _args := []) -> void:
-	var streamers_live_data = await main.twitcher.get_live_streamers_data()
+	var streamers_live_data = await RS.twitcher.get_live_streamers_data()
 	var msg: String = "Currently streaming:"
 	for key in streamers_live_data.keys():
 		msg += " %s" % key
-	main.twitcher.chat(msg)
+	RS.twitcher.chat(msg)
 
 #endregion
 
 
 func toggle_cig_overlay():
-	var item_id = await main.no_obs_ws.get_scene_item_id(STREAM_OVERLAY_SCENE, "BRB_text")
-	var scene_item_enabled = await main.no_obs_ws.get_item_enabled(STREAM_OVERLAY_SCENE, item_id)
-	main.no_obs_ws.set_item_enabled(STREAM_OVERLAY_SCENE, item_id, !scene_item_enabled)
+	var item_id = await RS.no_obs_ws.get_scene_item_id(STREAM_OVERLAY_SCENE, "BRB_text")
+	var scene_item_enabled = await RS.no_obs_ws.get_item_enabled(STREAM_OVERLAY_SCENE, item_id)
+	RS.no_obs_ws.set_item_enabled(STREAM_OVERLAY_SCENE, item_id, !scene_item_enabled)
 
 
 func suggest_no_ads(on_cig_break_activation := true) -> void:
 	if on_cig_break_activation:
-		var item_id = await main.no_obs_ws.get_scene_item_id(STREAM_OVERLAY_SCENE, "BRB_text")
-		var scene_item_enabled = await main.no_obs_ws.get_item_enabled(STREAM_OVERLAY_SCENE, item_id)
+		var item_id = await RS.no_obs_ws.get_scene_item_id(STREAM_OVERLAY_SCENE, "BRB_text")
+		var scene_item_enabled = await RS.no_obs_ws.get_item_enabled(STREAM_OVERLAY_SCENE, item_id)
 		if scene_item_enabled: return
-	var streamers_live_data = await main.twitcher.get_live_streamers_data()
+	var streamers_live_data: Dictionary = await RS.twitcher.get_live_streamers_data()
+	if streamers_live_data.is_empty():
+		return
 	var suggested_streamer = streamers_live_data.keys().pick_random()
 	var msg := """Do not watch the ADS.
 	 Excessive ad exposure manipulates behavior, fuels anxiety, and undermines mental well-being by promoting
 	unrealistic standards and decision fatigue. Watch twitch.tv/%s instead, they are live NOW!"""%suggested_streamer
-	main.twitcher.chat(msg)
+	RS.twitcher.chat(msg)
 
 
 func alert_on_stop_streaming(user: RSTwitchUser, data: RSTwitchEventData):
-	main.alert_scene.initialize_stop_streaming(user, data.user_input)
+	RS.alert_scene.initialize_stop_streaming(user, data.user_input)
 
 
 func stop_streaming():
-	main.no_obs_ws.stop_stream()
+	RS.no_obs_ws.stop_stream()
 
 
 func raid_kani(user: RSTwitchUser, data: RSTwitchEventData):
-	var kani_rs_user := main.get_known_user("kani_dev")
-	main.alert_scene.initialize_raid(user, kani_rs_user, data.user_input)
+	var kani_rs_user: RSTwitchUser = RS.get_known_user("kani_dev")
+	RS.alert_scene.initialize_raid(user, kani_rs_user, data.user_input)
 
 
 #func raid_a_random_streamer_from_the_user_list():
-	#var streamers_live_data = await main.twitcher.get_live_streamers_data()
-	#main.wheel_of_random.streamers_live_data = streamers_live_data
-	#main.wheel_of_random.spin_for_streamers()
+	#var streamers_live_data = await RS.twitcher.get_live_streamers_data()
+	#RS.wheel_of_random.streamers_live_data = streamers_live_data
+	#RS.wheel_of_random.spin_for_streamers()
 
 
 func save_all_scenes_and_scripts():
@@ -324,7 +323,7 @@ func open_useless_website():
 func open_browser_history():
 	OS.execute("C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe", ['about:history'])
 func activate_copilot(secondos : float):
-	main.copilot.activate(secondos)
+	RS.copilot.activate(secondos)
 func open_silent_itch_io_page():
 	pass
 func play_carbrix_or_woop():
@@ -336,13 +335,13 @@ func play_kerker():
 func change_stream_title(data : RSTwitchEventData):
 	var title = "%s - %s"%[data.user_input, data.username]
 	var path = "/helix/channels?"
-	path += "broadcaster_id=" + str(TwitchSetting.broadcaster_id) + "&"
-	await main.twitcher.api.request(path, HTTPClient.METHOD_PATCH, {"title":title}, "application/json")
+	path += "broadcaster_id=" + str(RS.settings.broadcaster_id) + "&"
+	await RS.twitcher.api.request(path, HTTPClient.METHOD_PATCH, {"title":title}, "application/json")
 
 
 func iRad_follow_somebody(_data : RSTwitchEventData):
 	pass
-	# main.twitcher.api.get_followed_channels(
+	# RS.twitcher.api.get_followed_channels(
 
 #"!tts" == "en_GB"
 #"!tts_us" == "en_US"

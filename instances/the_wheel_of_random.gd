@@ -20,7 +20,6 @@ const COLOURS = [
 const RES_TOTAL = 100
 var wheel_radius = 384.0
 
-var main : RSMain
 var angle_init := -PI/2
 var choices := PackedStringArray()
 var textures: Array[Texture2D] = []
@@ -71,7 +70,7 @@ func select_winner_from_wheel():
 	winner_selected.emit(winner)
 	print("winner selected: %s" % winner)
 	#main.twitcher.api.start_a_raid(
-		#str(TwitchSetting.broadcaster_id),
+		#str(RS.settings.broadcaster_id),
 		#str(winner.user_id),
 		#)
 	

@@ -6,7 +6,6 @@ extends PanelContainer
 @onready var tabs = %tabs
 @onready var ln_chat_live_streamer = %ln_chat_live_streamer
 
-var main : RSMain
 var user : RSTwitchUser
 var live_data : TwitchStream
 
@@ -23,11 +22,9 @@ func _ready():
 	set_process(false)
 
 
-func start(_main : RSMain):
-	main = _main
+func start():
 	update_dropdown_fields()
-	%pnl_connect_to_gift.main = main
-	%pnl_connect_to_gift.start(main)
+	%pnl_connect_to_gift.start()
 	reset_pnl_live()
 	set_tab_names()
 
@@ -46,7 +43,7 @@ func populate_fields(_user : RSTwitchUser, _live_data : TwitchStream):
 
 
 func update_user_fields():
-	%tex_profile_pic.texture = await main.loader.load_texture_from_url(user.profile_image_url)
+	%tex_profile_pic.texture = await RS.loader.load_texture_from_url(user.profile_image_url)
 	%ln_username.text = user.username
 	%ln_display_name.text = user.display_name
 	%ln_user_id.text = str(user.user_id)
@@ -84,7 +81,7 @@ func update_live_fields():
 	btn_stream_title.disabled = false
 	stream_viewer_count.text = str(live_data.viewer_count)
 	var thumbnail_url = live_data.thumbnail_url.format({"width": 640, "height": 360})
-	stream_thumbnail.texture = await main.loader.load_texture_from_url(thumbnail_url, false)
+	stream_thumbnail.texture = await RS.loader.load_texture_from_url(thumbnail_url, false)
 
 func reset_pnl_live():
 	stream_title.text = "Stream title"
@@ -170,8 +167,8 @@ func clear_custom_fields():
 
 func update_user():
 	var updated_user = user_from_fields()
-	main.loader.save_userfile(updated_user)
-	await main.load_known_user(updated_user.username)
+	RS.loader.save_userfile(updated_user)
+	await RS.load_known_user(updated_user.username)
 	#new_user_file.emit()
 
 func search_user(_username : String):
@@ -181,13 +178,13 @@ func search_user(_username : String):
 
 func gather_username_info_from_api():
 	var possible_username = %ln_search.text
-	if possible_username in main.known_users.keys():
-		populate_fields(main.known_users[possible_username], null)
+	if possible_username in RS.known_users.keys():
+		populate_fields(RS.known_users[possible_username], null)
 	else:
 		clear_custom_fields()
-	var _user = await main.twitcher.gather_user_info(possible_username)
+	var _user = await RS.twitcher.gather_user_info(possible_username)
 	if !_user: return
-	%tex_profile_pic.texture = await main.loader.load_texture_from_url(_user.profile_image_url)
+	%tex_profile_pic.texture = await RS.loader.load_texture_from_url(_user.profile_image_url)
 	%ln_username.text = _user.username
 	%ln_display_name.text = _user.display_name
 	%ln_user_id.text = str(_user.user_id)
@@ -195,8 +192,8 @@ func gather_username_info_from_api():
 
 
 func update_dropdown_fields():
-	var sfx_paths : Array[String] = [RSLoader.get_sfx_path(), RSGlobals.local_res_folder]
-	RSLoader.populate_opt_btn_from_files_in_folder(%opt_custom_sfx, sfx_paths, ["ogg"])
+	var sfx_paths : Array[String] = [RS.settings.get_sfx_path(), RSSettings.LOCAL_RES_FOLDER]
+	RSUtl.populate_opt_btn_from_files_in_folder(%opt_custom_sfx, sfx_paths, ["ogg"])
 	
 	var custom_script = ResourceLoader.load("res://classes/RSCustom.gd", "GDScript", ResourceLoader.CACHE_MODE_IGNORE) as GDScript
 	var functions_dics = custom_script.get_script_method_list()
@@ -226,23 +223,23 @@ func opt_btn_select_from_text(opt_button : OptionButton, text : String):
 
 
 func _on_ln_search_text_submitted(_new_text):
-	if main.twitcher.is_connected_to_twitch:
+	if RS.twitcher.is_connected_to_twitch:
 		gather_username_info_from_api()
 func _on_opt_custom_sfx_item_selected(index):
 	%sfx_prev.stop()
 	var sfx_name = %opt_custom_sfx.get_item_text(index)
-	%sfx_prev.stream = main.loader.load_sfx_from_sfx_folder(sfx_name)
+	%sfx_prev.stream = RS.loader.load_sfx_from_sfx_folder(sfx_name)
 	%sfx_prev.play()
 func _on_btn_save_pressed():
 	update_user()
 func _on_btn_open_file_pressed():
-	OS.shell_open(RSLoader.get_user_filepath(%ln_username.text))
+	OS.shell_open(RS.settings.get_user_filepath(%ln_username.text))
 func _on_btn_open_folder_pressed():
-	OS.shell_open(RSLoader.get_users_path())
+	OS.shell_open(RSSettings.get_users_path())
 
 func _on_btn_raid_current_pressed():
 	if not live_data: return
-	main.twitcher.raid(live_data.user_id)
+	RS.twitcher.raid(live_data.user_id)
 
 
 # ==============================================================================
@@ -287,7 +284,7 @@ func add_param_inspector():
 	if user.custom_beans_params != null:
 		check_param_and_add_inspector(user.custom_beans_params)
 	else:
-		check_param_and_add_inspector(RSBeansParam.from_json(RSGlobals.params_can))
+		check_param_and_add_inspector(RSBeansParam.from_json(RSGlobals.PARAMS_CANS))
 	#var param_inspector : RSParamInspector = RSGlobals.param_inspector_pack.instantiate()
 	#%sub_res.add_child(param_inspector)
 	#param_inspector.owner = owner
@@ -308,7 +305,7 @@ func _on_btn_add_custom_beans_toggled(toggled_on):
 func _on_btn_test_beans_pressed():
 	var _user := user_from_fields()
 	if !_user.username.is_empty():
-		main.custom.beans(_user.username)
+		RS.custom.beans(_user.username)
 
 
 func _on_stream_title_pressed():
@@ -316,4 +313,4 @@ func _on_stream_title_pressed():
 func _on_ln_chat_live_streamer_text_submitted(new_text):
 	ln_chat_live_streamer.clear()
 	if !live_data: return
-	main.twitcher.chat(new_text, live_data.user_login)
+	RS.twitcher.chat(new_text, live_data.user_login)

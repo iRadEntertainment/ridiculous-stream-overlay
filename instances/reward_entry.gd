@@ -7,13 +7,11 @@ extends PanelContainer
 @onready var ln_input = %ln_input
 @onready var cost = %cost
 
-var main : RSMain
 var reward : TwitchCustomReward
 var icon_img : Texture2D
 
 
-func start(_main : RSMain):
-	main = _main
+func start():
 	if not reward: return
 	
 	ln_input.visible = reward.is_user_input_required
@@ -30,7 +28,7 @@ func _on_ck_is_active_toggled(toggled_on):
 	reward.is_enabled = toggled_on
 	var body := TwitchUpdateCustomRewardBody.from_json(reward.to_dict())
 	body.is_enabled = reward.is_enabled
-	main.twitcher.api.update_custom_reward(reward.id, body)
+	RS.twitcher.api.update_custom_reward(reward.id, body)
 
 func _on_btn_icon_pressed():
 	pass

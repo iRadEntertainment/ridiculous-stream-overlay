@@ -22,19 +22,18 @@ const commands_string_format = {
 	#"!fade" : "[fade start=%s length=%s]"%[msg_length, msg_length*4] + msg + "[/fade]"
 }
 
-var main : RSMain
 var sprite_effect : SpriteFrameEffect
 
 
-func start(_main : RSMain):
-	main = _main
-	if !main.twitcher.received_chat_message.is_connected(_on_chat_message):
-		main.twitcher.received_chat_message.connect(_on_chat_message)
+func start():
+	if !RS.settings.irc_main_channel:
+		return
+	if !RS.twitcher.received_chat_message.is_connected(_on_chat_message):
+		RS.twitcher.received_chat_message.connect(_on_chat_message)
 	sprite_effect = SpriteFrameEffect.new()
 	lb_chat.install_effect(sprite_effect)
-	pnl_connect.main = main
-	pnl_connect.start(main)
-	%lb_channel.text = TwitchSetting.irc_connect_to_channel.front()
+	pnl_connect.start()
+	%lb_channel.text = RS.settings.irc_connect_to_channel.front()
 
 
 var badge_id = 0
@@ -56,8 +55,8 @@ func put_chat(username: String, message: String, _tags: TwitchTags.PrivMsg):
 	if _tags.display_name == "IAmAMerlin":
 		color = Color.BROWN.to_html()
 	var user : RSTwitchUser
-	if username in main.known_users.keys():
-		user = await main.load_known_user(username)
+	if username in RS.known_users.keys():
+		user = await RS.load_known_user(username)
 	if user:
 		if user.custom_chat_color != Color.BLACK:
 			color = user.custom_chat_color.to_html()
@@ -118,11 +117,11 @@ func change_font_size(font_size : int):
 	theme.set("RichTextLabel/font_sizes/mono_font_size", font_size)
 	theme.set("RichTextLabel/font_sizes/normal_font_size", font_size)
 func _on_ln_msg_text_submitted(new_text):
-	main.twitcher.chat(new_text)
+	RS.twitcher.chat(new_text)
 	ln_msg.clear()
 func _on_ln_announce_text_submitted(new_text):
 	var color : String = opt_announce_color.get_item_text( opt_announce_color.get_selected_id() )
-	main.twitcher.announcement(new_text, color)
+	RS.twitcher.announcement(new_text, color)
 	ln_announce.clear()
 
 

@@ -1,7 +1,7 @@
 
 extends HBoxContainer
 
-var main : RSMain
+
 var user : RSTwitchUser
 var live_data : TwitchStream
 var profile_pic : ImageTexture : set = set_profile_pic
@@ -16,8 +16,7 @@ var profile_pic : ImageTexture : set = set_profile_pic
 
 signal user_selected(user, live_data)
 
-func start(_main : RSMain):
-	main = _main
+func start():
 	user_pic = $user_pic
 	btn_user = $btn_user
 	btn_shoutout = $btn_shoutout
@@ -34,7 +33,7 @@ func start(_main : RSMain):
 
 
 func reload_profile_pic():
-	profile_pic = await main.loader.load_texture_from_url(user.profile_image_url, false)
+	profile_pic = await RS.loader.load_texture_from_url(user.profile_image_url, false)
 	if not is_node_ready(): await ready
 	if profile_pic: user_pic.texture = profile_pic
 func set_profile_pic(val):
@@ -45,9 +44,9 @@ func set_profile_pic(val):
 func _on_btn_user_pressed():
 	user_selected.emit(user, live_data)
 func _on_btn_shoutout_pressed():
-	main.shoutout_mng.add_shoutout(user)
+	RS.shoutout_mng.add_shoutout(user)
 func _on_btn_promote_pressed():
-	main.twitcher.chat(user.promotion_description)
+	RS.twitcher.chat(user.promotion_description)
 func _on_btn_special_pressed():
 	pass # Replace with function body.
 func _on_btn_reload_pressed():

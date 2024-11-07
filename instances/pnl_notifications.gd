@@ -4,13 +4,11 @@ extends PanelContainer
 @onready var vb = %vb
 @onready var sfx_notif = %sfx_notif
 
-var main : RSMain
 
-func start(_main : RSMain):
+func start():
 	show()
-	main = _main
-	if !main.vetting.notification_queued.is_connected(append_vetting_reward):
-		main.vetting.notification_queued.connect(append_vetting_reward)
+	if !RS.vetting.notification_queued.is_connected(append_vetting_reward):
+		RS.vetting.notification_queued.connect(append_vetting_reward)
 	for child in vb.get_children():
 		child.queue_free()
 
@@ -20,7 +18,7 @@ func append_vetting_reward(callable : Callable, data: RSTwitchEventData, warning
 	var pack : PackedScene = preload("res://instances/notification_vetting_reward.tscn")
 	var new_notif : RSNotificationVettingReward = pack.instantiate()
 	#var new_notif : RSNotificationVettingReward = RSGlobals.notif_vetting_reward_pack.instantiate()
-	new_notif.vetting = main.vetting
+	new_notif.vetting = RS.vetting
 	new_notif.callable = callable
 	new_notif.data = data
 	new_notif.warnings = warnings

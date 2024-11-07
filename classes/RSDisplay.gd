@@ -1,13 +1,12 @@
 extends Node
 class_name RSDisplay
 
-var main: RSMain
 var is_maximized := false
 
-func start(_main: RSMain) -> void:
-	main = _main
+func start() -> void:
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	set_borderless_maximized(true)
+	set_app_scale(RS.settings.app_scale)
 
 
 func set_borderless_maximized(value: bool):
@@ -20,3 +19,7 @@ func set_borderless_maximized(value: bool):
 		var usable_rect = DisplayServer.screen_get_usable_rect(current_screen)
 		DisplayServer.window_set_position(DisplayServer.screen_get_position(current_screen))
 		DisplayServer.window_set_size(usable_rect.size)
+
+
+func set_app_scale(_scale: float) -> void:
+	get_tree().root.content_scale_factor = _scale

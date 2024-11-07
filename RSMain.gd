@@ -1,7 +1,7 @@
 # ================== #
 #      RSMain.gd     #
 # ================== #
-
+# Singleton "RS"
 
 extends Control
 class_name RSMain
@@ -9,7 +9,8 @@ class_name RSMain
 @onready var debug_view: Control = %debug_view
 
 var globals := RSGlobals.new()
-var http_request := HTTPRequest.new()
+var settings := RSSettings.new()
+var l: RSLogger
 
 # Modules
 @onready var mouse_tracker: RSMouseTracker = %RSMouseTracker
@@ -22,6 +23,7 @@ var http_request := HTTPRequest.new()
 @onready var vetting: RSVetting = %RSVetting
 @onready var display: RSDisplay = %RSDisplay
 
+# Control nodes
 @onready var btn_floating_menu: Button = %btn_floating_menu
 @onready var pnl_notifications: PanelContainer = %pnl_notifications
 
@@ -31,27 +33,37 @@ var http_request := HTTPRequest.new()
 var wheel_of_random : RSWheelOfRandom
 
 var pnls: Array[Control] = []
+
+# Global vars
 var known_users := {} #{ user_login: RSTwitchUser }
 var unknown_users_cache := {}
 
 
 # ================================ INIT ========================================
 func _ready() -> void:
-	print("=================================== RIDICULOS STREAMING STARTED ===================================")
+	l = RSLogger.new(RSSettings.LOGGER_NAME_MAIN)
+	var is_everything_ok = await check_settings()
+	if !is_everything_ok:
+		return
+	
+	l.i("=================================== RIDICULOS STREAMING STARTED ===================================")
 	pnls = [
+		%pnl_chat,
 		%pnl_settings,
-		%pnl_chat
+		%pnl_welcome
 	]
 	setup_mouse_passthrough()
 	load_settings()
 	load_known_user()
-	get_tree().root.content_scale_factor = RSSettings.app_scale
 	start_everything()
 
 
-func launch_game(val: bool):
-	if val: %game.show()
-	else: %game.hide()
+func check_settings() -> bool:
+	if !RSSettings.rs_data_folder:
+		l.e("Please go to the Project Settings and set the Ridiculous Stream Data folder first!\nAborting...")
+		return false
+	
+	return true
 
 
 func setup_mouse_passthrough():
@@ -59,22 +71,20 @@ func setup_mouse_passthrough():
 	ui_elements.append(%split_chat)
 	for control: Control in ui_elements:
 		control.add_to_group("UI")
-	
 	mouse_tracker.mouse_track_updated.connect(mouse_pass.SetClickThrough)
-	mouse_tracker.start(self)
+	mouse_tracker.start()
 	mouse_pass.SetClickThrough(true)
-	debug_view.start(self)
+	debug_view.start()
 
 
 func get_all_control_nodes(node_to_search: Node, found: Array[Control] = []) -> Array[Control]:
 	for child in node_to_search.get_children():
 		var is_blocking := false
-		if child is Window:
-			continue
 		if child is Control:
 			if child.mouse_filter == MOUSE_FILTER_STOP:
 				found.append(child)
 				is_blocking = true
+		# if the current node doesn't blocks the mouse, search children recursive
 		if child.get_child_count() > 0 and not is_blocking:
 			var new_found_nodes = get_all_control_nodes(child, found)
 			found.append_array(new_found_nodes)
@@ -82,22 +92,21 @@ func get_all_control_nodes(node_to_search: Node, found: Array[Control] = []) -> 
 
 
 func start_everything():
-	loader.start(self)
-	twitcher.start(self)
-	custom.start(self)
-	vetting.start(self)
-	shoutout_mng.start(self)
-	no_obs_ws.start(self)
-	physic_scene.start(self)
-	display.start(self)
-	btn_floating_menu.start(self)
-	pnl_notifications.start(self)
-	alert_scene.start(self)
+	twitcher.start()
+	custom.start()
+	vetting.start()
+	shoutout_mng.start()
+	no_obs_ws.start()
+	btn_floating_menu.start()
+	physic_scene.start()
+	display.start()
+	pnl_notifications.start()
+	alert_scene.start()
 	
 	
 	for pnl: Control in pnls:
 		if pnl.has_method("start"):
-			pnl.start(self)
+			pnl.start()
 
 
 
@@ -133,18 +142,21 @@ func user_from_username(username: String) -> RSTwitchUser:
 
 # ========================== LOAD/SAVE CONFIG ==================================
 func load_settings():
-	print("Loading settings from RSMain")
-	loader.load_settings()
-	
+	l.i("Loading settings...")
+	settings = loader.load_settings()
+
+
 func save_settings():
-	print("Saving settings from RSMain")
+	l.i("Saving settings...")
 	loader.save_settings()
 
 
 func quit():
+	l.i("Exiting...")
 	save_settings()
 	save_known_users()
 	get_tree().quit()
+
 
 # =============================== UTILS =======================================
 func play_sfx(which: String) -> void:

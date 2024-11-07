@@ -15,9 +15,9 @@ general/logging/enabled=31
 [application]
 
 config/name="Ridiculous Stream"
-run/main_scene="res://rs_main.tscn"
+run/main_scene="res://empty.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://icon.png"
 
 [audio]
 
@@ -25,10 +25,17 @@ general/text_to_speech=true
 
 [autoload]
 
-HttpClientManager="*res://addons/twitcher/communication/http_client_manager.gd"
+HttpClientManager="*res://lib/twitcher/communication/http_client_manager.gd"
+RS="*res://rs_main.tscn"
+
+[debug]
+
+gdscript/warnings/unused_signal=0
 
 [display]
 
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 window/size/always_on_top=true
 window/size/transparent=true
 window/per_pixel_transparency/allowed=true
@@ -39,7 +46,7 @@ project/assembly_name="Ridiculous Stream"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/twitcher/plugin.cfg")
+enabled=PackedStringArray()
 
 [physics]
 
@@ -52,6 +59,14 @@ enabled=PackedStringArray("res://addons/twitcher/plugin.cfg")
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 viewport/transparent_background=true
+
+[ridiculous _stream]
+
+general/data_folder="C:/Users/Dario/AppData/Roaming/RidiculousStream"
+
+[ridiculous_stream]
+
+general/data_folder="C:/Users/Dario/AppData/Roaming/RidiculousStream"
 
 [twitch]
 

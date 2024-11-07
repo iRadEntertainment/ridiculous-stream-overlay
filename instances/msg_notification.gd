@@ -7,12 +7,11 @@ extends Control
 @onready var part_3: GPUParticles2D = $part_3
 @onready var part_4: GPUParticles2D = $part_4
 
-var main : RSMain
+
 var duration = 1.5
 var username : String = ""
 
-func start(_main: RSMain, _username: String) -> void:
-	main = _main
+func start(_username: String) -> void:
 	username = _username
 	part_2.position.x = size.x
 	part_3.position = size
@@ -21,12 +20,12 @@ func start(_main: RSMain, _username: String) -> void:
 	var hashed = hash(username)
 	var assigned_num := (hashed % 11) as int
 	var sound_path = "sfx_notification_%02d.ogg"%[assigned_num]
-	if username in main.known_users.keys():
-		var user := main.known_users[username] as RSTwitchUser
+	if username in RS.known_users.keys():
+		var user := RS.known_users[username] as RSTwitchUser
 		if !user.custom_notification_sfx.is_empty():
 			sound_path = user.custom_notification_sfx
 	
-	$sfx.stream = main.loader.load_sfx_from_sfx_folder(sound_path)
+	$sfx.stream = RS.loader.load_sfx_from_sfx_folder(sound_path)
 	$sfx.play()
 	for part: GPUParticles2D in [part_1, part_2, part_3, part_4]:
 		part.emitting = true

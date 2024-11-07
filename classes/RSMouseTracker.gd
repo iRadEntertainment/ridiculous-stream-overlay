@@ -1,14 +1,13 @@
 extends Node
 class_name RSMouseTracker
 
-var main: RSMain
 
 var m_pos: Vector2
 var is_active := true:
 	set(val):
 		is_active = val
 		set_process(is_active)
-		main.mouse_pass.SetClickThrough(false)
+		RS.mouse_pass.SetClickThrough(false)
 
 var is_gui_active := false
 var is_on_a_control_node := false
@@ -22,14 +21,11 @@ signal mouse_track_updated(is_passthrough)
 func _ready() -> void:
 	set_process(false)
 
-func start(_main : RSMain):
-	main = _main
+func start():
 	set_process(true)
 
 func _process(_d) -> void:
-	if not main:
-		return
-	m_pos = main.get_global_mouse_position()
+	m_pos = RS.get_global_mouse_position()
 	is_on_title_bar = is_m_pos_in_title(m_pos)
 	is_on_window_decoration = is_m_pos_on_window_decoration(m_pos)
 	is_on_a_window = is_m_pos_in_window(m_pos)
@@ -43,12 +39,12 @@ func _process(_d) -> void:
 		mouse_track_updated.emit(!is_gui_active)
 
 func is_pixel_transparent(pos: Vector2) -> bool:
-	if !main.get_rect().has_point(pos):
+	if !RS.get_rect().has_point(pos):
 		return true
 	return !get_window().get_texture().get_image().get_pixelv(pos).a > 0
 
 func is_m_pos_in_control_nodes(pos: Vector2) -> bool:
-	if !main.get_rect().has_point(pos):
+	if !RS.get_rect().has_point(pos):
 		return false
 	for ctr: Control in get_tree().get_nodes_in_group("UI"):
 		if !ctr.is_visible_in_tree(): continue
@@ -78,7 +74,7 @@ func is_m_pos_in_control_nodes(pos: Vector2) -> bool:
 
 
 func is_m_pos_in_window(pos: Vector2) -> bool:
-	if !main.get_rect().has_point(pos):
+	if !RS.get_rect().has_point(pos):
 		return false
 	for window: Window in get_tree().get_nodes_in_group("UIWindows"):
 		if not window.visible: continue
@@ -93,7 +89,7 @@ func is_m_pos_in_title(pos: Vector2) -> bool:
 		return false
 	var title_size: Vector2i = DisplayServer.window_get_title_size("App")
 	@warning_ignore("narrowing_conversion")
-	title_size = Vector2i(main.get_rect().size.x, 30)
+	title_size = Vector2i(RS.get_rect().size.x, 30)
 	var title_rect := Rect2i(Vector2i(0, -title_size.y), title_size)
 	
 	return title_rect.has_point(Vector2i(pos))
@@ -101,7 +97,7 @@ func is_m_pos_in_title(pos: Vector2) -> bool:
 func is_m_pos_on_window_decoration(pos: Vector2) -> bool:
 	if DisplayServer.window_get_flag(DisplayServer.WINDOW_FLAG_BORDERLESS):
 		return false
-	var window_rect := Rect2i(main.get_rect())
+	var window_rect := Rect2i(RS.get_rect())
 	var title_size: Vector2i = DisplayServer.window_get_title_size("App")
 	var decorations_offset := Vector2i.ONE * 8
 	

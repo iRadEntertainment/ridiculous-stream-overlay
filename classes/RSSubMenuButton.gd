@@ -5,13 +5,13 @@ class_name RSSubMenuButton
 @export var expand_on_hover := true:
 	set(val):
 		expand_on_hover = val
-		if is_node_ready():
-			if val:
-				if not mouse_entered.is_connected(expand_menu):
-					mouse_entered.connect(expand_menu.bind(true))
-			else:
-				if mouse_entered.is_connected(expand_menu):
-					mouse_entered.disconnect(expand_menu)
+		if !is_node_ready(): await ready
+		if val:
+			if not mouse_entered.is_connected(expand_menu):
+				mouse_entered.connect(expand_menu.bind(true))
+		else:
+			if mouse_entered.is_connected(expand_menu):
+				mouse_entered.disconnect(expand_menu)
 @export var is_radial := false
 @export_range (0.0, 64.0, 0.5) var offset_gap : float = 8:
 	set(val):
@@ -27,7 +27,6 @@ class_name RSSubMenuButton
 @export_range (0.0, 0.1, 0.001) var anim_delay = 0.03
 const MIN_SIZE = Vector2(48, 48)
 
-var main: RSMain
 var main_menu_button: RSSubMenuButton
 var tw: Tween
 
@@ -50,11 +49,8 @@ signal btn_child_expanded(btn_child: RSSubMenuButton, is_open: bool)
 signal properly_pressed
 
 
-func start(_main: RSMain, _main_menu_button: RSSubMenuButton = null) -> void:
-	main = _main
+func start(_main_menu_button: RSSubMenuButton = null) -> void:
 	main_menu_button = _main_menu_button
-	#tw = create_tween()
-	#tw.bind_node(self)
 	
 	gui_input.connect(_on_gui_input)
 	properly_pressed.connect(toggle_menu)
@@ -72,7 +68,7 @@ func start(_main: RSMain, _main_menu_button: RSSubMenuButton = null) -> void:
 	
 	for btn in all_btns:
 		if btn is RSSubMenuButton:
-			btn.start(main, main_menu_button)
+			btn.start(main_menu_button)
 			btn.btn_child_expanded.connect(_on_btn_child_expanded)
 		btn.focus_mode = Control.FOCUS_NONE
 		btn.custom_minimum_size = MIN_SIZE
@@ -90,6 +86,8 @@ func _on_btn_child_expanded(btn_expanded: RSSubMenuButton, opened: bool) -> void
 		#expand_menu(true, btn)
 
 func expand_menu(value: bool, except : RSSubMenuButton = null) -> void:
+	if !is_node_ready(): await ready
+	if all_btns.is_empty(): return
 	is_open = value
 	if is_sub_menu:
 		var parent_center : Vector2 = parent.size/2

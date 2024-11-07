@@ -4,25 +4,23 @@ extends PanelContainer
 const reward_entry_pack = preload("res://instances/reward_entry.tscn")
 @onready var list = %list
 
-var main : RSMain
 
-func start(_main : RSMain):
-	main = _main
+func start():
+	pass
 
 func update_list():
 	for child in list.get_children():
 		child.queue_free()
 	
-	var res := await main.twitcher.api.get_custom_reward([], false, str(TwitchSetting.broadcaster_id))
+	var res: TwitchGetCustomRewardResponse = await RS.twitcher.api.get_custom_reward([], false, str(RS.settings.broadcaster_id))
 	for reward : TwitchCustomReward in res.data:
 		var entry = reward_entry_pack.instantiate()
 		entry.reward = reward
-		entry.main = main
 		if reward.image:
-			entry.icon_img = await main.loader.load_texture_from_url(reward.image.url_4x, false)
+			entry.icon_img = await RS.loader.load_texture_from_url(reward.image.url_4x, false)
 		list.add_child(entry)
 		entry.owner = owner
-		entry.start(main)
+		entry.start()
 
 
 func _on_btn_update_pressed():

@@ -1,13 +1,12 @@
 
 extends PanelContainer
 
-var main : RSMain
 
 @onready var btn_cont = %btn_cont
 
 
-func start(_main : RSMain):
-	main = _main
+func start():
+	pass
 
 
 func _on_btn_expand_pressed():
@@ -15,6 +14,6 @@ func _on_btn_expand_pressed():
 
 
 func _on_btn_zero_g_pressed():
-	main.custom.zero_g()
+	RS.custom.zero_g()
 func _on_btn_laser_pressed():
-	main.custom.laser()
+	RS.custom.laser()

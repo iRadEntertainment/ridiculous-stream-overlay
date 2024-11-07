@@ -14,7 +14,7 @@ class_name RSPhysicsScene
 
 const SHARD_BODIES_CAP = 1200
 
-var main : RSMain
+
 var laser_scene
 
 var default_gravity: float
@@ -36,8 +36,7 @@ func _ready() -> void:
 	default_gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
-func start(_main : RSMain):
-	main = _main
+func start():
 	%fire.hide()
 
 
@@ -120,14 +119,14 @@ func add_image_bodies(params : RSBeansParam, pos = null, linear_velocity = null,
 	var texs : Array[Texture2D] = []
 	for tex_path in params.img_paths:
 		if tex_path.is_empty(): continue
-		texs.append(main.loader.load_texture_from_data_folder(tex_path))
+		texs.append(RS.loader.load_texture_from_data_folder(tex_path))
 	
 	var sfx_streams : Array[AudioStream] = []
 	for sfx_path in params.sfx_paths:
 		if sfx_path.is_empty(): continue
-		sfx_streams.append(main.loader.load_sfx_from_sfx_folder(sfx_path))
+		sfx_streams.append(RS.loader.load_sfx_from_sfx_folder(sfx_path))
 	
-	var num = range(params.spawn_range[0], params.spawn_range[1]+1).pick_random()
+	var num = range(params.spawn_count_min, params.spawn_count_max+1).pick_random()
 	for i in num:
 		if obj_count > SHARD_BODIES_CAP: continue
 		var tex = texs.pick_random()
@@ -155,7 +154,7 @@ func add_image_bodies(params : RSBeansParam, pos = null, linear_velocity = null,
 
 func add_laser(angle: float) -> void:
 	if not laser_scene:
-		laser_scene = main.globals.laser_scene_pack.instantiate()
+		laser_scene = RS.globals.laser_scene_pack.instantiate()
 		laser_scene.position = size/2
 		add_child(laser_scene)
 		laser_scene.play(angle)
@@ -294,7 +293,7 @@ func unpin_bodies():
 
 
 func spawn_grenade():
-	var granade := main.globals.granade_pack.instantiate()
+	var granade = RS.globals.granade_pack.instantiate()
 	_add_rigid(granade, Vector2(), Vector2(), randf_range(-5.0, 5.0), true)
 
 
