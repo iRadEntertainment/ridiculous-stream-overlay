@@ -2,7 +2,6 @@
 extends RigidBody2D
 class_name RSImageToRigid
 
-var main : RSMain
 var physics_scene : RSPhysicsScene
 
 var sprite_scale := Vector2(1,1)
@@ -61,7 +60,7 @@ func set_nodes():
 	var dim = tex.get_image().get_size()
 	sprite = Sprite2D.new()
 	sprite.texture = tex
-	sprite.scale = params.scale
+	sprite.scale = Vector2.ONE * params.scale
 	add_child(sprite)
 	coll = CollisionShape2D.new()
 	coll.visible = false
@@ -69,9 +68,9 @@ func set_nodes():
 	coll.shape = shape
 	if dim.x > dim.y:
 		coll.rotation = PI/2
-		shape.height = dim.x * params.scale.x * 0.9
-		shape.radius = dim.y/2.0 * params.scale.y * 0.9
+		shape.height = dim.x * params.scale * 0.9
+		shape.radius = dim.y/2.0 * params.scale * 0.9
 	else:
-		shape.height = dim.y * params.scale.y * 0.9
-		shape.radius = dim.x/2.0 * params.scale.x * 0.9
+		shape.height = dim.y * params.scale * 0.9
+		shape.radius = dim.x/2.0 * params.scale * 0.9
 	add_child(coll)

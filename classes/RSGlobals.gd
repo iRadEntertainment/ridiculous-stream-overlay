@@ -1,17 +1,6 @@
 extends RefCounted
 class_name RSGlobals
 
-# TODO: these need to be configurable
-const IRADDEV_CLIENT_ID = "t0nkdk4ssr5mhvyj2939da8y4gngrp"
-const rs_config_folder = "RidiculousStream/"
-
-const local_res_folder = "res://local_res/"
-const rs_settings_file_name = "settings.json"
-const rs_vetting_file_name = "user_vetting_list.json"
-const rs_log_folder = "logs/"
-const rs_user_folder = "users/"
-const rs_obj_folder = "obj/"
-const rs_sfx_folder = "sfx/"
 
 const pnl_settings_pack = preload ("res://instances/pnl_settings.tscn")
 const param_inspector_pack = preload ("res://instances/param_inspector.tscn")
@@ -26,39 +15,30 @@ const granade_pack = preload ("res://instances/granade.tscn")
 
 const DEFAULT_RIGID_LABEL_COLOR = "#29c3a6"
 
-const params_can = {
-	"img_paths": ["can.png"],
-	"spawn_range": [3, 5],
-	"sfx_paths": ["sfx_can_01.ogg", "sfx_can_02.ogg", "sfx_can_03.ogg", "sfx_can_04.ogg"],
-	"sfx_volume": - 12.0,
-	"is_pickable": true,
-	"is_poly_fracture": false,
-	"is_destroy": true,
-	"scale": [0.3, 0.3],
-	"coll_layer": 4,
-	"coll_mask": 5,
-	"destroy_shard_params": {
+const PARAMS_CANS = {
+		"img_paths": ["can.png"],
+		"sfx_paths": ["sfx_can_01.ogg", "sfx_can_02.ogg", "sfx_can_03.ogg", "sfx_can_04.ogg"],
+		"sfx_volume": - 12.0,
+		"spawn_count_min": 3,
+		"spawn_count_max": 5,
+		"is_pickable": true,
+		"is_poly_fracture": false,
+		"is_destroy": true,
+		"scale": 0.3,
+		"coll_layer": 4,
+		"coll_mask": 5,
+		"destroy_shard_params": PARAM_BEANS
+	}
+const PARAM_BEANS = {
 		"img_paths": ["bean_01.png", "bean_02.png"],
-		"spawn_range": [12, 17],
 		"sfx_paths": [],
 		"sfx_volume": 0.0,
+		"spawn_count_min": 7,
+		"spawn_count_max": 14,
 		"is_pickable": false,
 		"is_poly_fracture": false,
 		"is_destroy": false,
-		"scale": [0.5, 0.5],
+		"scale": 0.5,
 		"coll_layer": 2,
 		"coll_mask": 3,
-		"destroy_shard_params": null
-	}}
-const param_beans = {
-	"img_paths": ["bean_01.png", "bean_02.png"],
-	"spawn_range": [7, 14],
-	"sfx_paths": [],
-	"sfx_volume": 0.0,
-	"is_pickable": false,
-	"is_poly_fracture": false,
-	"is_destroy": false,
-	"scale": [0.5, 0.5],
-	"coll_layer": 2,
-	"coll_mask": 3,
-	"destroy_shard_params": {}}
+	}

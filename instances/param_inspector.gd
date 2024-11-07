@@ -24,11 +24,10 @@ func populate_fields():
 	%ck_is_destroy.button_pressed = params.is_destroy
 	%ck_is_fracture.button_pressed = params.is_poly_fracture
 	
-	%sb_scale_x.value = params.scale.x
-	%sb_scale_y.value = params.scale.y
+	%sb_scale.value = params.scale
 	
-	%sb_spawn_min.value = params.spawn_range[0]
-	%sb_spawn_max.value = params.spawn_range[1]
+	%sb_spawn_min.value = params.spawn_count_min
+	%sb_spawn_max.value = params.spawn_count_max
 	%sb_coll_layer.value = params.coll_layer
 	%sb_coll_mask.value = params.coll_mask
 	
@@ -59,7 +58,8 @@ func params_from_fields() -> RSBeansParam:
 	new_params.is_poly_fracture = %ck_is_fracture.button_pressed
 	
 	new_params.scale = Vector2(%sb_scale_x.value, %sb_scale_y.value)
-	new_params.spawn_range = [%sb_spawn_min.value as int, %sb_spawn_max.value as int]
+	new_params.spawn_count_min = %sb_spawn_min.value as int
+	new_params.spawn_count_max = %sb_spawn_max.value as int
 	new_params.coll_layer = %sb_coll_layer.value as int
 	new_params.coll_mask = %sb_coll_mask.value as int
 	
@@ -101,11 +101,11 @@ func set_item_opt_btn_from_string(opt_btn : OptionButton, value : String):
 
 
 func new_tex_opt_btn() -> OptionButton:
-	var tex_folders : Array[String] = [RSLoader.get_obj_path(), RSGlobals.local_res_folder]
-	return RSLoader.opt_btn_from_files_in_folder(tex_folders, ["png", "jpg", "jpeg", "btm"])
+	var tex_folders : Array[String] = [RS.settings.get_obj_path(), RSSettings.LOCAL_RES_FOLDER]
+	return RSUtl.opt_btn_from_files_in_folder(tex_folders, ["png", "jpg", "jpeg", "btm"])
 func new_sfx_opt_btn() -> OptionButton:
-	var sfx_folders : Array[String] = [RSLoader.get_sfx_path(), RSGlobals.local_res_folder]
-	return RSLoader.opt_btn_from_files_in_folder(sfx_folders, ["ogg"])
+	var sfx_folders : Array[String] = [RS.settings.get_sfx_path(), RSSettings.LOCAL_RES_FOLDER]
+	return RSUtl.opt_btn_from_files_in_folder(sfx_folders, ["ogg"])
 
 func _on_btn_add_tex_pressed():
 	var btn_opt := new_tex_opt_btn()

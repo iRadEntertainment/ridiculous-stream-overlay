@@ -157,10 +157,10 @@ columns = 4
 [node name="lb" type="Label" parent="vb/hb3/grid"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "scale.x"
+text = "scale"
 horizontal_alignment = 2
 
-[node name="sb_scale_x" type="SpinBox" parent="vb/hb3/grid"]
+[node name="sb_scale" type="SpinBox" parent="vb/hb3/grid"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -177,19 +177,6 @@ horizontal_alignment = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-select_all_on_focus = true
-
-[node name="lb2" type="Label" parent="vb/hb3/grid"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "scale.y"
-horizontal_alignment = 2
-
-[node name="sb_scale_y" type="SpinBox" parent="vb/hb3/grid"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-step = 0.01
 select_all_on_focus = true
 
 [node name="lb4" type="Label" parent="vb/hb3/grid"]
