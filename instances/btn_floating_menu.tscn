@@ -1,14 +1,15 @@
-[gd_scene load_steps=29 format=3 uid="uid://cdgelqh5th1pl"]
+[gd_scene load_steps=30 format=3 uid="uid://cdgelqh5th1pl"]
 
 [ext_resource type="Theme" uid="uid://byc6dqa0se0lp" path="res://ui/floating_menu.theme" id="1_kl6sw"]
 [ext_resource type="Script" path="res://instances/btn_floating_menu.gd" id="1_osqlv"]
 [ext_resource type="Texture2D" uid="uid://brq45fxn0wqha" path="res://ui/sprites/menu.png" id="2_y16f1"]
 [ext_resource type="Texture2D" uid="uid://x1kro6q7tj46" path="res://ui/gravity.png" id="4_bia5b"]
 [ext_resource type="Texture2D" uid="uid://chau12dlx6shv" path="res://ui/mic_unmute.png" id="4_xbf4m"]
+[ext_resource type="Texture2D" uid="uid://bgqpuhpogg36x" path="res://ui/pixelate.png" id="5_dltuo"]
 [ext_resource type="Texture2D" uid="uid://ca6xdmc1afmql" path="res://ui/bootstrap_icons/x.svg" id="5_tfiwm"]
 [ext_resource type="Texture2D" uid="uid://cg84ubdpyr75" path="res://ui/beans.png" id="5_xcqun"]
 [ext_resource type="Texture2D" uid="uid://dtm1fmijn2676" path="res://ui/laser.png" id="6_0cxqy"]
-[ext_resource type="Texture2D" uid="uid://ceh17coxgqqnr" path="res://ui/icon.png" id="6_3t7q5"]
+[ext_resource type="Texture2D" uid="uid://ceh17coxgqqnr" path="res://icon.png" id="6_3t7q5"]
 [ext_resource type="Texture2D" uid="uid://hqibc1sfinhq" path="res://ui/bootstrap_icons/stars.svg" id="6_jsivt"]
 [ext_resource type="Texture2D" uid="uid://d1aln31is10do" path="res://ui/nuke.png" id="7_dobih"]
 [ext_resource type="Texture2D" uid="uid://dr3a3o2jhf2if" path="res://ui/bootstrap_icons/window.svg" id="7_y65x8"]
@@ -87,7 +88,6 @@ anim_delay = 0.02
 
 [node name="indicators" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -105,6 +105,17 @@ offset_top = 48.0
 offset_right = 32.0
 offset_bottom = 64.0
 texture = ExtResource("19_3caay")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ico_pixelate" type="TextureRect" parent="indicators"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+offset_top = 48.0
+offset_right = 16.0
+offset_bottom = 64.0
+texture = ExtResource("5_dltuo")
 expand_mode = 1
 stretch_mode = 5
 
@@ -270,6 +281,14 @@ offset_bottom = 72.0
 icon = ExtResource("16_2b4wq")
 icon_alignment = 1
 
+[node name="btn_pixelate" type="Button" parent="btn_obs"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_right = 72.0
+offset_bottom = 72.0
+icon = ExtResource("5_dltuo")
+icon_alignment = 1
+
 [node name="btn_qol" type="Button" parent="."]
 visible = false
 layout_mode = 0
@@ -345,6 +364,7 @@ icon_alignment = 1
 [connection signal="pressed" from="btn_obs/btn_cig" to="." method="_on_btn_cig_pressed"]
 [connection signal="pressed" from="btn_obs/btn_mic" to="." method="_on_btn_mic_pressed"]
 [connection signal="pressed" from="btn_obs/btn_brave_sound" to="." method="_on_btn_brave_sound_pressed"]
+[connection signal="pressed" from="btn_obs/btn_pixelate" to="." method="_on_btn_pixelate_pressed"]
 [connection signal="pressed" from="btn_qol/btn_spam_form" to="." method="_on_btn_spam_form_pressed"]
 [connection signal="pressed" from="btn_qol/btn_test" to="." method="_on_btn_test_pressed"]
 [connection signal="pressed" from="btn_display/btn_maximize" to="." method="_on_btn_maximize_pressed"]

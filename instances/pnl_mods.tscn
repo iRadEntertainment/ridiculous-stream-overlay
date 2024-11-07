@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4lkycruly2ye"]
+
+[ext_resource type="Texture2D" uid="uid://h1by403q5s8f" path="res://ui/sword.png" id="1_e4eer"]
+[ext_resource type="Texture2D" uid="uid://6weky3a0q5r5" path="res://ui/bootstrap_icons/person-heart.svg" id="2_avnvt"]
+
+[node name="pnl_mods" type="PanelContainer"]
+
+[node name="hb" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ico_mod" type="TextureRect" parent="hb"]
+custom_minimum_size = Vector2(22, 22)
+layout_mode = 2
+texture = ExtResource("1_e4eer")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="lb_mod_stats" type="Label" parent="hb"]
+layout_mode = 2
+text = "500"
+
+[node name="sep" type="VSeparator" parent="hb"]
+layout_mode = 2
+
+[node name="ico_users" type="TextureRect" parent="hb"]
+custom_minimum_size = Vector2(22, 22)
+layout_mode = 2
+texture = ExtResource("2_avnvt")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="lb_foll_stats" type="Label" parent="hb"]
+layout_mode = 2
+text = "700"
+
+[node name="lb_mod_ratio" type="Label" parent="hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "75.05%"
+horizontal_alignment = 2
+
+[node name="btn_refresh_mods" type="Button" parent="."]
+layout_mode = 2
+focus_mode = 0
+flat = true

@@ -1,5 +1,6 @@
-[gd_scene load_steps=19 format=3 uid="uid://d345j5een73bf"]
+[gd_scene load_steps=21 format=3 uid="uid://d345j5een73bf"]
 
+[ext_resource type="Theme" uid="uid://b7xrw7crccrr7" path="res://ui/ridiculous_stream_main.theme" id="1_b2vbf"]
 [ext_resource type="Script" path="res://RSMain.gd" id="1_y2jdm"]
 [ext_resource type="Script" path="res://classes/RSMousePass.cs" id="2_4s2fq"]
 [ext_resource type="Script" path="res://classes/RSMouseTracker.gd" id="2_xjlao"]
@@ -8,7 +9,7 @@
 [ext_resource type="Script" path="res://classes/RSVetting.gd" id="5_joslx"]
 [ext_resource type="Script" path="res://classes/RSTwitcher.gd" id="5_wye2t"]
 [ext_resource type="PackedScene" uid="uid://cdgelqh5th1pl" path="res://instances/btn_floating_menu.tscn" id="5_xf57p"]
-[ext_resource type="Script" path="res://libraries/no-obs-ws/NoOBSWS.gd" id="7_oy4mo"]
+[ext_resource type="Script" path="res://lib/no-obs-ws/NoOBSWS.gd" id="6_8c5hc"]
 [ext_resource type="Script" path="res://classes/RSShoutoutMng.gd" id="8_ex7ik"]
 [ext_resource type="Script" path="res://classes/RSLoader.gd" id="8_fol3s"]
 [ext_resource type="Script" path="res://classes/RSCustom.gd" id="9_by474"]
@@ -16,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://dseoyhiylvwnu" path="res://instances/pnl_settings.tscn" id="15_8wfva"]
 [ext_resource type="PackedScene" uid="uid://jchfk7d78ss5" path="res://instances/pnl_chat.tscn" id="16_ege2h"]
 [ext_resource type="PackedScene" path="res://instances/pnl_notifications.tscn" id="17_sodyi"]
+[ext_resource type="PackedScene" uid="uid://cokv6nhefofwl" path="res://instances/pnl_welcome.tscn" id="19_3rcuc"]
 [ext_resource type="PackedScene" path="res://instances/alert_overlay.tscn" id="19_gj13v"]
 [ext_resource type="AudioStream" uid="uid://cidanglkg6lrp" path="res://local_res/sfx_quack_01.ogg" id="21_637v1"]
 
@@ -27,6 +29,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("1_b2vbf")
 script = ExtResource("1_y2jdm")
 metadata/_edit_lock_ = true
 
@@ -50,7 +53,7 @@ script = ExtResource("5_wye2t")
 
 [node name="NoOBSWS" type="Node" parent="Modules"]
 unique_name_in_owner = true
-script = ExtResource("7_oy4mo")
+script = ExtResource("6_8c5hc")
 
 [node name="RSShoutoutMng" type="Node" parent="Modules"]
 unique_name_in_owner = true
@@ -59,9 +62,6 @@ script = ExtResource("8_ex7ik")
 [node name="RSCustom" type="Node" parent="Modules"]
 unique_name_in_owner = true
 script = ExtResource("9_by474")
-
-[node name="RSCoPilot" type="Node" parent="Modules"]
-unique_name_in_owner = true
 
 [node name="RSVetting" type="Node" parent="Modules"]
 unique_name_in_owner = true
@@ -91,6 +91,7 @@ mouse_filter = 2
 [node name="empty" type="Control" parent="split_chat"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
 mouse_filter = 2
 
 [node name="pnl_settings" parent="split_chat/empty" instance=ExtResource("15_8wfva")]
@@ -100,7 +101,11 @@ layout_mode = 1
 
 [node name="pnl_chat" parent="split_chat" instance=ExtResource("16_ege2h")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
 
 [node name="debug_view" parent="." instance=ExtResource("5_j4imi")]
 unique_name_in_owner = true
@@ -129,6 +134,11 @@ grow_horizontal = 0
 [node name="physics_scene" parent="." instance=ExtResource("3_d3yde")]
 unique_name_in_owner = true
 layout_mode = 1
+
+[node name="pnl_welcome" parent="." instance=ExtResource("19_3rcuc")]
+unique_name_in_owner = true
+layout_mode = 1
+metadata/_edit_lock_ = true
 
 [node name="btn_floating_menu" parent="." instance=ExtResource("5_xf57p")]
 unique_name_in_owner = true

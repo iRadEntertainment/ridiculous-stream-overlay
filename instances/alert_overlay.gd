@@ -9,7 +9,6 @@ const PRE = "[color=%s][shake]" % ACCENT_COLOUR
 const SUF = "[/shake][/color]"
 const DURATION = 10.0
 
-var main : RSMain
 
 @onready var sfx_alert = %sfx_alert
 @onready var vb_cnt: VBoxContainer = %vb_cnt
@@ -18,8 +17,7 @@ var main : RSMain
 func _ready():
 	set_process(false)
 
-func start(_main : RSMain):
-	main = _main
+func start():
 	hide()
 	vb_cnt.child_entered_tree.connect(func(_n): visible = true)
 	vb_cnt.child_exiting_tree.connect(func(_n): visible = vb_cnt.get_child_count() > 1)
@@ -32,7 +30,7 @@ func initialize_stop_streaming(user: RSTwitchUser, message: String) -> void:
 		{"user": user.display_name,
 		"message": message})
 	#var callable : Callable = (func(): print("Shut down activated") )
-	var callable : Callable = main.custom.stop_streaming
+	var callable : Callable = RS.custom.stop_streaming
 	instantiate_new_bar(bbcode, callable)
 
 func initialize_raid(user: RSTwitchUser, to_user : RSTwitchUser, message: String = "") -> void:
@@ -43,11 +41,11 @@ func initialize_raid(user: RSTwitchUser, to_user : RSTwitchUser, message: String
 		"to_user": to_user.display_name,
 		"message": message,
 		})
-	var callable : Callable = main.twitcher.raid.bind(str(to_user.user_id))
+	var callable : Callable = RS.twitcher.raid.bind(str(to_user.user_id))
 	instantiate_new_bar(bbcode, callable)
 
 func wheel_of_random_raid(user: RSTwitchUser, message: String = "") -> void:
-	var online := await main.twitcher.get_users_online(main.known_users.keys())
+	var online: PackedStringArray = await RS.twitcher.get_users_online(RS.known_users.keys())
 	if online.is_empty():
 		return
 	var wheel := WHEEL_PACK.instantiate() as RSWheelOfRandom
@@ -55,7 +53,7 @@ func wheel_of_random_raid(user: RSTwitchUser, message: String = "") -> void:
 	wheel.start(online)
 	wheel.winner_selected.connect(raid_selected_username.bind(user, message))
 func raid_selected_username(to_username: String, from_user: RSTwitchUser, message: String = "") -> void:
-	var user_to_raid := await main.user_from_username(to_username)
+	var user_to_raid: RSTwitchUser = await RS.user_from_username(to_username)
 	initialize_raid(from_user, user_to_raid, message)
 
 

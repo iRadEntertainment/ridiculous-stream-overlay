@@ -1,14 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://jchfk7d78ss5"]
+[gd_scene load_steps=6 format=3 uid="uid://jchfk7d78ss5"]
 
 [ext_resource type="Theme" uid="uid://b7xrw7crccrr7" path="res://ui/ridiculous_stream_main.theme" id="1_omsf0"]
 [ext_resource type="Script" path="res://instances/pnl_chat.gd" id="1_x2vuy"]
 [ext_resource type="PackedScene" uid="uid://csqa2q3atku2i" path="res://instances/pnl_connect.tscn" id="3_e1ino"]
 [ext_resource type="Texture2D" uid="uid://ca6xdmc1afmql" path="res://ui/bootstrap_icons/x.svg" id="3_i32xj"]
+[ext_resource type="PackedScene" uid="uid://d4lkycruly2ye" path="res://instances/pnl_mods.tscn" id="4_v34se"]
 
 [node name="pnl_chat" type="PanelContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 847.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_omsf0")
@@ -34,6 +36,9 @@ vertical_alignment = 1
 [node name="btn_close" type="Button" parent="vb/top/hb"]
 layout_mode = 2
 icon = ExtResource("3_i32xj")
+
+[node name="pnl_mods" parent="vb" instance=ExtResource("4_v34se")]
+layout_mode = 2
 
 [node name="lb_chat" type="RichTextLabel" parent="vb"]
 unique_name_in_owner = true

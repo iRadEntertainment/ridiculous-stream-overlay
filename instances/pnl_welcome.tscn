@@ -1,9 +1,128 @@
-[gd_scene format=3 uid="uid://cokv6nhefofwl"]
+[gd_scene load_steps=11 format=3 uid="uid://cokv6nhefofwl"]
 
-[node name="pnl_welcome" type="Control"]
-layout_mode = 3
+[ext_resource type="Script" path="res://instances/pnl_welcome.gd" id="1_m3h8h"]
+[ext_resource type="Theme" uid="uid://b7xrw7crccrr7" path="res://ui/ridiculous_stream_main.theme" id="1_rt1t7"]
+[ext_resource type="Texture2D" uid="uid://ceh17coxgqqnr" path="res://icon.png" id="3_dsk3q"]
+[ext_resource type="FontFile" uid="uid://bnjc0nr6cycue" path="res://ui/jetbrains_mono_ttf/JetBrainsMono-Light.ttf" id="3_oj2c7"]
+[ext_resource type="FontFile" uid="uid://cpd3hjqqwp4y8" path="res://ui/jetbrains_mono_ttf/JetBrainsMono-Italic.ttf" id="4_eotn6"]
+[ext_resource type="FontFile" uid="uid://durvh12yp7n7r" path="res://ui/jetbrains_mono_ttf/JetBrainsMono-BoldItalic.ttf" id="5_yrlak"]
+[ext_resource type="FontFile" uid="uid://d0nn8s6iks32j" path="res://ui/jetbrains_mono_ttf/JetBrainsMono-Bold.ttf" id="6_fyp0l"]
+[ext_resource type="PackedScene" path="res://instances/pnl_rs_setting.tscn" id="8_0wpee"]
+[ext_resource type="Texture2D" uid="uid://cybbfwulysr0r" path="res://ui/bootstrap_icons/arrow-left.png" id="9_y631q"]
+[ext_resource type="Texture2D" uid="uid://40umxxmmps88" path="res://ui/bootstrap_icons/arrow-right.png" id="10_n4pa4"]
+
+[node name="pnl_welcome" type="PanelContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_rt1t7")
+script = ExtResource("1_m3h8h")
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="title" type="Label" parent="vb"]
+layout_mode = 2
+text = "Welcome to Ridiculous Stream Overlay!"
+horizontal_alignment = 1
+
+[node name="hb" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="pnl_left" type="PanelContainer" parent="vb/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="vb_left" type="VBoxContainer" parent="vb/hb/pnl_left"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb_d1" type="RichTextLabel" parent="vb/hb/pnl_left/vb_left"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_oj2c7")
+theme_override_fonts/italics_font = ExtResource("4_eotn6")
+theme_override_fonts/bold_italics_font = ExtResource("5_yrlak")
+theme_override_fonts/bold_font = ExtResource("6_fyp0l")
+bbcode_enabled = true
+text = "[center]Ridiculous Stream (RS) is an overlay for Twitch streaming that can hook to Twitch [i]API, IRC and EventSub[/i].
+
+Powered by:
+[font_size=12]Twitcher (by Kani)
+NoOBSws (by TheYagich)
+Polyfracture (by Solobits)
+
+[font_size=12]The name is an homage to \"Ridiculous Coding\" by [b]Jotson[/b][/font_size]"
+fit_content = true
+
+[node name="beans" type="TextureRect" parent="vb/hb/pnl_left/vb_left"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("3_dsk3q")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="lb_d2" type="RichTextLabel" parent="vb/hb/pnl_left/vb_left"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_oj2c7")
+theme_override_fonts/italics_font = ExtResource("4_eotn6")
+theme_override_fonts/bold_italics_font = ExtResource("5_yrlak")
+theme_override_fonts/bold_font = ExtResource("6_fyp0l")
+bbcode_enabled = true
+text = "[center][i]bean art by [b]PracticalNPC[/b][/i]
+[font_size=13]RS developed by Dario \"[b]iRadDev[/b]\" De Vita"
+fit_content = true
+
+[node name="vb_right" type="VBoxContainer" parent="vb/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="tab" type="TabContainer" parent="vb/hb/vb_right"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+current_tab = 0
+tabs_visible = false
+
+[node name="cnt_setup" type="MarginContainer" parent="vb/hb/vb_right/tab"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/_tab_index = 0
+
+[node name="scroll" type="ScrollContainer" parent="vb/hb/vb_right/tab/cnt_setup"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="vb" type="VBoxContainer" parent="vb/hb/vb_right/tab/cnt_setup/scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="pnl_rs_settings" parent="vb/hb/vb_right/tab/cnt_setup/scroll/vb" instance=ExtResource("8_0wpee")]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="vb/hb/vb_right"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="btn_left" type="Button" parent="vb/hb/vb_right/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+icon = ExtResource("9_y631q")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_right" type="Button" parent="vb/hb/vb_right/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+icon = ExtResource("10_n4pa4")
+icon_alignment = 1
+expand_icon = true
