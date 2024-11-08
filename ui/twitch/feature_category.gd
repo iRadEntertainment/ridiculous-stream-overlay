@@ -185,11 +185,34 @@ func _on_feature_selection_changed(p_id: String, p_selected: bool) -> void:
 	if !p_selected and selected:
 		set_selected_no_signal(false)
 
+	var updated_selection: FeatureSelection
+	var missing_selection := false
+
 	_selections_by_id[p_id] = p_selected
+
 	for selection in selections:
 		if selection.feature_id != p_id: continue
 		selection.selected = p_selected
-		feature_category_selection_changed.emit([selection.duplicate()])
+		updated_selection = selection
+		break
+
+	if not updated_selection:
+		updated_selection = FeatureSelection.new()
+		updated_selection.feature_id = p_id
+		updated_selection.selected = p_selected
+		selections.append(updated_selection)
+
+	var updated_selections: Array[FeatureSelection] = [updated_selection]
+	feature_category_selection_changed.emit(updated_selections)
+
+	# Automatically fill the Select All checkbox if all items in category are selected
+	var all_selected := selections.size() == features.size()
+	for selection in selections:
+		if !all_selected: break
+		if selection.selected: continue
+		all_selected = false
+		break
+	set_selected_no_signal(all_selected)
 
 func set_selected_no_signal(p_selected: bool) -> void:
 	_selected = p_selected
