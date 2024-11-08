@@ -1,0 +1,746 @@
+[gd_scene load_steps=6 format=3 uid="uid://cmd2xe3ug7ldd"]
+
+[ext_resource type="PackedScene" uid="uid://cwg72p5gy7ib3" path="res://instances/btn_collapse.tscn" id="1_e3njb"]
+[ext_resource type="Script" path="res://instances/pnl_twitcher_settings.gd" id="1_vdak7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7wyye"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gtt40"]
+shadow_size = 10
+shadow_color = Color(0, 0, 0, 0.313726)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f6rw5"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.145098, 0.168627, 0.203922, 1)
+
+[node name="pnl_twitcher_settings" type="PanelContainer"]
+offset_right = 1801.0
+offset_bottom = 1604.0
+script = ExtResource("1_vdak7")
+do_populate = true
+metadata/_tab_index = 0
+
+[node name="scroll" type="ScrollContainer" parent="."]
+layout_mode = 2
+
+[node name="vb" type="VBoxContainer" parent="scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="lb_title" type="Label" parent="scroll/vb"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_7wyye")
+text = "Twitcher Settings"
+label_settings = SubResource("LabelSettings_gtt40")
+horizontal_alignment = 1
+
+[node name="description" type="RichTextLabel" parent="scroll/vb"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_f6rw5")
+text = "Just remember to describe to AnihanShard here what the hell is going on with those settings"
+fit_content = true
+
+[node name="lb1" parent="scroll/vb" node_paths=PackedStringArray("nodes_to_collapse") instance=ExtResource("1_e3njb")]
+layout_mode = 2
+text = "AUTH"
+nodes_to_collapse = [NodePath("../vb")]
+text_centered = true
+
+[node name="sep" type="HSeparator" parent="scroll/vb"]
+layout_mode = 2
+
+[node name="vb" type="VBoxContainer" parent="scroll/vb"]
+layout_mode = 2
+
+[node name="hb1" type="HBoxContainer" parent="scroll/vb/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="scroll/vb/vb/hb1"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+text = "Broadcaster ID"
+horizontal_alignment = 2
+
+[node name="ln_broadcaster_id" type="LineEdit" parent="scroll/vb/vb/hb1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "12345678"
+
+[node name="btn_" type="Button" parent="scroll/vb/vb/hb1"]
+layout_mode = 2
+text = "Get your Broadcaster ID"
+
+[node name="hb2" type="HBoxContainer" parent="scroll/vb/vb/hb1"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="scroll/vb/vb/hb1/hb2"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+text = "Client ID"
+horizontal_alignment = 2
+
+[node name="ln_client_id" type="LineEdit" parent="scroll/vb/vb/hb1/hb2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="btn_" type="Button" parent="scroll/vb/vb/hb1/hb2"]
+visible = false
+layout_mode = 2
+text = "Get your Broadcaster ID"
+
+[node name="hb3" type="HBoxContainer" parent="scroll/vb/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="scroll/vb/vb/hb3"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+text = "Client Secret"
+horizontal_alignment = 2
+
+[node name="ln_client_secret" type="LineEdit" parent="scroll/vb/vb/hb3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1564894"
+secret = true
+
+[node name="btn_" type="Button" parent="scroll/vb/vb/hb3"]
+visible = false
+layout_mode = 2
+text = "Get your Broadcaster ID"
+
+[node name="hb4" type="HBoxContainer" parent="scroll/vb/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="scroll/vb/vb/hb4"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+text = "Redirect URL"
+horizontal_alignment = 2
+
+[node name="ln_redirect_url" type="LineEdit" parent="scroll/vb/vb/hb4"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "http://localhost:7170"
+
+[node name="btn_" type="Button" parent="scroll/vb/vb/hb4"]
+visible = false
+layout_mode = 2
+text = "Get your Broadcaster ID"
+
+[node name="lb6" parent="scroll/vb" node_paths=PackedStringArray("nodes_to_collapse") instance=ExtResource("1_e3njb")]
+layout_mode = 2
+text = "SCOPES"
+nodes_to_collapse = [NodePath("../cnt_scopes")]
+text_centered = true
+
+[node name="sep2" type="HSeparator" parent="scroll/vb"]
+layout_mode = 2
+
+[node name="cnt_scopes" type="FlowContainer" parent="scroll/vb"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+vertical = true
+
+[node name="pnl_chat" type="PanelContainer" parent="scroll/vb/cnt_scopes"]
+layout_mode = 2
+
+[node name="vb_chat" type="VBoxContainer" parent="scroll/vb/cnt_scopes/pnl_chat"]
+layout_mode = 2
+
+[node name="lb_cat_title" type="Label" parent="scroll/vb/cnt_scopes/pnl_chat/vb_chat"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "chat"
+horizontal_alignment = 1
+
+[node name="@CheckBox@107712" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_chat/vb_chat"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "chat:read"
+
+[node name="@CheckBox@107713" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_chat/vb_chat"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "chat:edit"
+
+[node name="pnl_analytics" type="PanelContainer" parent="scroll/vb/cnt_scopes"]
+layout_mode = 2
+
+[node name="vb_analytics" type="VBoxContainer" parent="scroll/vb/cnt_scopes/pnl_analytics"]
+layout_mode = 2
+
+[node name="lb_cat_title" type="Label" parent="scroll/vb/cnt_scopes/pnl_analytics/vb_analytics"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "analytics"
+horizontal_alignment = 1
+
+[node name="@CheckBox@107715" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_analytics/vb_analytics"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "analytics:read:extensions"
+
+[node name="@CheckBox@107716" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_analytics/vb_analytics"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "analytics:read:games"
+
+[node name="pnl_bits" type="PanelContainer" parent="scroll/vb/cnt_scopes"]
+layout_mode = 2
+
+[node name="vb_bits" type="VBoxContainer" parent="scroll/vb/cnt_scopes/pnl_bits"]
+layout_mode = 2
+
+[node name="lb_cat_title" type="Label" parent="scroll/vb/cnt_scopes/pnl_bits/vb_bits"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "bits"
+horizontal_alignment = 1
+
+[node name="@CheckBox@107718" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_bits/vb_bits"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "bits:read"
+
+[node name="pnl_channel" type="PanelContainer" parent="scroll/vb/cnt_scopes"]
+layout_mode = 2
+
+[node name="vb_channel" type="VBoxContainer" parent="scroll/vb/cnt_scopes/pnl_channel"]
+layout_mode = 2
+
+[node name="lb_cat_title" type="Label" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel"
+horizontal_alignment = 1
+
+[node name="@CheckBox@107720" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:edit:commercial"
+
+[node name="@CheckBox@107721" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:manage:ads"
+
+[node name="@CheckBox@107722" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:manage:broadcast"
+
+[node name="@CheckBox@107723" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:manage:extensions"
+
+[node name="@CheckBox@107724" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:manage:guest_star"
+
+[node name="@CheckBox@107725" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:manage:moderators"
+
+[node name="@CheckBox@107726" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:manage:polls"
+
+[node name="@CheckBox@107727" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:manage:predictions"
+
+[node name="@CheckBox@107728" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:manage:raids"
+
+[node name="@CheckBox@107729" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:manage:redemptions"
+
+[node name="@CheckBox@107730" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:manage:schedule"
+
+[node name="@CheckBox@107731" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:manage:videos"
+
+[node name="@CheckBox@107732" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:manage:vips"
+
+[node name="@CheckBox@107733" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:read:ads"
+
+[node name="@CheckBox@107734" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:read:charity"
+
+[node name="@CheckBox@107735" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:read:editors"
+
+[node name="@CheckBox@107736" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:read:goals"
+
+[node name="@CheckBox@107737" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:read:guest_star"
+
+[node name="@CheckBox@107738" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:read:hype_train"
+
+[node name="@CheckBox@107739" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:read:polls"
+
+[node name="@CheckBox@107740" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:read:predictions"
+
+[node name="@CheckBox@107741" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:read:redemptions"
+
+[node name="@CheckBox@107742" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:read:stream_key"
+
+[node name="@CheckBox@107743" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:read:subscriptions"
+
+[node name="@CheckBox@107744" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:read:vips"
+
+[node name="@CheckBox@107745" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:bot"
+
+[node name="@CheckBox@107746" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_channel/vb_channel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "channel:moderate"
+
+[node name="pnl_clips" type="PanelContainer" parent="scroll/vb/cnt_scopes"]
+layout_mode = 2
+
+[node name="vb_clips" type="VBoxContainer" parent="scroll/vb/cnt_scopes/pnl_clips"]
+layout_mode = 2
+
+[node name="lb_cat_title" type="Label" parent="scroll/vb/cnt_scopes/pnl_clips/vb_clips"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "clips"
+horizontal_alignment = 1
+
+[node name="@CheckBox@107748" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_clips/vb_clips"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "clips:edit"
+
+[node name="pnl_moderation" type="PanelContainer" parent="scroll/vb/cnt_scopes"]
+layout_mode = 2
+
+[node name="vb_moderation" type="VBoxContainer" parent="scroll/vb/cnt_scopes/pnl_moderation"]
+layout_mode = 2
+
+[node name="lb_cat_title" type="Label" parent="scroll/vb/cnt_scopes/pnl_moderation/vb_moderation"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderation"
+horizontal_alignment = 1
+
+[node name="@CheckBox@107750" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderation/vb_moderation"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderation:read"
+
+[node name="pnl_moderator" type="PanelContainer" parent="scroll/vb/cnt_scopes"]
+layout_mode = 2
+
+[node name="vb_moderator" type="VBoxContainer" parent="scroll/vb/cnt_scopes/pnl_moderator"]
+layout_mode = 2
+
+[node name="lb_cat_title" type="Label" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator"
+horizontal_alignment = 1
+
+[node name="@CheckBox@107752" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:manage:announcements"
+
+[node name="@CheckBox@107753" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:manage:automod"
+
+[node name="@CheckBox@107754" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:manage:automod_settings"
+
+[node name="@CheckBox@107755" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:manage:banned_users"
+
+[node name="@CheckBox@107756" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:manage:blocked_terms"
+
+[node name="@CheckBox@107757" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:manage:chat_messages"
+
+[node name="@CheckBox@107758" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:manage:chat_settings"
+
+[node name="@CheckBox@107759" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:manage:guest_star"
+
+[node name="@CheckBox@107760" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:manage:shield_mode"
+
+[node name="@CheckBox@107761" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:manage:shoutouts"
+
+[node name="@CheckBox@107762" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:read:automod_settings"
+
+[node name="@CheckBox@107763" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:read:blocked_terms"
+
+[node name="@CheckBox@107764" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:read:chatters"
+
+[node name="@CheckBox@107765" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:read:chat_settings"
+
+[node name="@CheckBox@107766" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:read:followers"
+
+[node name="@CheckBox@107767" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:read:guest_star"
+
+[node name="@CheckBox@107768" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:read:shield_mode"
+
+[node name="@CheckBox@107769" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_moderator/vb_moderator"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "moderator:read:shoutouts"
+
+[node name="pnl_user" type="PanelContainer" parent="scroll/vb/cnt_scopes"]
+layout_mode = 2
+
+[node name="vb_user" type="VBoxContainer" parent="scroll/vb/cnt_scopes/pnl_user"]
+layout_mode = 2
+
+[node name="lb_cat_title" type="Label" parent="scroll/vb/cnt_scopes/pnl_user/vb_user"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user"
+horizontal_alignment = 1
+
+[node name="@CheckBox@107771" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_user/vb_user"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user:edit"
+
+[node name="@CheckBox@107772" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_user/vb_user"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user:edit:follows"
+
+[node name="@CheckBox@107773" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_user/vb_user"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user:manage:blocked_users"
+
+[node name="@CheckBox@107774" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_user/vb_user"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user:manage:chat_color"
+
+[node name="@CheckBox@107775" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_user/vb_user"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user:manage:whispers"
+
+[node name="@CheckBox@107776" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_user/vb_user"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user:read:blocked_users"
+
+[node name="@CheckBox@107777" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_user/vb_user"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user:read:broadcast"
+
+[node name="@CheckBox@107778" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_user/vb_user"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user:read:email"
+
+[node name="@CheckBox@107779" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_user/vb_user"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user:read:follows"
+
+[node name="@CheckBox@107780" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_user/vb_user"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user:read:moderated_channels"
+
+[node name="@CheckBox@107781" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_user/vb_user"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user:read:subscriptions"
+
+[node name="@CheckBox@107782" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_user/vb_user"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user:bot"
+
+[node name="@CheckBox@107783" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_user/vb_user"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user:read:chat"
+
+[node name="@CheckBox@107784" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_user/vb_user"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "user:write:chat"
+
+[node name="pnl_whispers" type="PanelContainer" parent="scroll/vb/cnt_scopes"]
+layout_mode = 2
+
+[node name="vb_whispers" type="VBoxContainer" parent="scroll/vb/cnt_scopes/pnl_whispers"]
+layout_mode = 2
+
+[node name="lb_cat_title" type="Label" parent="scroll/vb/cnt_scopes/pnl_whispers/vb_whispers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "whispers"
+horizontal_alignment = 1
+
+[node name="@CheckBox@107786" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_whispers/vb_whispers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "whispers:read"
+
+[node name="@CheckBox@107787" type="CheckBox" parent="scroll/vb/cnt_scopes/pnl_whispers/vb_whispers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "whispers:edit"
+
+[node name="lb5" parent="scroll/vb" node_paths=PackedStringArray("nodes_to_collapse") instance=ExtResource("1_e3njb")]
+layout_mode = 2
+text = "IRC"
+nodes_to_collapse = [NodePath("../vb4")]
+text_centered = true
+
+[node name="sep4" type="HSeparator" parent="scroll/vb"]
+layout_mode = 2
+
+[node name="vb4" type="VBoxContainer" parent="scroll/vb"]
+layout_mode = 2
+
+[node name="hb1" type="HBoxContainer" parent="scroll/vb/vb4"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="scroll/vb/vb4/hb1"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+text = "IRC bot username"
+horizontal_alignment = 2
+
+[node name="ln_irc_username" type="LineEdit" parent="scroll/vb/vb4/hb1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1564894"
+
+[node name="btn_" type="Button" parent="scroll/vb/vb4/hb1"]
+layout_mode = 2
+text = "Get your Broadcaster ID"
+
+[node name="hb2" type="HBoxContainer" parent="scroll/vb/vb4"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="scroll/vb/vb4/hb2"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+text = "IRC main channel"
+horizontal_alignment = 2
+
+[node name="ln_client_id" type="LineEdit" parent="scroll/vb/vb4/hb2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1564894"
+
+[node name="btn_" type="Button" parent="scroll/vb/vb4/hb2"]
+visible = false
+layout_mode = 2
+text = "Get your Broadcaster ID"
+
+[node name="hb3" type="HBoxContainer" parent="scroll/vb/vb4"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="scroll/vb/vb4/hb3"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+text = "IRC login message"
+horizontal_alignment = 2
+
+[node name="ln_client_secret" type="LineEdit" parent="scroll/vb/vb4/hb3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1564894"
+secret = true
+
+[node name="btn_" type="Button" parent="scroll/vb/vb4/hb3"]
+visible = false
+layout_mode = 2
+text = "Get your Broadcaster ID"
+
+[node name="lb7" parent="scroll/vb" node_paths=PackedStringArray("nodes_to_collapse") instance=ExtResource("1_e3njb")]
+layout_mode = 2
+text = "EventSub"
+nodes_to_collapse = [NodePath("../vb_eventsub")]
+text_centered = true
+
+[node name="sep3" type="HSeparator" parent="scroll/vb"]
+layout_mode = 2
+
+[node name="vb_eventsub" type="HFlowContainer" parent="scroll/vb"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ck_sub1" type="CheckBox" parent="scroll/vb/vb_eventsub"]
+layout_mode = 2
+text = "eventsub_test"
+
+[node name="ck_sub2" type="CheckBox" parent="scroll/vb/vb_eventsub"]
+layout_mode = 2
+text = "eventsub_test"
+
+[node name="ck_sub3" type="CheckBox" parent="scroll/vb/vb_eventsub"]
+layout_mode = 2
+text = "eventsub_test"
+
+[node name="ck_sub4" type="CheckBox" parent="scroll/vb/vb_eventsub"]
+layout_mode = 2
+text = "eventsub_test"
+
+[node name="ck_sub5" type="CheckBox" parent="scroll/vb/vb_eventsub"]
+layout_mode = 2
+text = "eventsub_test"
+
+[node name="ck_sub6" type="CheckBox" parent="scroll/vb/vb_eventsub"]
+layout_mode = 2
+text = "eventsub_test"
+
+[node name="ck_sub7" type="CheckBox" parent="scroll/vb/vb_eventsub"]
+layout_mode = 2
+text = "eventsub_test"
+
+[node name="ck_sub8" type="CheckBox" parent="scroll/vb/vb_eventsub"]
+layout_mode = 2
+text = "eventsub_test"
+
+[node name="ck_sub9" type="CheckBox" parent="scroll/vb/vb_eventsub"]
+layout_mode = 2
+text = "eventsub_test"
+
+[node name="ck_sub10" type="CheckBox" parent="scroll/vb/vb_eventsub"]
+layout_mode = 2
+text = "eventsub_test"
+
+[node name="ck_sub11" type="CheckBox" parent="scroll/vb/vb_eventsub"]
+layout_mode = 2
+text = "eventsub_test"
+
+[node name="ck_sub12" type="CheckBox" parent="scroll/vb/vb_eventsub"]
+layout_mode = 2
+text = "eventsub_test"
+
+[node name="ck_sub13" type="CheckBox" parent="scroll/vb/vb_eventsub"]
+layout_mode = 2
+text = "eventsub_test"
+
+[node name="ck_sub14" type="CheckBox" parent="scroll/vb/vb_eventsub"]
+layout_mode = 2
+text = "eventsub_test"
+
+[node name="ck_sub15" type="CheckBox" parent="scroll/vb/vb_eventsub"]
+layout_mode = 2
+text = "eventsub_test"
+
+[node name="ck_sub16" type="CheckBox" parent="scroll/vb/vb_eventsub"]
+layout_mode = 2
+text = "eventsub_test"
