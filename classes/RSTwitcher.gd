@@ -33,7 +33,7 @@ signal connected_to_twitch
 
 func start():
 	#---------------
-	l = RSLogger.new(RS.settings.LOGGER_NAME_SERVICE)
+	l = RSLogger.new(RSSettings.LOGGER_NAME_SERVICE)
 	l.i("Starting...")
 	if !RS.settings.is_twitcher_setup():
 		
