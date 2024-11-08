@@ -20,6 +20,7 @@ signal feature_selection_changed(p_id: String, p_selected: bool)
 
 @export_multiline var description: String = "Test\nTest\nTest":
 	set(value):
+		if value: value = value.strip_edges()
 		if value == description: return
 		description = value
 		_update_description()
@@ -49,6 +50,7 @@ func _update_doc_link() -> void:
 func _update_description() -> void:
 	if !is_node_ready(): return
 	%LabelDescription.text = description
+	%ButtonFeatureDetails.visible = !description.is_empty()
 
 func _update_expanded() -> void:
 	if !is_node_ready(): return
