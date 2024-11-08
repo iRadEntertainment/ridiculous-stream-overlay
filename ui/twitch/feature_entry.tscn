@@ -24,6 +24,7 @@ anchor_right = 1.0
 offset_bottom = 44.0
 grow_horizontal = 2
 size_flags_horizontal = 3
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_g81ri")
 script = ExtResource("1_fc2bb")
 
@@ -77,5 +78,6 @@ Test
 Test
 "
 
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="toggled" from="FeatureEntryContents/FeatureHeader/ButtonFeatureDetails" to="." method="_on_button_feature_details_toggled"]
 [connection signal="toggled" from="FeatureEntryContents/FeatureHeader/CheckSelectFeature" to="." method="_on_check_select_feature_toggled"]

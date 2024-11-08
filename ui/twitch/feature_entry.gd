@@ -73,3 +73,10 @@ func _on_check_select_feature_toggled(toggled_on: bool) -> void:
 	selected = toggled_on
 	feature_selection_changed.emit(id, selected)
 	_update_selected()
+
+func _on_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		var event_mouse_button := event as InputEventMouseButton
+		if event_mouse_button.button_index == MOUSE_BUTTON_LEFT and event_mouse_button.pressed:
+			if %ButtonFeatureDetails.visible:
+				expanded = !expanded
