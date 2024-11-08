@@ -31,6 +31,7 @@ func _populate_from(categories: Array[ScopedFeatureDefinitionCategory], parent_n
 	for category in categories:
 		var category_instance: FeatureCategory = SCENE_FEATURE_CATEGORY.instantiate()
 		category_instance.category_name = category.category_name
+		category_instance.expanded = false
 		scope_aggregator.connect_to(category_instance)
 
 		var features: Array[FeatureDefinition] = []
