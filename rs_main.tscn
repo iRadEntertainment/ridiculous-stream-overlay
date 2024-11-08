@@ -16,9 +16,9 @@
 [ext_resource type="Script" path="res://classes/RSDisplay.gd" id="12_qc4sr"]
 [ext_resource type="PackedScene" uid="uid://dseoyhiylvwnu" path="res://instances/pnl_settings.tscn" id="15_8wfva"]
 [ext_resource type="PackedScene" uid="uid://jchfk7d78ss5" path="res://instances/pnl_chat.tscn" id="16_ege2h"]
-[ext_resource type="PackedScene" path="res://instances/pnl_notifications.tscn" id="17_sodyi"]
+[ext_resource type="PackedScene" uid="uid://bhjtpi0nfv415" path="res://instances/pnl_notifications.tscn" id="17_sodyi"]
 [ext_resource type="PackedScene" uid="uid://cokv6nhefofwl" path="res://instances/pnl_welcome.tscn" id="19_3rcuc"]
-[ext_resource type="PackedScene" path="res://instances/alert_overlay.tscn" id="19_gj13v"]
+[ext_resource type="PackedScene" uid="uid://dregwshpiqg8j" path="res://instances/alert_overlay.tscn" id="19_gj13v"]
 [ext_resource type="AudioStream" uid="uid://cidanglkg6lrp" path="res://local_res/sfx_quack_01.ogg" id="21_637v1"]
 
 [node name="rs_main" type="Control"]

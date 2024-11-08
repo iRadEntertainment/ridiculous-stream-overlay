@@ -42,10 +42,7 @@ var unknown_users_cache := {}
 # ================================ INIT ========================================
 func _ready() -> void:
 	l = RSLogger.new(RSSettings.LOGGER_NAME_MAIN)
-	var is_everything_ok = await check_settings()
-	if !is_everything_ok:
-		return
-	
+
 	l.i("=================================== RIDICULOS STREAMING STARTED ===================================")
 	pnls = [
 		%pnl_chat,
@@ -56,14 +53,6 @@ func _ready() -> void:
 	load_settings()
 	load_known_user()
 	start_everything()
-
-
-func check_settings() -> bool:
-	if !RSSettings.rs_data_folder:
-		l.e("Please go to the Project Settings and set the Ridiculous Stream Data folder first!\nAborting...")
-		return false
-	
-	return true
 
 
 func setup_mouse_passthrough():
@@ -143,7 +132,11 @@ func user_from_username(username: String) -> RSTwitchUser:
 # ========================== LOAD/SAVE CONFIG ==================================
 func load_settings():
 	l.i("Loading settings...")
-	settings = loader.load_settings()
+	var loaded_settings := loader.load_settings()
+	if loaded_settings:
+		settings = loaded_settings
+	else:
+		print_debug("No settings loaded")
 
 
 func save_settings():

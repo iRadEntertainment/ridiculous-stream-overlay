@@ -56,9 +56,11 @@ func start():
 		
 		if has_all:
 			connect_to_obsws(RS.settings.obs_websocket_port, RS.settings.obs_websocket_password)
-	if _ws.get_ready_state() != WebSocketPeer.STATE_OPEN:
-		await connection_ready
-		await get_tree().process_frame
+			if _ws.get_ready_state() != WebSocketPeer.STATE_OPEN:
+				await connection_ready
+				await get_tree().process_frame
+		else:
+			print_debug("Missing settings for OBS Autoconnect")
 	
 	is_mic_muted = await get_input_mute("Mic/Aux")
 	is_brave_muted = await get_input_mute("Brave")

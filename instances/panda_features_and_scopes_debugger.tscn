@@ -1,0 +1,65 @@
+[gd_scene load_steps=2 format=3 uid="uid://clyrn7shlst6q"]
+
+[ext_resource type="Script" path="res://instances/panda_features_and_scopes_debugger.gd" id="1_64gt8"]
+
+[node name="FeaturesAndScopesDebugger" type="HBoxContainer"]
+size_flags_vertical = 3
+script = ExtResource("1_64gt8")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="FeaturesApiScroller" type="ScrollContainer" parent="TabContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 0
+
+[node name="FeaturesApi" type="VBoxContainer" parent="TabContainer/FeaturesApiScroller"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="FeaturesEventSubScroller" type="ScrollContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 1
+
+[node name="FeaturesEventSub" type="VBoxContainer" parent="TabContainer/FeaturesEventSubScroller"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="LabelSelectedScopes" type="Label" parent="vb"]
+layout_mode = 2
+text = "Selected Scopes"
+horizontal_alignment = 1
+
+[node name="sep3" type="HSeparator" parent="vb"]
+layout_mode = 2
+
+[node name="ScopesScroller" type="ScrollContainer" parent="vb"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ScopesList" type="ItemList" parent="vb/ScopesScroller"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+same_column_width = true

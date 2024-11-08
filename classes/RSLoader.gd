@@ -13,7 +13,7 @@ func load_settings() -> RSSettings:
 	var path = RSSettings.get_settings_filepath()
 	if FileAccess.file_exists(path):
 		var json = RSUtl.load_json(path)
-		return RSSettings.from_json(json)
+		#return RSSettings.from_json(json)
 	return null
 func save_settings() -> void:
 	var path = RSSettings.get_settings_filepath()

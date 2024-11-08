@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cmd2xe3ug7ldd"]
+[gd_scene load_steps=7 format=3 uid="uid://42kaw8tk5mxo"]
 
-[ext_resource type="PackedScene" uid="uid://cwg72p5gy7ib3" path="res://instances/btn_collapse.tscn" id="1_e3njb"]
+[ext_resource type="PackedScene" path="res://instances/btn_collapse.tscn" id="1_e3njb"]
 [ext_resource type="Script" path="res://instances/pnl_twitcher_settings.gd" id="1_vdak7"]
+[ext_resource type="PackedScene" uid="uid://clyrn7shlst6q" path="res://instances/panda_features_and_scopes_debugger.tscn" id="3_y0bov"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7wyye"]
 content_margin_left = 4.0
@@ -667,6 +668,9 @@ secret = true
 visible = false
 layout_mode = 2
 text = "Get your Broadcaster ID"
+
+[node name="FeaturesAndScopesDebugger" parent="scroll/vb" instance=ExtResource("3_y0bov")]
+layout_mode = 2
 
 [node name="lb7" parent="scroll/vb" node_paths=PackedStringArray("nodes_to_collapse") instance=ExtResource("1_e3njb")]
 layout_mode = 2

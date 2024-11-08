@@ -2,25 +2,59 @@
 extends Resource
 class_name RSSettings
 
-const SETTING_FOLDER_KEY = "ridiculous_stream/general/data_folder"
+const _CONFIG_PATH := "user://settings.ini"
+static var _config := ConfigFile.new()
 
-static var rs_data_folder: String:
-	get():
-		return ProjectSettings.get_setting(SETTING_FOLDER_KEY)
-	set(val):
-		ProjectSettings.set_setting(
-			SETTING_FOLDER_KEY, val
-		)
+static var data_dir: String = OS.get_user_data_dir():
+	set(value):
+		if value == data_dir: return
+		if !DirAccess.dir_exists_absolute(value):
+			print_verbose("Ridiculous Stream data directory does not exist and will be created: '%s'")
+			if OK == DirAccess.make_dir_recursive_absolute(value):
+				# Make sure the directory path ends with / or \
+				if !value.ends_with("/") and !value.ends_with("\\"):
+					value += "/"
+
+				# Only change the directory if it exists and managed to be created
+				data_dir = value
+				_config.set_value("RSSettings", "data_dir", data_dir)
+			else:
+				push_error("Failed to create data directory for Ridiculous Stream: '%s'" % [value])
+
+static var path_settings: String:
+	get: return "%s/%s" % [
+		data_dir,
+		RS_SETTINGS_FILE_NAME
+	]
+
+# UTILITIES
+static func get_settings_filepath() -> String:
+	var path := "%s/%s" % [data_dir, RS_SETTINGS_FILE_NAME]
+	return path
+static func get_users_path() -> String:
+	var path := "%s/%s" % [data_dir, RS_USER_FOLDER]
+	return path
+static func get_obj_path() -> String:
+	var path := "%s/%s" % [data_dir, RS_OBJ_FOLDER]
+	return path
+static func get_sfx_path() -> String:
+	var path := "%s/%s" % [data_dir, RS_SFX_FOLDER]
+	return path
+static func get_logs_path() -> String:
+	var path := "%s/%s" % [data_dir, RS_LOG_FOLDER]
+	return path
 
 static func _static_init() -> void:
-	var default_path = OS.get_data_dir() + "/RidiculousStream"
-	ProjectSettings.set_setting(SETTING_FOLDER_KEY, default_path)
-	ProjectSettings.add_property_info({
-			"name": SETTING_FOLDER_KEY,
-			"type": TYPE_STRING,
-			"hint": PROPERTY_HINT_GLOBAL_DIR,
-			"hint_string": "The global folder with all your Ridiculous Stream Data"
-		})
+	if FileAccess.file_exists(_CONFIG_PATH):
+		var error := _config.load(_CONFIG_PATH)
+		if OK == error:
+			data_dir = _config.get_value("RSSettings", "data_dir", OS.get_user_data_dir())
+		else:
+			push_error("Failed to load global configuration from %s: %d" % [_CONFIG_PATH, error])
+	else:
+		var error := _config.save(_CONFIG_PATH)
+		if OK != _config.save(_CONFIG_PATH):
+			push_error("Failed to save global configuration from %s: %d" % [_CONFIG_PATH, error])
 
 const LOCAL_RES_FOLDER = "res://local_res/"
 const RS_SETTINGS_FILE_NAME = "settings.json"
@@ -247,7 +281,6 @@ func set_eventsubs(values : Dictionary) -> void:
 # 			print("TwitchSetting")
 # 			ProjectSettings.set_setting(key, broadcaster_id)
 
-
 func is_twitcher_setup() -> bool:
 	if !broadcaster_id: return false
 	if !client_id: return false
@@ -256,31 +289,6 @@ func is_twitcher_setup() -> bool:
 	if !redirect_port: return false
 	return true
 
-
-# UTILITIES
-static func get_data_folder() -> String:
-	RSUtl.make_path(rs_data_folder)
-	return rs_data_folder
-static func get_settings_filepath() -> String:
-	var path := "%s/%s"%[get_data_folder(), RS_SETTINGS_FILE_NAME]
-	return path
-static func get_users_path() -> String:
-	var path := "%s%s"%[get_data_folder(), RS_USER_FOLDER]
-	RSUtl.make_path(path)
-	return path
-static func get_obj_path() -> String:
-	var path := "%s%s"%[get_data_folder(), RS_OBJ_FOLDER]
-	RSUtl.make_path(path)
-	return path
-static func get_sfx_path() -> String:
-	var path := "%s%s"%[get_data_folder(), RS_SFX_FOLDER]
-	RSUtl.make_path(path)
-	return path
-static func get_logs_path() -> String:
-	var path := "%s%s"%[get_data_folder(), RS_LOG_FOLDER]
-	RSUtl.make_path(path)
-	return path
-
 # ACTIVATE ALL SCOPES ('cause I can't be fucked to do it properly) JESUS
 static func get_all_scopes_list() -> Array[String]:
 	var res: Array[String] = []
@@ -288,4 +296,4 @@ static func get_all_scopes_list() -> Array[String]:
 		res.append(scope.value)
 	return res
 
-	var example_for_pandino = ["chat:read", "chat:edit"]
+#var example_for_pandino = ["chat:read", "chat:edit"]

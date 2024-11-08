@@ -99,12 +99,12 @@ func receive_response(callable : Callable, data: RSTwitchEventData, response: Re
 
 
 func load_user_vetting_list():
-	var path = RSSettings.get_data_folder() + RSSettings.RS_VETTING_FILE_NAME
+	var path := RSSettings.data_dir + RSSettings.RS_VETTING_FILE_NAME
 	if FileAccess.file_exists(path):
 		user_vetting_list = RSUtl.load_json(path)
 		l.i("List loaded (%s)" % path)
 func save_user_vetting_list():
-	var path = RSSettings.get_data_folder() + RSSettings.RS_VETTING_FILE_NAME
+	var path := RSSettings.data_dir + RSSettings.RS_VETTING_FILE_NAME
 	RSUtl.save_to_json(path, user_vetting_list)
 func clear(user, _reward_title) -> void:
 	if user_vetting_list.has(user):

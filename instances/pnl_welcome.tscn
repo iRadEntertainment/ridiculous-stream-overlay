@@ -8,7 +8,7 @@
 [ext_resource type="FontFile" uid="uid://cpd3hjqqwp4y8" path="res://ui/jetbrains_mono_ttf/JetBrainsMono-Italic.ttf" id="4_eotn6"]
 [ext_resource type="FontFile" uid="uid://durvh12yp7n7r" path="res://ui/jetbrains_mono_ttf/JetBrainsMono-BoldItalic.ttf" id="5_yrlak"]
 [ext_resource type="FontFile" uid="uid://d0nn8s6iks32j" path="res://ui/jetbrains_mono_ttf/JetBrainsMono-Bold.ttf" id="6_fyp0l"]
-[ext_resource type="PackedScene" uid="uid://cmd2xe3ug7ldd" path="res://instances/pnl_twitcher_settings.tscn" id="9_xnjuj"]
+[ext_resource type="PackedScene" uid="uid://42kaw8tk5mxo" path="res://instances/pnl_twitcher_settings.tscn" id="9_xnjuj"]
 [ext_resource type="Texture2D" uid="uid://cybbfwulysr0r" path="res://ui/bootstrap_icons/arrow-left.png" id="9_y631q"]
 [ext_resource type="Texture2D" uid="uid://40umxxmmps88" path="res://ui/bootstrap_icons/arrow-right.png" id="10_n4pa4"]
 

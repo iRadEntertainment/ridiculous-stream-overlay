@@ -1,0 +1,81 @@
+[gd_scene load_steps=6 format=3 uid="uid://desh1w40padq8"]
+
+[ext_resource type="Texture2D" uid="uid://caxev54f1spx0" path="res://assets/ui/icons/minus.png" id="1_3rsc5"]
+[ext_resource type="Script" path="res://ui/twitch/feature_entry.gd" id="1_fc2bb"]
+[ext_resource type="Texture2D" uid="uid://21ejlvfa14lw" path="res://assets/ui/icons/plus.png" id="2_nm3ho"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g81ri"]
+content_margin_left = 40.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.121569, 0.121569, 0.121569, 0.121569)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0s3od"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.121569)
+
+[node name="FeatureEntry" type="PanelContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 44.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_g81ri")
+script = ExtResource("1_fc2bb")
+
+[node name="FeatureEntryContents" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="FeatureHeader" type="HBoxContainer" parent="FeatureEntryContents"]
+layout_mode = 2
+
+[node name="ButtonFeatureDetails" type="CheckButton" parent="FeatureEntryContents/FeatureHeader"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Show Feature Details"
+theme_override_constants/icon_max_width = 20
+theme_override_icons/checked = ExtResource("1_3rsc5")
+theme_override_icons/unchecked = ExtResource("2_nm3ho")
+icon_alignment = 1
+expand_icon = true
+
+[node name="LabelFeatureName" type="Label" parent="FeatureEntryContents/FeatureHeader"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Feature Name"
+
+[node name="LinkDocumentation" type="LinkButton" parent="FeatureEntryContents/FeatureHeader"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Go to Documentation"
+
+[node name="CheckSelectFeature" type="CheckBox" parent="FeatureEntryContents/FeatureHeader"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FeatureDetails" type="PanelContainer" parent="FeatureEntryContents"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0s3od")
+
+[node name="FeatureDetailsContents" type="VBoxContainer" parent="FeatureEntryContents/FeatureDetails"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LabelDescription" type="Label" parent="FeatureEntryContents/FeatureDetails/FeatureDetailsContents"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "Test
+Test
+Test
+"
+
+[connection signal="toggled" from="FeatureEntryContents/FeatureHeader/ButtonFeatureDetails" to="." method="_on_button_feature_details_toggled"]
+[connection signal="toggled" from="FeatureEntryContents/FeatureHeader/CheckSelectFeature" to="." method="_on_check_select_feature_toggled"]

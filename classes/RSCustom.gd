@@ -127,7 +127,7 @@ func impersonate_iRad(data : RSTwitchEventData):
 	RS.twitcher.irc.chat(msg, channel)
 
 func give_advice(data : RSTwitchEventData) -> void:
-	var folder_path = RSSettings.get_data_folder()
+	var folder_path := RSSettings.data_dir
 	var advice_file = folder_path + "advice_collection.json"
 	var advice_list : Array = []
 	check_if_advice_file_exists(advice_file)
@@ -154,7 +154,7 @@ func check_if_advice_file_exists(advice_file : String):
 		RSUtl.save_to_json(advice_file, advice_list)
 
 func get_advice(data : RSTwitchEventData) -> void:
-	var folder_path = RSSettings.get_data_folder()
+	var folder_path := RSSettings.data_dir
 	var advice_file = folder_path + "advice_collection.json"
 	var advice_list : Array
 	check_if_advice_file_exists(advice_file)

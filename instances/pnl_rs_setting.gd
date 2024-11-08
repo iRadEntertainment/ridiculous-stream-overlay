@@ -10,7 +10,7 @@ func start():
 	%ln_obs_pass.text = RS.settings.obs_websocket_password
 
 func _on_data_dir_pressed():
-	OS.shell_open(RSSettings.get_data_folder())
+	OS.shell_open(RSSettings.data_dir)
 func _on_btn_open_user_dir_pressed():
 	OS.shell_open(OS.get_user_data_dir())
 
