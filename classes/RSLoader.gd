@@ -17,7 +17,8 @@ func load_settings() -> RSSettings:
 	return null
 func save_settings() -> void:
 	var path = RSSettings.get_settings_filepath()
-	RSUtl.save_to_json(path, RS.settings.to_dict())
+	# TODO: Figure out what this should be so it doesn't crash the program on close
+	#RSUtl.save_to_json(path, RS.settings.to_dict())
 
 
 func load_sfx_from_sfx_folder(sfx_name : String) -> AudioStreamOggVorbis:
