@@ -112,8 +112,8 @@ var client_secret: String
 var redirect_url: String = "http://localhost:7170"
 var redirect_port: int = 7170
 
-var scopes : Dictionary = SCOPES_DEFAULT_DIC
-#var scopes: Array[String]
+# var scopes : Dictionary = SCOPES_DEFAULT_DIC
+var scopes: Array[String] = get_all_scopes_list()
 
 var force_verify: String = "false"
 var subscriptions: Dictionary
@@ -161,7 +161,6 @@ var http_client_max: int = 4
 
 
 
-
 func is_log_enabled(logger: String) -> bool:
 	return log_enabled.has(logger)
 
@@ -195,58 +194,67 @@ func set_eventsubs(values : Dictionary) -> void:
 		ProjectSettings.set_setting(key, value)
 
 
-func to_dict() -> Dictionary:
-	var d = {}
-	d["app_scale"] = app_scale
+# func to_dict() -> Dictionary:
+# 	var d = {}
+# 	d["app_scale"] = app_scale
 	
-	d["scopes"] = scopes
-	d["eventsubs"] = eventsubs
+# 	d["scopes"] = scopes
+# 	d["eventsubs"] = eventsubs
 	
-	d["auto_connect"] = auto_connect
+# 	d["auto_connect"] = auto_connect
 	
-	d["obs_autoconnect"] = obs_autoconnect
-	d["obs_websocket_url"] = obs_websocket_url
-	d["obs_websocket_port"] = obs_websocket_port
-	d["obs_websocket_password"] = obs_websocket_password
-	d["log_enabled"] = log_enabled
+# 	d["obs_autoconnect"] = obs_autoconnect
+# 	d["obs_websocket_url"] = obs_websocket_url
+# 	d["obs_websocket_port"] = obs_websocket_port
+# 	d["obs_websocket_password"] = obs_websocket_password
+# 	d["log_enabled"] = log_enabled
 	
-	d["max_messages_in_chat"] = max_messages_in_chat
-	return d
+# 	d["max_messages_in_chat"] = max_messages_in_chat
+# 	return d
 
-static func from_json(d: Dictionary) -> RSSettings:
-	var _settings = RSSettings.new()
-	if d.has("app_scale") && d["app_scale"] != null: _settings.app_scale = d["app_scale"]
+# static func from_json(d: Dictionary) -> RSSettings:
+# 	var _settings = RSSettings.new()
+# 	if d.has("app_scale") && d["app_scale"] != null: _settings.app_scale = d["app_scale"]
 	
-	if d.has("scopes") && d["scopes"] != null: _settings.scopes = d["scopes"]
-	if d.has("eventsubs") && d["eventsubs"] != null: _settings.eventsubs = d["eventsubs"]
+# 	if d.has("scopes") && d["scopes"] != null: _settings.scopes = d["scopes"]
+# 	if d.has("eventsubs") && d["eventsubs"] != null: _settings.eventsubs = d["eventsubs"]
 	
-	if d.has("auto_connect") && d["auto_connect"] != null: _settings.auto_connect = d["auto_connect"]
+# 	if d.has("auto_connect") && d["auto_connect"] != null: _settings.auto_connect = d["auto_connect"]
 	
-	if d.has("obs_autoconnect") && d["obs_autoconnect"] != null: _settings.obs_autoconnect = d["obs_autoconnect"]
-	if d.has("obs_websocket_url") && d["obs_websocket_url"] != null: _settings.obs_websocket_url = d["obs_websocket_url"]
-	if d.has("obs_websocket_port") && d["obs_websocket_port"] != null: _settings.obs_websocket_port = d["obs_websocket_port"]
-	if d.has("obs_websocket_password") && d["obs_websocket_password"] != null: _settings.obs_websocket_password = d["obs_websocket_password"]
-	if d.has("log_enabled") && d["log_enabled"] != null: _settings.log_enabled = d["log_enabled"]
+# 	if d.has("obs_autoconnect") && d["obs_autoconnect"] != null: _settings.obs_autoconnect = d["obs_autoconnect"]
+# 	if d.has("obs_websocket_url") && d["obs_websocket_url"] != null: _settings.obs_websocket_url = d["obs_websocket_url"]
+# 	if d.has("obs_websocket_port") && d["obs_websocket_port"] != null: _settings.obs_websocket_port = d["obs_websocket_port"]
+# 	if d.has("obs_websocket_password") && d["obs_websocket_password"] != null: _settings.obs_websocket_password = d["obs_websocket_password"]
+# 	if d.has("log_enabled") && d["log_enabled"] != null: _settings.log_enabled = d["log_enabled"]
 	
-	if d.has("max_messages_in_chat") && d["max_messages_in_chat"] != null: _settings.max_messages_in_chat = d["max_messages_in_chat"]
-	return _settings
+# 	if d.has("max_messages_in_chat") && d["max_messages_in_chat"] != null: _settings.max_messages_in_chat = d["max_messages_in_chat"]
+# 	return _settings
 
 
-func set_broadcaster_id_for_all_eventsub():
-	var all_properties : Array = ProjectSettings.get_property_list()
-	var keys = []
-	for d : Dictionary in all_properties:
-		var key : String = str(d.name)
-		if key.begins_with("twitch/eventsub/") and (
-			key.ends_with("/broadcaster_user_id") or \
-			key.ends_with("/moderator_user_id")
-			):
-			keys.append(key)
+# func set_broadcaster_id_for_all_eventsub():
+# 	var all_properties : Array = ProjectSettings.get_property_list()
+# 	var keys = []
+# 	for d : Dictionary in all_properties:
+# 		var key : String = str(d.name)
+# 		if key.begins_with("twitch/eventsub/") and (
+# 			key.ends_with("/broadcaster_user_id") or \
+# 			key.ends_with("/moderator_user_id")
+# 			):
+# 			keys.append(key)
 	
-	for key in keys:
-		if ProjectSettings.get_setting(key) == "":
-			print("TwitchSetting")
-			ProjectSettings.set_setting(key, broadcaster_id)
+# 	for key in keys:
+# 		if ProjectSettings.get_setting(key) == "":
+# 			print("TwitchSetting")
+# 			ProjectSettings.set_setting(key, broadcaster_id)
+
+
+func is_twitcher_setup() -> bool:
+	if !broadcaster_id: return false
+	if !client_id: return false
+	if !client_secret: return false
+	if !redirect_url: return false
+	if !redirect_port: return false
+	return true
 
 
 # UTILITIES
@@ -273,10 +281,11 @@ static func get_logs_path() -> String:
 	RSUtl.make_path(path)
 	return path
 
-func is_twitcher_setup() -> bool:
-	if !broadcaster_id: return false
-	if !client_id: return false
-	if !client_secret: return false
-	if !redirect_url: return false
-	if !redirect_port: return false
-	return true
+# ACTIVATE ALL SCOPES ('cause I can't be fucked to do it properly) JESUS
+static func get_all_scopes_list() -> Array[String]:
+	var res: Array[String] = []
+	for scope: TwitchScopes.Scope in TwitchScopes.get_all_scopes():
+		res.append(scope.value)
+	return res
+
+	var example_for_pandino = ["chat:read", "chat:edit"]
