@@ -3,7 +3,7 @@
 /android/
 .vscode/
 
-stored.txt
 
 # Dario doesn't want this
-/.idea/
+~*.dll
+stored.txt
