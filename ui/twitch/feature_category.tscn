@@ -43,6 +43,7 @@ expand_icon = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 0
 theme_override_font_sizes/font_size = 20
 text = "Category Name"
 
@@ -61,4 +62,5 @@ layout_mode = 2
 expanded = true
 
 [connection signal="toggled" from="CategoryHeader/CategoryHeaderContents/ButtonExpandCategory" to="." method="_on_button_expand_category_toggled"]
+[connection signal="gui_input" from="CategoryHeader/CategoryHeaderContents/LabelCategoryName" to="." method="_on_label_category_name_gui_input"]
 [connection signal="toggled" from="CategoryHeader/CategoryHeaderContents/CheckSelectCategory" to="." method="_on_check_select_category_toggled"]

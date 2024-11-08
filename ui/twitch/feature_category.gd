@@ -229,3 +229,9 @@ func _get_existing_feature_entries() -> Array[FeatureEntry]:
 				node.get_class().get_basename()
 			])
 	return entries
+
+func _on_label_category_name_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		var event_mouse_button := event as InputEventMouseButton
+		if event_mouse_button.button_index == MOUSE_BUTTON_LEFT and event_mouse_button.pressed:
+			expanded = !expanded
