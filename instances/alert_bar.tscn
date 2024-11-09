@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://pr2cr6wubeyt"]
 
-[ext_resource type="Theme" uid="uid://bwa6a5abww8i3" path="res://ui/alert_overlay.theme" id="1_iynrc"]
+[ext_resource type="Theme" uid="uid://ya1vefj2nbhc" path="res://ui/alert_overlay.tres" id="1_imutm"]
 [ext_resource type="Script" path="res://instances/alert_bar.gd" id="2_2k78h"]
 [ext_resource type="Texture2D" uid="uid://dpyn121ra1pa" path="res://ui/sprites/close.png" id="2_n20qi"]
 
 [node name="bar" type="PanelContainer"]
 offset_right = 604.0
 offset_bottom = 110.0
-theme = ExtResource("1_iynrc")
+theme = ExtResource("1_imutm")
 script = ExtResource("2_2k78h")
 
 [node name="vb" type="VBoxContainer" parent="."]

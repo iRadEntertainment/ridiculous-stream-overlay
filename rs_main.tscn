@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://d345j5een73bf"]
 
-[ext_resource type="Theme" uid="uid://b7xrw7crccrr7" path="res://ui/ridiculous_stream_main.theme" id="1_b2vbf"]
+[ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_33ebf"]
 [ext_resource type="Script" path="res://RSMain.gd" id="1_y2jdm"]
 [ext_resource type="Script" path="res://classes/RSMousePass.cs" id="2_4s2fq"]
 [ext_resource type="Script" path="res://classes/RSMouseTracker.gd" id="2_xjlao"]
@@ -29,7 +29,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme = ExtResource("1_b2vbf")
+theme = ExtResource("1_33ebf")
 script = ExtResource("1_y2jdm")
 metadata/_edit_lock_ = true
 

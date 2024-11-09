@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://ui/bootstrap_icons/folder2-open.svg" id="6_1qe2s"]
 [ext_resource type="PackedScene" uid="uid://csqa2q3atku2i" path="res://instances/pnl_connect.tscn" id="6_jv0c3"]
 [ext_resource type="Texture2D" uid="uid://dbpv7xe18l2r6" path="res://ui/sprites/raid_icon.png" id="7_ayv7u"]
-[ext_resource type="Theme" uid="uid://s7hlwwefuhgh" path="res://ui/chat_message.theme" id="10_0ham4"]
+[ext_resource type="Theme" uid="uid://0k8rsjlg003m" path="res://ui/chat_message.tres" id="10_b8h00"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nb1op"]
 content_margin_left = 4.0
@@ -296,7 +296,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
-theme = ExtResource("10_0ham4")
+theme = ExtResource("10_b8h00")
 metadata/_tab_index = 2
 
 [node name="vb" type="VBoxContainer" parent="vb/tabs/pnl_live"]

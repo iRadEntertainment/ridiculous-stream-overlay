@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://rvb1iyen7vu3"]
 
 [ext_resource type="Script" path="res://instances/pnl_rewards.gd" id="1_3d7eq"]
-[ext_resource type="Theme" uid="uid://s7hlwwefuhgh" path="res://ui/chat_message.theme" id="2_3q2xc"]
+[ext_resource type="Theme" uid="uid://0k8rsjlg003m" path="res://ui/chat_message.tres" id="2_maxpk"]
 [ext_resource type="PackedScene" uid="uid://wl1340ejrqt0" path="res://instances/reward_entry.tscn" id="3_nmi06"]
 [ext_resource type="Texture2D" uid="uid://b2mtooi658yq0" path="res://ui/sprites/loading.png" id="3_ssecm"]
 
@@ -23,7 +23,7 @@ layout_mode = 2
 [node name="lb" type="Label" parent="vb/top"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("2_3q2xc")
+theme = ExtResource("2_maxpk")
 text = "Channel Redeems"
 horizontal_alignment = 1
 

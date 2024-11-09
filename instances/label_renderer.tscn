@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cc7snq8wu8h2p"]
 
 [ext_resource type="Script" path="res://instances/label_renderer.gd" id="1_2xnc1"]
-[ext_resource type="Theme" uid="uid://dwgudy07ug5n7" path="res://ui/fractured_text.theme" id="1_kgcnt"]
+[ext_resource type="Theme" uid="uid://b1ahlikq7p0dk" path="res://ui/fractured_text.tres" id="2_dpags"]
 
 [node name="label_renderer" type="SubViewport"]
 transparent_bg = true
@@ -12,7 +12,7 @@ script = ExtResource("1_2xnc1")
 [node name="lb" type="Label" parent="."]
 offset_right = 406.0
 offset_bottom = 127.0
-theme = ExtResource("1_kgcnt")
+theme = ExtResource("2_dpags")
 theme_override_colors/font_color = Color(0.713726, 0.235294, 0.623529, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 24

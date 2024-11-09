@@ -1,7 +1,7 @@
 [gd_scene load_steps=30 format=3 uid="uid://cdgelqh5th1pl"]
 
-[ext_resource type="Theme" uid="uid://byc6dqa0se0lp" path="res://ui/floating_menu.theme" id="1_kl6sw"]
 [ext_resource type="Script" path="res://instances/btn_floating_menu.gd" id="1_osqlv"]
+[ext_resource type="Theme" uid="uid://ce52ib0ugeqlb" path="res://ui/floating_menu.tres" id="1_rrnku"]
 [ext_resource type="Texture2D" uid="uid://brq45fxn0wqha" path="res://ui/sprites/menu.png" id="2_y16f1"]
 [ext_resource type="Texture2D" uid="uid://x1kro6q7tj46" path="res://ui/gravity.png" id="4_bia5b"]
 [ext_resource type="Texture2D" uid="uid://chau12dlx6shv" path="res://ui/mic_unmute.png" id="4_xbf4m"]
@@ -70,7 +70,7 @@ offset_top = 94.0
 offset_bottom = 158.0
 grow_horizontal = 0
 focus_mode = 0
-theme = ExtResource("1_kl6sw")
+theme = ExtResource("1_rrnku")
 theme_override_colors/font_color = Color(1, 1, 1, 0.368627)
 theme_override_colors/icon_normal_color = Color(1, 1, 1, 0.368627)
 theme_override_colors/icon_hover_color = Color(1, 1, 1, 0.745098)
@@ -150,7 +150,7 @@ layout_mode = 0
 offset_right = 48.0
 offset_bottom = 48.0
 focus_mode = 0
-theme = ExtResource("1_kl6sw")
+theme = ExtResource("1_rrnku")
 icon = ExtResource("4_bia5b")
 icon_alignment = 1
 expand_icon = true

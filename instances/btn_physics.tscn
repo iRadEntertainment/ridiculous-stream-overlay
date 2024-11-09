@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://dl8kh0lkb2wm4"]
 
-[ext_resource type="Theme" uid="uid://byc6dqa0se0lp" path="res://ui/floating_menu.theme" id="1_3n6x8"]
+[ext_resource type="Theme" uid="uid://ce52ib0ugeqlb" path="res://ui/floating_menu.tres" id="1_7fh17"]
 [ext_resource type="Texture2D" uid="uid://x1kro6q7tj46" path="res://ui/gravity.png" id="2_nwlca"]
 [ext_resource type="Script" path="res://instances/btn_physics.gd" id="3_ls7lh"]
 [ext_resource type="Texture2D" uid="uid://cg84ubdpyr75" path="res://ui/beans.png" id="4_vd6au"]
@@ -20,7 +20,7 @@ offset_top = 42.0
 offset_right = 50.0
 offset_bottom = 82.0
 focus_mode = 0
-theme = ExtResource("1_3n6x8")
+theme = ExtResource("1_7fh17")
 icon = ExtResource("2_nwlca")
 icon_alignment = 1
 expand_icon = true
