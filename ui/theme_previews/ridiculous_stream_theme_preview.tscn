@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpyxvmlmpe51h"]
+
+[ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_yy5wc"]
+
+[node name="ridiculous_stream_theme_preview" type="VFlowContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_yy5wc")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 2
+
+[node name="Label" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "test"
+
+[node name="Label2" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "test"

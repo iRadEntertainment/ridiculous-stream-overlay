@@ -139,6 +139,7 @@ layout_mode = 1
 
 [node name="pnl_welcome" parent="." instance=ExtResource("19_3rcuc")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 metadata/_edit_lock_ = true
 

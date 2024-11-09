@@ -1,0 +1,104 @@
+[gd_scene load_steps=6 format=3 uid="uid://lw7lx1p8i8tx"]
+
+[ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_qg7pe"]
+[ext_resource type="Script" path="res://instances/welcome/twitch/pnl_twitch_features.gd" id="2_crosi"]
+[ext_resource type="StyleBox" uid="uid://dp1gxe3ir730n" path="res://ui/panel_flat_dark.tres" id="3_q4cyh"]
+[ext_resource type="StyleBox" uid="uid://be1r1ht3qo0ct" path="res://ui/panel_flat_dark_semitransparent.tres" id="4_hmc1q"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wybyw"]
+shadow_size = 10
+shadow_color = Color(0, 0, 0, 0.313726)
+
+[node name="pnl_twitch_features" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_qg7pe")
+script = ExtResource("2_crosi")
+metadata/_tab_index = 1
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="lb_title" type="Label" parent="vb"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = ExtResource("3_q4cyh")
+text = "Twitch Features"
+label_settings = SubResource("LabelSettings_wybyw")
+horizontal_alignment = 1
+
+[node name="hb" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+
+[node name="spacer" type="Control" parent="vb/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="btn_toggle_show_adv" type="CheckButton" parent="vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Show Advanced Details"
+
+[node name="hsep" type="HSeparator" parent="vb"]
+layout_mode = 2
+
+[node name="scroll_features" type="ScrollContainer" parent="vb"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 0
+
+[node name="vb_feature_categories" type="VBoxContainer" parent="vb/scroll_features"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="vb_scopes" type="VBoxContainer" parent="vb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="hsep" type="HSeparator" parent="vb/vb_scopes"]
+layout_mode = 2
+
+[node name="lbl" type="Label" parent="vb/vb_scopes"]
+layout_mode = 2
+text = "Scopes"
+horizontal_alignment = 1
+
+[node name="scroll" type="ScrollContainer" parent="vb/vb_scopes"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="pnl" type="PanelContainer" parent="vb/vb_scopes/scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("4_hmc1q")
+
+[node name="grid_scopes" type="GridContainer" parent="vb/vb_scopes/scroll/pnl"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_qg7pe")
+columns = 2
+
+[node name="lbl_scope" type="Label" parent="vb/vb_scopes/scroll/pnl/grid_scopes"]
+layout_mode = 2
+theme_override_styles/normal = ExtResource("3_q4cyh")
+text = "analytics:read:extensions"
+
+[node name="lbl_description" type="Label" parent="vb/vb_scopes/scroll/pnl/grid_scopes"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("3_q4cyh")
+text = "View analytics data for the Twitch Extensions owned by the authenticated account."
+
+[connection signal="toggled" from="vb/hb/btn_toggle_show_adv" to="." method="_on_btn_toggle_show_adv_toggled"]
