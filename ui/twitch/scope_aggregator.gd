@@ -26,6 +26,14 @@ static func _static_init() -> void:
 					if scopes_for_feature_id.find(scope) < 0:
 						scopes_for_feature_id.append_array(feature_definition.scopes)
 
+var features: Array[String]:
+	get:
+		var features: Array[String] = []
+		features.append_array(_active_features.keys())
+		return features;
+
+var _active_features := {}
+
 var scopes: Array[String]:
 	get:
 		var scopes: Array[String] = []
@@ -42,7 +50,11 @@ func disconnect_from(category: FeatureCategory) -> void:
 
 func _on_feature_category_selection_changed(p_selections: Array[FeatureSelection]) -> void:
 	for selection in p_selections:
-		var x := scopes_by_feature_id
+		if selection.selected:
+			_active_features[selection.feature_id] = true
+		else:
+			_active_features.erase(selection.feature_id)
+
 		var scopes := scopes_by_feature_id.get(selection.feature_id, []) as Array
 		for scope in scopes:
 			var scope_count: int = _active_scopes.get_or_add(scope, 0)

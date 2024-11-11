@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://deuf2rqcfddbn" path="res://ui/bootstrap_icons/caret-right-fill.png" id="2_6f20g"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m6rkg"]
-content_margin_left = 4.0
+content_margin_left = 8.0
 content_margin_top = 4.0
-content_margin_right = 4.0
+content_margin_right = 8.0
 content_margin_bottom = 4.0
 
 [node name="btn_collapse" type="PanelContainer"]

@@ -2,14 +2,14 @@
 extends EditorScript
 
 func _run() -> void:
-	var base_folder = "C:/Git/Bootstrap_icons/"
-	var folder_src = "bootstrap-icons-1.11.3/"
+	var base_folder = ProjectSettings.globalize_path("res://ui/")
+	var folder_src = "bootstrap_icons/"
 	var list_svg = DirAccess.get_files_at(base_folder + folder_src)
 	
-	var png_size = 32
+	var png_size = 64
 	var what = 'width="16" height="16" fill="currentColor"'
 	var for_what = 'width="{size}" height="{size}" fill="{col}"'.format({"size": str(png_size), "col": "#ffffff"})
-	var folder_dst = "png_%s/"%png_size
+	var folder_dst = folder_src#"png_%s/"%png_size
 	DirAccess.make_dir_recursive_absolute(base_folder + folder_dst)
 	for i in list_svg.size():
 		if list_svg[i].get_extension() != "svg": continue

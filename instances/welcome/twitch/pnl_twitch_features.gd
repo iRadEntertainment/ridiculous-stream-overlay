@@ -1,6 +1,6 @@
 @tool
 class_name PanelTwitchFeatures
-extends PanelContainer
+extends PanelFormContainer
 
 #region Constants
 

@@ -1,0 +1,146 @@
+[gd_scene load_steps=6 format=3 uid="uid://ep2joxuxeqvu"]
+
+[ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_qeffq"]
+[ext_resource type="PackedScene" uid="uid://cwg72p5gy7ib3" path="res://instances/btn_collapse.tscn" id="2_kao4t"]
+[ext_resource type="Script" path="res://addons/ridiculous_stream_project_settings/settings/pnl_ridiculous_stream_project_settings.gd" id="2_tqp8l"]
+[ext_resource type="StyleBox" uid="uid://dp1gxe3ir730n" path="res://ui/panel_flat_dark.tres" id="3_e72pp"]
+[ext_resource type="StyleBox" uid="uid://bbm13ghfao7l3" path="res://ui/editor_panel_light_borderless.tres" id="5_t7dku"]
+
+[node name="Ridiculous Stream" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_qeffq")
+script = ExtResource("2_tqp8l")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="twitch_btn_collapse" parent="VBoxContainer" node_paths=PackedStringArray("nodes_to_collapse") instance=ExtResource("2_kao4t")]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_e72pp")
+text = "Twitch Developer Settings"
+nodes_to_collapse = [NodePath("../twitch_settings")]
+
+[node name="twitch_settings" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("5_t7dku")
+
+[node name="twitch" type="GridContainer" parent="VBoxContainer/twitch_settings"]
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 32
+columns = 3
+
+[node name="lbl_publish" type="Label" parent="VBoxContainer/twitch_settings/twitch"]
+layout_mode = 2
+text = "Enable Publishing mode?"
+horizontal_alignment = 2
+
+[node name="vb3" type="VBoxContainer" parent="VBoxContainer/twitch_settings/twitch"]
+layout_mode = 2
+alignment = 1
+
+[node name="val_publish" type="CheckBox" parent="VBoxContainer/twitch_settings/twitch/vb3"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+
+[node name="desc_publish" type="RichTextLabel" parent="VBoxContainer/twitch_settings/twitch"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "If publishing mode should be enabled. This should be checked if you plan on compiling and distributing binaries to users, but left unchecked if you only plan on sharing the source code."
+fit_content = true
+
+[node name="lbl_flow" type="Label" parent="VBoxContainer/twitch_settings/twitch"]
+layout_mode = 2
+text = "Authorization Flow"
+horizontal_alignment = 2
+
+[node name="vb" type="VBoxContainer" parent="VBoxContainer/twitch_settings/twitch"]
+layout_mode = 2
+alignment = 1
+
+[node name="val_flow" type="OptionButton" parent="VBoxContainer/twitch_settings/twitch/vb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+selected = 1
+item_count = 4
+popup/item_0/text = "Authorization Code"
+popup/item_1/text = "Implicit"
+popup/item_1/id = 1
+popup/item_2/text = "Device Code"
+popup/item_2/id = 2
+popup/item_3/text = "Client Credentials"
+popup/item_3/id = 3
+
+[node name="desc_flow" type="RichTextLabel" parent="VBoxContainer/twitch_settings/twitch"]
+layout_mode = 2
+bbcode_enabled = true
+text = "The authorization flow to use.
+
+[color=orange]If publishing mode is enabled and the end user does not specify their own Client ID and Client Secret, this is restricted to the Implicit grant flow.[/color]"
+fit_content = true
+
+[node name="lbl_clientid" type="Label" parent="VBoxContainer/twitch_settings/twitch"]
+layout_mode = 2
+text = "Client ID"
+horizontal_alignment = 2
+
+[node name="vb4" type="VBoxContainer" parent="VBoxContainer/twitch_settings/twitch"]
+layout_mode = 2
+alignment = 1
+
+[node name="val_clientid" type="LineEdit" parent="VBoxContainer/twitch_settings/twitch/vb4"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+editable = false
+secret = true
+
+[node name="desc_clientid" type="RichTextLabel" parent="VBoxContainer/twitch_settings/twitch"]
+layout_mode = 2
+bbcode_enabled = true
+text = "The Client ID to be included in the published app as a default.
+End users will be able to override this on the Welcome screen (even with Publish on) if they want to use their own Client ID (and Client Secret if they choose to use the Authorization Code flow).
+
+[color=orange]This should not be set if you are not intending to publish.[/color]"
+fit_content = true
+
+[node name="lbl_redirecturi" type="Label" parent="VBoxContainer/twitch_settings/twitch"]
+layout_mode = 2
+text = "Redirect URI"
+horizontal_alignment = 2
+
+[node name="vb2" type="VBoxContainer" parent="VBoxContainer/twitch_settings/twitch"]
+layout_mode = 2
+alignment = 1
+
+[node name="val_redirecturi" type="LineEdit" parent="VBoxContainer/twitch_settings/twitch/vb2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+text = "http://localhost:7170"
+
+[node name="desc_redirecturi" type="RichTextLabel" parent="VBoxContainer/twitch_settings/twitch"]
+layout_mode = 2
+bbcode_enabled = true
+text = "The redirect URI to be used as a default value on the Welcome screen."
+fit_content = true
+
+[connection signal="toggled" from="VBoxContainer/twitch_settings/twitch/vb3/val_publish" to="." method="_on_val_publish_toggled"]
+[connection signal="item_selected" from="VBoxContainer/twitch_settings/twitch/vb/val_flow" to="." method="_on_val_flow_item_selected"]
+[connection signal="text_changed" from="VBoxContainer/twitch_settings/twitch/vb4/val_clientid" to="." method="_on_val_clientid_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/twitch_settings/twitch/vb2/val_redirecturi" to="." method="_on_val_redirecturi_text_changed"]

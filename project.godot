@@ -8,13 +8,10 @@
 
 config_version=5
 
-[RidiculousStream]
-
-general/logging/enabled=31
-
 [application]
 
 config/name="Ridiculous Stream"
+config/version="2024.11.10.1"
 run/main_scene="res://empty.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.png"
@@ -36,7 +33,6 @@ gdscript/warnings/unused_signal=0
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/always_on_top=true
 window/size/transparent=true
 window/per_pixel_transparency/allowed=true
 
@@ -46,7 +42,7 @@ project/assembly_name="Ridiculous Stream"
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/ridiculous_stream_project_settings/plugin.cfg")
 
 [physics]
 
@@ -59,14 +55,6 @@ enabled=PackedStringArray()
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 viewport/transparent_background=true
-
-[ridiculous _stream]
-
-general/data_folder="C:/Users/Dario/AppData/Roaming/RidiculousStream"
-
-[ridiculous_stream]
-
-general/data_folder="C:/Users/Dario/AppData/Roaming/RidiculousStream"
 
 [twitch]
 
@@ -87,7 +75,7 @@ auth/scopes/whispers=3
 general/http_client/max_amount=6
 websocket/irc/username="iRadBot"
 websocket/irc/connect_to_channel=Array[StringName]([&"iraddev"])
-websocket/irc/login_message="Bot has successfully connected. TheYagich"
+websocket/irc/login_message="Happy birthday Ani and iRad!"
 eventsub/channel_update/broadcaster_user_id="443367221"
 eventsub/channel_follow/broadcaster_user_id="443367221"
 eventsub/channel_follow/moderator_user_id="443367221"

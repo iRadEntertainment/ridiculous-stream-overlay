@@ -15,20 +15,35 @@ func _check_token_refresh() -> void:
 
 	if _last_validation_check < Time.get_ticks_msec():
 		_last_validation_check = Time.get_ticks_msec() + 60 * 60 * 1000;
-		_validate_token()
+		validate_token()
 
-## Calles the validation endpoint of Twtich to make sure
-func _validate_token() -> void:
-	var validation_request = _http_client.request("/oauth2/validate", HTTPClient.METHOD_GET, {
-		"Authorization": "OAuth %s" % _tokens.get_access_token()
-	}, "")
-	var response = await _http_client.wait_for_request(validation_request)
+## Calls the validation endpoint of Twtich to make sure
+func validate_token(p_requests_remaining: int = 1) -> Dictionary:
+	if !_tokens.is_token_valid():
+		return {}
+	
+	var validation_request := _http_client.request(
+		"/oauth2/validate",
+		HTTPClient.METHOD_GET,
+		{
+			"Authorization": "OAuth %s" % _tokens.get_access_token()
+		},
+		""
+	)
+
+	var response := await _http_client.wait_for_request(validation_request)
 	if response.response_code != 200:
 		refresh_tokens()
-		return
+		if p_requests_remaining < 1:
+			return {}
+		return await validate_token(p_requests_remaining - 1)
 
-	var response_string: String = response.response_data.get_string_from_utf8();
+	var response_string := response.response_data.get_string_from_utf8();
 	var response_data = JSON.parse_string(response_string);
 	if response_data["expires_in"] <= 0:
 		refresh_tokens()
-		return
+		if p_requests_remaining < 1:
+			return {}
+		return await validate_token(p_requests_remaining - 1)
+
+	return response_data

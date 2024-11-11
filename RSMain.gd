@@ -27,6 +27,9 @@ var l: RSLogger
 @onready var btn_floating_menu: Button = %btn_floating_menu
 @onready var pnl_notifications: PanelContainer = %pnl_notifications
 
+# Panels
+@onready var pnl_welcome: PanelWelcome = %pnl_welcome
+
 @onready var alert_scene : RSAlertOverlay = %alert_scene
 @onready var physic_scene : RSPhysicsScene = %physics_scene
 
@@ -46,8 +49,7 @@ func _ready() -> void:
 	l.i("=================================== RIDICULOS STREAMING STARTED ===================================")
 	pnls = [
 		%pnl_chat,
-		%pnl_settings,
-		%pnl_welcome
+		%pnl_settings
 	]
 	setup_mouse_passthrough()
 	load_settings()
@@ -79,8 +81,23 @@ func get_all_control_nodes(node_to_search: Node, found: Array[Control] = []) -> 
 			found.append_array(new_found_nodes)
 	return found
 
+func _on_welcome_completed() -> void:
+	settings.welcome_version = ProjectSettings.get_setting("application/config/version")
+	save_settings()
+
+	pnl_welcome.completed.disconnect(_on_welcome_completed)
+	start_everything()
 
 func start_everything():
+	if pnl_welcome.should_show():
+		pnl_welcome.completed.connect(_on_welcome_completed)
+		pnl_welcome.start()
+		return
+
+	pnl_welcome.hide()
+
+	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, true)
+
 	twitcher.start()
 	custom.start()
 	vetting.start()
@@ -132,22 +149,19 @@ func user_from_username(username: String) -> RSTwitchUser:
 # ========================== LOAD/SAVE CONFIG ==================================
 func load_settings():
 	l.i("Loading settings...")
-	var loaded_settings := loader.load_settings()
-	if loaded_settings:
-		settings = loaded_settings
-	else:
-		print_debug("No settings loaded")
-
+	settings = loader.load_settings(settings)
 
 func save_settings():
 	l.i("Saving settings...")
 	loader.save_settings()
 
-
 func quit():
 	l.i("Exiting...")
-	save_settings()
-	save_known_users()
+
+	# Don't save anything if we haven't finished configuring, the settings may be in a bad state
+	if !pnl_welcome.should_show():
+		save_settings()
+		save_known_users()
 	get_tree().quit()
 
 

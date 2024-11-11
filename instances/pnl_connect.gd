@@ -29,5 +29,5 @@ func _on_btn_connect_at_startup_toggled(toggled_on:bool):
 
 func connect_to_twitch():
 	RS.settings.broadcaster_id = ln_broadcaster_id.text
-	RS.save_rs_settings()
+	RS.save_settings()
 	RS.twitcher.connect_to_twitch()

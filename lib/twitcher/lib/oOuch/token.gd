@@ -36,7 +36,7 @@ func _persist_tokens():
 
 ## Loads the tokens and returns the information if the file got created
 func _load_tokens():
-	print(_cache_file)
+	print("[_load_tokens] %s" % [_cache_file])
 	var status = _config_file.load_encrypted_pass(_cache_file, _encryption_secret)
 	if status == OK:
 		_expire_date = _config_file.get_value("auth", "expire_date", 0);

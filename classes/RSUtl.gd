@@ -1,17 +1,96 @@
 # Utilities
 class_name RSUtl
 
+const TYPE_NAMES := {
+	TYPE_BOOL: "bool",
+	TYPE_INT: "int",
+	TYPE_FLOAT: "float",
+	TYPE_STRING: "String",
+	TYPE_VECTOR2: "Vector2",
+	TYPE_VECTOR2I: "Vector2i",
+	TYPE_RECT2: "Rect2",
+	TYPE_RECT2I: "Rect2i",
+	TYPE_VECTOR3: "Vector3",
+	TYPE_VECTOR3I: "Vector3i",
+	TYPE_TRANSFORM2D: "Transform2D",
+	TYPE_VECTOR4: "Vector4",
+	TYPE_VECTOR4I: "Vector4i",
+	TYPE_PLANE: "Plane",
+	TYPE_QUATERNION: "Quaternion",
+	TYPE_AABB: "AABB",
+	TYPE_BASIS: "Basis",
+	TYPE_TRANSFORM3D: "Transform3D",
+	TYPE_PROJECTION: "Projection",
+	TYPE_COLOR: "Color",
+	TYPE_STRING_NAME: "StringName",
+	TYPE_NODE_PATH: "NodePath",
+	TYPE_RID: "Rid",
+	TYPE_OBJECT: "Object",
+	TYPE_CALLABLE: "Callable",
+	TYPE_SIGNAL: "Signal",
+	TYPE_DICTIONARY: "Dictionary",
+	TYPE_ARRAY: "Array",
+	TYPE_PACKED_BYTE_ARRAY: "PackedByteArray",
+	TYPE_PACKED_INT32_ARRAY: "PackedInt32Array",
+	TYPE_PACKED_INT64_ARRAY: "PackedInt64Array",
+	TYPE_PACKED_FLOAT32_ARRAY: "PackedFloat32Array",
+	TYPE_PACKED_FLOAT64_ARRAY: "PackedFloat64Array",
+	TYPE_PACKED_STRING_ARRAY: "PackedStringArray",
+	TYPE_PACKED_VECTOR2_ARRAY: "PackedVector2Array",
+	TYPE_PACKED_VECTOR3_ARRAY: "PackedVector3Array",
+	TYPE_PACKED_COLOR_ARRAY: "PackedColorArray",
+	TYPE_PACKED_VECTOR4_ARRAY: "PackedVector4Array",
+}
+
 
 static func save_to_json(file_path: String, variant: Variant) -> void:
-	var file = FileAccess.open(file_path, FileAccess.WRITE)
-	file.store_string(JSON.stringify(variant, "\t"))
-	file.close()
-static func load_json(file_path: String) -> Variant:
-	var file = FileAccess.open(file_path, FileAccess.READ)
-	var content = file.get_as_text()
-	file.close()
-	return JSON.parse_string(content)
+	var file := FileAccess.open(file_path, FileAccess.WRITE)
 
+	if file == null:
+		push_warning("[RSUtl.save_to_json] Failed to open %s" % [file_path])
+		return
+
+	file.store_string(JSON.stringify(variant, "\t"))
+
+static func load_json(file_path: String) -> Variant:
+	var file := FileAccess.open(file_path, FileAccess.READ)
+
+	if file == null:
+		push_warning("[RSUtl.load_json] Failed to open %s" % [file_path])
+		return null
+
+	var content := file.get_as_text()
+	var parsed = JSON.parse_string(content)
+	if parsed == null:
+		push_warning("[RSUtl.load_json] Failed to parse JSON in %s" % [file_path])
+		return null
+
+	return parsed
+
+static func get_type_string(p_value: Variant) -> String:
+	var type_of_value := typeof(p_value)
+	if type_of_value == TYPE_NIL:
+		return &"null"
+
+	if type_of_value >= TYPE_MAX:
+		return "Invalid/unknown type %d" % type_of_value
+
+	var type_name = TYPE_NAMES.get(type_of_value)
+	if type_of_value != TYPE_OBJECT:
+		if type_name == null:
+			return "Invalid/unknown type %d" % type_of_value
+		else:
+			return type_name
+
+	var value_object := p_value as Object
+	var value_class := value_object.get_class()
+	if value_class == null:
+		return "%s (unknown)" % [type_name]
+
+	return "%s (%s)" % [
+		type_name,
+		&"unknown" if value_class == null else value_class
+	]
 
 static func make_path(path):
 	if !DirAccess.dir_exists_absolute(path):
@@ -29,10 +108,14 @@ static func fix_external_res(file_path : String, from : String, to : String):
 
 static func list_file_in_folder(folder_path : String, types : Array = [], full_path := false) -> PackedStringArray:
 	var found_files : PackedStringArray = []
-	
+
 	if !folder_path.ends_with("/"):
 		folder_path += "/"
-	var dir = DirAccess.open(folder_path)
+
+	if !DirAccess.dir_exists_absolute(folder_path):
+		DirAccess.make_dir_recursive_absolute(folder_path)
+
+	var dir := DirAccess.open(folder_path)
 	if dir:
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
@@ -46,8 +129,8 @@ static func list_file_in_folder(folder_path : String, types : Array = [], full_p
 					#print("Found file: " + file_name)
 			file_name = dir.get_next()
 	else:
-		print("An error occurred when trying to access the path.")
-	
+		print("An error occurred when trying to access the directory: %s" % folder_path)
+
 	return found_files
 
 

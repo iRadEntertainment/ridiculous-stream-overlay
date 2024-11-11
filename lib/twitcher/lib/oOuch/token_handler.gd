@@ -33,7 +33,11 @@ func _init(setting: OAuthSetting) -> void:
 	_setting = setting;
 	_tokens = OAuthToken.new(setting.cache_file, setting.encryption_secret)
 	_http_client = OAuthHTTPClient.new(setting.get_token_host());
-	Engine.get_main_loop().process_frame.connect(_check_token_refresh);
+	_wait_frame_and_check_token_refresh();
+
+func _wait_frame_and_check_token_refresh() -> void:
+	await Engine.get_main_loop().process_frame;
+	_check_token_refresh();
 
 ## Checks if tokens runs up and starts refreshing it. (called often hold footprint small)
 func _check_token_refresh() -> void:

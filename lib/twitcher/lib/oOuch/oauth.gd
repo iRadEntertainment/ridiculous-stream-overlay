@@ -24,19 +24,28 @@ var login_in_process: bool;
 
 var _query_parser = RegEx.create_from_string("GET (.*?/?)\\??(.*?)? HTTP/1\\.1.*?")
 var _auth_http_server: OAuthHTTPServer;
-var _token_handler: OAuthTokenHandler;
+var _token_handler: TwitchTokenHandler;
 var _setting: OAuthSetting;
 var _last_login_attempt: int;
 
 enum AuthorizationFlow {
+	## Uses the auth code flow [url=https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#authorization-code-grant-flow]Twitch Documentation[/url][br]
+	## [b]Do not use this flow if publishing binaries for others to use[/b]
 	AUTHORIZATION_CODE_FLOW,
+
+	## Uses the implicit auth flow [url=https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#implicit-grant-flow]Twitch Documentation[/url][br]
+	## [b]Do not use this if sharing source code and not publishing binaries for others to use[/b]
 	IMPLICIT_FLOW,
+	
+	## Uses an device code and no redirect url [url=https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#device-code-grant-flow]Twitch Documentation[/url][br]
 	DEVICE_CODE_FLOW,
+
+	## Uses the client credentials auth flow [url=https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#client-credentials-grant-flow]Twitch Documentation[/url][br]
 	CLIENT_CREDENTIALS,
-	PASSWORD_FLOW
+	#PASSWORD_FLOW
 }
 
-func _init(setting: OAuthSetting, token_handler: OAuthTokenHandler) -> void:
+func _init(setting: OAuthSetting, token_handler: TwitchTokenHandler) -> void:
 	_setting = setting;
 	_auth_http_server = OAuthHTTPServer.new(setting.get_redirect_port());
 	_token_handler = token_handler;
@@ -74,7 +83,30 @@ func get_token() -> String:
 ## Depending on the authorization_flow it gets resolves the token via the different
 ## Flow types. Only one login process at the time. All other tries wait until the first process
 ## was succesful.
-func login() -> void:
+func login(force := false) -> void:
+	var validation_response := await _token_handler.validate_token();
+	if !force and validation_response.has("login"):
+		var validation_scopes := validation_response.get("scopes", []) as Array;
+		var needs_to_reauth := false;
+
+		for setting_scope in _setting.scopes:
+			var has_scope := false;
+			for validation_scope in validation_scopes:
+				has_scope = setting_scope == validation_scope;
+				if has_scope:
+					break;
+			needs_to_reauth = !has_scope;
+			if needs_to_reauth:
+				logDebug("Missing scope %s, forcing re-authentication" % [setting_scope]);
+				break;
+		
+		if !needs_to_reauth:
+			logInfo("Already authenticated as %s (%s)" % [
+				validation_response.get("login"),
+				validation_response.get("user_id")
+			]);
+			return;
+
 	if _last_login_attempt != 0 && Time.get_ticks_msec() - 60 * 1000 < _last_login_attempt:
 		print("[OAuth] Last Login attempt was within 1 minute wait 1 minute before trying again. Please enable and consult logs, cause there is an issue with your authentication!")
 		await Engine.get_main_loop().create_timer(60).timeout;
@@ -96,9 +128,9 @@ func login() -> void:
 			await _start_login_process("token");
 		AuthorizationFlow.DEVICE_CODE_FLOW:
 			await _start_device_login_process();
-		AuthorizationFlow.PASSWORD_FLOW:
-			logInfo("Password flow is not yet supported");
-			pass
+		#AuthorizationFlow.PASSWORD_FLOW:
+			#logInfo("Password flow is not yet supported");
+			#pass
 	login_in_process = false;
 
 func _start_login_process(response_type: String):

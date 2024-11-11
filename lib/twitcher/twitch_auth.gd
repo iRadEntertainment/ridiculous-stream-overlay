@@ -12,12 +12,13 @@ signal initialized();
 var l: RSLogger = RSLogger.new(RSSettings.LOGGER_NAME_AUTH)
 var auth: OAuth;
 var is_initialzied: bool;
+var token_handler: TwitchTokenHandler;
 
-
-func _init() -> void:
+func _init(p_rs_settings: RSSettings = null) -> void:
 	OAuth.set_logger(l.e, l.i, l.d);
-	var settings = await _get_setting()
-	auth = OAuth.new(settings, TwitchTokenHandler.new(settings));
+	var oauth_settings = await _get_setting(p_rs_settings)
+	token_handler = TwitchTokenHandler.new(oauth_settings);
+	auth = OAuth.new(oauth_settings, token_handler);
 	is_initialzied = true;
 	initialized.emit();
 
@@ -27,6 +28,9 @@ func _is_initialized() -> void:
 func login() -> void:
 	await _is_initialized();
 	await auth.login();
+
+func validate() -> Dictionary:
+	return await token_handler.validate_token()
 
 func ensure_authentication() -> void:
 	await _is_initialized();
@@ -44,23 +48,22 @@ func refresh_token() -> void:
 	await _is_initialized();
 	auth.refresh_token();
 
-func _get_setting() -> OAuthSetting:
-	var setting = OAuthSetting.new();
-	await setting.load_from_wellknown("https://id.twitch.tv/oauth2/.well-known/openid-configuration")
-	setting.device_authorization_url = "https://id.twitch.tv/oauth2/device";
-	setting.authorization_flow = _get_flow();
-	setting.client_id = RS.settings.client_id;
-	setting.client_secret = RS.settings.client_secret;
-	setting.redirect_url = RS.settings.redirect_url;
-	setting.cache_file = RS.settings.auth_cache;
-	setting.encryption_secret = RS.settings.client_secret;
-	setting.scopes = RS.settings.get_scopes();
-	return setting;
+func _get_setting(p_rs_settings: RSSettings = null) -> OAuthSetting:
+	var rs_settings: RSSettings = p_rs_settings if p_rs_settings else RS.settings
+	var oauth_settings = OAuthSetting.new();
+	await oauth_settings.load_from_wellknown("https://id.twitch.tv/oauth2/.well-known/openid-configuration")
+	oauth_settings.device_authorization_url = "https://id.twitch.tv/oauth2/device";
+	oauth_settings.authorization_flow = _get_flow();
+	oauth_settings.client_id = rs_settings.client_id;
+	oauth_settings.client_secret = rs_settings.client_secret;
+	oauth_settings.redirect_url = rs_settings.redirect_url;
+	oauth_settings.cache_file = rs_settings.auth_cache;
+	oauth_settings.encryption_secret = rs_settings.client_id if rs_settings.client_secret.is_empty() else rs_settings.client_secret;
+	oauth_settings.scopes = rs_settings.twitch_scopes;
+	return oauth_settings;
 
 func _get_flow() -> OAuth.AuthorizationFlow:
-	match RS.settings.authorization_flow:
-		RSSettings.FLOW_AUTHORIZATION_CODE: return OAuth.AuthorizationFlow.AUTHORIZATION_CODE_FLOW;
-		RSSettings.FLOW_CLIENT_CREDENTIALS: return OAuth.AuthorizationFlow.CLIENT_CREDENTIALS;
-		RSSettings.FLOW_DEVICE_CODE_GRANT: return OAuth.AuthorizationFlow.DEVICE_CODE_FLOW;
-		RSSettings.FLOW_IMPLICIT: return OAuth.AuthorizationFlow.IMPLICIT_FLOW;
-	return OAuth.AuthorizationFlow.AUTHORIZATION_CODE_FLOW;
+	return OAuth.AuthorizationFlow.get(RS.settings.authorization_flow, OAuth.AuthorizationFlow.AUTHORIZATION_CODE_FLOW) as OAuth.AuthorizationFlow;
+
+func test(p_client_id: String, p_client_secret: String, p_redirect_uri: String, ) -> bool:
+	return false

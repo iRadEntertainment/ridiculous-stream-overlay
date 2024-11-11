@@ -7,19 +7,47 @@ var HOST_PARSER = RegEx.create_from_string("(https://.*?)/")
 
 var cached = {}
 
-
 # TODO save/load as .RES
-func load_settings() -> RSSettings:
-	var path = RSSettings.get_settings_filepath()
-	if FileAccess.file_exists(path):
-		var json = RSUtl.load_json(path)
-		#return RSSettings.from_json(json)
-	return null
-func save_settings() -> void:
-	var path = RSSettings.get_settings_filepath()
-	# TODO: Figure out what this should be so it doesn't crash the program on close
-	#RSUtl.save_to_json(path, RS.settings.to_dict())
+func load_settings(p_default: RSSettings = null) -> RSSettings:
+	var path_to_settings_file := RSSettings.get_settings_filepath()
+	if FileAccess.file_exists(path_to_settings_file):
+		var loaded_settings = ResourceLoader.load(path_to_settings_file)
+		if loaded_settings == null:
+			push_warning("[RSLoader.load_settings] Failed to load settings or was null: %s" % [
+				path_to_settings_file
+			])
+			return p_default
 
+		if loaded_settings is RSSettings:
+			return loaded_settings
+
+		push_error("[RSLoader.load_settings] Expected RSSettings but found %s at %s" % [
+			RSUtl.get_type_string(loaded_settings),
+			path_to_settings_file
+		])
+		return p_default
+	else:
+		push_warning("[RSLoader.load_settings] Settings file does not exist, skipping load: %s" % [
+			path_to_settings_file
+		])
+		save_settings(RS.settings)
+		return p_default
+
+func save_settings(p_settings: RSSettings = null) -> void:
+	var path_to_settings_file := RSSettings.get_settings_filepath()
+	var result := ResourceSaver.save(
+		RS.settings if p_settings == null else p_settings,
+		path_to_settings_file
+	)
+
+	if result == OK:
+		print("Saved settings to %s" % [path_to_settings_file])
+		return
+	
+	push_error("Error %d, failed to save settings to %s" % [
+		result,
+		path_to_settings_file
+	])
 
 func load_sfx_from_sfx_folder(sfx_name : String) -> AudioStreamOggVorbis:
 	if sfx_name in cached.keys():

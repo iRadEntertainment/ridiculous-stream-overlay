@@ -31,18 +31,48 @@ static var path_settings: String:
 static func get_settings_filepath() -> String:
 	var path := "%s/%s" % [data_dir, RS_SETTINGS_FILE_NAME]
 	return path
+
 static func get_users_path() -> String:
 	var path := "%s/%s" % [data_dir, RS_USER_FOLDER]
 	return path
+
 static func get_obj_path() -> String:
 	var path := "%s/%s" % [data_dir, RS_OBJ_FOLDER]
 	return path
+
 static func get_sfx_path() -> String:
 	var path := "%s/%s" % [data_dir, RS_SFX_FOLDER]
 	return path
+
 static func get_logs_path() -> String:
 	var path := "%s/%s" % [data_dir, RS_LOG_FOLDER]
 	return path
+
+static var project_settings_twitch_publish: bool:
+	get: return ProjectSettings.get_setting("ridiculous_stream/twitch/publish", false)
+
+static var project_settings_twitch_client_id: String:
+	get: return ProjectSettings.get_setting("ridiculous_stream/twitch/client_id", "")
+
+static var project_settings_twitch_redirect_uri: String:
+	get: return ProjectSettings.get_setting("ridiculous_stream/twitch/redirect_uri", "http://localhost:7170")
+
+static var project_settings_twitch_grant_type: OAuth.AuthorizationFlow:
+	get:
+		var default_grant_type := OAuth.AuthorizationFlow.AUTHORIZATION_CODE_FLOW
+		if project_settings_twitch_publish:
+			default_grant_type = OAuth.AuthorizationFlow.IMPLICIT_FLOW
+
+		var default_grant_type_key := OAuth.AuthorizationFlow.keys()[default_grant_type] as String
+		var grant_type_key := ProjectSettings.get_setting(
+			"ridiculous_stream/twitch/grant_type",
+			default_grant_type_key
+		) as String
+		var grant_type := OAuth.AuthorizationFlow.get(
+			grant_type_key,
+			default_grant_type
+		) as OAuth.AuthorizationFlow
+		return grant_type
 
 static func _static_init() -> void:
 	if FileAccess.file_exists(_CONFIG_PATH):
@@ -57,23 +87,12 @@ static func _static_init() -> void:
 			push_error("Failed to save global configuration from %s: %d" % [_CONFIG_PATH, error])
 
 const LOCAL_RES_FOLDER = "res://local_res/"
-const RS_SETTINGS_FILE_NAME = "settings.json"
+const RS_SETTINGS_FILE_NAME = "settings.tres"
 const RS_VETTING_FILE_NAME = "user_vetting_list.json"
 const RS_LOG_FOLDER = "logs/"
 const RS_USER_FOLDER = "users/"
 const RS_OBJ_FOLDER = "obj/"
 const RS_SFX_FOLDER = "sfx/"
-
-
-## Uses the implicit auth flow see also: https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#implicit-grant-flow
-## @deprecated use AuthorizationCodeGrantFlow...
-const FLOW_IMPLICIT = "ImplicitGrantFlow";
-## Uses the client credentials auth flow see also: https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#client-credentials-grant-flow
-const FLOW_CLIENT_CREDENTIALS = "ClientCredentialsGrantFlow";
-## Uses the auth code flow see also: https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#authorization-code-grant-flow
-const FLOW_AUTHORIZATION_CODE = "AuthorizationCodeGrantFlow";
-## Uses an device code and no redirect url see: https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#device-code-grant-flow
-const FLOW_DEVICE_CODE_GRANT = "DeviceCodeGrantFlow";
 
 ## Twitcher Loggers
 const LOGGER_NAME_AUTH = "TwitchAuthorization"
@@ -115,100 +134,94 @@ const ALL_LOGGERS: Array[String] = [
 	LOGGER_NAME_VETTING,
 ]
 
-const SCOPES_DEFAULT_DIC := {
-			"chat": int(0),
-			"channel": int(0),
-			"moderator": int(0),
-			"user": int(0),
-		}
+@export var welcome_version: String = &""
 
+@export var twitch_features_enabled: Array[String] = []
+@export var twitch_scopes: Array[String] = []
 
 # RS settings
-var app_scale: float = 1.0
+@export var app_scale: float = 1.0
 
-var auto_connect : bool = false
-var max_messages_in_chat : int = 100
-var eventsubs : Dictionary
+@export var auto_connect : bool = false
+@export var max_messages_in_chat : int = 100
+@export var eventsubs : Dictionary
 
 # no-OBS-ws settings
-var obs_autoconnect : bool
-var obs_websocket_url : String
-var obs_websocket_port : int
+@export var obs_autoconnect : bool
+@export var obs_websocket_url : String
+@export var obs_websocket_port : int
 var obs_websocket_password : String
 
-var log_enabled: Array = ALL_LOGGERS
+@export var log_enabled: Array = ALL_LOGGERS
 
 # Twitcher settings
-var authorization_flow: String = FLOW_AUTHORIZATION_CODE
-var broadcaster_id: String
-var client_id: String
-var client_secret: String
-var redirect_url: String = "http://localhost:7170"
-var redirect_port: int = 7170
+@export var authorization_flow: String
+@export var broadcaster_id: String
+@export var broadcaster_name: String
+@export var client_id: String
+@export var client_secret: String
+@export var redirect_url: String
+@export var redirect_port: int = 7170
 
-# var scopes : Dictionary = SCOPES_DEFAULT_DIC
-var scopes: Array[String] = get_all_scopes_list()
+@export var force_verify: String = "false"
+@export var subscriptions: Dictionary
 
-var force_verify: String = "false"
-var subscriptions: Dictionary
-
-var image_transformers: Dictionary = {}
+@export var image_transformers: Dictionary = {}
 var image_transformer: TwitchImageTransformer
 
 
-var image_tranformer_path: String = "TwitchImageTransformer"
-var imagemagic_path: String
-var twitch_image_cdn_host: String = "https://static-cdn.jtvnw.net"
+@export var image_tranformer_path: String = "TwitchImageTransformer"
+@export var imagemagic_path: String
+@export var twitch_image_cdn_host: String = "https://static-cdn.jtvnw.net"
 
-var auth_cache: String = "user://auth.conf"
+@export var auth_cache: String = "user://auth.conf"
 #var secret_storage: String = "user://secrets.conf"
 
-var token_host: String = "https://id.twitch.tv"
-var token_endpoint: String = "/oauth2/token"
+@export var token_host: String = "https://id.twitch.tv"
+@export var token_endpoint: String = "/oauth2/token"
 
-# var fallback_texture2d: Texture2D
-# var fallback_profile: Texture2D
+# @export var fallback_texture2d: Texture2D
+# @export var fallback_profile: Texture2D
 
-var cache_emote: String = "user://emotes"
-var cache_badge: String = "user://badge"
-var cache_cheermote: String = "user://cheermote"
-var use_test_server: bool = false
+@export var cache_emote: String = "user://emotes"
+@export var cache_badge: String = "user://badge"
+@export var cache_cheermote: String = "user://cheermote"
+@export var use_test_server: bool = false
 
-var eventsub_test_server_url: String = "ws://127.0.0.1:8081/ws"
-var eventsub_live_server_url: String = "wss://eventsub.wss.twitch.tv/ws"
+@export var eventsub_test_server_url: String = "ws://127.0.0.1:8081/ws"
+@export var eventsub_live_server_url: String = "wss://eventsub.wss.twitch.tv/ws"
 
-var irc_server_url: String = "wss://irc-ws.chat.twitch.tv:443"
-var irc_username: String
-var irc_main_channel: String
-var irc_connect_to_channel: Array[StringName]
-var irc_login_message: String = "Bot has successfully connected."
-var irc_send_message_delay: int = 320
-# var default_caps: Array[TwitchIrcCapabilities.Capability] = [TwitchIrcCapabilities.COMMANDS, TwitchIrcCapabilities.TAGS];
-# var default_cap_val = TwitchIrcCapabilities.get_bit_value(default_caps);
+@export var chatbot_enabled := false
+@export var chatbot_use_eventsub := false
+@export var chatbot_username: String
+@export var chatbot_user_id: String
+@export var chatbot_join_message: String
+@export var chatbot_channel: String
+@export var chatbot_additional_channels: Array[String] = []
+@export var chatbot_send_message_delay := 320 # ms
+
+@export var irc_server_url: String = "wss://irc-ws.chat.twitch.tv:443"
+@export var irc_username: String
+@export var irc_main_channel: String
+@export var irc_connect_to_channel: Array[StringName]
+@export var irc_login_message: String = "Bot has successfully connected."
+@export var irc_send_message_delay: int = 320
+
+# TODO: Figure out if this should be exported, or if Capability needs to be made into a Resource
+#var default_caps: Array[TwitchIrcCapabilities.Capability] = [TwitchIrcCapabilities.COMMANDS, TwitchIrcCapabilities.TAGS];
+#var default_cap_val = TwitchIrcCapabilities.get_bit_value(default_caps);
 var irc_capabilities: Array[TwitchIrcCapabilities.Capability] = [TwitchIrcCapabilities.COMMANDS, TwitchIrcCapabilities.TAGS]
 
-var api_host: String = "https://api.twitch.tv"
+@export var api_host: String = "https://api.twitch.tv"
 
-var ignore_message_eventsub_in_seconds: int = 600
-var http_client_min: int = 2
-var http_client_max: int = 4
+@export var ignore_message_eventsub_in_seconds: int = 600
+@export var http_client_min: int = 2
+@export var http_client_max: int = 4
 
 
 
 func is_log_enabled(logger: String) -> bool:
 	return log_enabled.has(logger)
-
-
-func get_scopes() -> Dictionary:
-	var d = {}
-	for key in SCOPES_DEFAULT_DIC.keys():
-		var value : int = int(scopes[key])
-		d[key] = value
-	return d
-func set_scopes(values : Dictionary) -> void:
-	for key in SCOPES_DEFAULT_DIC.keys():
-		var value := int(values[key])
-		ProjectSettings.set_setting(key, value)
 
 func get_eventsubs() -> Dictionary:
 	var keys = []
@@ -246,23 +259,7 @@ func set_eventsubs(values : Dictionary) -> void:
 # 	d["max_messages_in_chat"] = max_messages_in_chat
 # 	return d
 
-# static func from_json(d: Dictionary) -> RSSettings:
-# 	var _settings = RSSettings.new()
-# 	if d.has("app_scale") && d["app_scale"] != null: _settings.app_scale = d["app_scale"]
-	
-# 	if d.has("scopes") && d["scopes"] != null: _settings.scopes = d["scopes"]
-# 	if d.has("eventsubs") && d["eventsubs"] != null: _settings.eventsubs = d["eventsubs"]
-	
-# 	if d.has("auto_connect") && d["auto_connect"] != null: _settings.auto_connect = d["auto_connect"]
-	
-# 	if d.has("obs_autoconnect") && d["obs_autoconnect"] != null: _settings.obs_autoconnect = d["obs_autoconnect"]
-# 	if d.has("obs_websocket_url") && d["obs_websocket_url"] != null: _settings.obs_websocket_url = d["obs_websocket_url"]
-# 	if d.has("obs_websocket_port") && d["obs_websocket_port"] != null: _settings.obs_websocket_port = d["obs_websocket_port"]
-# 	if d.has("obs_websocket_password") && d["obs_websocket_password"] != null: _settings.obs_websocket_password = d["obs_websocket_password"]
-# 	if d.has("log_enabled") && d["log_enabled"] != null: _settings.log_enabled = d["log_enabled"]
-	
-# 	if d.has("max_messages_in_chat") && d["max_messages_in_chat"] != null: _settings.max_messages_in_chat = d["max_messages_in_chat"]
-# 	return _settings
+
 
 
 # func set_broadcaster_id_for_all_eventsub():
@@ -288,12 +285,3 @@ func is_twitcher_setup() -> bool:
 	if !redirect_url: return false
 	if !redirect_port: return false
 	return true
-
-# ACTIVATE ALL SCOPES ('cause I can't be fucked to do it properly) JESUS
-static func get_all_scopes_list() -> Array[String]:
-	var res: Array[String] = []
-	for scope: TwitchScopes.Scope in TwitchScopes.get_all_scopes():
-		res.append(scope.value)
-	return res
-
-#var example_for_pandino = ["chat:read", "chat:edit"]
