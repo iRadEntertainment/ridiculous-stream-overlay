@@ -20,9 +20,11 @@ var l: RSLogger
 ## Key: url | value: array of BufferedHTTPClient
 var http_client_map: Dictionary;
 
-func init(_max: int, _min: int) -> void:
-	client_max = _max
-	client_min = _min
+func _init(p_max: int = 4, p_min: int = 2) -> void:
+	assert(p_min > 0, "p_min can't be below 1...");
+	assert(p_max > 0, "p_max can't be below 1...");
+	client_max = max(p_max, p_min)
+	client_min = min(p_max, p_min)
 	l = RSLogger.new(RSSettings.LOGGER_NAME_HTTP_CLIENT)
 	var cleanup_timer = Timer.new();
 	cleanup_timer.autostart = true;

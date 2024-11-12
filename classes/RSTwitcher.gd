@@ -36,8 +36,8 @@ func start():
 	l = RSLogger.new(RSSettings.LOGGER_NAME_SERVICE)
 	l.i("Starting...")
 	if !RS.settings.is_twitcher_setup():
-		
 		return
+
 	auth = await TwitchAuth.new()
 	api = TwitchRestAPI.new(auth)
 	icon_loader = TwitchIconLoader.new(api)

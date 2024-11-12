@@ -32,10 +32,17 @@ signal feature_selection_changed(p_id: String, p_selected: bool)
 		_update_expanded()
 
 @export var selected: bool = false:
+	get: return _selected
 	set(value):
-		if value == selected: return
-		selected = value
+		if value == _selected: return
+		_selected = value
 		_update_selected()
+
+var _selected: bool
+
+func set_selected_no_signal(p_selected: bool) -> void:
+	_selected = p_selected
+	_update_selected()
 
 func _ready() -> void:
 	_update_doc_link()

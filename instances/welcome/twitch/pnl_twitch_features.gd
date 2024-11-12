@@ -117,10 +117,25 @@ func _populate_from(p_feature_set: ScopedFeatureSet) -> void:
 		category_instance.features = features
 		%vb_feature_categories.add_child(category_instance)
 
+	if scope_aggregator:
+		_on_scopes_changed(scope_aggregator)
+
 #region Event Handlers
 
 func _on_scopes_changed(p_scope_aggregator: ScopeAggregator) -> void:
 	if Engine.is_editor_hint(): return
+
+	var features := p_scope_aggregator.features
+	for child in %vb_feature_categories.get_children():
+		if not child is FeatureCategory:
+			continue
+
+		var category := child as FeatureCategory
+		for entry in category.get_entry_controls():
+			var entry_selected := features.find(entry.id) >= 0
+			entry.set_selected_no_signal(entry_selected)
+
+		category.synchronize_selections()
 
 	var scopes: Array[String] = p_scope_aggregator.scopes
 	scopes.sort()

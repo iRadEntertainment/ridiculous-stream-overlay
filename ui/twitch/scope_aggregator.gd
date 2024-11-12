@@ -48,24 +48,54 @@ func connect_to(category: FeatureCategory) -> void:
 func disconnect_from(category: FeatureCategory) -> void:
 	category.feature_category_selection_changed.disconnect(_on_feature_category_selection_changed)
 
-func _on_feature_category_selection_changed(p_selections: Array[FeatureSelection]) -> void:
-	for selection in p_selections:
-		if selection.selected:
-			_active_features[selection.feature_id] = true
-		else:
-			_active_features.erase(selection.feature_id)
+func enable_feature(p_feature_id: String, p_enabled := true, p_no_signal := false) -> bool:
+	if p_enabled == _active_features.has(p_feature_id):
+		return false
 
-		var scopes := scopes_by_feature_id.get(selection.feature_id, []) as Array
+	var no_scope_change := p_enabled
+
+	if p_enabled:
+		var activation_count: int = _active_features.get_or_add(p_feature_id, 0) + 1
+		no_scope_change = activation_count > 1
+		_active_features[p_feature_id] = activation_count
+	else:
+		var activation_count: int = _active_features.get_or_add(p_feature_id, 0) - 1
+		if activation_count < 1:
+			_active_features.erase(p_feature_id)
+		else:
+			no_scope_change = true
+			_active_features[p_feature_id] = activation_count
+
+	if !no_scope_change:
+		var scopes := scopes_by_feature_id.get(p_feature_id, []) as Array
 		for scope in scopes:
-			var scope_count: int = _active_scopes.get_or_add(scope, 0)
-			if selection.selected:
-				scope_count += 1
-			else:
-				scope_count -= 1
-			
-			if scope_count < 1:
-				_active_scopes.erase(scope)
-			else:
-				_active_scopes[scope] = scope_count
+			enable_scope(scope, p_enabled, true)
+
+		if !p_no_signal:
+			scopes_changed.emit(self)
+
+	return true
+
+func enable_scope(p_scope: String, p_enabled := true, p_no_signal := false) -> void:
+	var scope_count: int = _active_scopes.get_or_add(p_scope, 0)
+
+	if p_enabled:
+		scope_count += 1
+	else:
+		scope_count -= 1
+
+	if scope_count < 1:
+		_active_scopes.erase(p_scope)
+	else:
+		_active_scopes[p_scope] = scope_count
+
+	if !p_no_signal:
+		scopes_changed.emit(self)
+
+func _on_feature_category_selection_changed(p_selections: Array[FeatureSelection]) -> void:
+	var scope_changed := false
+	for selection in p_selections:
+		if enable_feature(selection.feature_id, selection.selected, true):
+			scope_changed = true
 
 	scopes_changed.emit(self)

@@ -108,8 +108,7 @@ func start_everything():
 	display.start()
 	pnl_notifications.start()
 	alert_scene.start()
-	
-	
+
 	for pnl: Control in pnls:
 		if pnl.has_method("start"):
 			pnl.start()
@@ -150,6 +149,8 @@ func user_from_username(username: String) -> RSTwitchUser:
 func load_settings():
 	l.i("Loading settings...")
 	settings = loader.load_settings(settings)
+	HttpClientManager.client_max = settings.http_client_max
+	HttpClientManager.client_min = settings.http_client_min
 
 func save_settings():
 	l.i("Saving settings...")

@@ -31,7 +31,7 @@ func request(path: String, method: int, body: Variant = "", content_type: String
 	else:
 		request_body = JSON.stringify(body);
 
-	var _request = client._request(path, method, header, request_body)
+	var _request = client.request(path, method, header, request_body)
 	var response = await client.wait_for_request(_request);
 
 	# Token expired / or missing permissions

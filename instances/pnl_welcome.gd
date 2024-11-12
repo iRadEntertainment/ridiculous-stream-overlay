@@ -26,8 +26,21 @@ func start() -> void:
 	settings = RS.settings.duplicate(true)
 
 	# Initialize the scope aggregator with previously selected items
-	scope_aggregator.features = settings.twitch_features_enabled
-	scope_aggregator.scopes = settings.twitch_scopes
+	for feature in settings.twitch_features_enabled:
+		scope_aggregator.enable_feature(feature, true, true)
+
+	for scope in settings.twitch_scopes:
+		if scope_aggregator.scopes.find(scope) < 0:
+			scope_aggregator.enable_scope(scope, true, true)
+
+	if settings.chatbot_enabled:
+		if settings.chatbot_use_eventsub:
+			scope_aggregator.enable_feature("channel.chat.message", true, true)
+			scope_aggregator.enable_feature("send-chat-message", true, true)
+		else:
+			scope_aggregator.enable_scope("chat:read", true, true)
+			scope_aggregator.enable_scope("chat:write", true, true)
+
 	scope_aggregator.scopes_changed.connect(_on_scopes_changed)
 
 	print_verbose("Configuring Twitch API Features panel...")

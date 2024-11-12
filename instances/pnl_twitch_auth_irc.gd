@@ -42,9 +42,12 @@ func _ready() -> void:
 func _on_settings_changed(p_settings: RSSettings) -> void:
 	%hb_twitch_auth_broadcaster_id/input.text = p_settings.broadcaster_id
 	%hb_twitch_auth_broadcaster_name/input.text = p_settings.broadcaster_name
-	%input_twitch_chatbot_enabled.button_pressed = p_settings.chatbot_enabled
-	%input_twitch_chatbot_use_eventsub.button_pressed = p_settings.chatbot_use_eventsub
-	pass
+	%input_twitch_chatbot_enabled.set_pressed_no_signal(p_settings.chatbot_enabled)
+	%input_twitch_chatbot_use_eventsub.set_pressed_no_signal(p_settings.chatbot_use_eventsub)
+	%hb_twitch_chatbot_id/input.text = p_settings.chatbot_user_id
+	%hb_twitch_chatbot_name/input.text = p_settings.chatbot_username
+	%hb_twitch_chatbot_main_channel/input.text = p_settings.chatbot_channel if p_settings.chatbot_channel else p_settings.chatbot_username
+	%hb_twitch_chatbot_join_message/input.text = p_settings.chatbot_join_message
 
 func _on_scopes_changed(p_scope_aggregator: ScopeAggregator) -> void:
 	pass
@@ -105,7 +108,7 @@ func _on_twitch_auth_broadcaster_id_input_text_changed(new_text: String) -> void
 
 func _update_chatbot_enablement() -> void:
 	var should_enable_chatbot_section := settings.broadcaster_name and settings.broadcaster_id
-	%input_twitch_chatbot_enabled.button_pressed = should_enable_chatbot_section
+	%input_twitch_chatbot_enabled.disabled = !should_enable_chatbot_section
 
 func _on_input_twitch_chatbot_enabled_toggled(toggled_on: bool) -> void:
 	settings.chatbot_enabled = toggled_on
@@ -114,6 +117,13 @@ func _on_input_twitch_chatbot_enabled_toggled(toggled_on: bool) -> void:
 			input.editable = toggled_on
 		else:
 			input.disabled = !toggled_on
+
+	if settings.chatbot_use_eventsub:
+		scope_aggregator.enable_feature("channel.chat.message", toggled_on)
+		scope_aggregator.enable_feature("send-chat-message", toggled_on)
+	else:
+		scope_aggregator.enable_scope("chat:read", toggled_on)
+		scope_aggregator.enable_scope("chat:write", toggled_on)
 
 	if toggled_on:
 		_required_valid_field_count += 2
@@ -126,6 +136,13 @@ func _on_input_twitch_chatbot_enabled_toggled(toggled_on: bool) -> void:
 
 func _on_input_twitch_chatbot_use_eventsub_toggled(toggled_on: bool) -> void:
 	settings.chatbot_use_eventsub = toggled_on
+	
+	if toggled_on:
+		scope_aggregator.feat
+
+	# TODO: Force add user:write:chat and user:read:chat if event sub
+	
+
 
 func _on_twitch_chatbot_use_different_pressed() -> void:
 	pass # Replace with function body.

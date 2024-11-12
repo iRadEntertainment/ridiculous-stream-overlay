@@ -180,7 +180,7 @@ var image_transformer: TwitchImageTransformer
 @export var token_host: String = "https://id.twitch.tv"
 @export var token_endpoint: String = "/oauth2/token"
 
-# @export var fallback_texture2d: Texture2D
+@export var fallback_texture2d: Texture2D
 # @export var fallback_profile: Texture2D
 
 @export var cache_emote: String = "user://emotes"

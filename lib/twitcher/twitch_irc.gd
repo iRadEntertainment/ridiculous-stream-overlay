@@ -128,6 +128,7 @@ class EmoteLocation extends RefCounted:
 var auth: TwitchAuth;
 
 func _init(twitch_auth : TwitchAuth) -> void:
+	l = RSLogger.new(RSSettings.LOGGER_NAME_IRC);
 	auth = twitch_auth;
 	client.connection_state_changed.connect(_on_connection_state_changed);
 	client.message_received.connect(_data_received);
@@ -162,7 +163,7 @@ func _on_login(success: bool):
 	else: l.e("Can't connect");
 
 func _request_capabilities() -> void:
-	_send("CAP REQ :" + " ".join(RS.settings.irc_capabilities));
+	_send("CAP REQ :" + " ".join(RS.settings.irc_capabilities.map(func (capability: TwitchIrcCapabilities.Capability): return capability.get_name())));
 
 ## Reconnect to all channels the bot was joined before (in case programatically joined channels)
 func _reconnect_to_channels():

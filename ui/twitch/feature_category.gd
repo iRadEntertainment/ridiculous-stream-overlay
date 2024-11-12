@@ -54,6 +54,13 @@ var _selected: bool = false
 
 		_update_features()
 
+func get_entry_controls() -> Array[FeatureEntry]:
+	var controls: Array[FeatureEntry] = []
+	for child in %FeatureEntries.get_children():
+		if child is FeatureEntry:
+			controls.append(child)
+	return controls
+
 var _features_by_id := {}
 var _selections_by_id := {}
 
@@ -140,6 +147,7 @@ func _update_features() -> void:
 
 	# Remove nodes that are no longer being used
 	for feature_entry in feature_entries_to_prune:
+		%FeatureEntries.remove_child(feature_entry)
 		feature_entry.queue_free()
 
 	for feature_index in features.size():
@@ -179,7 +187,7 @@ func _on_check_select_category_toggled(toggled_on: bool) -> void:
 	_update_selections()
 	_update_selected()
 
-func _on_feature_selection_changed(p_id: String, p_selected: bool) -> void:
+func _on_feature_selection_changed(p_id: String, p_selected: bool, p_no_signal := false) -> void:
 	_selections_by_id[p_id] = p_selected
 
 	if !p_selected and selected:
@@ -202,10 +210,18 @@ func _on_feature_selection_changed(p_id: String, p_selected: bool) -> void:
 		updated_selection.selected = p_selected
 		selections.append(updated_selection)
 
-	var updated_selections: Array[FeatureSelection] = [updated_selection]
-	feature_category_selection_changed.emit(updated_selections)
+	if !p_no_signal:
+		var updated_selections: Array[FeatureSelection] = [updated_selection]
+		feature_category_selection_changed.emit(updated_selections)
 
 	# Automatically fill the Select All checkbox if all items in category are selected
+	_update_all_selected()
+
+func synchronize_selections() -> void:
+	for entry in get_entry_controls():
+		_on_feature_selection_changed(entry.id, entry.selected, true)
+
+func _update_all_selected() -> void:
 	var all_selected := selections.size() == features.size()
 	for selection in selections:
 		if !all_selected: break
