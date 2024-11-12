@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dseoyhiylvwnu"]
+[gd_scene load_steps=18 format=3 uid="uid://dseoyhiylvwnu"]
 
 [ext_resource type="Script" path="res://instances/pnl_settings.gd" id="1_5rbjj"]
 [ext_resource type="PackedScene" uid="uid://gi6k83qtu4y2" path="res://instances/pnl_rs_setting.tscn" id="1_7lr6v"]
@@ -12,8 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://bykc5hku6ubu8" path="res://ui/icon_irad.png" id="5_pus7l"]
 [ext_resource type="PackedScene" uid="uid://rvb1iyen7vu3" path="res://instances/pnl_rewards.tscn" id="6_d22ns"]
 [ext_resource type="Texture2D" uid="uid://b4gxd48s477ky" path="res://ui/icon-github.png" id="6_e1vcs"]
+[ext_resource type="Texture2D" uid="uid://br6wvwv8mpd2p" path="res://local_res/bean_01.png" id="6_r18nw"]
 [ext_resource type="PackedScene" uid="uid://cwbekbjfcqjml" path="res://instances/pnl_vetting.tscn" id="7_0wmw7"]
 [ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://ui/bootstrap_icons/arrow-repeat.svg" id="7_a5jks"]
+[ext_resource type="PackedScene" uid="uid://n34kine1d6ij" path="res://instances/pnl_beans.tscn" id="12_3omwv"]
 [ext_resource type="Texture2D" uid="uid://b2mtooi658yq0" path="res://ui/sprites/loading.png" id="12_yksnf"]
 
 [node name="pnl_settings" type="PanelContainer"]
@@ -78,6 +80,17 @@ icon = ExtResource("4_7hk7t")
 icon_alignment = 1
 expand_icon = true
 
+[node name="btn_tab ANI USE THIS" type="Button" parent="vb/hb/side/side_vb"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+theme_override_colors/icon_pressed_color = Color(0.803922, 0.486275, 0.996078, 1)
+toggle_mode = true
+icon = ExtResource("6_r18nw")
+icon_alignment = 1
+expand_icon = true
+
 [node name="empty" type="Control" parent="vb/hb/side"]
 layout_mode = 2
 mouse_filter = 2
@@ -97,7 +110,7 @@ clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-current_tab = 1
+current_tab = 2
 tabs_visible = false
 
 [node name="pnl_settings" type="PanelContainer" parent="vb/hb/tabs"]
@@ -129,6 +142,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="users" type="HSplitContainer" parent="vb/hb/tabs"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.5
@@ -146,7 +160,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="pnl_twitch_utilities" type="PanelContainer" parent="vb/hb/tabs"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -159,6 +172,10 @@ custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 
 [node name="Control" type="Control" parent="vb/hb/tabs/pnl_twitch_utilities/hb"]
+layout_mode = 2
+
+[node name="pnl_beans" parent="vb/hb/tabs" instance=ExtResource("12_3omwv")]
+visible = false
 layout_mode = 2
 
 [node name="bot" type="PanelContainer" parent="vb"]
