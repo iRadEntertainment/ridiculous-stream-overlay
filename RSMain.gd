@@ -90,6 +90,17 @@ func _on_welcome_completed() -> void:
 
 func start_everything():
 	if pnl_welcome.should_show():
+		var current_screen := DisplayServer.window_get_current_screen()
+		var current_screen_usable_rect := DisplayServer.screen_get_usable_rect(current_screen)
+		var window_size := get_window().size
+		var decorated_size := get_window().get_size_with_decorations()
+		var decorations_size := decorated_size - window_size
+		var target_size_x := mini(current_screen_usable_rect.size.x, decorated_size.x) - decorations_size.x
+		var target_size_y := mini(current_screen_usable_rect.size.y, decorated_size.y) - decorations_size.y
+		var target_size := Vector2i(mini(target_size_x, window_size.x), mini(target_size_y, window_size.y))
+		get_window().size = target_size
+		get_window().move_to_center()
+
 		pnl_welcome.completed.connect(_on_welcome_completed)
 		pnl_welcome.start()
 		return
