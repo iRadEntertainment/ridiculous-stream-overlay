@@ -78,7 +78,7 @@ func connect_to_twitch():
 	l.i("Connecting...")
 	await auth.ensure_authentication()
 	l.i("Auth ensured.")
-	#if RS.settings.irc_username in [null, ""]:
+	#if RS.settings.chatbot_username in [null, ""]:
 		#var user_response := await api.get_users([str(RS.settings.broadcaster_id)], [])
 		#var user := user_response.data[0]
 		#RS.settings.user_login = user.login
@@ -99,8 +99,8 @@ func _init_chat() -> void:
 	irc.received_privmsg.connect(commands.handle_chat_command);
 	irc.received_whisper.connect(commands.handle_whisper_command);
 	irc.connect_to_irc();
-	if !RS.settings.irc_connect_to_channel.is_empty():
-		irc.join_channel(RS.settings.irc_connect_to_channel.front())
+	if !RS.settings.chatbot_channels.is_empty():
+		irc.join_channel(RS.settings.chatbot_channels.front())
 	icon_loader.do_preload();
 	await icon_loader.preload_done;
 
@@ -185,11 +185,11 @@ func _on_irc_received_privmsg(channel_name: String, username: String, message: S
 	received_chat_message.emit(channel_name, username, message, tags)
 
 func chat(msg : String, channel_name := ""):
-	if channel_name == "":
-		if !RS.settings.irc_connect_to_channel.is_empty():
-			irc.chat(msg, RS.settings.irc_connect_to_channel.front())
+	if (not channel_name is String) or channel_name.strip_edges().is_empty():
+		if !RS.settings.chatbot_channels.is_empty():
+			irc.chat(msg, RS.settings.chatbot_channels.front());
 	else:
-		irc.chat(msg, channel_name)
+		irc.chat(msg, channel_name);
 
 func whisper(_message: String, _username: String) -> void:
 	l.e("Whipser from bots aren't supported by Twitch anymore. See https://dev.twitch.tv/docs/irc/chat-commands/ at /w")

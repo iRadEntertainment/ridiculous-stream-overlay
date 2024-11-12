@@ -26,14 +26,14 @@ var sprite_effect : SpriteFrameEffect
 
 
 func start():
-	if !RS.settings.irc_main_channel:
+	if !RS.settings.chatbot_channel:
 		return
 	if !RS.twitcher.received_chat_message.is_connected(_on_chat_message):
 		RS.twitcher.received_chat_message.connect(_on_chat_message)
 	sprite_effect = SpriteFrameEffect.new()
 	lb_chat.install_effect(sprite_effect)
 	pnl_connect.start()
-	%lb_channel.text = RS.settings.irc_connect_to_channel.front()
+	%lb_channel.text = RS.settings.chatbot_channels.front()
 
 
 var badge_id = 0

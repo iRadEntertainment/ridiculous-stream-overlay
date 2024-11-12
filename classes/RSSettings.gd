@@ -200,17 +200,25 @@ var image_transformer: TwitchImageTransformer
 @export var chatbot_additional_channels: Array[String] = []
 @export var chatbot_send_message_delay := 320 # ms
 
+var chatbot_channels: Array[String]:
+	get:
+		var channels: Array[String] = [];
+		if !chatbot_channel.is_empty():
+			channels.append(chatbot_channel);
+		if !chatbot_additional_channels.is_empty():
+			channels.append_array(chatbot_additional_channels);
+		return channels;
+
 @export var irc_server_url: String = "wss://irc-ws.chat.twitch.tv:443"
-@export var irc_username: String
-@export var irc_main_channel: String
-@export var irc_connect_to_channel: Array[StringName]
-@export var irc_login_message: String = "Bot has successfully connected."
-@export var irc_send_message_delay: int = 320
 
 # TODO: Figure out if this should be exported, or if Capability needs to be made into a Resource
 #var default_caps: Array[TwitchIrcCapabilities.Capability] = [TwitchIrcCapabilities.COMMANDS, TwitchIrcCapabilities.TAGS];
 #var default_cap_val = TwitchIrcCapabilities.get_bit_value(default_caps);
-var irc_capabilities: Array[TwitchIrcCapabilities.Capability] = [TwitchIrcCapabilities.COMMANDS, TwitchIrcCapabilities.TAGS]
+var irc_capabilities: Array[TwitchIrcCapabilities.Capability] = [
+	TwitchIrcCapabilities.COMMANDS,
+	TwitchIrcCapabilities.MEMBERSHIP,
+	TwitchIrcCapabilities.TAGS,
+]
 
 @export var api_host: String = "https://api.twitch.tv"
 

@@ -40,7 +40,7 @@ var client: WebsocketClient = WebsocketClient.new();
 var next_message : int = Time.get_ticks_msec();
 
 ## Messages to send with an interval for disconnection protection
-## see TwitchSettings.irc_send_message_delay.
+## see TwitchSettings.chatbot_send_message_delay.
 var chat_queue : Array[String] = []
 
 ## All connected channels of the bot. Contains Key: channel_name -> Value: ChannelData entries.
@@ -154,7 +154,7 @@ func _on_connection_state_changed(state: WebSocketPeer.State):
 ## Sends the login message for authorization pupose and sets an username
 func _login() -> void:
 	client.send_text("PASS oauth:%s" % await auth.get_access_token());
-	_send("NICK " + RS.settings.irc_username);
+	_send("NICK " + RS.settings.chatbot_username);
 
 ## Callback after a login try was made with the result value as parameter
 func _on_login(success: bool):
@@ -170,9 +170,9 @@ func _reconnect_to_channels():
 	for channel_name in channel_maps: join_channel(channel_name);
 
 func _join_channels_on_connect():
-	for channel_name: String in RS.settings.irc_connect_to_channel:
+	for channel_name: String in RS.settings.chatbot_channels:
 		var channel = join_channel(channel_name);
-		var message: String = RS.settings.irc_login_message;
+		var message: String = RS.settings.chatbot_join_message;
 		if message != "":
 			await channel.is_joined();
 			chat(message, channel_name);
@@ -199,7 +199,7 @@ func _send_messages() -> void:
 	if not chat_queue.is_empty() && next_message <= Time.get_ticks_msec():
 		var msg_to_send = chat_queue.pop_front();
 		_send(msg_to_send);
-		next_message = Time.get_ticks_msec() + RS.settings.irc_send_message_delay;
+		next_message = Time.get_ticks_msec() + RS.settings.chatbot_send_message_delay;
 
 ## Sends join channel message
 func join_channel(channel_name : String) -> ChannelData:
