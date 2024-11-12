@@ -2,7 +2,7 @@
 extends PanelContainer
 class_name RSParamInspector
 
-var params : RSBeansParam : set = set_params
+var params : RSBeansParam : get = get_params , set = set_params 
 
 
 func populate_fields():
@@ -57,7 +57,7 @@ func params_from_fields() -> RSBeansParam:
 	new_params.is_destroy = %ck_is_destroy.button_pressed
 	new_params.is_poly_fracture = %ck_is_fracture.button_pressed
 	
-	new_params.scale = Vector2(%sb_scale_x.value, %sb_scale_y.value)
+	new_params.scale = float(%sb_scale.value)
 	new_params.spawn_count_min = %sb_spawn_min.value as int
 	new_params.spawn_count_max = %sb_spawn_max.value as int
 	new_params.coll_layer = %sb_coll_layer.value as int

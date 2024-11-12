@@ -46,6 +46,7 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="param_inspector" parent="scroll/vertical box/sub_res" instance=ExtResource("2_bunmk")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [connection signal="pressed" from="scroll/vertical box/horizontal box/btn_test_beans" to="." method="_on_btn_test_beans_pressed"]

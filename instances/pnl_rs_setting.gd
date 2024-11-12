@@ -36,7 +36,7 @@ func _on_btn_obs_req_api_pressed() -> void:
 
 
 func _on_sl_window_scale_value_changed(value: float) -> void:
-	%lb_window_scale.text = "x%s" % value
+	%lb_window_scale.text = "x%.2f" % value
 
 
 func _on_sl_window_scale_drag_ended(_value_changed: bool) -> void:
