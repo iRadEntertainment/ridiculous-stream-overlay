@@ -32,6 +32,7 @@ func start():
 		RS.twitcher.received_chat_message.connect(_on_chat_message)
 	sprite_effect = SpriteFrameEffect.new()
 	lb_chat.install_effect(sprite_effect)
+	lb_chat.clear()
 	pnl_connect.start()
 	%lb_channel.text = RS.settings.chatbot_channels.front()
 

@@ -130,7 +130,7 @@ func _on_input_twitch_chatbot_enabled_toggled(toggled_on: bool) -> void:
 		scope_aggregator.enable_feature("send-chat-message", toggled_on)
 	else:
 		scope_aggregator.enable_scope("chat:read", toggled_on)
-		scope_aggregator.enable_scope("chat:write", toggled_on)
+		scope_aggregator.enable_scope("chat:edit", toggled_on)
 
 	if toggled_on:
 		_required_valid_field_count += 2
@@ -142,28 +142,49 @@ func _on_input_twitch_chatbot_enabled_toggled(toggled_on: bool) -> void:
 		_required_valid_field_count -= 2
 
 func _on_input_twitch_chatbot_use_eventsub_toggled(toggled_on: bool) -> void:
-	settings.chatbot_use_eventsub = toggled_on
-	
-	if toggled_on:
-		scope_aggregator.feat
+	settings.chatbot_use_eventsub = toggled_on;
 
-	# TODO: Force add user:write:chat and user:read:chat if event sub
-	
+	scope_aggregator.enable_feature("send-chat-message", toggled_on);
+	scope_aggregator.enable_feature("channel.chat.message", toggled_on);
+	scope_aggregator.enable_scope("chat:edit", !toggled_on);
+	scope_aggregator.enable_scope("chat:read", !toggled_on);
 
 
 func _on_twitch_chatbot_use_different_pressed() -> void:
 	pass # Replace with function body.
 
 func _on_twitch_chatbot_name_input_text_changed(new_text: String) -> void:
-	settings.chatbot_username = new_text
-	_mark_field_valid("chatbot_username", !new_text.is_empty())
+	settings.chatbot_username = new_text;
+	_mark_field_valid("chatbot_username", !new_text.is_empty());
 
 func _on_twitch_chatbot_id_input_text_changed(new_text: String) -> void:
-	settings.chatbot_user_id = new_text
-	_mark_field_valid("chatbot_user_id", !new_text.is_empty())
+	settings.chatbot_user_id = new_text;
+	_mark_field_valid("chatbot_user_id", !new_text.is_empty());
 
 func _on_twitch_chatbot_join_message_input_text_changed(new_text: String) -> void:
-	settings.chatbot_join_message = new_text if !new_text.is_empty() else %hb_twitch_chatbot_join_message/input.placeholder_text
+	settings.chatbot_join_message = new_text \
+		if !new_text.is_empty() \
+		else %hb_twitch_chatbot_join_message/input.placeholder_text;
 
 func _on_twitch_chatbot_main_channel_input_text_changed(new_text: String) -> void:
-	settings.chatbot_channel = new_text
+	settings.chatbot_channel = new_text;
+
+func _presubmit(p_settings: RSSettings) -> void:
+	p_settings.chatbot_join_message = _pick_chatbot_join_message(p_settings);
+	p_settings.chatbot_channel = _pick_chatbot_channel(p_settings);
+
+func _pick_chatbot_join_message(p_settings: RSSettings) -> String:
+	var chatbot_join_message := p_settings.chatbot_join_message;
+	if chatbot_join_message.is_empty():
+		chatbot_join_message = %hb_twitch_chatbot_join_message/input.text;
+	if chatbot_join_message.is_empty():
+		chatbot_join_message = %hb_twitch_chatbot_join_message/input.placeholder_text;
+	return chatbot_join_message;
+
+func _pick_chatbot_channel(p_settings: RSSettings) -> String:
+	var chatbot_channel := p_settings.chatbot_channel;
+	if chatbot_channel.is_empty():
+		chatbot_channel = %hb_twitch_chatbot_main_channel/input.text;
+	if chatbot_channel.is_empty():
+		chatbot_channel = %hb_twitch_chatbot_main_channel/input.placeholder_text;
+	return chatbot_channel;

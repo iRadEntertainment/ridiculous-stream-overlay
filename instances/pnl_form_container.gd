@@ -35,3 +35,6 @@ func _check_completion(p_was_marked_valid: bool) -> void:
 		completion_changed.emit(self, false)
 
 	_was_completed = is_completed
+
+func _presubmit(p_settings: RSSettings) -> void:
+	pass

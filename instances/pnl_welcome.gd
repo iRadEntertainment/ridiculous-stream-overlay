@@ -39,7 +39,7 @@ func start() -> void:
 			scope_aggregator.enable_feature("send-chat-message", true, true)
 		else:
 			scope_aggregator.enable_scope("chat:read", true, true)
-			scope_aggregator.enable_scope("chat:write", true, true)
+			scope_aggregator.enable_scope("chat:edit", true, true)
 
 	scope_aggregator.scopes_changed.connect(_on_scopes_changed)
 
@@ -98,6 +98,11 @@ func _on_btn_next_pressed() -> void:
 	if %tabs_welcome.current_tab + 1 < %tabs_welcome.get_tab_count():
 		%tabs_welcome.current_tab = min(%tabs_welcome.current_tab + 1, %tabs_welcome.get_tab_count())
 	else:
+		for child in %tabs_welcome.get_children():
+			if child is PanelFormContainer:
+				var form_container := child as PanelFormContainer
+				form_container._presubmit(settings)
+
 		RS.settings = settings
 		completed.emit()
 
