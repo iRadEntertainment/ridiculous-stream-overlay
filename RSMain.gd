@@ -24,7 +24,7 @@ var l: RSLogger
 @onready var display: RSDisplay = %RSDisplay
 
 # Control nodes
-@onready var btn_floating_menu: Button = %btn_floating_menu
+@onready var btn_floating_menu: RSFloatingMenu = %btn_floating_menu
 @onready var pnl_notifications: PanelContainer = %pnl_notifications
 
 # Panels
@@ -90,41 +90,36 @@ func _on_welcome_completed() -> void:
 
 func start_everything():
 	if pnl_welcome.should_show():
-		var current_screen := DisplayServer.window_get_current_screen()
-		var current_screen_usable_rect := DisplayServer.screen_get_usable_rect(current_screen)
-		var window_size := get_window().size
-		var decorated_size := get_window().get_size_with_decorations()
-		var decorations_size := decorated_size - window_size
-		var target_size_x := mini(current_screen_usable_rect.size.x, decorated_size.x) - decorations_size.x
-		var target_size_y := mini(current_screen_usable_rect.size.y, decorated_size.y) - decorations_size.y
-		var target_size := Vector2i(mini(target_size_x, window_size.x), mini(target_size_y, window_size.y))
-		get_window().size = target_size
-		get_window().move_to_center()
+		get_window().always_on_top = false;
+		RSUtl.fit_and_center_window_to_display(get_window());
+		btn_floating_menu.hide();
+		pnl_welcome.completed.connect(_on_welcome_completed);
+		pnl_welcome.start();
+		return;
 
-		pnl_welcome.completed.connect(_on_welcome_completed)
-		pnl_welcome.start()
-		return
+	pnl_welcome.hide();
 
-	pnl_welcome.hide()
+	await Engine.get_main_loop().process_frame;
 
-	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, true)
+	get_window().always_on_top = true;
 
-	twitcher.start()
-	custom.start()
-	vetting.start()
-	shoutout_mng.start()
-	no_obs_ws.start()
-	btn_floating_menu.start()
-	physic_scene.start()
-	display.start()
-	pnl_notifications.start()
-	alert_scene.start()
+	display.start();
+
+	btn_floating_menu.show();
+
+	twitcher.start();
+	custom.start();
+	vetting.start();
+	shoutout_mng.start();
+	no_obs_ws.start();
+	btn_floating_menu.start();
+	physic_scene.start();
+	pnl_notifications.start();
+	alert_scene.start();
 
 	for pnl: Control in pnls:
 		if pnl.has_method("start"):
 			pnl.start()
-
-
 
 # =============================== KNOWN USERS ==================================
 func load_known_user(username := ""):
@@ -132,13 +127,16 @@ func load_known_user(username := ""):
 		known_users = loader.load_all_user()
 	else:
 		known_users[username] = loader.load_userfile(username)
+
 func save_known_users():
 	loader.save_all_user(known_users)
+
 func get_known_user(username : String) -> RSTwitchUser:
 	var user = null
 	if username in known_users.keys():
 		user = known_users[username]
 	return user
+
 func user_from_username(username: String) -> RSTwitchUser:
 	if username in known_users:
 		return known_users[username]
@@ -174,6 +172,7 @@ func quit():
 	if !pnl_welcome.should_show():
 		save_settings()
 		save_known_users()
+
 	get_tree().quit()
 
 
