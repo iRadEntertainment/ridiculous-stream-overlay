@@ -19,6 +19,7 @@ var settings: RSSettings:
 		if value == settings: return
 		settings = value
 		_on_settings_changed(settings)
+		_on_scopes_changed(scope_aggregator)
 
 @onready var chatbot_inputs_all: Array[Control] = [
 	%input_twitch_chatbot_enabled,
@@ -50,7 +51,13 @@ func _on_settings_changed(p_settings: RSSettings) -> void:
 	%hb_twitch_chatbot_join_message/input.text = p_settings.chatbot_join_message
 
 func _on_scopes_changed(p_scope_aggregator: ScopeAggregator) -> void:
-	pass
+	if settings:
+		for scope in p_scope_aggregator.scopes:
+			if settings.twitch_scopes.find(scope) < 0:
+				%hb_twitch_auth_broadcaster_id/input.text = "";
+				%hb_twitch_auth_broadcaster_name/input.text = "";
+				_on_twitch_auth_broadcaster_id_input_text_changed("");
+				_on_twitch_auth_broadcaster_name_input_text_changed("");
 
 func _on_btn_connect_to_twitch_pressed() -> void:
 	%hb_twitch_auth_connect/btn_connect_to_twitch.disabled = true;

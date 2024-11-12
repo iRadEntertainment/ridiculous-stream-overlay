@@ -187,48 +187,71 @@ func _on_check_select_category_toggled(toggled_on: bool) -> void:
 	_update_selections()
 	_update_selected()
 
-func _on_feature_selection_changed(p_id: String, p_selected: bool, p_no_signal := false) -> void:
-	_selections_by_id[p_id] = p_selected
+func _on_feature_selection_changed(p_id: String, p_selected: bool, p_no_signal := false, p_skip_update_all_selected := false) -> void:
+	_selections_by_id[p_id] = p_selected;
 
 	if !p_selected and selected:
-		set_selected_no_signal(false)
+		set_selected_no_signal(false);
 
-	var updated_selection: FeatureSelection
-	var missing_selection := false
+	var updated_selection: FeatureSelection;
+	var missing_selection := false;
 
-	_selections_by_id[p_id] = p_selected
+	_selections_by_id[p_id] = p_selected;
 
 	for selection in selections:
-		if selection.feature_id != p_id: continue
-		selection.selected = p_selected
-		updated_selection = selection
-		break
+		if selection.feature_id != p_id: continue;
+		selection.selected = p_selected;
+		updated_selection = selection;
+		break;
 
 	if not updated_selection:
-		updated_selection = FeatureSelection.new()
-		updated_selection.feature_id = p_id
-		updated_selection.selected = p_selected
-		selections.append(updated_selection)
+		updated_selection = FeatureSelection.new();
+		updated_selection.feature_id = p_id;
+		updated_selection.selected = p_selected;
+		selections.append(updated_selection);
 
 	if !p_no_signal:
-		var updated_selections: Array[FeatureSelection] = [updated_selection]
-		feature_category_selection_changed.emit(updated_selections)
+		var updated_selections: Array[FeatureSelection] = [updated_selection];
+		feature_category_selection_changed.emit(updated_selections);
 
 	# Automatically fill the Select All checkbox if all items in category are selected
-	_update_all_selected()
+	if !p_skip_update_all_selected:
+		_update_all_selected();
 
 func synchronize_selections() -> void:
 	for entry in get_entry_controls():
-		_on_feature_selection_changed(entry.id, entry.selected, true)
+		_on_feature_selection_changed(entry.id, entry.selected, true, true);
+
+	_update_all_selected();
 
 func _update_all_selected() -> void:
-	var all_selected := selections.size() == features.size()
+	var unselected_features: Array[String] = [];
+
+	var all_selected := selections.size() == _features_by_id.size();
 	for selection in selections:
-		if !all_selected: break
-		if selection.selected: continue
-		all_selected = false
-		break
-	set_selected_no_signal(all_selected)
+		if !all_selected and !OS.is_debug_build():
+			break;
+
+		if selection.selected:
+			continue;
+
+		all_selected = false;
+
+		if OS.is_debug_build():
+			if category_name == "Channel":
+				breakpoint
+			unselected_features.append(selection.feature_id);
+			continue;
+
+		break;
+
+	if !all_selected and OS.is_debug_build():
+		print_debug("[FeatureCategory][%s] Unselected features: %s" % [
+			category_name,
+			", ".join(unselected_features)
+		]);
+
+	set_selected_no_signal(all_selected);
 
 func set_selected_no_signal(p_selected: bool) -> void:
 	_selected = p_selected
