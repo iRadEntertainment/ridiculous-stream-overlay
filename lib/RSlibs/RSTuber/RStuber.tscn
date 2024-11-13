@@ -1,0 +1,74 @@
+[gd_scene load_steps=5 format=3 uid="uid://cne3qohuibmd2"]
+
+[ext_resource type="Script" path="res://lib/RSlibs/RSTuber/RSTuber.gd" id="1_k38vi"]
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_67h81"]
+
+[sub_resource type="Shader" id="Shader_vwuoy"]
+code = "shader_type canvas_item;
+
+// https://godotshaders.com/shader/spectrum-analyzer/
+
+const int VU_COUNT = 30;
+uniform float segment_count : hint_range(6.0, 60.0, 2.0) = 40.0;
+uniform float reticle_precision : hint_range(0.01, 0.90, 0.01) = 0.15;
+
+uniform float[VU_COUNT] freq_data;
+
+void fragment() {
+	vec2 uv = UV;
+	uv.y = 1.0 - uv.y;
+	float vu_count = float(VU_COUNT);
+	vec2 pos = vec2(floor(uv.x * vu_count) / vu_count, floor(uv.y * segment_count) / segment_count);
+	float fft = freq_data[int(uv.x * vu_count)];
+	vec3 color = mix(vec3(0.0, 2.0, 1.0), vec3(2.0, 0.0, 0.0), sqrt(uv.y));
+	float mask = pos.y < fft ? 1.0 : 0.1;
+	vec2 dist = fract((uv - pos) * vec2(vu_count, segment_count)) - 0.5;
+	float step_reticle = 0.5 - reticle_precision;
+	float led = smoothstep(0.5, step_reticle, abs(dist.x)) * smoothstep(0.5, step_reticle, abs(dist.y));
+	COLOR = vec4(led * color * mask, 1.0);
+	COLOR.a = led;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3584b"]
+shader = SubResource("Shader_vwuoy")
+shader_parameter/segment_count = 24.0
+shader_parameter/reticle_precision = 0.08
+shader_parameter/freq_data = [1.35218e-06, 1.35218e-06, 1.35218e-06, 1.35218e-06, 0.2141, 0.784293, 0.784293, 0.784293, 0.982213, 0.982213, 0.839167, 0.980633, 0.970766, 0.806127, 0.64827, 0.278835, 0.203826, 0.0664688, 0.00495187, 0.00447654, 0.00749068, 0.00287162, 0.012626, 0.000661918, 7.81255e-05, 4.36134e-19, 1.60999e-18, 2.71524e-18, 1.23165e-18, 0.0]
+
+[node name="RSTuber" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k38vi")
+active_in_editor = true
+animation_speed = 0.32
+
+[node name="mic" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamMicrophone_67h81")
+volume_db = 7.744
+autoplay = true
+bus = &"Input"
+playback_type = 1
+
+[node name="spectrometer" type="ColorRect" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_3584b")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 3.0
+offset_bottom = -655.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_right = 4.0
+offset_bottom = 27.0
