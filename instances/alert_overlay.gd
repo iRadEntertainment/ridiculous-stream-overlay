@@ -3,7 +3,7 @@ extends Control
 class_name RSAlertOverlay
 
 const BAR_PACK = preload("res://instances/alert_bar.tscn")
-const WHEEL_PACK = preload("res://instances/the_wheel_of_random.tscn")
+#const WHEEL_PACK = preload("res://instances/the_wheel_of_random.tscn")
 const ACCENT_COLOUR = "#f737d0"
 const PRE = "[color=%s][shake]" % ACCENT_COLOUR
 const SUF = "[/shake][/color]"
@@ -48,10 +48,10 @@ func wheel_of_random_raid(user: RSTwitchUser, message: String = "") -> void:
 	var online: PackedStringArray = await RS.twitcher.get_users_online(RS.known_users.keys())
 	if online.is_empty():
 		return
-	var wheel := WHEEL_PACK.instantiate() as RSWheelOfRandom
-	vb_cnt.add_child(wheel)
-	wheel.start(online)
-	wheel.winner_selected.connect(raid_selected_username.bind(user, message))
+	#var wheel := WHEEL_PACK.instantiate() as RSWheel
+	#vb_cnt.add_child(wheel)
+	#wheel.start(online)
+	#wheel.winner_selected.connect(raid_selected_username.bind(user, message))
 func raid_selected_username(to_username: String, from_user: RSTwitchUser, message: String = "") -> void:
 	var user_to_raid: RSTwitchUser = await RS.user_from_username(to_username)
 	initialize_raid(from_user, user_to_raid, message)
