@@ -238,8 +238,6 @@ func _update_all_selected() -> void:
 		all_selected = false;
 
 		if OS.is_debug_build():
-			if category_name == "Channel":
-				breakpoint
 			unselected_features.append(selection.feature_id);
 			continue;
 
