@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhrvwishvid8f"
-path="res://.godot/imported/arrow.png-6e48f414deba8336f308cf1a75bbca47.ctex"
+uid="uid://mchkrubsccqb"
+path="res://.godot/imported/wheel_rim.png-5359cfd6e9edfefe5c97ee8424e79794.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/sprites/arrow.png"
-dest_files=["res://.godot/imported/arrow.png-6e48f414deba8336f308cf1a75bbca47.ctex"]
+source_file="res://lib/RSlibs/RSWheel/wheel_rim.png"
+dest_files=["res://.godot/imported/wheel_rim.png-5359cfd6e9edfefe5c97ee8424e79794.ctex"]
 
 [params]
 

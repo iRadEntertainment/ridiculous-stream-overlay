@@ -30,8 +30,6 @@ var l: RSLogger
 @onready var alert_scene : RSAlertOverlay = %alert_scene
 @onready var physic_scene : RSPhysicsScene = %physics_scene
 
-var wheel_of_random : RSWheelOfRandom
-
 var pnls: Array[Control] = []
 
 # Global vars
