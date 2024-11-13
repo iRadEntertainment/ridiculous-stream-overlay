@@ -19,7 +19,6 @@ const commands_string_format = {
 	"!tornado" : "[tornado radius=10.0 freq=1.0 connected=1]%s[/tornado]",
 	"!shake" : "[shake rate=20.0 level=5 connected=1]%s[/shake]",
 	"!hd" : "[bgcolor=#21262e][color=#21262e]%s[/color][/bgcolor]",
-	#"!fade" : "[fade start=%s length=%s]"%[msg_length, msg_length*4] + msg + "[/fade]"
 }
 
 var sprite_effect : SpriteFrameEffect
@@ -32,7 +31,6 @@ func start():
 		RS.twitcher.received_chat_message.connect(_on_chat_message)
 	sprite_effect = SpriteFrameEffect.new()
 	lb_chat.install_effect(sprite_effect)
-	lb_chat.clear()
 	pnl_connect.start()
 	%lb_channel.text = RS.settings.chatbot_channels.front()
 

@@ -46,7 +46,8 @@ layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 2
 bbcode_enabled = true
-text = "TheYagich"
+text = "TheYagich
+"
 scroll_following = true
 threaded = true
 selection_enabled = true
