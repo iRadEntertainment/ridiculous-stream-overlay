@@ -50,7 +50,7 @@ func _ready():
 	max_values.resize(VU_COUNT)
 	max_values.fill(0.0)
 
-func _process(delta):
+func _process(_d):
 	if Engine.is_editor_hint() and !active_in_editor:
 		return
 	spectrum = AudioServer.get_bus_effect_instance(1, 1)

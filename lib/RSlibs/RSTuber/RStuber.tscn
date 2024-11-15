@@ -35,7 +35,7 @@ void fragment() {
 shader = SubResource("Shader_vwuoy")
 shader_parameter/segment_count = 24.0
 shader_parameter/reticle_precision = 0.08
-shader_parameter/freq_data = [1.35218e-06, 1.35218e-06, 1.35218e-06, 1.35218e-06, 0.2141, 0.784293, 0.784293, 0.784293, 0.982213, 0.982213, 0.839167, 0.980633, 0.970766, 0.806127, 0.64827, 0.278835, 0.203826, 0.0664688, 0.00495187, 0.00447654, 0.00749068, 0.00287162, 0.012626, 0.000661918, 7.81255e-05, 4.36134e-19, 1.60999e-18, 2.71524e-18, 1.23165e-18, 0.0]
+shader_parameter/freq_data = [2.78249e-27, 1.88312e-27, 1.88312e-27, 1.88312e-27, 0.372989, 0.578807, 0.578807, 0.684778, 0.701258, 0.701258, 0.418086, 0.688133, 0.688133, 0.334352, 0.322078, 0.604127, 0.813911, 0.771194, 0.51178, 0.188336, 0.0961113, 0.000406285, 0.000395803, 0.000395803, 0.000184319, 7.92172e-05, 0.0001832, 2.76723e-05, 1.58748e-07, 0.0]
 
 [node name="RSTuber" type="Control"]
 layout_mode = 3
@@ -45,7 +45,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_k38vi")
-active_in_editor = true
 animation_speed = 0.32
 
 [node name="mic" type="AudioStreamPlayer" parent="."]
@@ -72,3 +71,22 @@ grow_vertical = 2
 layout_mode = 0
 offset_right = 4.0
 offset_bottom = 27.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 200.0
+offset_top = 498.0
+offset_right = 649.0
+offset_bottom = 916.0
+
+[node name="png_reference" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
