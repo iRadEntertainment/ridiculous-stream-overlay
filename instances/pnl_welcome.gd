@@ -1,10 +1,11 @@
-@tool
 class_name PanelWelcome
 extends Control
 
 const Features = preload("res://ui/twitch/features.gd")
 
 signal completed()
+
+var l := RSLogger.new(RSSettings.LOGGER_NAME_SETTINGS)
 
 var settings: RSSettings
 var scope_aggregator := ScopeAggregator.new()
@@ -41,7 +42,8 @@ func start() -> void:
 			scope_aggregator.enable_scope("chat:read", true, true)
 			scope_aggregator.enable_scope("chat:edit", true, true)
 
-	scope_aggregator.scopes_changed.connect(_on_scopes_changed)
+	if !scope_aggregator.scopes_changed.is_connected(_on_scopes_changed):
+		scope_aggregator.scopes_changed.connect(_on_scopes_changed)
 
 	print_verbose("Configuring Twitch API Features panel...")
 	%pnl_twitch_features_api.scope_aggregator = scope_aggregator
@@ -56,6 +58,9 @@ func start() -> void:
 
 	%pnl_twitch_developer.scope_aggregator = scope_aggregator
 	%pnl_twitch_developer.settings = settings
+	
+	%pnl_obs_ws.settings = settings
+	%pnl_app_settings.settings = settings
 
 	for child in %tabs_welcome.get_children():
 		if child is PanelFormContainer:
@@ -68,6 +73,12 @@ func start() -> void:
 	show()
 
 func should_show() -> bool:
+	if !settings:
+		l.i("Welcome showing: no RS.settings defined")
+		return true
+	if !_all_forms_completed:
+		l.i("Welcome showing: not all form completed")
+		return true
 	var project_version := RSVersion.parse(ProjectSettings.get_setting("application/config/version"))
 	var welcome_version := RSVersion.parse(RS.settings.welcome_version)
 	return welcome_version.compare_to(project_version) < 0

@@ -1,0 +1,168 @@
+[gd_scene load_steps=11 format=3 uid="uid://dfgxxcmb66hy2"]
+
+[ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_a2om0"]
+[ext_resource type="Script" path="res://instances/pnl_obs_ws.gd" id="2_e5g46"]
+[ext_resource type="StyleBox" uid="uid://dp1gxe3ir730n" path="res://ui/panel_flat_dark.tres" id="3_36jw1"]
+[ext_resource type="PackedScene" uid="uid://cwg72p5gy7ib3" path="res://instances/btn_collapse.tscn" id="4_fokuy"]
+[ext_resource type="StyleBox" uid="uid://be1r1ht3qo0ct" path="res://ui/panel_flat_dark_semitransparent.tres" id="5_abak2"]
+[ext_resource type="StyleBox" uid="uid://bbm13ghfao7l3" path="res://ui/editor_panel_light_borderless.tres" id="6_jdkvv"]
+[ext_resource type="Texture2D" uid="uid://gvhb68vjfckm" path="res://ui/bootstrap_icons/arrow-counterclockwise.png" id="7_2hw6a"]
+[ext_resource type="PackedScene" uid="uid://b12coyg6xjohk" path="res://instances/btn_toggle_secret.tscn" id="8_w5dnt"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_t5wdt"]
+shadow_size = 10
+shadow_color = Color(0, 0, 0, 0.313726)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_isydv"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.145098, 0.168627, 0.203922, 1)
+
+[node name="pnl_obs_ws" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -6.0
+offset_right = -1242.0
+offset_bottom = -782.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_a2om0")
+script = ExtResource("2_e5g46")
+metadata/_tab_index = 4
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="lb_title" type="Label" parent="vb"]
+layout_mode = 2
+theme_override_styles/normal = ExtResource("3_36jw1")
+text = "OBS Settings"
+label_settings = SubResource("LabelSettings_t5wdt")
+horizontal_alignment = 1
+
+[node name="description" type="RichTextLabel" parent="vb"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_isydv")
+text = "With these settings you will be able to communicate with OBS using the noOBSWs module in Ridiculous stream. It will let you manipulate avery item in OBS once connected, like toggle items or audio outputs in a scene, manipulate the strenght of an item effect, move their positions, turn on or off the stream and much more. Best used with the floating menu for quick access to functionalities.
+
+You need to read the OBS docs to understand what parameters to pass to each request to OBS and know the exact naming of your scenes and items in a scene. You will find examples in RSCustom.gd
+
+You can safely switch this feature off if you don't need it."
+fit_content = true
+
+[node name="sep_group" type="HSeparator" parent="vb"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="vb" type="VBoxContainer" parent="vb"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="hb" type="HBoxContainer" parent="vb/vb"]
+layout_mode = 2
+
+[node name="ck_use_noobsws" type="CheckButton" parent="vb/vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Use OBS module"
+
+[node name="ck_obs_autoconnect" type="CheckBox" parent="vb/vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "connect on start-up"
+
+[node name="lb_obs_ws" parent="vb/vb" node_paths=PackedStringArray("nodes_to_collapse") instance=ExtResource("4_fokuy")]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("5_abak2")
+text = "OBS websocket settings"
+nodes_to_collapse = [NodePath("../pnl")]
+text_centered = true
+
+[node name="pnl" type="PanelContainer" parent="vb/vb"]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("6_jdkvv")
+
+[node name="hb" type="HBoxContainer" parent="vb/vb/pnl"]
+layout_mode = 2
+
+[node name="vb" type="VBoxContainer" parent="vb/vb/pnl/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="hb" type="HBoxContainer" parent="vb/vb/pnl/hb/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="vb/vb/pnl/hb/vb/hb"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Server IP"
+horizontal_alignment = 2
+
+[node name="ln_server_ip" type="LineEdit" parent="vb/vb/pnl/hb/vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "test"
+secret = true
+
+[node name="btn_reset_ip" type="Button" parent="vb/vb/pnl/hb/vb/hb"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("7_2hw6a")
+expand_icon = true
+
+[node name="lb2" type="Label" parent="vb/vb/pnl/hb/vb/hb"]
+layout_mode = 2
+text = "Server port"
+horizontal_alignment = 2
+
+[node name="ln_server_port" type="LineEdit" parent="vb/vb/pnl/hb/vb/hb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="btn_reset_port" type="Button" parent="vb/vb/pnl/hb/vb/hb"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("7_2hw6a")
+expand_icon = true
+
+[node name="hb2" type="HBoxContainer" parent="vb/vb/pnl/hb/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="vb/vb/pnl/hb/vb/hb2"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Server Password"
+horizontal_alignment = 2
+
+[node name="ln_server_secret" type="LineEdit" parent="vb/vb/pnl/hb/vb/hb2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "test"
+secret = true
+
+[node name="btn_reset_secret" type="Button" parent="vb/vb/pnl/hb/vb/hb2"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("7_2hw6a")
+expand_icon = true
+
+[node name="btn_toggle_secret" parent="vb/vb/pnl/hb" node_paths=PackedStringArray("secret_fields") instance=ExtResource("8_w5dnt")]
+layout_mode = 2
+secret_fields = [NodePath("../vb/hb2/ln_server_secret"), NodePath("../vb/hb/ln_server_ip")]
+
+[connection signal="toggled" from="vb/vb/hb/ck_use_noobsws" to="." method="_on_ck_use_noobsws_toggled"]
+[connection signal="text_changed" from="vb/vb/pnl/hb/vb/hb/ln_server_ip" to="." method="_on_ln_server_ip_text_changed"]
+[connection signal="pressed" from="vb/vb/pnl/hb/vb/hb/btn_reset_ip" to="." method="_on_btn_reset_ip_pressed"]
+[connection signal="text_changed" from="vb/vb/pnl/hb/vb/hb/ln_server_port" to="." method="_on_ln_server_port_text_changed"]
+[connection signal="pressed" from="vb/vb/pnl/hb/vb/hb/btn_reset_port" to="." method="_on_btn_reset_port_pressed"]
+[connection signal="text_changed" from="vb/vb/pnl/hb/vb/hb2/ln_server_secret" to="." method="_on_ln_server_secret_text_changed"]
+[connection signal="pressed" from="vb/vb/pnl/hb/vb/hb2/btn_reset_secret" to="." method="_on_btn_reset_secret_pressed"]
