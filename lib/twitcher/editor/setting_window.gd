@@ -64,17 +64,17 @@ func _on_client_secret_changed(new_text: String) -> void:
 
 func _on_flow_changed(index: int) -> void:
 	match index:
-		0: RS.settings.authorization_flow = RSSettings.FLOW_AUTHORIZATION_CODE
-		1: RS.settings.authorization_flow = RSSettings.FLOW_DEVICE_CODE_GRANT
-		2: RS.settings.authorization_flow = RSSettings.FLOW_IMPLICIT
-		3: RS.settings.authorization_flow = RSSettings.FLOW_CLIENT_CREDENTIALS
+		0: RS.settings.authorization_flow = "AUTHORIZATION_CODE_FLOW"
+		1: RS.settings.authorization_flow = "DEVICE_CODE_FLOW"
+		2: RS.settings.authorization_flow = "IMPLICIT_FLOW"
+		3: RS.settings.authorization_flow = "CLIENT_CREDENTIALS"
 
 func _select_flow(selected_flow: String) -> void:
 	match selected_flow:
-		RSSettings.FLOW_AUTHORIZATION_CODE: flow_input.select(0)
-		RSSettings.FLOW_DEVICE_CODE_GRANT: flow_input.select(1)
-		RSSettings.FLOW_IMPLICIT: flow_input.select(2)
-		RSSettings.FLOW_CLIENT_CREDENTIALS: flow_input.select(3)
+		"AUTHORIZATION_CODE_FLOW": flow_input.select(0)
+		"DEVICE_CODE_FLOW": flow_input.select(1)
+		"IMPLICIT_FLOW": flow_input.select(2)
+		"CLIENT_CREDENTIALS": flow_input.select(3)
 
 func _on_clear_badges() -> void:
 	var badge_dir = DirAccess.open(RS.settings.cache_badge);
