@@ -28,17 +28,17 @@ static func _static_init() -> void:
 
 var features: Array[String]:
 	get:
-		var features: Array[String] = []
-		features.append_array(_active_features.keys())
-		return features;
+		var _features: Array[String] = []
+		_features.append_array(_active_features.keys())
+		return _features;
 
 var _active_features := {}
 
 var scopes: Array[String]:
 	get:
-		var scopes: Array[String] = []
-		scopes.append_array(_active_scopes.keys())
-		return scopes
+		var _scopes: Array[String] = []
+		_scopes.append_array(_active_scopes.keys())
+		return _scopes
 
 var _active_scopes := {}
 
@@ -67,8 +67,8 @@ func enable_feature(p_feature_id: String, p_enabled := true, p_no_signal := fals
 			_active_features[p_feature_id] = activation_count
 
 	if !no_scope_change:
-		var scopes := scopes_by_feature_id.get(p_feature_id, []) as Array
-		for scope in scopes:
+		var _scopes := scopes_by_feature_id.get(p_feature_id, []) as Array
+		for scope in _scopes:
 			enable_scope(scope, p_enabled, true)
 
 		if !p_no_signal:
@@ -93,9 +93,9 @@ func enable_scope(p_scope: String, p_enabled := true, p_no_signal := false) -> v
 		scopes_changed.emit(self)
 
 func _on_feature_category_selection_changed(p_selections: Array[FeatureSelection]) -> void:
-	var scope_changed := false
+	var _scope_changed := false
 	for selection in p_selections:
 		if enable_feature(selection.feature_id, selection.selected, true):
-			scope_changed = true
+			_scope_changed = true
 
 	scopes_changed.emit(self)

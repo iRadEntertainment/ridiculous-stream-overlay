@@ -28,7 +28,7 @@ func _mark_field_valid(p_field_name: String, p_valid := true) -> void:
 
 	_check_completion(true)
 
-func _check_completion(p_was_marked_valid: bool) -> void:
+func _check_completion(_p_was_marked_valid: bool) -> void:
 	if is_completed:
 		completion_changed.emit(self, true)
 	elif _was_completed:
@@ -36,5 +36,5 @@ func _check_completion(p_was_marked_valid: bool) -> void:
 
 	_was_completed = is_completed
 
-func _presubmit(p_settings: RSSettings) -> void:
+func _presubmit(_p_settings: RSSettings) -> void:
 	pass

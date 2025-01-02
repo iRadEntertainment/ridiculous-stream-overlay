@@ -51,7 +51,7 @@ static func parse(p_version_string: String) -> RSVersion:
 	assert(!tag_parts.is_empty(), "Invalid version string: '%s'" % [p_version_string])
 
 	var base_string := tag_parts[0]
-	var tag := tag_parts[1] if tag_parts.size() > 1 else ""
+	var _tag := tag_parts[1] if tag_parts.size() > 1 else ""
 
 	var base_parts := base_string.split(".", false)
 	assert(!base_parts.is_empty(), "No digit segments found before a hypen: '%s'" % [p_version_string])
@@ -60,9 +60,9 @@ static func parse(p_version_string: String) -> RSVersion:
 		p_version_string
 	])
 
-	var major := int(base_parts[0])
-	var minor := int(base_parts[1]) if base_parts.size() > 1 else 0
-	var revision := int(base_parts[2]) if base_parts.size() > 2 else 0
-	var patch := int(base_parts[3]) if base_parts.size() > 3 else 0
+	var _major := int(base_parts[0])
+	var _minor := int(base_parts[1]) if base_parts.size() > 1 else 0
+	var _revision := int(base_parts[2]) if base_parts.size() > 2 else 0
+	var _patch := int(base_parts[3]) if base_parts.size() > 3 else 0
 
-	return RSVersion.new(major, minor, revision, patch, tag, p_version_string)
+	return RSVersion.new(_major, _minor, _revision, _patch, _tag, p_version_string)

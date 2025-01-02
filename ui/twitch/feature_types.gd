@@ -41,6 +41,7 @@ class ScopedFeatureDefinitionCategory extends Resource:
 
 class ScopedFeatureSet extends Resource:
 	var id: String
+	@warning_ignore("shadowed_variable_base_class")
 	var set_name: String
 	var feature_categories: Array[ScopedFeatureDefinitionCategory] = []
 

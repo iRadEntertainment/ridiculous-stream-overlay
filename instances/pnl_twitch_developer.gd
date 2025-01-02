@@ -11,7 +11,8 @@ var scope_aggregator: ScopeAggregator:
 			scope_aggregator.scopes_changed.disconnect(_on_scopes_changed)
 		scope_aggregator = value
 		if scope_aggregator:
-			scope_aggregator.scopes_changed.connect(_on_scopes_changed)
+			if !scope_aggregator.scopes_changed.is_connected(_on_scopes_changed):
+				scope_aggregator.scopes_changed.connect(_on_scopes_changed)
 			_on_scopes_changed(scope_aggregator)
 
 var settings: RSSettings:
@@ -31,7 +32,8 @@ func _on_settings_changed(p_settings: RSSettings) -> void:
 	%hb_twitch_developer_client_secret/btn_reset.disabled = p_settings.client_secret.is_empty()
 	_on_twitch_developer_client_secret_input_text_changed(p_settings.client_secret)
 
-	%hb_twitch_developer_grant_type/input.item_selected.connect(_on_twitch_developer_grant_type_selection_changed)
+	if !%hb_twitch_developer_grant_type/input.item_selected.is_connected(_on_twitch_developer_grant_type_selection_changed):
+		%hb_twitch_developer_grant_type/input.item_selected.connect(_on_twitch_developer_grant_type_selection_changed)
 	if p_settings.authorization_flow:
 		%hb_twitch_developer_grant_type/input.selected = OAuth.AuthorizationFlow.get(p_settings.authorization_flow)
 	else:
@@ -56,7 +58,7 @@ func _on_settings_changed(p_settings: RSSettings) -> void:
 			else RSSettings.project_settings_twitch_redirect_uri
 	)
 
-func _on_scopes_changed(p_scope_aggregator: ScopeAggregator) -> void:
+func _on_scopes_changed(_p_scope_aggregator: ScopeAggregator) -> void:
 	pass
 
 func _on_twitch_developer_grant_type_selection_changed(p_index: int) -> void:

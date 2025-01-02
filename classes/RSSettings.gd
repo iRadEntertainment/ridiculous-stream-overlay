@@ -8,45 +8,30 @@ static var _config := ConfigFile.new()
 static var data_dir: String = OS.get_user_data_dir():
 	set(value):
 		if value == data_dir: return
+		if !value.is_absolute_path():
+			push_error("Failed to assign data directory for Ridiculous Stream: '%s'" % [value])
+			return
 		if !DirAccess.dir_exists_absolute(value):
 			print_verbose("Ridiculous Stream data directory does not exist and will be created: '%s'")
 			if OK == DirAccess.make_dir_recursive_absolute(value):
-				# Make sure the directory path ends with / or \
-				if !value.ends_with("/") and !value.ends_with("\\"):
-					value += "/"
-
 				# Only change the directory if it exists and managed to be created
 				data_dir = value
 				_config.set_value("RSSettings", "data_dir", data_dir)
+				_config.save(_CONFIG_PATH)
 			else:
 				push_error("Failed to create data directory for Ridiculous Stream: '%s'" % [value])
+		else:
+			data_dir = value
+			_config.set_value("RSSettings", "data_dir", data_dir)
+			_config.save(_CONFIG_PATH)
 
-static var path_settings: String:
-	get: return "%s/%s" % [
-		data_dir,
-		RS_SETTINGS_FILE_NAME
-	]
 
 # UTILITIES
-static func get_settings_filepath() -> String:
-	var path := "%s/%s" % [data_dir, RS_SETTINGS_FILE_NAME]
-	return path
-
-static func get_users_path() -> String:
-	var path := "%s/%s" % [data_dir, RS_USER_FOLDER]
-	return path
-
-static func get_obj_path() -> String:
-	var path := "%s/%s" % [data_dir, RS_OBJ_FOLDER]
-	return path
-
-static func get_sfx_path() -> String:
-	var path := "%s/%s" % [data_dir, RS_SFX_FOLDER]
-	return path
-
-static func get_logs_path() -> String:
-	var path := "%s/%s" % [data_dir, RS_LOG_FOLDER]
-	return path
+static func get_settings_filepath() -> String: return data_dir.path_join(RS_SETTINGS_FILE_NAME)
+static func get_users_path() -> String: return data_dir.path_join(RS_USER_FOLDER)
+static func get_obj_path() -> String: return data_dir.path_join(RS_OBJ_FOLDER)
+static func get_sfx_path() -> String: return data_dir.path_join(RS_SFX_FOLDER)
+static func get_logs_path() -> String: return data_dir.path_join(RS_LOG_FOLDER)
 
 static var project_settings_twitch_publish: bool:
 	get: return ProjectSettings.get_setting("ridiculous_stream/twitch/publish", false)
@@ -74,17 +59,6 @@ static var project_settings_twitch_grant_type: OAuth.AuthorizationFlow:
 		) as OAuth.AuthorizationFlow
 		return grant_type
 
-static func _static_init() -> void:
-	if FileAccess.file_exists(_CONFIG_PATH):
-		var error := _config.load(_CONFIG_PATH)
-		if OK == error:
-			data_dir = _config.get_value("RSSettings", "data_dir", OS.get_user_data_dir())
-		else:
-			push_error("Failed to load global configuration from %s: %d" % [_CONFIG_PATH, error])
-	else:
-		var error := _config.save(_CONFIG_PATH)
-		if OK != _config.save(_CONFIG_PATH):
-			push_error("Failed to save global configuration from %s: %d" % [_CONFIG_PATH, error])
 
 const LOCAL_RES_FOLDER = "res://local_res/"
 const RS_SETTINGS_FILE_NAME = "settings.tres"
@@ -95,24 +69,27 @@ const RS_OBJ_FOLDER = "obj/"
 const RS_SFX_FOLDER = "sfx/"
 
 ## Twitcher Loggers
-const LOGGER_NAME_AUTH = "TwitchAuthorization"
-const LOGGER_NAME_EVENT_SUB = "TwitchEventSub"
-const LOGGER_NAME_REST_API = "TwitchRestAPI"
-const LOGGER_NAME_IRC = "TwitchIRC"
-const LOGGER_NAME_IMAGE_LOADER = "TwitchImageLoader"
-const LOGGER_NAME_COMMAND_HANDLING = "TwitchCommandHandling"
-const LOGGER_NAME_SERVICE = "TwitchService"
-const LOGGER_NAME_HTTP_CLIENT = "TwitchHttpClient"
-const LOGGER_NAME_HTTP_SERVER = "TwitchHttpServer"
-const LOGGER_NAME_WEBSOCKET = "TwitchWebsocket"
-const LOGGER_NAME_CUSTOM_REWARDS = "TwitchCustomRewards"
+const LOGGER_NAME_AUTH = &"TwitchAuthorization"
+const LOGGER_NAME_EVENT_SUB = &"TwitchEventSub"
+const LOGGER_NAME_REST_API = &"TwitchRestAPI"
+const LOGGER_NAME_IRC = &"TwitchIRC"
+const LOGGER_NAME_IMAGE_LOADER = &"TwitchImageLoader"
+const LOGGER_NAME_COMMAND_HANDLING = &"TwitchCommandHandling"
+const LOGGER_NAME_SERVICE = &"TwitchService"
+const LOGGER_NAME_HTTP_CLIENT = &"TwitchHttpClient"
+const LOGGER_NAME_HTTP_SERVER = &"TwitchHttpServer"
+const LOGGER_NAME_WEBSOCKET = &"TwitchWebsocket"
+const LOGGER_NAME_CUSTOM_REWARDS = &"TwitchCustomRewards"
 
 ## RS Loggers
-const LOGGER_NAME_MAIN = "RS"
-const LOGGER_NAME_NOOBSWS = "OBS Websocket"
-const LOGGER_NAME_SHOUTOUT = "Shoutout Manager"
-const LOGGER_NAME_CUSTOM = "RSCustom"
-const LOGGER_NAME_VETTING = "RSVetting"
+const LOGGER_NAME_MAIN = &"RS Main"
+const LOGGER_NAME_SETTINGS = &"RS Settings"
+const LOGGER_NAME_LOADER = &"RS Loader"
+const LOGGER_NAME_DISPLAY = &"RS Display"
+const LOGGER_NAME_NOOBSWS = &"OBS Websocket"
+const LOGGER_NAME_SHOUTOUT = &"Shoutout Manager"
+const LOGGER_NAME_CUSTOM = &"RS Custom"
+const LOGGER_NAME_VETTING = &"RS Vetting"
 
 const ALL_LOGGERS: Array[String] = [
 	LOGGER_NAME_AUTH, # Twitcher Loggers
@@ -128,6 +105,9 @@ const ALL_LOGGERS: Array[String] = [
 	LOGGER_NAME_CUSTOM_REWARDS,
 	
 	LOGGER_NAME_MAIN, # RS Loggers
+	LOGGER_NAME_SETTINGS,
+	LOGGER_NAME_LOADER,
+	LOGGER_NAME_DISPLAY,
 	LOGGER_NAME_NOOBSWS,
 	LOGGER_NAME_SHOUTOUT,
 	LOGGER_NAME_CUSTOM,
@@ -147,10 +127,11 @@ const ALL_LOGGERS: Array[String] = [
 @export var eventsubs : Dictionary
 
 # no-OBS-ws settings
+@export var obs_use_module := true
 @export var obs_autoconnect : bool
 @export var obs_websocket_url : String
 @export var obs_websocket_port : int
-var obs_websocket_password : String
+@export var obs_websocket_password : String
 
 @export var log_enabled: Array = ALL_LOGGERS
 

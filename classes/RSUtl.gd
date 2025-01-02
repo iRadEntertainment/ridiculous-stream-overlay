@@ -87,6 +87,7 @@ static func get_type_string(p_value: Variant) -> String:
 	if value_class == null:
 		return "%s (unknown)" % [type_name]
 
+	@warning_ignore("incompatible_ternary")
 	return "%s (%s)" % [
 		type_name,
 		&"unknown" if value_class == null else value_class

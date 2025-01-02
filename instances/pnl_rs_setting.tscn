@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://gi6k83qtu4y2"]
+[gd_scene load_steps=6 format=3 uid="uid://d3jcvhnykltfd"]
 
 [ext_resource type="Script" path="res://instances/pnl_rs_setting.gd" id="1_mw25e"]
 [ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://ui/bootstrap_icons/folder2-open.svg" id="2_5jph2"]

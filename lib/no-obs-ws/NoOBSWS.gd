@@ -55,12 +55,13 @@ func start():
 		elif !RS.settings.obs_websocket_port: has_all = false
 		
 		if has_all:
+			l.i("Connecting to %s:%s" % [RS.settings.obs_websocket_url, RS.settings.obs_websocket_port])
 			connect_to_obsws(RS.settings.obs_websocket_port, RS.settings.obs_websocket_password)
 			if _ws.get_ready_state() != WebSocketPeer.STATE_OPEN:
 				await connection_ready
 				await get_tree().process_frame
 		else:
-			print_debug("Missing settings for OBS Autoconnect")
+			l.w("Missing settings for OBS Autoconnect")
 	
 	is_mic_muted = await get_input_mute("Mic/Aux")
 	is_brave_muted = await get_input_mute("Brave")
@@ -306,9 +307,11 @@ func _handle_message(message: NoOBSMessage) -> void:
 func _send_message(message: NoOBSMessage) -> void:
 	if not _ws:
 		l.e("WebSocket not initialized")
+		l.w("Cannot send message with code: %s" % message.op_code)
 		return
 	if _ws.get_ready_state() != WebSocketPeer.STATE_OPEN:
 		l.e("WebSocket not open")
+		l.w("Cannot send message with code: %s" % message.op_code)
 		return
 	_ws.send_text(message.to_obsws_json())
 
@@ -323,7 +326,7 @@ func _authenticate(message: NoOBSMessage, password: String) -> void:
 	var m = NoOBSMessage.new()
 	m.op_code = NoOBSEnums.WebSocketOpCode.IDENTIFY
 	m._d["authentication"] = auth_string
-	l.i("MY RESPONSE: ")
+	l.i("Authentication...")
 	l.i(m._to_string())
 	_send_message(m)
 

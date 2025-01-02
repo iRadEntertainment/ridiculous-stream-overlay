@@ -4,16 +4,16 @@ class_name RSLoader
 
 var HOST_PARSER = RegEx.create_from_string("(https://.*?)/")
 
+var l := RSLogger.new(RSSettings.LOGGER_NAME_LOADER)
 
 var cached = {}
 
-# TODO save/load as .RES
 func load_settings(p_default: RSSettings = null) -> RSSettings:
 	var path_to_settings_file := RSSettings.get_settings_filepath()
 	if FileAccess.file_exists(path_to_settings_file):
 		var loaded_settings = ResourceLoader.load(path_to_settings_file)
 		if loaded_settings == null:
-			push_warning("[RSLoader.load_settings] Failed to load settings or was null: %s" % [
+			l.w("[load_settings] Failed to load settings or was null: %s" % [
 				path_to_settings_file
 			])
 			return p_default
@@ -21,13 +21,13 @@ func load_settings(p_default: RSSettings = null) -> RSSettings:
 		if loaded_settings is RSSettings:
 			return loaded_settings
 
-		push_error("[RSLoader.load_settings] Expected RSSettings but found %s at %s" % [
+		l.e("[load_settings] Expected RSSettings but found %s at %s" % [
 			RSUtl.get_type_string(loaded_settings),
 			path_to_settings_file
 		])
 		return p_default
 	else:
-		push_warning("[RSLoader.load_settings] Settings file does not exist, skipping load: %s" % [
+		l.w("[load_settings] Settings file does not exist, skipping load: %s" % [
 			path_to_settings_file
 		])
 		save_settings(RS.settings)
@@ -41,10 +41,10 @@ func save_settings(p_settings: RSSettings = null) -> void:
 	)
 
 	if result == OK:
-		print("Saved settings to %s" % [path_to_settings_file])
+		l.i("Saved settings to %s" % [path_to_settings_file])
 		return
 	
-	push_error("Error %d, failed to save settings to %s" % [
+	l.e("Error %d, failed to save settings to %s" % [
 		result,
 		path_to_settings_file
 	])
@@ -81,7 +81,7 @@ func load_texture_from_url(url : String, use_cached := true) -> ImageTexture:
 		"webp": tex_image.load_webp_from_buffer(image_buffer)
 		"svg": tex_image.load_svg_from_buffer(image_buffer)
 		_:
-			push_error("RSLoader: %s format not recognised."%file_type)
+			l.e("%s format not recognised."%file_type)
 			return
 	
 	var tex = ImageTexture.create_from_image(tex_image)
@@ -108,15 +108,15 @@ func load_texture_from_data_folder(texture_file_name : String) -> Texture2D:
 func load_userfile(username) -> RSTwitchUser:
 	var path := get_user_filepath(username)
 	if !FileAccess.file_exists(path):
-		print("Cannot find file: ", path)
+		l.i("Cannot find file: %s" % path)
 	var user := RSTwitchUser.from_json(RSUtl.load_json(path))
 	if user.username == "":
 		user.username = username_from_userfile(path)
-		print("WARNING: %s doesn't contain a username."%path.get_file())
+		l.w("%s doesn't contain a username." % path.get_file())
 	return user
 func save_userfile(user : RSTwitchUser) -> void:
 	if user.username == "":
-		print("cannot save an user without a username")
+		l.w("cannot save an user without a username")
 		return
 	var path = get_user_filepath(user.username)
 	var dict = user.to_dict()

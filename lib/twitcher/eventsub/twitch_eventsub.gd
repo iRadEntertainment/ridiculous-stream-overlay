@@ -71,7 +71,7 @@ var subscriptions: Array = [];
 ## Key: MessageID ; Value: Timestamp
 var eventsub_messages: Dictionary = {};
 var last_keepalive: int;
-var is_connected: bool;
+var is_connected_to_twitch: bool;
 
 func _init(twitch_api: TwitchRestAPI, autoconnect: bool = true) -> void:
 	api = twitch_api;
@@ -86,16 +86,16 @@ func connect_to_eventsub(url: String) -> void:
 
 func _on_connection_state_changed(state : WebSocketPeer.State):
 	if state == WebSocketPeer.State.STATE_OPEN:
-		is_connected = true;
+		is_connected_to_twitch = true;
 		connected.emit();
 		_subscribe_all();
 	else:
-		is_connected = false;
+		is_connected_to_twitch = false;
 
 ## Awaits until the websocket is connected and the session id was received
 ## at this point we can subscribe to events.
 func wait_for_connection() -> void:
-	if not is_connected:
+	if not is_connected_to_twitch:
 		await connected;
 	if session == null:
 		await session_id_received;

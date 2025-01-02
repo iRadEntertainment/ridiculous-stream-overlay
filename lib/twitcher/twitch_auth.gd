@@ -65,5 +65,5 @@ func _get_setting(p_rs_settings: RSSettings = null) -> OAuthSetting:
 func _get_flow() -> OAuth.AuthorizationFlow:
 	return OAuth.AuthorizationFlow.get(RS.settings.authorization_flow, OAuth.AuthorizationFlow.AUTHORIZATION_CODE_FLOW) as OAuth.AuthorizationFlow;
 
-func test(p_client_id: String, p_client_secret: String, p_redirect_uri: String, ) -> bool:
+func test(_p_client_id: String, _p_client_secret: String, _p_redirect_uri: String, ) -> bool:
 	return false

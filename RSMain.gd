@@ -91,31 +91,31 @@ func _on_welcome_completed() -> void:
 func start_everything():
 	if pnl_welcome.should_show():
 		get_window().always_on_top = false;
-		RSUtl.fit_and_center_window_to_display(get_window());
-		btn_floating_menu.hide();
-		pnl_welcome.completed.connect(_on_welcome_completed);
-		pnl_welcome.start();
-		return;
+		RSUtl.fit_and_center_window_to_display(get_window())
+		btn_floating_menu.hide()
+		pnl_welcome.completed.connect(_on_welcome_completed)
+		pnl_welcome.start()
+		return
 
-	pnl_welcome.hide();
+	pnl_welcome.hide()
 
-	await Engine.get_main_loop().process_frame;
+	await Engine.get_main_loop().process_frame
 
-	get_window().always_on_top = true;
+	get_window().always_on_top = true
 
-	display.start();
+	display.start()
 
-	btn_floating_menu.show();
+	btn_floating_menu.show()
 
-	twitcher.start();
-	custom.start();
-	vetting.start();
-	shoutout_mng.start();
-	no_obs_ws.start();
-	btn_floating_menu.start();
-	physic_scene.start();
-	pnl_notifications.start();
-	alert_scene.start();
+	twitcher.start()
+	custom.start()
+	vetting.start()
+	shoutout_mng.start()
+	no_obs_ws.start()
+	btn_floating_menu.start()
+	physic_scene.start()
+	pnl_notifications.start()
+	alert_scene.start()
 
 	for pnl: Control in pnls:
 		if pnl.has_method("start"):
@@ -156,12 +156,27 @@ func user_from_username(username: String) -> RSTwitchUser:
 
 # ========================== LOAD/SAVE CONFIG ==================================
 func load_settings():
-	l.i("Loading settings...")
+	if FileAccess.file_exists(RSSettings._CONFIG_PATH):
+		var error := RSSettings._config.load(RSSettings._CONFIG_PATH)
+		if OK == error:
+			RSSettings.data_dir = RSSettings._config.get_value("RSSettings", "data_dir", OS.get_user_data_dir())
+			l.i("Data folder: %s" %RSSettings.data_dir)
+		else:
+			l.e("Failed to load global configuration from %s: %d" % [RSSettings._CONFIG_PATH, error])
+	else:
+		var error := RSSettings._config.save(RSSettings._CONFIG_PATH)
+		if OK != RSSettings._config.save(RSSettings._CONFIG_PATH):
+			l.e("Failed to save global configuration from %s: %d" % [RSSettings._CONFIG_PATH, error])
+
+	l.i("Loading settings from %s..." % RSSettings.data_dir)
 	settings = loader.load_settings(settings)
 	HttpClientManager.client_max = settings.http_client_max
 	HttpClientManager.client_min = settings.http_client_min
 
 func save_settings():
+	l.i("Saving data dir in settings.ini...")
+	RSSettings._config.set_value("RSSettings", "data_dir", RSSettings.data_dir)
+	RSSettings._config.save(RSSettings._CONFIG_PATH)
 	l.i("Saving settings...")
 	loader.save_settings()
 

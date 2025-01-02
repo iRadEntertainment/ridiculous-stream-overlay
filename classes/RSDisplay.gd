@@ -1,6 +1,8 @@
 extends Node
 class_name RSDisplay
 
+var l := RSLogger.new(RSSettings.LOGGER_NAME_DISPLAY)
+
 var is_maximized := false
 
 func start() -> void:
