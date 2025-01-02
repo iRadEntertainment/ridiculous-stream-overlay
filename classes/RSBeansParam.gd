@@ -52,7 +52,12 @@ static func from_json(d: Dictionary) -> RSBeansParam:
 	param.is_destroy = d.get("is_destroy", false)
 	param.is_pickable = d.get("is_pickable", false)
 	param.is_poly_fracture = d.get("is_poly_fracture", false)
-	param.scale = d.get("scale", 1.0)
+	# TODO: remove user _scale fix
+	var _scale = d.get("scale", 1.0)
+	if _scale is Array:
+		_scale = float(_scale.front())
+	param.scale = _scale
 	if d.has("destroy_shard_params"):
-		param.destroy_shard_params = RSBeansParam.from_json(d["destroy_shard_params"])
+		if d.destroy_shard_params is Dictionary:
+			param.destroy_shard_params = RSBeansParam.from_json(d["destroy_shard_params"])
 	return param
