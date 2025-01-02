@@ -16,9 +16,10 @@ func _ready() -> void:
 
 
 func _on_settings_changed() -> void:
-	%ck_use_noobsws.button_pressed = settings.obs_use_module
 	_required_valid_field_count = 3 if settings.obs_use_module else 0
-	
+	%ck_use_noobsws.button_pressed = settings.obs_use_module
+	%ck_obs_autoconnect.button_pressed = settings.obs_autoconnect
+
 	%ln_server_ip.editable = settings.obs_use_module
 	%ln_server_port.editable = settings.obs_use_module
 	%ln_server_secret.editable = settings.obs_use_module
@@ -59,3 +60,8 @@ func _on_ck_use_noobsws_toggled(toggled_on:bool) -> void:
 	settings.obs_use_module = toggled_on
 	_on_settings_changed()
 
+
+
+func _on_ck_obs_autoconnect_toggled(toggled_on:bool) -> void:
+	settings.obs_autoconnect = toggled_on
+	_on_settings_changed()

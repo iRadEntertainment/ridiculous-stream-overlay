@@ -47,26 +47,31 @@ var is_pixelate_on := false:
 
 func start():
 	l = RSLogger.new(RSSettings.LOGGER_NAME_NOOBSWS)
-	l.i("Started")
+	l.i("Module Started. Not connected to WS.")
 	event_received.connect(_on_event_received)
+	
+	var has_all := true
+	if !RS.settings.obs_websocket_url: has_all = false
+	elif !RS.settings.obs_websocket_port: has_all = false
+	
+	if !has_all:
+		l.w("Missing settings for OBS Autoconnect")
+		return
 	if RS.settings.obs_autoconnect:
-		var has_all := true
-		if !RS.settings.obs_websocket_url: has_all = false
-		elif !RS.settings.obs_websocket_port: has_all = false
-		
-		if has_all:
-			l.i("Connecting to %s:%s" % [RS.settings.obs_websocket_url, RS.settings.obs_websocket_port])
-			connect_to_obsws(RS.settings.obs_websocket_port, RS.settings.obs_websocket_password)
-			if _ws.get_ready_state() != WebSocketPeer.STATE_OPEN:
-				await connection_ready
-				await get_tree().process_frame
-		else:
-			l.w("Missing settings for OBS Autoconnect")
+		start_connection()
+
+
+func start_connection() -> void:
+	l.i("Connecting to %s:%s" % [RS.settings.obs_websocket_url, RS.settings.obs_websocket_port])
+	connect_to_obsws(RS.settings.obs_websocket_port, RS.settings.obs_websocket_password)
+	if !is_state_open:
+		await connection_ready
 	
 	is_mic_muted = await get_input_mute("Mic/Aux")
 	is_brave_muted = await get_input_mute("Brave")
 	is_stream_on = await get_stream_status()
 	is_pixelate_on = await get_item_filter_enabled("main_desk", "Blur")
+	
 
 func _on_event_received(event: NoOBSMessage) -> void:
 	var data := event.get_data()
@@ -173,9 +178,8 @@ func connect_to_obsws(port: int, password: String = "") -> void:
 	if err == OK:
 		if not _auth_required.is_connected(_authenticate):
 			_auth_required.connect(_authenticate.bind(password))
-		l.i("Connected.")
 	else:
-		l.e("Couldn't connect.")
+		l.e("Couldn't connect. Error: %s" % err)
 
 
 func make_generic_request(request_type: String, request_data: Dictionary = {}) -> NoOBSRequestResponse:
@@ -245,6 +249,7 @@ func _poll_socket() -> void:
 				connection_failed.emit()
 			else:
 				connection_closed_clean.emit(_ws.get_close_code(), _ws.get_close_reason())
+			l.i("Connection closing. Code {}")
 			_ws = null
 
 
@@ -258,6 +263,7 @@ func _handle_message(message: NoOBSMessage) -> void:
 		NoOBSEnums.WebSocketOpCode.HELLO:
 			if message.get("authentication") != null:
 				_auth_required.emit(message)
+				l.w("Auth required.")
 			else:
 				var m = NoOBSMessage.new()
 				m.op_code = NoOBSEnums.WebSocketOpCode.IDENTIFY
@@ -265,6 +271,7 @@ func _handle_message(message: NoOBSMessage) -> void:
 
 		NoOBSEnums.WebSocketOpCode.IDENTIFIED:
 			connection_ready.emit()
+			l.i("Connected.")
 
 		NoOBSEnums.WebSocketOpCode.EVENT:
 			event_received.emit(message)

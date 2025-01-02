@@ -160,6 +160,7 @@ layout_mode = 2
 secret_fields = [NodePath("../vb/hb2/ln_server_secret"), NodePath("../vb/hb/ln_server_ip")]
 
 [connection signal="toggled" from="vb/vb/hb/ck_use_noobsws" to="." method="_on_ck_use_noobsws_toggled"]
+[connection signal="toggled" from="vb/vb/hb/ck_obs_autoconnect" to="." method="_on_ck_obs_autoconnect_toggled"]
 [connection signal="text_changed" from="vb/vb/pnl/hb/vb/hb/ln_server_ip" to="." method="_on_ln_server_ip_text_changed"]
 [connection signal="pressed" from="vb/vb/pnl/hb/vb/hb/btn_reset_ip" to="." method="_on_btn_reset_ip_pressed"]
 [connection signal="text_changed" from="vb/vb/pnl/hb/vb/hb/ln_server_port" to="." method="_on_ln_server_port_text_changed"]
