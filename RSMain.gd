@@ -41,6 +41,7 @@ var pnls: Array[Control] = []
 var known_users := {} #{ user_login: RSTwitchUser }
 var unknown_users_cache := {}
 
+var debug_mode := true
 
 # ================================ INIT ========================================
 func _ready() -> void:
@@ -111,7 +112,8 @@ func start_everything():
 	custom.start()
 	vetting.start()
 	shoutout_mng.start()
-	no_obs_ws.start()
+	if settings.obs_use_module:
+		no_obs_ws.start()
 	btn_floating_menu.start()
 	physic_scene.start()
 	pnl_notifications.start()

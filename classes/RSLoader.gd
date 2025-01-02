@@ -67,8 +67,8 @@ func load_texture_from_url(url : String, use_cached := true) -> ImageTexture:
 		return cached[url]
 	var file_type = url.get_extension()
 	if not file_type in ["png", "jpeg", "jpg", "bmp", "webp", "svg"]: return
-	var host_result : RegExMatch = HOST_PARSER.search(url);
-	var host = host_result.get_string(1);
+	var host_result : RegExMatch = HOST_PARSER.search(url)
+	var host = host_result.get_string(1)
 	var client := HttpClientManager.get_client(host)
 	var request := client.request(url, HTTPClient.METHOD_GET, BufferedHTTPClient.HEADERS, "")
 	var response := await client.wait_for_request(request)
