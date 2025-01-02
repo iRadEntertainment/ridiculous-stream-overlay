@@ -16,10 +16,12 @@ var _completed_form_containers := {}
 var _all_forms_completed: bool:
 	get: return _completed_form_containers.size() >= _form_containers.size()
 
+
 func _ready() -> void:
 	# Don't hide if we're in the editor, it just makes modifying the panel a pain
 	if !Engine.is_editor_hint():
 		hide()
+
 
 func start() -> void:
 	# Duplicate this and modify the local copy so we can add a "reset" button that copies the
@@ -45,6 +47,11 @@ func start() -> void:
 	if !scope_aggregator.scopes_changed.is_connected(_on_scopes_changed):
 		scope_aggregator.scopes_changed.connect(_on_scopes_changed)
 
+	if RS.debug_mode:
+		print_verbose("Opening debug panels")
+		%pnl_debug_mode.settings = settings
+		%pnl_debug_mode.start()
+	
 	print_verbose("Configuring Twitch API Features panel...")
 	%pnl_twitch_features_api.scope_aggregator = scope_aggregator
 	%pnl_twitch_features_api.feature_set = Features.feature_set_api
@@ -72,16 +79,24 @@ func start() -> void:
 
 	show()
 
+
 func should_show() -> bool:
-	if !settings:
+	if !RS.settings:
 		l.i("Welcome showing: no RS.settings defined")
 		return true
 	if !_all_forms_completed:
 		l.i("Welcome showing: not all form completed")
 		return true
+	if RS.debug_always_launch_welcome:
+		l.i("Welcome showing: default always launch welcome")
+		return true
 	var project_version := RSVersion.parse(ProjectSettings.get_setting("application/config/version"))
 	var welcome_version := RSVersion.parse(RS.settings.welcome_version)
-	return welcome_version.compare_to(project_version) < 0
+	var is_newer_version := welcome_version.compare_to(project_version) < 0
+	if is_newer_version:
+		l.i("Welcome showing: is newer version")
+	return is_newer_version
+
 
 func _on_panel_form_container_completion_changed(p_panel_form_container: PanelFormContainer, p_completed: bool) -> void:
 	var form_key := p_panel_form_container.name
@@ -94,16 +109,18 @@ func _on_panel_form_container_completion_changed(p_panel_form_container: PanelFo
 	if p_panel_form_container == active_tab:
 		%btn_next.disabled = !p_completed
 
+
 func _on_tabs_welcome_tab_changed(tab: int) -> void:
 	%btn_prev.disabled = tab < 1
-	#%btn_next.disabled = tab >= %tabs_welcome.get_tab_count() - 1
 	if %tabs_welcome.current_tab + 1 < %tabs_welcome.get_tab_count():
 		%btn_next.icon = preload("res://ui/bootstrap_icons/arrow-right.png")
 	else:
 		%btn_next.icon = preload("res://ui/bootstrap_icons/check2.png")
 
+
 func _on_btn_prev_pressed() -> void:
 	%tabs_welcome.current_tab = max(%tabs_welcome.current_tab - 1, 0)
+
 
 func _on_btn_next_pressed() -> void:
 	if %tabs_welcome.current_tab + 1 < %tabs_welcome.get_tab_count():
@@ -115,7 +132,10 @@ func _on_btn_next_pressed() -> void:
 				form_container._presubmit(settings)
 
 		RS.settings = settings
+		if RS.debug_always_launch_welcome:
+			RS.debug_always_launch_welcome = false
 		completed.emit()
+
 
 func _on_scopes_changed(p_scope_aggregator: ScopeAggregator) -> void:
 	settings.twitch_features_enabled = p_scope_aggregator.features

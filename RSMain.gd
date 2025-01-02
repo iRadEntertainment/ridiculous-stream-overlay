@@ -42,12 +42,13 @@ var known_users := {} #{ user_login: RSTwitchUser }
 var unknown_users_cache := {}
 
 var debug_mode := true
+var debug_always_launch_welcome := true
 
 # ================================ INIT ========================================
 func _ready() -> void:
 	l = RSLogger.new(RSSettings.LOGGER_NAME_MAIN)
 
-	l.i("=================================== RIDICULOS STREAMING STARTED ===================================")
+	print("=================================== RIDICULOS STREAM STARTED ===================================")
 	pnls = [
 		%pnl_chat,
 		%pnl_settings
@@ -82,6 +83,7 @@ func get_all_control_nodes(node_to_search: Node, found: Array[Control] = []) -> 
 			found.append_array(new_found_nodes)
 	return found
 
+
 func _on_welcome_completed() -> void:
 	settings.welcome_version = ProjectSettings.get_setting("application/config/version")
 	save_settings()
@@ -89,9 +91,10 @@ func _on_welcome_completed() -> void:
 	pnl_welcome.completed.disconnect(_on_welcome_completed)
 	start_everything()
 
+
 func start_everything():
 	if pnl_welcome.should_show():
-		get_window().always_on_top = false;
+		get_window().always_on_top = false
 		RSUtl.fit_and_center_window_to_display(get_window())
 		btn_floating_menu.hide()
 		pnl_welcome.completed.connect(_on_welcome_completed)
@@ -130,14 +133,17 @@ func load_known_user(username := ""):
 	else:
 		known_users[username] = loader.load_userfile(username)
 
+
 func save_known_users():
 	loader.save_all_user(known_users)
+
 
 func get_known_user(username : String) -> RSTwitchUser:
 	var user = null
 	if username in known_users.keys():
 		user = known_users[username]
 	return user
+
 
 func user_from_username(username: String) -> RSTwitchUser:
 	if username in known_users:
