@@ -58,31 +58,10 @@ func start():
 		await connect_to_twitch()
 
 
-func set_broadcaster_id_for_all_eventsub(broadcaster_id: String):
-	var all_properties : Array = ProjectSettings.get_property_list()
-	var keys = []
-	for d : Dictionary in all_properties:
-		var key : String = str(d.name)
-		if key.begins_with("twitch/eventsub/") and (
-			key.ends_with("/broadcaster_user_id") or \
-			key.ends_with("/moderator_user_id")
-			):
-			keys.append(key)
-	
-	for key in keys:
-		if ProjectSettings.get_setting(key) == "":
-			ProjectSettings.set_setting(key, broadcaster_id)
-
-
 func connect_to_twitch():
 	l.i("Connecting...")
 	await auth.ensure_authentication()
 	l.i("Auth ensured.")
-	#if RS.settings.chatbot_username in [null, ""]:
-		#var user_response := await api.get_users([str(RS.settings.broadcaster_id)], [])
-		#var user := user_response.data[0]
-		#RS.settings.user_login = user.login
-		#RS.settings.channel_name = user.login
 	await _init_chat()
 	l.i("Chat initialized.")
 	_init_eventsub()

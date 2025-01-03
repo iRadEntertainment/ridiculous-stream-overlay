@@ -65,7 +65,7 @@ enum Subscriptions {
 }
 
 ## Definition of a subscription.
-class Subscription extends RefCounted:
+class Subscription:
 	var value: String;
 	var version: String;
 	var conditions: Array[String];

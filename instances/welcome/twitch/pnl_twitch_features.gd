@@ -158,7 +158,7 @@ func _on_scopes_changed(p_scope_aggregator: ScopeAggregator) -> void:
 			var scope_metadata := Scopes.lookup.get(scope) as ScopeMetadata
 			scope_description.text = scope_metadata.description
 		else:
-			scope_description.text = &"MISSING DESCRIPTION" if OS.is_debug_build() else &""
+			scope_description.text = &"MISSING DESCRIPTION" if RS.debug_mode else &""
 		%grid_scopes.add_child(scope_description)
 
 func _on_btn_toggle_show_adv_toggled(toggled_on: bool) -> void:

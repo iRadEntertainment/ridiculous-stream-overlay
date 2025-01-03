@@ -124,7 +124,6 @@ const ALL_LOGGERS: Array[String] = [
 
 @export var auto_connect : bool = false
 @export var max_messages_in_chat : int = 100
-@export var eventsubs : Dictionary
 
 # no-OBS-ws settings
 @export var obs_use_module := true
@@ -145,7 +144,9 @@ const ALL_LOGGERS: Array[String] = [
 @export var redirect_port: int = 7170
 
 @export var force_verify: String = "false"
-@export var subscriptions: Dictionary
+var subscriptions: Dictionary:
+	get:
+		return get_subscriptions_from_enabled_features()
 
 @export var image_transformers: Dictionary = {}
 var image_transformer: TwitchImageTransformer
@@ -212,60 +213,6 @@ var irc_capabilities: Array[TwitchIrcCapabilities.Capability] = [
 func is_log_enabled(logger: String) -> bool:
 	return log_enabled.has(logger)
 
-func get_eventsubs() -> Dictionary:
-	var keys = []
-	for property : Dictionary in ProjectSettings.get_property_list():
-		var key : String = str(property.name)
-		if key.begins_with("twitch/eventsub/") and ProjectSettings.get_setting(key):
-			keys.append(key)
-	var d = {}
-	for key in keys:
-		d[key] = ProjectSettings.get_setting(key)
-	return d
-func set_eventsubs(values : Dictionary) -> void:
-	for key in values.keys():
-		var value = values[key]
-		if typeof(value) in [TYPE_INT, TYPE_FLOAT]:
-			value = str(value)
-		ProjectSettings.set_setting(key, value)
-
-
-# func to_dict() -> Dictionary:
-# 	var d = {}
-# 	d["app_scale"] = app_scale
-	
-# 	d["scopes"] = scopes
-# 	d["eventsubs"] = eventsubs
-	
-# 	d["auto_connect"] = auto_connect
-	
-# 	d["obs_autoconnect"] = obs_autoconnect
-# 	d["obs_websocket_url"] = obs_websocket_url
-# 	d["obs_websocket_port"] = obs_websocket_port
-# 	d["obs_websocket_password"] = obs_websocket_password
-# 	d["log_enabled"] = log_enabled
-	
-# 	d["max_messages_in_chat"] = max_messages_in_chat
-# 	return d
-
-
-
-
-# func set_broadcaster_id_for_all_eventsub():
-# 	var all_properties : Array = ProjectSettings.get_property_list()
-# 	var keys = []
-# 	for d : Dictionary in all_properties:
-# 		var key : String = str(d.name)
-# 		if key.begins_with("twitch/eventsub/") and (
-# 			key.ends_with("/broadcaster_user_id") or \
-# 			key.ends_with("/moderator_user_id")
-# 			):
-# 			keys.append(key)
-	
-# 	for key in keys:
-# 		if ProjectSettings.get_setting(key) == "":
-# 			print("TwitchSetting")
-# 			ProjectSettings.set_setting(key, broadcaster_id)
 
 func is_twitcher_setup() -> bool:
 	if !broadcaster_id: return false
@@ -274,3 +221,24 @@ func is_twitcher_setup() -> bool:
 	if !redirect_url: return false
 	if !redirect_port: return false
 	return true
+
+
+## Return the subscribed subscriptions key = TwitchSubscriptions.Subscription, value = Dictionary with conditions (ready to use)
+func get_subscriptions_from_enabled_features() -> Dictionary:
+	var result = {}
+	for subscription: TwitchSubscriptions.Subscription in TwitchSubscriptions.get_all():
+		if twitch_features_enabled.has(subscription.value):
+			var conditions: Array[String] = subscription.conditions
+			result[subscription] = get_conditions(conditions)
+	return result
+
+
+## Returns the conditions that the eventsub subscriptions need to pass to the Twitcher library
+## For Ridiculous Stream we will override all the bradcaster user id with the current one
+## eg. {broadcaster_user_id (String): current user id value (String)}
+func get_conditions(conditions: Array[String]) -> Dictionary:
+	var condition: Dictionary = {}
+	for condition_name: String in conditions:
+		if condition_name in ["broadcaster_user_id", "moderator_user_id", "to_broadcaster_user_id"]:
+			condition[condition_name] = RS.settings.broadcaster_id
+	return condition

@@ -112,6 +112,7 @@ layout_mode = 2
 
 [node name="hb" type="HBoxContainer" parent="scroll/vb/vb4"]
 layout_mode = 2
+size_flags_vertical = 0
 
 [node name="spacer" type="Control" parent="scroll/vb/vb4/hb"]
 custom_minimum_size = Vector2(260, 0)
@@ -129,8 +130,10 @@ size_flags_horizontal = 3
 [node name="input_twitch_chatbot_use_eventsub" type="CheckBox" parent="scroll/vb/vb4/hb"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 disabled = true
 text = "Use EventSub instead of IRC, which will also currently disable notifications for people joining/leaving chat."
+autowrap_mode = 2
 
 [node name="spacer2" type="Control" parent="scroll/vb/vb4/hb"]
 custom_minimum_size = Vector2(8, 0)

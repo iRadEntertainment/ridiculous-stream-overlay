@@ -251,7 +251,7 @@ func _convert_response(request: BufferedHTTPClient.RequestData, cache_path: Stri
 	var file_head = response_data.slice(0, 3);
 	# REMARK: don't use content-type... twitch doesn't check and sends PNGs with GIF content type.
 	if file_head == GIF_HEADER:
-		return await image_transformer.convert_image(cache_path, response_data, spriteframe_path) as SpriteFrames;
+		return image_transformer.convert_image(cache_path, response_data, spriteframe_path) as SpriteFrames;
 	else:
 		return static_image_transformer.convert_image(cache_path, response_data, spriteframe_path) as SpriteFrames; # await?
 

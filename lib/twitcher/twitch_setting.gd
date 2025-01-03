@@ -37,20 +37,6 @@ class_name TwitchSetting
 # 	var default_cap_val = TwitchIrcCapabilities.get_bit_value(default_caps);
 # 	_irc_capabilities = Property.new("twitch/websocket/irc/capabilities", default_cap_val).as_bit_field(_get_all_irc_capabilities()).basic();
 
-# static func get_log_enabled() -> Array[String]:
-# 	var result: Array[String] = [];
-# 	# Other classes can be initialized before the settings and use the log.
-# 	if _log_enabled == null:
-# 		return result;
-# 	var bitset = _log_enabled.get_val();
-# 	if typeof(bitset) == TYPE_STRING && bitset == "" || typeof(bitset) == TYPE_INT && bitset == 0:
-# 		return result
-# 	for logger_idx: int in range(ALL_LOGGERS.size()):
-# 		var bit_value = 1 << logger_idx;
-# 		if bitset & bit_value == bit_value:
-# 			result.append(ALL_LOGGERS[logger_idx])
-# 	return result
-
 
 # static func get_image_transformers() -> Array[String]:
 # 	var result: Array[String] = [];
@@ -125,22 +111,3 @@ class_name TwitchSetting
 # # 		for condition in subscription.conditions:
 # # 			subscription_properties.append(Property.new("twitch/eventsub/%s/%s" % [subscription.get_name(), condition], "").as_str().basic());
 
-# ## Return the subscribed subscriptions key = TwitchSubscriptions.Subscription, value = Dictionary with conditions (ready to use)
-# static func get_subscriptions() -> Dictionary:
-# 	var result = {};
-# 	for subscription in TwitchSubscriptions.get_all():
-# 		var properties: Array = _subscriptions[subscription];
-# 		var subscribed_property: Property = properties[0];
-
-# 		if subscribed_property.get_val():
-# 			result[subscription] = get_conditions(properties);
-# 	return result;
-
-# static func get_conditions(properties: Array) -> Dictionary:
-# 	var condition: Dictionary = {}
-# 	# Skip first property that is the "subscribed" boolean
-# 	for property: Property in properties.slice(1):
-# 		var condition_name: String = property.key
-# 		condition_name = condition_name.substr(condition_name.rfind("/") + 1);
-# 		condition[condition_name] = property.get_val();
-# 	return condition;

@@ -106,7 +106,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-current_tab = 1
+current_tab = 5
 tabs_visible = false
 
 [node name="pnl_app_settings" parent="vb/hb/mrg_right/vb/tabs_welcome" instance=ExtResource("9_n5r7t")]
@@ -116,6 +116,7 @@ layout_mode = 2
 
 [node name="pnl_obs_ws" parent="vb/hb/mrg_right/vb/tabs_welcome" instance=ExtResource("9_kgf55")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -141,7 +142,6 @@ metadata/_tab_index = 4
 
 [node name="pnl_twitch_auth_irc" parent="vb/hb/mrg_right/vb/tabs_welcome" instance=ExtResource("11_omwxy")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 metadata/_tab_index = 5
 
@@ -168,6 +168,7 @@ expand_icon = true
 
 [node name="pnl_debug_mode" parent="vb/hb/mrg_right" instance=ExtResource("16_w8j4y")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [connection signal="tab_changed" from="vb/hb/mrg_right/vb/tabs_welcome" to="." method="_on_tabs_welcome_tab_changed"]

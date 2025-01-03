@@ -156,7 +156,6 @@ func _update_features() -> void:
 		%FeatureEntries.move_child(feature_entry, feature_index)
 
 func _on_button_expand_category_toggled(toggled_on: bool) -> void:
-	print_debug("Category expanded: %s" % toggled_on)
 	expanded = toggled_on
 	_update_expanded()
 
@@ -229,7 +228,7 @@ func _update_all_selected() -> void:
 
 	var all_selected := selections.size() == _features_by_id.size()
 	for selection in selections:
-		if !all_selected and !OS.is_debug_build():
+		if !all_selected and !RS.debug_mode:
 			break
 
 		if selection.selected:
@@ -237,17 +236,17 @@ func _update_all_selected() -> void:
 
 		all_selected = false
 
-		if OS.is_debug_build():
+		if RS.debug_mode:
 			unselected_features.append(selection.feature_id)
 			continue
 
 		break
 
-	if !all_selected and OS.is_debug_build():
-		print_debug("[FeatureCategory][%s] Unselected features: %s" % [
-			category_name,
-			", ".join(unselected_features)
-		])
+	# if !all_selected and RS.debug_mode:
+	# 	print_debug("[FeatureCategory][%s] Unselected features: %s" % [
+	# 		category_name,
+	# 		", ".join(unselected_features)
+	# 	])
 
 	set_selected_no_signal(all_selected)
 
