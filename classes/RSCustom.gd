@@ -53,7 +53,8 @@ func add_commands() -> void:
 	l.i("Command added to the handler.")
 
 func on_chat(_channel_name: String, username: String, message: String, _tags: TwitchTags.PrivMsg):
-	add_notification_scene(username)
+	if not message.begins_with("!"):
+		add_notification_scene(username)
 	if "kiwi" in message.to_lower(): OS.shell_open("https://cdn.discordapp.com/attachments/1221896398706835527/1296143099478933566/IMG_2351.jpg?ex=671136d4&is=670fe554&hm=a909489ef95bd303ec49c2c559d869fc1da209e9ae3eb9a25ed085e055cdb183&")
 	if username == "theyagich" and message == "wb!": yag_welcome_back()
 	if "dawdle" in message: destructibles_names("dawdle")
