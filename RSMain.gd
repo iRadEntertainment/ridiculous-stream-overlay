@@ -44,6 +44,8 @@ var unknown_users_cache := {}
 var debug_mode := true
 var debug_always_launch_welcome := true
 
+signal all_started
+
 # ================================ INIT ========================================
 func _ready() -> void:
 	l = RSLogger.new(RSSettings.LOGGER_NAME_MAIN)
@@ -125,6 +127,8 @@ func start_everything():
 	for pnl: Control in pnls:
 		if pnl.has_method("start"):
 			pnl.start()
+	
+	all_started.emit()
 
 # =============================== KNOWN USERS ==================================
 func load_known_user(username := ""):

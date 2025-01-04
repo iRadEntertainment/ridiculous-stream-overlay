@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://d4lkycruly2ye"]
+[gd_scene load_steps=5 format=3 uid="uid://d4lkycruly2ye"]
 
+[ext_resource type="Script" path="res://instances/pnl_mods.gd" id="1_adgd2"]
 [ext_resource type="Texture2D" uid="uid://h1by403q5s8f" path="res://ui/sword.png" id="1_e4eer"]
 [ext_resource type="Texture2D" uid="uid://6weky3a0q5r5" path="res://ui/bootstrap_icons/person-heart.svg" id="2_avnvt"]
+[ext_resource type="PackedScene" uid="uid://biy3s0e3yb44c" path="res://instances/pnl_loading_simple.tscn" id="4_v6h6o"]
 
 [node name="pnl_mods" type="PanelContainer"]
+script = ExtResource("1_adgd2")
 
 [node name="hb" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -16,6 +19,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="lb_mod_stats" type="Label" parent="hb"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "500"
 
@@ -30,10 +34,12 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="lb_foll_stats" type="Label" parent="hb"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "700"
 
 [node name="lb_mod_ratio" type="Label" parent="hb"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "75.05%"
@@ -43,3 +49,9 @@ horizontal_alignment = 2
 layout_mode = 2
 focus_mode = 0
 flat = true
+
+[node name="pnl_loading_simple" parent="btn_refresh_mods" instance=ExtResource("4_v6h6o")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[connection signal="pressed" from="btn_refresh_mods" to="." method="_on_btn_refresh_mods_pressed"]
