@@ -40,7 +40,11 @@ var emote_start : int = 0
 var fl_first_chat_message := true
 
 func _on_chat_message(_channel: String, from_user: String, message: String, tags: TwitchTags.PrivMsg):
-	if message.begins_with("!"): return
+	if message.begins_with("!"):
+		if message.begins_with("!tts"):
+			pass
+		else:
+			return
 	var username = from_user.to_lower()
 	put_chat(username, message, tags)
 

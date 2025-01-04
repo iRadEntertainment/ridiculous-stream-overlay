@@ -232,8 +232,9 @@ func _on_opt_custom_sfx_item_selected(index):
 	%sfx_prev.play()
 func _on_btn_save_pressed():
 	update_user()
-func _on_btn_open_file_pressed():
-	OS.shell_open(RS.settings.get_user_filepath(%ln_username.text))
+# TODO:
+#func _on_btn_open_file_pressed():
+	#OS.shell_open(RS.settings.get_user_filepath(%ln_username.text))
 func _on_btn_open_folder_pressed():
 	OS.shell_open(RSSettings.get_users_path())
 
