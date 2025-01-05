@@ -16,6 +16,7 @@ func start() -> void:
 	if settings:
 		_on_settings_changed()
 	%ln_data_folder.text = RSSettings.data_dir
+	%sl_window_scale.value = settings.app_scale
 
 
 func _on_settings_changed() -> void:
@@ -36,3 +37,10 @@ func _on_file_dialog_folder_selected(status: bool, selected_paths: PackedStringA
 	RSSettings._config.save(RSSettings._CONFIG_PATH)
 	l.i("Data folder set: %s | Saving to %s" % [RSSettings.data_dir, RSSettings._CONFIG_PATH])
 	%ln_data_folder.text = data_dir
+
+
+func _on_sl_window_scale_value_changed(value: float) -> void:
+	%lb_window_scale.text = "%d%%" % (value*100)
+func _on_sl_window_scale_drag_ended(_value_changed: bool) -> void:
+	get_tree().root.content_scale_factor = %sl_window_scale.value
+	settings.app_scale = %sl_window_scale.value
