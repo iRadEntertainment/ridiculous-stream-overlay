@@ -76,6 +76,8 @@ func start() -> void:
 			var form_container := child as PanelFormContainer
 			form_container.completion_changed.connect(_on_panel_form_container_completion_changed)
 			_on_panel_form_container_completion_changed(form_container, form_container.is_completed)
+		if child.has_method("start"):
+			child.start()
 
 	show()
 

@@ -12,7 +12,7 @@ var settings: RSSettings:
 func _init() -> void:
 	super()
 
-func _ready() -> void:
+func start() -> void:
 	if settings:
 		_on_settings_changed()
 	%ln_data_folder.text = RSSettings.data_dir

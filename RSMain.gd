@@ -48,17 +48,27 @@ signal all_started
 
 # ================================ INIT ========================================
 func _ready() -> void:
-	l = RSLogger.new(RSSettings.LOGGER_NAME_MAIN)
-
 	print("=================================== RIDICULOS STREAM STARTED ===================================")
-	pnls = [
-		%pnl_chat,
-		%pnl_settings
-	]
-	setup_mouse_passthrough()
+	l = RSLogger.new(RSSettings.LOGGER_NAME_MAIN)
 	load_settings()
+	await welcome_panel_check()
+
+	setup_mouse_passthrough()
 	load_known_user()
 	start_everything()
+
+
+func welcome_panel_check() -> void:
+	if pnl_welcome.should_show():
+		get_window().always_on_top = false
+		RSUtl.fit_and_center_window_to_display(get_window())
+		btn_floating_menu.hide()
+		pnl_welcome.start()
+		await pnl_welcome.completed
+		settings.welcome_version = ProjectSettings.get_setting("application/config/version")
+		save_settings()
+	
+	pnl_welcome.hide()
 
 
 func setup_mouse_passthrough():
@@ -86,27 +96,8 @@ func get_all_control_nodes(node_to_search: Node, found: Array[Control] = []) -> 
 	return found
 
 
-func _on_welcome_completed() -> void:
-	settings.welcome_version = ProjectSettings.get_setting("application/config/version")
-	save_settings()
-
-	pnl_welcome.completed.disconnect(_on_welcome_completed)
-	start_everything()
-
-
-func start_everything():
-	if pnl_welcome.should_show():
-		get_window().always_on_top = false
-		RSUtl.fit_and_center_window_to_display(get_window())
-		btn_floating_menu.hide()
-		pnl_welcome.completed.connect(_on_welcome_completed)
-		pnl_welcome.start()
-		return
-
-	pnl_welcome.hide()
-
+func start_everything() -> void:
 	await Engine.get_main_loop().process_frame
-
 	get_window().always_on_top = true
 
 	display.start()
@@ -123,7 +114,11 @@ func start_everything():
 	physic_scene.start()
 	pnl_notifications.start()
 	alert_scene.start()
-
+	
+	pnls = [
+		%pnl_chat,
+		%pnl_settings
+	]
 	for pnl: Control in pnls:
 		if pnl.has_method("start"):
 			pnl.start()
@@ -168,6 +163,8 @@ func user_from_username(username: String) -> RSTwitchUser:
 
 # ========================== LOAD/SAVE CONFIG ==================================
 func load_settings():
+	# The config file is stored into user:// and only holds the custom data directory
+	# where everything else is stored
 	if FileAccess.file_exists(RSSettings._CONFIG_PATH):
 		var error := RSSettings._config.load(RSSettings._CONFIG_PATH)
 		if OK == error:
