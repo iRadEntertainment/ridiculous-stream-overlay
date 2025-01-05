@@ -82,9 +82,6 @@ func convert_filenames() -> void:
 	# for user: RSTwitchUser in users:
 	# 	save_user_to_tres(user)
 
-static func rename_old_to_new(from: String, to: String) -> void:
-	pass
-
 
 func save_user_to_tres(user: RSTwitchUser) -> void:
 	var filename = user_filename_json_from_user(user)

@@ -105,18 +105,19 @@ func load_texture_from_data_folder(texture_file_name : String) -> Texture2D:
 	return tex
 
 #=========================================== USERSERSRESWRES ========================================================
-func load_userfile(username) -> RSTwitchUser:
+static func load_userfile(username) -> RSTwitchUser:
 	var path := get_user_filepath(username)
 	if !FileAccess.file_exists(path):
-		l.i("Cannot find file: %s" % path)
+		print_verbose("Cannot find file: %s" % path)
+		return null
 	var user := RSTwitchUser.from_json(RSUtl.load_json(path))
 	if user.username == "":
 		user.username = username_from_userfile(path)
-		l.w("%s doesn't contain a username." % path.get_file())
+		print_verbose("%s doesn't contain a username." % path.get_file())
 	return user
-func save_userfile(user : RSTwitchUser) -> void:
+static func save_userfile(user : RSTwitchUser) -> void:
 	if user.username == "":
-		l.w("cannot save an user without a username")
+		print_verbose("cannot save an user without a username")
 		return
 	var path = get_user_filepath(user.username)
 	var dict = user.to_dict()
@@ -145,6 +146,7 @@ static func userfile_from_username(username : String) -> String:
 static func username_from_userfile(userfile : String) -> String:
 	userfile = userfile.get_file()
 	return userfile.trim_prefix("user_").trim_suffix(".json")
-static func get_user_filepath(username : String) -> String:
+static func get_user_filepath(username : String, users_folder_path := "") -> String:
 	var user_file = "user_%s.json" % username
-	return RSSettings.get_users_path() + user_file
+	var folder = users_folder_path if !users_folder_path.is_empty() else RSSettings.get_users_path()
+	return folder + user_file
