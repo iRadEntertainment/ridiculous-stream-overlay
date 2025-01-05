@@ -68,7 +68,6 @@ layout_mode = 2
 
 [node name="FeatureDetails" type="PanelContainer" parent="FeatureEntryContents"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_0s3od")
 
@@ -85,6 +84,7 @@ text = "Test
 Test
 Test
 "
+autowrap_mode = 2
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="toggled" from="FeatureEntryContents/FeatureHeader/ButtonFeatureDetails" to="." method="_on_button_feature_details_toggled"]
