@@ -8,3 +8,4 @@
 ~*.dll
 stored.txt
 /addons/editorscriptmanager/
+export_presets.cfg
