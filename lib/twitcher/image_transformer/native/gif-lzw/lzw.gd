@@ -15,7 +15,7 @@ class CodeEntry:
 	func add(other) -> CodeEntry:
 		return CodeEntry.new(raw_array + other.raw_array)
 
-	func to_string() -> String:
+	func stringify() -> String:
 		var result: String = ""
 		for element in sequence:
 			result += str(element) + ", "
@@ -42,10 +42,10 @@ class CodeTable:
 	func get_entry(index: int) -> CodeEntry:
 		return entries.get(index, null)
 
-	func to_string() -> String:
+	func stringify() -> String:
 		var result: String = "CodeTable:\n"
 		for id in entries:
-			result += str(id) + ": " + entries[id].to_string() + "\n"
+			result += str(id) + ": " + entries[id].stringify() + "\n"
 		result += "Counter: " + str(counter) + "\n"
 		return result
 
@@ -65,7 +65,7 @@ func initialize_color_code_table(colors: PackedByteArray) -> CodeTable:
 		result_code_table.add(CodeEntry.new([color_id]))
 	# move counter to the first available compression code index
 	var last_color_index: int = colors.size() - 1
-	var clear_code_index: int = pow(2, get_bits_number_for(last_color_index))
+	var clear_code_index: int = int(pow(2, get_bits_number_for(last_color_index)))
 	result_code_table.counter = clear_code_index + 2
 	return result_code_table
 
@@ -84,7 +84,7 @@ func compress_lzw(image: PackedByteArray, colors: PackedByteArray) -> Array:
 	# Number 15 is in binary 0b1111, so we'll need 4 bits to write all
 	# colors down.
 	var last_color_index: int = colors.size() - 1
-	var clear_code_index: int = pow(2, get_bits_number_for(last_color_index))
+	var clear_code_index: int = int(pow(2, get_bits_number_for(last_color_index)))
 	var index_stream: PackedByteArray = image
 	var current_code_size: int = get_bits_number_for(clear_code_index)
 	var binary_code_stream = lsbbitpacker.LSBLZWBitPacker.new()
@@ -151,7 +151,7 @@ func decompress_lzw(code_stream_data: PackedByteArray, min_code_size: int, color
 	var index_stream: PackedByteArray = PackedByteArray([])
 	var binary_code_stream = lsbbitunpacker.LSBLZWBitUnpacker.new(code_stream_data)
 	var current_code_size: int = min_code_size + 1
-	var clear_code_index: int = pow(2, min_code_size)
+	var clear_code_index: int = int(pow(2, min_code_size))
 
 	# CODE is an index of code table, {CODE} is sequence inside
 	# code table with index CODE. The same goes for PREVCODE.
