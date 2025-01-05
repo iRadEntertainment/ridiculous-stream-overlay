@@ -43,7 +43,7 @@ project/assembly_name="Ridiculous Stream"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/editorscriptmanager/plugin.cfg", "res://addons/ridiculous_stream_project_settings/plugin.cfg")
+enabled=PackedStringArray("res://addons/editorscriptmanager/plugin.cfg", "res://addons/ridiculous_coding/plugin.cfg", "res://addons/ridiculous_stream_project_settings/plugin.cfg")
 
 [physics]
 

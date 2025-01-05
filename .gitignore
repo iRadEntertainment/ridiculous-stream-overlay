@@ -8,4 +8,5 @@
 ~*.dll
 stored.txt
 /addons/editorscriptmanager/
+/addons/ridiculous_coding/
 export_presets.cfg
