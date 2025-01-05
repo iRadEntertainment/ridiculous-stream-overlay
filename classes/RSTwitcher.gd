@@ -278,6 +278,8 @@ func get_live_streamers_data(user_names_or_ids : Array = []) -> Dictionary:
 	if user_names_or_ids.is_empty():
 		for key in RS.known_users.keys():
 			var user : RSTwitchUser = RS.known_users[key]
+			if !user:
+				continue
 			if user.get("is_streamer") != null:
 				if user.is_streamer:
 					user_names_or_ids.append(key)
