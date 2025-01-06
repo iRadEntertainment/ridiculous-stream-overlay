@@ -134,8 +134,6 @@ func _on_btn_next_pressed() -> void:
 				form_container._presubmit(settings)
 
 		RS.settings = settings
-		if RS.debug_always_launch_welcome:
-			RS.debug_always_launch_welcome = false
 		completed.emit()
 
 
