@@ -36,7 +36,7 @@ horizontal_alignment = 1
 [node name="description" type="RichTextLabel" parent="vb"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_bnd81")
-text = "If the app has been launched with RS.debug_mode on this panel should be on!
+text = "If the app has been launched with RS.settings.debug_mode on this panel should be on!
 
 It will let you choose which logs to print in the consolle and some other stuff"
 fit_content = true

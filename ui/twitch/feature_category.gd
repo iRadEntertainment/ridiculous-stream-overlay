@@ -228,7 +228,7 @@ func _update_all_selected() -> void:
 
 	var all_selected := selections.size() == _features_by_id.size()
 	for selection in selections:
-		if !all_selected and !RS.debug_mode:
+		if !all_selected and !RS.settings.debug_mode:
 			break
 
 		if selection.selected:
@@ -236,13 +236,13 @@ func _update_all_selected() -> void:
 
 		all_selected = false
 
-		if RS.debug_mode:
+		if RS.settings.debug_mode:
 			unselected_features.append(selection.feature_id)
 			continue
 
 		break
 
-	# if !all_selected and RS.debug_mode:
+	# if !all_selected and RS.settings.debug_mode:
 	# 	print_debug("[FeatureCategory][%s] Unselected features: %s" % [
 	# 		category_name,
 	# 		", ".join(unselected_features)

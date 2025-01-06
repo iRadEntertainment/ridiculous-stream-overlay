@@ -17,6 +17,8 @@ func start() -> void:
 		_on_settings_changed()
 	%ln_data_folder.text = RSSettings.data_dir
 	%sl_window_scale.value = settings.app_scale
+	%ck_always_open_welcome_pnl.button_pressed = settings.welcome_display_always
+	%ck_debug_mode.button_pressed = settings.debug_mode
 
 
 func _on_settings_changed() -> void:
@@ -44,3 +46,8 @@ func _on_sl_window_scale_value_changed(value: float) -> void:
 func _on_sl_window_scale_drag_ended(_value_changed: bool) -> void:
 	get_tree().root.content_scale_factor = %sl_window_scale.value
 	settings.app_scale = %sl_window_scale.value
+
+func _on_ck_always_open_welcome_pnl_toggled(toggled_on:bool) -> void:
+	settings.welcome_display_always = toggled_on
+func _on_ck_debug_mode_toggled(toggled_on:bool) -> void:
+	settings.debug_mode = toggled_on

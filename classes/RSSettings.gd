@@ -121,6 +121,8 @@ const ALL_LOGGERS: Array[String] = [
 
 # RS settings
 @export var app_scale: float = 1.0
+@export var welcome_display_always := true
+@export var debug_mode := false
 
 @export var auto_connect : bool = false
 @export var max_messages_in_chat : int = 100

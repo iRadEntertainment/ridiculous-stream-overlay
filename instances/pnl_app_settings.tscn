@@ -101,6 +101,24 @@ layout_mode = 2
 text = "x1"
 horizontal_alignment = 2
 
+[node name="grid" type="GridContainer" parent="vb"]
+layout_mode = 2
+columns = 2
+
+[node name="ck_always_open_welcome_pnl" type="CheckBox" parent="vb/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Always launch welcome panel"
+
+[node name="ck_debug_mode" type="CheckBox" parent="vb/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Debug mode"
+
 [connection signal="pressed" from="vb/hb2/btn_select_data_folder" to="." method="_on_btn_select_data_folder_pressed"]
 [connection signal="drag_ended" from="vb/hb/sl_window_scale" to="." method="_on_sl_window_scale_drag_ended"]
 [connection signal="value_changed" from="vb/hb/sl_window_scale" to="." method="_on_sl_window_scale_value_changed"]
+[connection signal="toggled" from="vb/grid/ck_always_open_welcome_pnl" to="." method="_on_ck_always_open_welcome_pnl_toggled"]
+[connection signal="toggled" from="vb/grid/ck_debug_mode" to="." method="_on_ck_debug_mode_toggled"]

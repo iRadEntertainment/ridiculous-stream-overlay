@@ -173,7 +173,7 @@ func _join_channels_on_connect():
 	for channel_name: String in RS.settings.chatbot_channels:
 		var channel = join_channel(channel_name);
 		var message: String = RS.settings.chatbot_join_message;
-		if message != "" and !RS.debug_mode:
+		if message != "" and !RS.settings.debug_mode:
 			await channel.is_joined();
 			chat(message, channel_name);
 

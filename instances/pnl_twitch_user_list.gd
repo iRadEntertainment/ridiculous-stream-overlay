@@ -24,7 +24,7 @@ func populate_user_button_list():
 		if not user: continue
 		var btn_user_instance = RSGlobals.btn_user_pack.instantiate()
 		btn_user_instance.user = user
-		if !RS.debug_mode:
+		if !RS.settings.debug_mode:
 			var profile_pic = await RS.loader.load_texture_from_url(user.profile_image_url)
 			btn_user_instance.profile_pic = profile_pic
 		btn_user_instance.user_selected.connect(user_selected_pressed)

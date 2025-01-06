@@ -41,8 +41,6 @@ var pnls: Array[Control] = []
 var known_users := {} #{ user_login: RSTwitchUser }
 var unknown_users_cache := {}
 
-var debug_mode := true
-var debug_always_launch_welcome := true
 
 signal all_started
 
@@ -97,9 +95,14 @@ func get_all_control_nodes(node_to_search: Node, found: Array[Control] = []) -> 
 
 
 func start_everything() -> void:
+	pnls = [
+		%pnl_chat,
+		%pnl_settings
+	]
 	await Engine.get_main_loop().process_frame
 	get_window().always_on_top = true
 
+	
 	display.start()
 
 	btn_floating_menu.show()
@@ -115,10 +118,6 @@ func start_everything() -> void:
 	pnl_notifications.start()
 	alert_scene.start()
 	
-	pnls = [
-		%pnl_chat,
-		%pnl_settings
-	]
 	for pnl: Control in pnls:
 		if pnl.has_method("start"):
 			pnl.start()

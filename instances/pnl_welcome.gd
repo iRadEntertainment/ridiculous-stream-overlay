@@ -47,7 +47,7 @@ func start() -> void:
 	if !scope_aggregator.scopes_changed.is_connected(_on_scopes_changed):
 		scope_aggregator.scopes_changed.connect(_on_scopes_changed)
 
-	if RS.debug_mode:
+	if RS.settings.debug_mode:
 		print_verbose("Opening debug panels")
 		%pnl_debug_mode.settings = settings
 		%pnl_debug_mode.start()
@@ -89,7 +89,7 @@ func should_show() -> bool:
 	if !_all_forms_completed:
 		l.i("Welcome showing: not all form completed")
 		return true
-	if RS.debug_always_launch_welcome:
+	if RS.settings.welcome_display_always:
 		l.i("Welcome showing: default always launch welcome")
 		return true
 	var project_version := RSVersion.parse(ProjectSettings.get_setting("application/config/version"))
