@@ -16,6 +16,7 @@ var l: RSLogger
 @onready var mouse_tracker: RSMouseTracker = %RSMouseTracker
 @onready var mouse_pass: Node = %RSMousePass # C# class
 @onready var loader: RSLoader = %RSLoader
+@onready var user_mng: RSUserMng = %RSUserMng
 @onready var twitcher: RSTwitcher = %RSTwitcher
 @onready var no_obs_ws: NoOBSWS = %NoOBSWS
 @onready var shoutout_mng: RSShoutoutMng = %RSShoutoutMng

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://d345j5een73bf"]
+[gd_scene load_steps=22 format=3 uid="uid://d345j5een73bf"]
 
 [ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_33ebf"]
 [ext_resource type="Script" path="res://RSMain.gd" id="1_y2jdm"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://classes/RSShoutoutMng.gd" id="8_ex7ik"]
 [ext_resource type="Script" path="res://classes/RSLoader.gd" id="8_fol3s"]
 [ext_resource type="Script" path="res://classes/RSCustom.gd" id="9_by474"]
+[ext_resource type="Script" path="res://classes/RSUserMng.gd" id="12_oh8ps"]
 [ext_resource type="Script" path="res://classes/RSDisplay.gd" id="12_qc4sr"]
 [ext_resource type="PackedScene" uid="uid://dseoyhiylvwnu" path="res://instances/pnl_settings.tscn" id="15_8wfva"]
 [ext_resource type="PackedScene" uid="uid://jchfk7d78ss5" path="res://instances/pnl_chat.tscn" id="16_ege2h"]
@@ -70,6 +71,10 @@ script = ExtResource("5_joslx")
 [node name="RSDisplay" type="Node" parent="Modules"]
 unique_name_in_owner = true
 script = ExtResource("12_qc4sr")
+
+[node name="RSUserMng" type="Node" parent="Modules"]
+unique_name_in_owner = true
+script = ExtResource("12_oh8ps")
 
 [node name="sfx" type="Node" parent="."]
 

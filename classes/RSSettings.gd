@@ -84,6 +84,7 @@ const LOGGER_NAME_CUSTOM_REWARDS = &"TwitchCustomRewards"
 ## RS Loggers
 const LOGGER_NAME_MAIN = &"RS Main"
 const LOGGER_NAME_SETTINGS = &"RS Settings"
+const LOGGER_NAME_USER_MNG = &"RS User Manager"
 const LOGGER_NAME_LOADER = &"RS Loader"
 const LOGGER_NAME_DISPLAY = &"RS Display"
 const LOGGER_NAME_NOOBSWS = &"OBS Websocket"
@@ -106,6 +107,7 @@ const ALL_LOGGERS: Array[String] = [
 	
 	LOGGER_NAME_MAIN, # RS Loggers
 	LOGGER_NAME_SETTINGS,
+	LOGGER_NAME_USER_MNG,
 	LOGGER_NAME_LOADER,
 	LOGGER_NAME_DISPLAY,
 	LOGGER_NAME_NOOBSWS,
