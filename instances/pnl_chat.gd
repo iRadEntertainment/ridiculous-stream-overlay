@@ -14,13 +14,13 @@ const commands_string_format = {
 	"!big" : "[font_size=64]%s[/font_size]",
 	"!small" : "[font_size=12]%s[/font_size]",
 	"!wave" : "[wave amp=50.0 freq=5.0 connect=1]%s[/wave]",
-	"!hl" : "[bgcolor=#ff0000][color=#ffffff]%s[/color][/bgcolor]",
-	"!pulse" : "[pulse freq=1.0 color=#ffffff40 ease=-2.0]%s[/pulse]",
+	"!hl" : "[bgcolor=ff0000][color=ffffff]%s[/color][/bgcolor]",
+	"!pulse" : "[pulse freq=1.0 color=ffffff40 ease=-2.0]%s[/pulse]",
 	"!tornado" : "[tornado radius=10.0 freq=1.0 connected=1]%s[/tornado]",
 	"!shake" : "[shake rate=20.0 level=5 connected=1]%s[/shake]",
-	"!hd" : "[bgcolor=#21262e][color=#21262e]%s[/color][/bgcolor]",
+	"!hd" : "[bgcolor=21262e][color=21262e]%s[/color][/bgcolor]",
 }
-var ma = "#"
+
 var sprite_effect : SpriteFrameEffect
 
 
@@ -47,6 +47,7 @@ func _on_chat_message(_channel: String, from_user: String, message: String, tags
 			return
 	var username = from_user.to_lower()
 	put_chat(username, message, tags)
+
 
 func put_chat(username: String, message: String, _tags: TwitchTags.PrivMsg):
 	var tags := TwitchTags.Message.from_priv_msg(_tags)

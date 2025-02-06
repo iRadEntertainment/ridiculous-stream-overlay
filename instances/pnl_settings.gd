@@ -66,8 +66,8 @@ func _on_btn_open_irad_twitch_pressed():
 	OS.shell_open("https://twitch.tv/iraddev")
 	RS.twitcher.chat("Ridiculous Stream has been provided kindly by iRadDev: https://twitch.tv/iraddev")
 func _on_btn_open_github_pressed():
-	OS.shell_open("https://github.com/iRadEntertainment/Ridiculous-Stream")
-	RS.twitcher.chat("Here is the repo for Ridiculous Stream, feel free to use, modify or contribute: https://github.com/iRadEntertainment/Ridiculous-Stream")
+	OS.shell_open("https://github.com/iRadEntertainment/ridiculous-stream-overlay")
+	RS.twitcher.chat("Here is the repo for Ridiculous Stream, feel free to use, modify or contribute: https://github.com/iRadEntertainment/ridiculous-stream-overlay")
 func _on_btn_credits_gift_pressed():
 	RS.twitcher.chat("Issork made Gift! The library I used before the Twitcher: https://github.com/issork/gift")
 func _on_btn_credits_twitcher_pressed():

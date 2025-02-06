@@ -1,6 +1,5 @@
-
 extends HBoxContainer
-
+class_name RSTwitchUserEntry
 
 var user : RSTwitchUser
 var live_data : TwitchStream
@@ -30,6 +29,7 @@ func start():
 	btn_special.disabled = user.custom_action == ""
 	
 	user_live_rect.visible = live_data != null
+	if profile_pic: user_pic.texture = profile_pic
 
 
 func reload_profile_pic():

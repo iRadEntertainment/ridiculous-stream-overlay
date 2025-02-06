@@ -6,24 +6,62 @@ static var l: RSLogger
 ## FILENAMES json
 ## file tamplate -> {user_id}_{username}.json
 
+var folder: String:
+	get(): return RSSettings.get_users_path()
+
 var known := {} # {user_id (int): user_object (RSTwitchUser)}
-var unknown := {} # {user_id (int): user_object (RSTwitchUser)}
+# TODO: populate unknown users
+var unknown := {} # {user_id (int): user_object (RSTwitchUser)} CACHE
 var username_to_user_id := {} # -> {username (String): user_id (int)} # used for known and cached unknown
 
+signal user_updated(user: RSTwitchUser)
+signal all_users_updated
 
+
+#region INIT
 func start():
 	RSUserMng.l = RSLogger.new(RSSettings.LOGGER_NAME_USER_MNG)
 	l.i("Started")
 	l.i("Loading all users")
-	known = load_all_users_from_folder(RSSettings.get_users_path())
+	known = load_all_users_from_folder(folder)
+	username_to_user_id = {}
+	for user_id: int in known:
+		var user: RSTwitchUser = known[user_id]
+		username_to_user_id[user.username] = user_id
+
+
+func connect_signals() -> void:
+	# RS.twitcher.connected_to_twitch.connect(_on_twitch_connected)
+	RS.twitcher.first_session_message.connect(_on_first_session_message)
+#endregion
+
+
+#region LOAD/SAVE/DELETE
+func save_user(user: RSTwitchUser) -> void:
+	var filename: String = get_filename_from_user_id(user.user_id, folder)
+	while not filename.is_empty():
+		delete_user(user)
+		filename = get_filename_from_user_id(user.user_id, folder)
+	
+	known[user.username] = user
+	save_user_to_json(user, folder)
 
 
 func save_all() -> void:
 	l.i("Saving all users")
-	save_all_users_to_folder(known, RSSettings.get_users_path())
+	save_all_users_to_folder(known, folder)
 
 
-# UTILITIES
+func delete_user(user: RSTwitchUser) -> void:
+	var filename: String = get_filename_from_user_id(user.user_id, folder)
+	if filename.is_empty():
+		return
+	OS.move_to_trash(folder + filename)
+
+#endregion
+
+
+#region UTILITIES
 func get_user_from_username(username : String) -> RSTwitchUser:
 	var user: RSTwitchUser
 	var user_id: int = 0
@@ -57,25 +95,71 @@ func user_from_twitch_api(username: String = "", user_id: int = 0) -> RSTwitchUs
 	
 	var user := RSTwitchUser.new()
 	user = RSTwitchUser.from_twitcher_user(t_user)
-	user.twitch_chat_color = await RS.twitcher.get_user_color(t_user.id)
-	if known.has(user.user_id):
-		known[user.user_id] = user
-	else:
-		unknown[user.user_id] = user
+	user.twitch_chat_color = await RS.twitcher.get_user_color(int(t_user.id))
+	# TODO: check if we want to update the known user dictionary here.
+	# Probably move to: _on_chat()
+	# if known.has(user.user_id):
+	# 	known[user.user_id] = user
+	# else:
+	# 	unknown[user.user_id] = user
 	return user
 
 
 func is_user_known(user: RSTwitchUser) -> bool:
 	return known.has(user.user_id)
+
+
 func is_username_known(username: String) -> bool:
 	if username_to_user_id.has(username):
 		var user_id = username_to_user_id[username]
 		return is_user_id_known(user_id)
 	return false
+
+
 func is_user_id_known(user_id: int) -> bool:
 	return known.has(user_id)
 
-# STATIC METHODS
+
+func update_known_user_from_twitch(user: RSTwitchUser) -> void:
+	if !is_user_known(user):
+		return
+	
+	var user_compare_from_twitch: RSTwitchUser = await user_from_twitch_api("", user.user_id)
+	var user_has_edits := false
+	
+	# check username mismatch
+	if user.username != user_compare_from_twitch.username:
+		user.username = user_compare_from_twitch.username
+		user_has_edits = true
+	
+	# check preferred twitch color
+	if user.twitch_chat_color != user_compare_from_twitch.twitch_chat_color:
+		user.twitch_chat_color = user_compare_from_twitch.twitch_chat_color
+		user_has_edits = true
+	
+	# check changed profile picture
+	if user.profile_image_url != user_compare_from_twitch.profile_image_url:
+		user.profile_image_url = user_compare_from_twitch.profile_image_url
+		user_has_edits = true
+
+	# save user if edits occur
+	if user_has_edits:
+		save_user_to_json(user, folder)
+		user_updated.emit(user)
+
+#endregion
+
+
+#region CONNECTED METHODS
+func _on_first_session_message(_username: String, tags: TwitchTags.PrivMsg) -> void:
+	var user_id: int = int(tags.user_id)
+	if is_user_id_known(user_id):
+		var user: RSTwitchUser = await get_user_from_user_id(user_id)
+		await update_known_user_from_twitch(user)
+#endregion
+
+
+#region STATIC METHODS
 static func load_all_users_from_folder(user_folder: String) -> Dictionary:
 	var dic: Dictionary = {}
 	var user_files = RSUtl.list_file_in_folder(user_folder, ["json"])
@@ -108,6 +192,13 @@ static func save_user_to_json(user: RSTwitchUser, user_folder: String) -> void:
 		RSUtl.save_to_json(abs_path, dict)
 	else:
 		l.e("Failed to save user. Missing data.")
+static func get_filename_from_user_id(user_id: int, user_folder: String) -> String:
+	var dir := DirAccess.open(user_folder)
+	for filename in dir.get_files():
+		var file_user_id: int = user_id_from_filename(filename)
+		if file_user_id == user_id:
+			return filename
+	return ""
 
 
 # static func load_user_from_file_by_username(username: String, user_folder: String) -> RSTwitchUser:
@@ -130,3 +221,4 @@ static func username_from_filename(user_filename: String) -> String:
 static func user_id_from_filename(user_filename: String) -> int:
 	var no_extension = user_filename.get_file().get_basename()
 	return int(no_extension.split("_", false, 1)[0])
+#endregion

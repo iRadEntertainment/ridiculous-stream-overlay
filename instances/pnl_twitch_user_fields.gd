@@ -167,12 +167,14 @@ func clear_custom_fields():
 
 func update_user():
 	var updated_user = user_from_fields()
-	RS.loader.save_userfile(updated_user)
-	await RS.load_known_user(updated_user.username)
+	RS.user_mng.save_user(updated_user)
+	# TODO: update the user list after updating the user json file
+	#await RS.load_known_user(updated_user.username)
 	#new_user_file.emit()
 
+
 func search_user(_username : String):
-	# TODO
+	# TODO: What do I need search user for?
 	pass
 
 

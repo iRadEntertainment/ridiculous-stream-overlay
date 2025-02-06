@@ -47,7 +47,7 @@ func _ready() -> void:
 	l = RSLogger.new(RSSettings.LOGGER_NAME_MAIN)
 	load_settings()
 	await welcome_panel_check()
-
+	
 	setup_mouse_passthrough()
 	start_everything()
 

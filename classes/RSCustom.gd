@@ -68,9 +68,9 @@ func on_first_session_message(username: String, _tags: TwitchTags.PrivMsg) -> vo
 	if !RS.no_obs_ws.is_stream_on: return
 	var user: RSTwitchUser = await RS.user_mng.get_user_from_username(username)
 	if RS.user_mng.is_username_known(username):
-		user.twitch_chat_color = await RS.twitcher.get_user_color(str(user.user_id))
+		user.twitch_chat_color = await RS.twitcher.get_user_color(user.user_id)
 		# TODO: move this to user manager
-		# RS.loader.save_userfile(user)
+		RS.user_mng.save_user(user)
 	destructibles_names(username)
 	if user.auto_shoutout:
 		RS.shoutout_mng.add_shoutout(user)
@@ -97,6 +97,7 @@ func on_channel_points_redeemed(data : RSTwitchEventData):
 		"Do it!": play_doit()
 		"Toggle mute mic on stream": RS.no_obs_ws.toggle_mic_mute()
 		"Granades!": RS.physic_scene.spawn_grenade()
+		"Change streamer colour": change_streamer_colour(data.user_input)
 func on_followed(data : RSTwitchEventData):
 	destructibles_names(data.username)
 func on_raided(data : RSTwitchEventData):
@@ -121,12 +122,44 @@ func parse_tts_command(_info : TwitchCommandInfo = null, args := [], localizazio
 func play_doit():
 	RS.no_obs_ws.restart_media("do_it_%s.mp4" % randi_range(1,3))
 
+
+func change_streamer_colour(user_input: String) -> void:
+	if not user_input.is_valid_html_color():
+		return
+	
+	var c: Color = Color.html(user_input)
+	
+	var val: int = (c.b8 << 16) | (c.g8 << 8) | c.r8
+	
+	var settings: Dictionary = {
+		"color_multiply": val,
+	}
+	#{
+		#"brightness": -0.0345,
+		#"color_multiply": 16711935, # 65280
+		#"contrast": -0.25,
+		#"gamma": 0.5,
+		#"hue_shift": 0,
+		#"opacity": 1,
+		#"saturation": -0.07
+	#}
+	await RS.no_obs_ws.set_item_filter_setting("cam", "Colour Correction", settings)
+	RS.twitcher.chat(
+		str( await RS.no_obs_ws.get_item_filter_setting("cam", "Colour Correction") )
+		)
+	#RS.no_obs_ws.set_item_filter_enabled("cam", "Colour Correction", false)
+	#RS.no_obs_ws.set_item_filter_enabled("cam", "Colour Correction", true)
+
+
 func impersonate_iRad(data : RSTwitchEventData):
-	var channel = data.user_input.split(" ", false, 1)[0].to_lower()
+	var broadcaster_login = data.user_input.split(" ", false, 1)[0]
+	broadcaster_login = broadcaster_login.strip_edges()
+	broadcaster_login = broadcaster_login.lstrip("@")
+	broadcaster_login = broadcaster_login.to_lower()
 	#var msg = data.username + " wants me to tell you: "
 	#msg += data.user_input.split(" ", false, 1)[1]
 	var msg = data.user_input.split(" ", false, 1)[1]
-	RS.twitcher.irc.chat(msg, channel)
+	RS.twitcher.irc.chat(msg, broadcaster_login)
 
 func give_advice(data : RSTwitchEventData) -> void:
 	var folder_path := RSSettings.data_dir
@@ -197,6 +230,7 @@ func beans(username : String):
 		user = RS.user_mng.known.values().pick_random()
 	elif not username.is_empty():
 		user = await RS.user_mng.get_user_from_username(username.to_lower())
+	
 	var beans_param := RSBeansParam.from_json(RSGlobals.PARAMS_CANS)
 	if user:
 		if user.custom_beans_params:
@@ -245,10 +279,6 @@ func destructibles_names(username := "", quantity : int = 1, font_size := 96):
 	var user: RSTwitchUser
 	if username.is_empty() and !RS.user_mng.known.is_empty():
 		user = RS.user_mng.known.values().pick_random()
-		if user.twitch_chat_color == Color.BLACK:
-			user.twitch_chat_color = await RS.twitcher.get_user_color(str(user.user_id))
-			# TODO: check if we really need to save the user here
-			# RS.loader.save_userfile(user)
 	else:
 		user = await RS.user_mng.get_user_from_username(username)
 	

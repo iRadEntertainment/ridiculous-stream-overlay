@@ -104,8 +104,8 @@ func get_user(username: String) -> TwitchUser:
 	var t_user : TwitchUser = res.data[0]
 	return t_user
 
-func get_user_color(user_id: String) -> Color:
-	var res_col := await api.get_user_chat_color([user_id])
+func get_user_color(user_id: int) -> Color:
+	var res_col := await api.get_user_chat_color([str(user_id)])
 	if res_col.data.is_empty():
 		return Color.BLACK
 	var data_col : TwitchUserChatColor = res_col.data[0]

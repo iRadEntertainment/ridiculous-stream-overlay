@@ -148,6 +148,31 @@ func set_item_filter_enabled(source_name: String, filter_name: String, filter_en
 	make_generic_request(request_type, request_data)
 
 
+func get_item_filter_setting(source_name: String, filter_name: String) -> Dictionary:
+	var request_type = "GetSourceFilter"
+	var request_data = {
+			"source_name": source_name,
+			"filter_name": filter_name
+		}
+	var request = make_generic_request(request_type, request_data)
+	await request.response_received
+	var response = request.message.get_data()
+	return response.response_data.filter_settings
+
+
+func set_item_filter_setting(source_name: String, filter_name: String, filter_settings: Dictionary) -> void:
+	var request_type = "SetSourceFilterSettings"
+	var request_data = {
+			"sourceName": source_name,
+			"filterName": filter_name,
+			"filterSettings": filter_settings,
+			"overlay": true
+		}
+	var res: NoOBSRequestResponse = make_generic_request(request_type, request_data, false)
+	await res.response_received
+	print(res.message.get_data())
+
+
 func toggle_mic_mute() -> void:
 	is_mic_muted = !is_mic_muted
 	set_input_mute("Mic/Aux", is_mic_muted)
@@ -155,11 +180,13 @@ func toggle_brave_mute() -> void:
 	is_brave_muted = !is_brave_muted
 	set_input_mute("Brave", is_brave_muted)
 
+
 func stop_stream() -> void:
 	var request_type = "StopStream"
 	var request_data = {}
 	var request = make_generic_request(request_type, request_data)
 	await request.response_received
+
 
 func restart_media(media_name) -> void:
 	var request_type = "TriggerMediaInputAction"
@@ -182,10 +209,15 @@ func connect_to_obsws(port: int, password: String = "") -> void:
 		l.e("Couldn't connect. Error: %s" % err)
 
 
-func make_generic_request(request_type: String, request_data: Dictionary = {}) -> NoOBSRequestResponse:
+func make_generic_request(
+			request_type: String,
+			request_data: Dictionary = {},
+			do_convert: bool = true
+		) -> NoOBSRequestResponse:
 	var response := NoOBSRequestResponse.new()
 	var message := NoOBSMessage.new()
-
+	message.do_convert = do_convert
+	
 	var crypto := Crypto.new()
 	var request_id := crypto.generate_random_bytes(16).hex_encode()
 	var data := {
@@ -193,6 +225,12 @@ func make_generic_request(request_type: String, request_data: Dictionary = {}) -
 		"request_id": request_id,
 		"request_data": request_data,
 	}
+	if not do_convert:
+		data = {
+			"requestType": request_type,
+			"requestId": request_id,
+			"requestData": request_data,
+		}
 	message._d.merge(data, true)
 
 	message.op_code = NoOBSEnums.WebSocketOpCode.REQUEST
@@ -341,14 +379,15 @@ func _authenticate(message: NoOBSMessage, password: String) -> void:
 class NoOBSMessage:
 	var op_code: int
 	var _d: Dictionary = {"rpc_version": 1}
-
+	var do_convert: bool = true
+	
 	func _get(property: StringName):
 		if property in _d:
 			return _d[property]
 		else:
 			return null
-
-
+	
+	
 	func _get_property_list() -> Array:
 		var prop_list = []
 		_d.keys().map(
@@ -360,23 +399,24 @@ class NoOBSMessage:
 				prop_list.append(d)
 		)
 		return prop_list
-
-
+	
+	
 	func to_obsws_json() -> String:
 		var data = {
 			"op": op_code,
 			"d": {}
 		}
-
-		data.d = snake_to_camel_recursive(_d)
-
+		if do_convert:
+			data.d = snake_to_camel_recursive(_d)
+		else:
+			data.d = _d
 		return JSON.stringify(data)
-
-
+	
+	
 	func get_data() -> Dictionary:
 		return _d
-
-
+	
+	
 	func _to_string() -> String:
 		return var_to_str(_d)
 
