@@ -20,8 +20,8 @@ func start(_username: String) -> void:
 	var hashed = hash(username)
 	var assigned_num := (hashed % 11) as int
 	var sound_path = "sfx_notification_%02d.ogg"%[assigned_num]
-	if username in RS.known_users.keys():
-		var user := RS.known_users[username] as RSTwitchUser
+	if username in RS.user_mng.known.keys():
+		var user := RS.user_mng.known[username] as RSTwitchUser
 		if !user.custom_notification_sfx.is_empty():
 			sound_path = user.custom_notification_sfx
 	

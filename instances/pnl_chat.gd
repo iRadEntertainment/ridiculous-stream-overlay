@@ -20,7 +20,7 @@ const commands_string_format = {
 	"!shake" : "[shake rate=20.0 level=5 connected=1]%s[/shake]",
 	"!hd" : "[bgcolor=#21262e][color=#21262e]%s[/color][/bgcolor]",
 }
-
+var ma = "#"
 var sprite_effect : SpriteFrameEffect
 
 
@@ -58,9 +58,7 @@ func put_chat(username: String, message: String, _tags: TwitchTags.PrivMsg):
 	
 	if _tags.display_name == "IAmAMerlin":
 		color = Color.BROWN.to_html()
-	var user : RSTwitchUser
-	if username in RS.known_users.keys():
-		user = await RS.load_known_user(username)
+	var user : RSTwitchUser = await RS.user_mng.get_user_from_username(username)
 	if user:
 		if user.custom_chat_color != Color.BLACK:
 			color = user.custom_chat_color.to_html()

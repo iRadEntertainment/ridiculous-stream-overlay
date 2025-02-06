@@ -183,7 +183,7 @@ func _on_btn_test_pressed() -> void:
 	#var u = await RS.twitcher.get_teams_users("indiegamedevs")
 	#print(u)
 	#for username in u:
-		#if not username.to_lower() in RS.known_users.keys():
+		#if not username.to_lower() in RS.user_mng.known.keys():
 			#print(username)
 	#var test_text = "{user} something {else}"
 	#var prefix = "[color=#f00]"

@@ -38,10 +38,6 @@ var wheel_of_random : RSWheelOfRandom
 
 var pnls: Array[Control] = []
 
-# Global vars
-var known_users := {} #{ user_login: RSTwitchUser }
-var unknown_users_cache := {}
-
 
 signal all_started
 
@@ -53,7 +49,6 @@ func _ready() -> void:
 	await welcome_panel_check()
 
 	setup_mouse_passthrough()
-	load_known_user()
 	start_everything()
 
 
@@ -102,13 +97,13 @@ func start_everything() -> void:
 	]
 	await Engine.get_main_loop().process_frame
 	get_window().always_on_top = true
-
 	
 	display.start()
 
 	btn_floating_menu.show()
 
 	twitcher.start()
+	user_mng.start()
 	custom.start()
 	vetting.start()
 	shoutout_mng.start()
@@ -124,41 +119,6 @@ func start_everything() -> void:
 			pnl.start()
 	
 	all_started.emit()
-
-# =============================== KNOWN USERS ==================================
-func load_known_user(username := ""):
-	if username.is_empty():
-		known_users = loader.load_all_user()
-	else:
-		known_users[username] = loader.load_userfile(username)
-
-
-func save_known_users():
-	loader.save_all_user(known_users)
-
-
-func get_known_user(username : String) -> RSTwitchUser:
-	var user = null
-	if username in known_users.keys():
-		user = known_users[username]
-	return user
-
-
-func user_from_username(username: String) -> RSTwitchUser:
-	if username in known_users:
-		return known_users[username]
-	if username in unknown_users_cache:
-		return unknown_users_cache[username]
-	
-	var user := RSTwitchUser.new()
-	var t_user : TwitchUser = await twitcher.get_user(username)
-	if t_user:
-		user.username = t_user.login
-		user.user_id = int(t_user.id)
-		user.display_name = t_user.display_name
-		user.twitch_chat_color = await twitcher.get_user_color(t_user.id)
-		unknown_users_cache[username] = user
-	return user
 
 
 # ========================== LOAD/SAVE CONFIG ==================================
@@ -195,7 +155,7 @@ func quit():
 	# Don't save anything if we haven't finished configuring, the settings may be in a bad state
 	if !pnl_welcome.should_show():
 		save_settings()
-		save_known_users()
+		user_mng.save_all()
 
 	get_tree().quit()
 

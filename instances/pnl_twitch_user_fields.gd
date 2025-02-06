@@ -178,8 +178,8 @@ func search_user(_username : String):
 
 func gather_username_info_from_api():
 	var possible_username = %ln_search.text
-	if possible_username in RS.known_users.keys():
-		populate_fields(RS.known_users[possible_username], null)
+	if possible_username in RS.user_mng.known.keys():
+		populate_fields(RS.user_mng.known[possible_username], null)
 	else:
 		clear_custom_fields()
 	var _user = await RS.twitcher.gather_user_info(possible_username)

@@ -90,3 +90,11 @@ static func from_json(d: Dictionary) -> RSTwitchUser:
 	user.promotion_description = d["promotion_description"]
 	user.last_shout_unix_time = d["last_shout_unix_time"]
 	return user
+
+
+static func from_twitcher_user(t_user: TwitchUser) -> RSTwitchUser:
+	var user := RSTwitchUser.new()
+	user.username = t_user.login
+	user.user_id = int(t_user.id)
+	user.display_name = t_user.display_name
+	return user

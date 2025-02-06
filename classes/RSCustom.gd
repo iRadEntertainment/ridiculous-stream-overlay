@@ -66,10 +66,11 @@ func chat_on_stream_off(username: String) -> void:
 
 func on_first_session_message(username: String, _tags: TwitchTags.PrivMsg) -> void:
 	if !RS.no_obs_ws.is_stream_on: return
-	var user: RSTwitchUser = await RS.user_from_username(username)
-	if username in RS.known_users.keys():
+	var user: RSTwitchUser = await RS.user_mng.get_user_from_username(username)
+	if RS.user_mng.is_username_known(username):
 		user.twitch_chat_color = await RS.twitcher.get_user_color(str(user.user_id))
-		RS.loader.save_userfile(user)
+		# TODO: move this to user manager
+		# RS.loader.save_userfile(user)
 	destructibles_names(username)
 	if user.auto_shoutout:
 		RS.shoutout_mng.add_shoutout(user)
@@ -78,7 +79,7 @@ func on_first_session_message(username: String, _tags: TwitchTags.PrivMsg) -> vo
 
 func on_channel_points_redeemed(data : RSTwitchEventData):
 	l.i("Channel points redeemed. %s -> %s" % [data.username, data.reward_title] )
-	var user: RSTwitchUser = await RS.user_from_username(data.username)
+	var user: RSTwitchUser = await RS.user_mng.get_user_from_username(data.username)
 	#if await !RS.no_obs_ws.is_stream_on: chat_on_stream_off(data.username); return
 	match data.reward_title:
 		"beans": beans(data.username)
@@ -191,10 +192,12 @@ func chat_commands_help(_info : TwitchCommandInfo = null, _args := []):
 
 func beans(username : String):
 	#if RS.physic_scene.is_closing: return
-	if username.is_empty() and !RS.known_users.is_empty():
-		username = RS.known_users.keys().pick_random()
+	var user: RSTwitchUser
+	if username.is_empty() and !RS.user_mng.known.is_empty():
+		user = RS.user_mng.known.values().pick_random()
+	elif not username.is_empty():
+		user = await RS.user_mng.get_user_from_username(username.to_lower())
 	var beans_param := RSBeansParam.from_json(RSGlobals.PARAMS_CANS)
-	var user := RS.get_known_user(username.to_lower()) as RSTwitchUser
 	if user:
 		if user.custom_beans_params:
 			beans_param = user.custom_beans_params
@@ -240,16 +243,16 @@ func nuke(_info : TwitchCommandInfo = null, _args := []):
 
 func destructibles_names(username := "", quantity : int = 1, font_size := 96):
 	var user: RSTwitchUser
-	if username.is_empty() and !RS.known_users.is_empty():
-		username = RS.known_users.keys().pick_random()
-		user = RS.known_users[username]
+	if username.is_empty() and !RS.user_mng.known.is_empty():
+		user = RS.user_mng.known.values().pick_random()
 		if user.twitch_chat_color == Color.BLACK:
 			user.twitch_chat_color = await RS.twitcher.get_user_color(str(user.user_id))
-			RS.loader.save_userfile(user)
+			# TODO: check if we really need to save the user here
+			# RS.loader.save_userfile(user)
 	else:
-		user = await RS.user_from_username(username)
+		user = await RS.user_mng.get_user_from_username(username)
 	
-	var col :=  Color("#00ec4f")
+	var col :=  Color("00ec4f")
 	if user.twitch_chat_color != Color.BLACK:
 		col = user.twitch_chat_color
 	elif user.custom_chat_color != Color.BLACK:
@@ -306,7 +309,7 @@ func stop_streaming():
 
 
 func raid_kani(user: RSTwitchUser, data: RSTwitchEventData):
-	var kani_rs_user: RSTwitchUser = RS.get_known_user("kani_dev")
+	var kani_rs_user: RSTwitchUser = await RS.user_mng.get_user_from_username("kani_dev")
 	RS.alert_scene.initialize_raid(user, kani_rs_user, data.user_input)
 
 

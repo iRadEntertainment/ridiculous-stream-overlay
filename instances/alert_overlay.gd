@@ -45,7 +45,7 @@ func initialize_raid(user: RSTwitchUser, to_user : RSTwitchUser, message: String
 	instantiate_new_bar(bbcode, callable)
 
 func wheel_of_random_raid(user: RSTwitchUser, message: String = "") -> void:
-	var online: PackedStringArray = await RS.twitcher.get_users_online(RS.known_users.keys())
+	var online: PackedStringArray = await RS.twitcher.get_users_online(RS.user_mng.known.keys())
 	if online.is_empty():
 		return
 	var wheel := WHEEL_PACK.instantiate() as RSWheelOfRandom
@@ -53,7 +53,7 @@ func wheel_of_random_raid(user: RSTwitchUser, message: String = "") -> void:
 	wheel.start(online)
 	wheel.winner_selected.connect(raid_selected_username.bind(user, message))
 func raid_selected_username(to_username: String, from_user: RSTwitchUser, message: String = "") -> void:
-	var user_to_raid: RSTwitchUser = await RS.user_from_username(to_username)
+	var user_to_raid: RSTwitchUser = await RS.user_mng.get_user_from_username(to_username)
 	initialize_raid(from_user, user_to_raid, message)
 
 

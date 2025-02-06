@@ -52,6 +52,10 @@ script = ExtResource("8_fol3s")
 unique_name_in_owner = true
 script = ExtResource("5_wye2t")
 
+[node name="RSUserMng" type="Node" parent="Modules"]
+unique_name_in_owner = true
+script = ExtResource("12_oh8ps")
+
 [node name="NoOBSWS" type="Node" parent="Modules"]
 unique_name_in_owner = true
 script = ExtResource("6_8c5hc")
@@ -71,10 +75,6 @@ script = ExtResource("5_joslx")
 [node name="RSDisplay" type="Node" parent="Modules"]
 unique_name_in_owner = true
 script = ExtResource("12_qc4sr")
-
-[node name="RSUserMng" type="Node" parent="Modules"]
-unique_name_in_owner = true
-script = ExtResource("12_oh8ps")
 
 [node name="sfx" type="Node" parent="."]
 

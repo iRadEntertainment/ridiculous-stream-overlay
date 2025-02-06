@@ -276,13 +276,10 @@ func get_live_streamers_data(user_names_or_ids : Array = []) -> Dictionary:
 		return {}
 
 	if user_names_or_ids.is_empty():
-		for key in RS.known_users.keys():
-			var user : RSTwitchUser = RS.known_users[key]
-			if !user:
-				continue
+		for user: RSTwitchUser in RS.user_mng.known.values():
 			if user.get("is_streamer") != null:
 				if user.is_streamer:
-					user_names_or_ids.append(key)
+					user_names_or_ids.append(user.username)
 	
 	var live_streamers_data := {}
 	var max_user_query = 10
@@ -312,12 +309,13 @@ func check_first_msg(_channel_name: String, username: String, _message: String, 
 		first_session_message_username_list.append(username)
 		first_session_message.emit(username, tags)
 
-func check_user_twitch_color(username : String, tags: TwitchTags.PrivMsg):
+func check_user_twitch_color(username : String, tags: TwitchTags.PrivMsg) -> void:
 	if tags.color.is_empty(): return
-	if username in RS.known_users.keys():
-		if RS.known_users[username].twitch_chat_color != Color(tags.color):
-			RS.known_users[username].twitch_chat_color = Color(tags.color)
-			RS.loader.save_userfile(RS.known_users[username])
+	if RS.user_mng.is_username_known(username):
+		var user: RSTwitchUser = await RS.user_mng.get_user_from_username(username)
+		if user.twitch_chat_color != Color(tags.color):
+			user.twitch_chat_color = Color(tags.color)
+			RSUserMng.save_user_to_json(user, RSSettings.get_users_path())
 
 func raid(to_broadcaster_id : String):
 	var path = "/helix/raids?from_broadcaster_id={from}&to_broadcaster_id={to}".format(

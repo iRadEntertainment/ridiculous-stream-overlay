@@ -163,3 +163,20 @@ static func populate_opt_btn_from_files_in_folder(opt_btn : OptionButton, folder
 			opt_btn.add_item(file, opt_btn.item_count+1)
 		if i < folder_paths.size()-1:
 			opt_btn.add_separator("Local Resources")
+
+
+static func rename_file(from_abs: String, to_abs: String) -> void:
+	DirAccess.rename_absolute(from_abs, to_abs)
+
+
+static func get_newest_file(file_absolute_paths: Array) -> String:
+	var newest_file = ""
+	var latest_time = 0
+
+	for path in file_absolute_paths:
+		var modified_time = FileAccess.get_modified_time(path)
+		if modified_time > latest_time:
+			latest_time = modified_time
+			newest_file = path
+
+	return newest_file

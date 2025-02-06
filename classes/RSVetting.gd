@@ -58,7 +58,7 @@ func custom_rewards_vetting(callable : Callable, data : RSTwitchEventData):
 func is_allowed(data: RSTwitchEventData) -> bool:
 	if "Impersonate" in data.reward_title:
 		var broadcaster_login : String = data.user_input.split(" ", true, 1)[0]
-		var allowed = broadcaster_login.to_lower() in RS.known_users
+		var allowed = broadcaster_login.to_lower() in RS.user_mng.known
 		if allowed:
 			l.i("Impersonate allowed (to [color=#f00]{streamer}[/color]). {user}: {msg}".format({"streamer": broadcaster_login, "user": data.username, "msg": data.user_input}))
 		else:
