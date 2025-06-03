@@ -7,15 +7,17 @@ extends RSImageToRigid
 
 var is_detonated := false
 
-func _init() -> void:
-	pass
 
 func start():
+	if randf() > 0.5:
+		$sprite.texture = preload("res://local_res/grenade_adamgda2.png")
+		$sprite.scale = Vector2.ONE * 0.2
 	set_white_circle()
 	params = RSBeansParam.new()
 	if ! is_inside_tree():
 		await tree_entered
 	get_tree().create_timer(4.0).timeout.connect(destroy)
+
 
 func destroy() -> void:
 	if is_detonated: return

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://beogu47vm8jbh"]
 
-[ext_resource type="Script" path="res://instances/pnl_app_settings.gd" id="1_y37x5"]
+[ext_resource type="Script" uid="uid://bpkhfvx6m6pm4" path="res://instances/pnl_app_settings.gd" id="1_y37x5"]
 [ext_resource type="StyleBox" uid="uid://dp1gxe3ir730n" path="res://ui/panel_flat_dark.tres" id="2_u8yv0"]
 [ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://ui/bootstrap_icons/folder2-open.svg" id="3_6qw3p"]
 [ext_resource type="PackedScene" uid="uid://b12coyg6xjohk" path="res://instances/btn_toggle_secret.tscn" id="4_g5qpk"]

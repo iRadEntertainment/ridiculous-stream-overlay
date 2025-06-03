@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://deyd0k38tajk3"]
 
-[ext_resource type="Script" path="res://instances/pnl_twitch_auth_irc.gd" id="1_fkuuy"]
+[ext_resource type="Script" uid="uid://ci6sxk4t7xxq5" path="res://instances/pnl_twitch_auth_irc.gd" id="1_fkuuy"]
 [ext_resource type="PackedScene" uid="uid://cwg72p5gy7ib3" path="res://instances/btn_collapse.tscn" id="1_jfw5k"]
 [ext_resource type="StyleBox" uid="uid://be1r1ht3qo0ct" path="res://ui/panel_flat_dark_semitransparent.tres" id="2_bftkl"]
 

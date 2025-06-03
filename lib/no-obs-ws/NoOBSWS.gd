@@ -107,10 +107,12 @@ func get_item_enabled(scene_name: String, item_id: int) -> bool:
 	var response = request.message.get_data()
 	return response.response_data.scene_item_enabled
 
+
 func set_item_enabled(scene_name: String, item_id: int, val: bool) -> void:
 	var request_type = "SetSceneItemEnabled"
 	var request_data = {"scene_name": scene_name, "scene_item_id": item_id, "scene_item_enabled": val}
 	make_generic_request(request_type, request_data)
+
 
 func get_input_mute(input_name: String) -> bool:
 	var request_type = "GetInputMute"
@@ -119,6 +121,7 @@ func get_input_mute(input_name: String) -> bool:
 	await request.response_received
 	var response = request.message.get_data()
 	return response.response_data.input_muted
+
 
 func set_input_mute(input_name: String, val: bool) -> void:
 	var request_type = "SetInputMute"
@@ -170,7 +173,6 @@ func set_item_filter_setting(source_name: String, filter_name: String, filter_se
 		}
 	var res: NoOBSRequestResponse = make_generic_request(request_type, request_data, false)
 	await res.response_received
-	print(res.message.get_data())
 
 
 func toggle_mic_mute() -> void:

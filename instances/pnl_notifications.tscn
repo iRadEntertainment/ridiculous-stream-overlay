@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bhjtpi0nfv415"]
 
-[ext_resource type="Script" path="res://instances/pnl_notifications.gd" id="1_ur0i4"]
+[ext_resource type="Script" uid="uid://88hyyar7m8hh" path="res://instances/pnl_notifications.gd" id="1_ur0i4"]
 [ext_resource type="PackedScene" uid="uid://cokx3oev2rafs" path="res://instances/notification_vetting_reward.tscn" id="2_n01tf"]
 [ext_resource type="AudioStream" uid="uid://csll4dlyotttm" path="res://local_res/sfx_alert_wawawa.wav" id="3_jlx5b"]
 

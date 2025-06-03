@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://gnorahmpya7e"]
 
-[ext_resource type="Script" path="res://instances/msg_notification.gd" id="1_xc0er"]
+[ext_resource type="Script" uid="uid://b8klbqc5l6mpf" path="res://instances/msg_notification.gd" id="1_xc0er"]
 [ext_resource type="Material" uid="uid://ja2qtim7ion6" path="res://shaders/part_msg_notification.material" id="2_fwhp7"]
 [ext_resource type="AudioStream" uid="uid://qlyulkklh8jw" path="res://local_res/sfx_notification_00.ogg" id="2_plkef"]
 

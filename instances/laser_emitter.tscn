@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://cgfsmadnui1ru"]
 
 [ext_resource type="Texture2D" uid="uid://45yeungtmxeu" path="res://local_res/laser_emitter_ico.png" id="1_8kuue"]
-[ext_resource type="Script" path="res://instances/laser_emitter.gd" id="1_jjfv8"]
+[ext_resource type="Script" uid="uid://7xuyejyocvbd" path="res://instances/laser_emitter.gd" id="1_jjfv8"]
 [ext_resource type="Texture2D" uid="uid://cf08bglhkxl7i" path="res://ui/sprites/line_dashed.png" id="2_41dh3"]
 [ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="4_nfw7e"]
 

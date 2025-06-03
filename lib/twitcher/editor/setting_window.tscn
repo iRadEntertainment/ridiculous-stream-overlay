@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://clgpjiy6dtub8"]
 
-[ext_resource type="Script" path="res://lib/twitcher/editor/setting_window.gd" id="1_b361f"]
+[ext_resource type="Script" uid="uid://c1x0hf4micfy" path="res://lib/twitcher/editor/setting_window.gd" id="1_b361f"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_71vpn"]
 font_size = 24

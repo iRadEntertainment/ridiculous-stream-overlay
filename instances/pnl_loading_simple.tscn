@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://biy3s0e3yb44c"]
 
-[ext_resource type="Script" path="res://instances/pnl_loading_simple.gd" id="1_e280l"]
+[ext_resource type="Script" uid="uid://pqagqlmw0rgb" path="res://instances/pnl_loading_simple.gd" id="1_e280l"]
 [ext_resource type="Texture2D" uid="uid://b2mtooi658yq0" path="res://ui/sprites/loading.png" id="1_jebw5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4cep7"]

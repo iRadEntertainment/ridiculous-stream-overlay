@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://ce52ib0ugeqlb" path="res://ui/floating_menu.tres" id="1_7fh17"]
 [ext_resource type="Texture2D" uid="uid://x1kro6q7tj46" path="res://ui/gravity.png" id="2_nwlca"]
-[ext_resource type="Script" path="res://instances/btn_physics.gd" id="3_ls7lh"]
+[ext_resource type="Script" uid="uid://gafhp7pphfqg" path="res://instances/btn_physics.gd" id="3_ls7lh"]
 [ext_resource type="Texture2D" uid="uid://cg84ubdpyr75" path="res://ui/beans.png" id="4_vd6au"]
 [ext_resource type="Texture2D" uid="uid://dtm1fmijn2676" path="res://ui/laser.png" id="5_826vi"]
 [ext_resource type="Texture2D" uid="uid://d1aln31is10do" path="res://ui/nuke.png" id="6_fhy2b"]

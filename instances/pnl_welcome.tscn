@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=3 uid="uid://cokv6nhefofwl"]
 
-[ext_resource type="Script" path="res://instances/pnl_welcome.gd" id="1_m3h8h"]
+[ext_resource type="Script" uid="uid://06haj4fgbnt3" path="res://instances/pnl_welcome.gd" id="1_m3h8h"]
 [ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_ommbr"]
 [ext_resource type="FontFile" uid="uid://dnbncxup3m18f" path="res://ui/jetbrains_mono_ttf/JetBrainsMono-ExtraBold.ttf" id="3_do1hy"]
 [ext_resource type="Texture2D" uid="uid://ceh17coxgqqnr" path="res://icon.png" id="3_dsk3q"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cc7snq8wu8h2p"]
 
-[ext_resource type="Script" path="res://instances/label_renderer.gd" id="1_2xnc1"]
+[ext_resource type="Script" uid="uid://ddud2njttvoap" path="res://instances/label_renderer.gd" id="1_2xnc1"]
 [ext_resource type="Theme" uid="uid://b1ahlikq7p0dk" path="res://ui/fractured_text.tres" id="2_dpags"]
 
 [node name="label_renderer" type="SubViewport"]

@@ -1,23 +1,24 @@
-[gd_scene load_steps=22 format=3 uid="uid://d345j5een73bf"]
+[gd_scene load_steps=23 format=3 uid="uid://d345j5een73bf"]
 
 [ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_33ebf"]
-[ext_resource type="Script" path="res://RSMain.gd" id="1_y2jdm"]
-[ext_resource type="Script" path="res://classes/RSMousePass.cs" id="2_4s2fq"]
-[ext_resource type="Script" path="res://classes/RSMouseTracker.gd" id="2_xjlao"]
+[ext_resource type="Script" uid="uid://brw4mp8qnlxxh" path="res://RSMain.gd" id="1_y2jdm"]
+[ext_resource type="Script" uid="uid://copo7pkldfbov" path="res://classes/RSMousePass.cs" id="2_4s2fq"]
+[ext_resource type="Script" uid="uid://doxabl7ha832k" path="res://classes/RSMouseTracker.gd" id="2_xjlao"]
 [ext_resource type="PackedScene" uid="uid://gxr8ww6jok8i" path="res://instances/physics_scene.tscn" id="3_d3yde"]
 [ext_resource type="PackedScene" uid="uid://che3syvs71fq3" path="res://instances/debug_view.tscn" id="5_j4imi"]
-[ext_resource type="Script" path="res://classes/RSVetting.gd" id="5_joslx"]
-[ext_resource type="Script" path="res://classes/RSTwitcher.gd" id="5_wye2t"]
+[ext_resource type="Script" uid="uid://mhheuev0h0yt" path="res://classes/RSVetting.gd" id="5_joslx"]
+[ext_resource type="Script" uid="uid://ivai1wov0xyp" path="res://classes/RSTwitcher.gd" id="5_wye2t"]
 [ext_resource type="PackedScene" uid="uid://cdgelqh5th1pl" path="res://instances/btn_floating_menu.tscn" id="5_xf57p"]
-[ext_resource type="Script" path="res://lib/no-obs-ws/NoOBSWS.gd" id="6_8c5hc"]
-[ext_resource type="Script" path="res://classes/RSShoutoutMng.gd" id="8_ex7ik"]
-[ext_resource type="Script" path="res://classes/RSLoader.gd" id="8_fol3s"]
-[ext_resource type="Script" path="res://classes/RSCustom.gd" id="9_by474"]
-[ext_resource type="Script" path="res://classes/RSUserMng.gd" id="12_oh8ps"]
-[ext_resource type="Script" path="res://classes/RSDisplay.gd" id="12_qc4sr"]
+[ext_resource type="Script" uid="uid://dpswjmhhvf4na" path="res://lib/no-obs-ws/NoOBSWS.gd" id="6_8c5hc"]
+[ext_resource type="Script" uid="uid://ccysx7mq6mwoc" path="res://classes/RSShoutoutMng.gd" id="8_ex7ik"]
+[ext_resource type="Script" uid="uid://yenw20vcio8i" path="res://classes/RSLoader.gd" id="8_fol3s"]
+[ext_resource type="Script" uid="uid://yq73vhe7mr0d" path="res://classes/RSCustom.gd" id="9_by474"]
+[ext_resource type="Script" uid="uid://d3ad1n45m8dmo" path="res://classes/RSUserMng.gd" id="12_oh8ps"]
+[ext_resource type="Script" uid="uid://c4aq5xbpuof7c" path="res://classes/RSDisplay.gd" id="12_qc4sr"]
+[ext_resource type="AudioStream" uid="uid://bmqpfhn6b600q" path="res://local_res/sfx_notification_discord.ogg" id="14_38gvb"]
 [ext_resource type="PackedScene" uid="uid://dseoyhiylvwnu" path="res://instances/pnl_settings.tscn" id="15_8wfva"]
 [ext_resource type="PackedScene" uid="uid://jchfk7d78ss5" path="res://instances/pnl_chat.tscn" id="16_ege2h"]
-[ext_resource type="PackedScene" path="res://instances/pnl_notifications.tscn" id="17_sodyi"]
+[ext_resource type="PackedScene" uid="uid://bhjtpi0nfv415" path="res://instances/pnl_notifications.tscn" id="17_sodyi"]
 [ext_resource type="PackedScene" uid="uid://cokv6nhefofwl" path="res://instances/pnl_welcome.tscn" id="19_3rcuc"]
 [ext_resource type="PackedScene" uid="uid://dregwshpiqg8j" path="res://instances/alert_overlay.tscn" id="19_gj13v"]
 [ext_resource type="AudioStream" uid="uid://cidanglkg6lrp" path="res://local_res/sfx_quack_01.ogg" id="21_637v1"]
@@ -77,9 +78,13 @@ unique_name_in_owner = true
 script = ExtResource("12_qc4sr")
 
 [node name="sfx" type="Node" parent="."]
+unique_name_in_owner = true
 
 [node name="quack" type="AudioStreamPlayer" parent="sfx"]
 stream = ExtResource("21_637v1")
+
+[node name="discord" type="AudioStreamPlayer" parent="sfx"]
+stream = ExtResource("14_38gvb")
 
 [node name="split_chat" type="HSplitContainer" parent="."]
 unique_name_in_owner = true

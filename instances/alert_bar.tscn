@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://pr2cr6wubeyt"]
 
 [ext_resource type="Theme" uid="uid://ya1vefj2nbhc" path="res://ui/alert_overlay.tres" id="1_imutm"]
-[ext_resource type="Script" path="res://instances/alert_bar.gd" id="2_2k78h"]
+[ext_resource type="Script" uid="uid://be770tk2q6kqw" path="res://instances/alert_bar.gd" id="2_2k78h"]
 [ext_resource type="Texture2D" uid="uid://dpyn121ra1pa" path="res://ui/sprites/close.png" id="2_n20qi"]
 
 [node name="bar" type="PanelContainer"]

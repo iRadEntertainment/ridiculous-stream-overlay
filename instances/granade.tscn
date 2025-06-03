@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dpphttpdklsl0"]
 
 [ext_resource type="Texture2D" uid="uid://bgmhs06tfpyw7" path="res://local_res/granade_color.png" id="1_4gay7"]
-[ext_resource type="Script" path="res://instances/granade.gd" id="1_66jpr"]
+[ext_resource type="Script" uid="uid://df0urlihveou4" path="res://instances/granade.gd" id="1_66jpr"]
 [ext_resource type="AudioStream" uid="uid://bke7iiw8llqt6" path="res://local_res/sfx_boom.wav" id="3_7x8lf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m10o4"]

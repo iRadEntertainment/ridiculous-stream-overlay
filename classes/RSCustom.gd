@@ -25,11 +25,12 @@ func add_commands() -> void:
 	RS.twitcher.commands.add_command("pandano", pandano)
 	RS.twitcher.commands.add_command("whostream", whostream)
 	
-	RS.twitcher.commands.add_command("b", spawn_can)
+	RS.twitcher.commands.add_command("b", spawn_can, 0, 1)
 	
 	RS.twitcher.commands.add_command("laser", laser, 0, 1)
 	RS.twitcher.commands.add_command("nuke", nuke)
-	RS.twitcher.commands.add_command("grenade", spawn_grenade)
+	RS.twitcher.commands.add_command("g", spawn_grenade, 0, 1)
+	RS.twitcher.commands.add_alias("g", "grenade")
 	RS.twitcher.commands.add_alias("grenade", "granade")
 	RS.twitcher.commands.add_alias("grenade", "grandma")
 	RS.twitcher.commands.add_alias("grenade", "grenades")
@@ -125,14 +126,18 @@ func play_doit():
 
 func change_streamer_colour(user_input: String) -> void:
 	if not user_input.is_valid_html_color():
+		l.w("Change streamer colour didn't work. Colour: #%s" % user_input)
 		return
 	
-	var c: Color = Color.html(user_input)
+	var col: Color = Color.html(user_input)
 	
-	var val: int = (c.b8 << 16) | (c.g8 << 8) | c.r8
+	var val: int = (col.b8 << 16) | (col.g8 << 8) | col.r8
 	
-	var settings: Dictionary = {
+	var settings_cutout: Dictionary = {
 		"color_multiply": val,
+	}
+	var settings_composite: Dictionary = {
+		"opacity": col.a,
 	}
 	#{
 		#"brightness": -0.0345,
@@ -143,12 +148,8 @@ func change_streamer_colour(user_input: String) -> void:
 		#"opacity": 1,
 		#"saturation": -0.07
 	#}
-	await RS.no_obs_ws.set_item_filter_setting("cam", "Colour Correction", settings)
-	RS.twitcher.chat(
-		str( await RS.no_obs_ws.get_item_filter_setting("cam", "Colour Correction") )
-		)
-	#RS.no_obs_ws.set_item_filter_enabled("cam", "Colour Correction", false)
-	#RS.no_obs_ws.set_item_filter_enabled("cam", "Colour Correction", true)
+	RS.no_obs_ws.set_item_filter_setting("Cam-cutout", "Colour Correction", settings_cutout)
+	RS.no_obs_ws.set_item_filter_setting("Cam-composite", "Colour Correction", settings_composite)
 
 
 func impersonate_iRad(data : RSTwitchEventData):
@@ -214,6 +215,7 @@ func get_advice(data : RSTwitchEventData) -> void:
 
 
 func discord(_info : TwitchCommandInfo = null, _args := []):
+	RS.play_sfx("discord")
 	var msg = "Join Discord: https://discord.gg/4YhKaHkcMb"
 	RS.twitcher.chat(msg)
 
@@ -255,22 +257,51 @@ func laser(_info : TwitchCommandInfo = null, args := []):
 	var angle: float = float(args[0] if args.size() >= 1 else ANGLE_DEFAULT)
 	RS.physic_scene.add_laser(angle)
 
-func spawn_can(_info : TwitchCommandInfo = null, _args := []) -> void:
-	var param := RSBeansParam.new()
-	param.img_paths = ["can.png"]
-	param.sfx_paths = [
-			"sfx_can_01.ogg",
-			"sfx_can_02.ogg",
-			"sfx_can_03.ogg",
-			"sfx_can_04.ogg",
-		]
-	param.is_destroy = true
-	param.is_pickable = true
-	param.scale = randf_range(0.15, 0.35)
-	RS.physic_scene.add_image_bodies(param)
 
-func spawn_grenade(_info : TwitchCommandInfo = null, _args := []) -> void:
-	RS.physic_scene.spawn_grenade()
+func spawn_can(_info : TwitchCommandInfo = null, args := []) -> void:
+	var fake_can := RSBeansParam.new()
+	fake_can.img_paths = ["can.png"]
+	fake_can.sfx_paths = [
+			"sfx_notification_discord.ogg",
+			#"sfx_can_01.ogg",
+			#"sfx_can_02.ogg",
+			#"sfx_can_03.ogg",
+			#"sfx_can_04.ogg",
+		]
+	fake_can.is_destroy = true
+	fake_can.is_pickable = true
+	fake_can.scale = randf_range(0.10, 0.25)
+	
+	var count: int = 1
+	if !args.is_empty():
+		count = ceili( float(args[0]) )
+		if count != 69:
+			count = wrapi(count, 0, 6)
+		
+		if args[0] == "giganzo":
+			count = 1000
+	
+	
+	for i: int in count:
+		fake_can.coll_mask = fake_can.coll_layer + 0b001
+		RS.physic_scene.add_image_bodies(fake_can)
+		if RS.physic_scene.obj_count > RS.physic_scene.SHARD_BODIES_CAP:
+			break
+		await get_tree().create_timer(0.03).timeout
+
+
+func spawn_grenade(_info : TwitchCommandInfo = null, args := []) -> void:
+	var count: int = 1
+	if !args.is_empty():
+		count = ceili( float(args[0]) )
+		if count != 69:
+			count = wrapi(count, 0, 6)
+	
+	for i: int in count:
+		RS.physic_scene.spawn_grenade()
+		if RS.physic_scene.obj_count >= RS.physic_scene.SHARD_BODIES_CAP + 10:
+			break
+		await get_tree().create_timer(0.03).timeout
 
 func nuke(_info : TwitchCommandInfo = null, _args := []):
 	RS.physic_scene.nuke()

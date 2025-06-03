@@ -162,7 +162,12 @@ func quit():
 
 # =============================== UTILS =======================================
 func play_sfx(which: String) -> void:
-	match which:
-		"quack":
-			$sfx/quack.stream = load("res://local_res/sfx_quack_0%s.ogg"%randi_range(1, 2))
-			$sfx/quack.play()
+	if which == "quack":
+		$sfx/quack.stream = load("res://local_res/sfx_quack_0%s.ogg"%randi_range(1, 2))
+		$sfx/quack.play()
+		return
+	
+	for sfx_node: AudioStreamPlayer in %sfx.get_children():
+		if sfx_node.name == which:
+			sfx_node.play()
+			break

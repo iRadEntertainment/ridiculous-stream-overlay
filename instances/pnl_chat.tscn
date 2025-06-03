@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://jchfk7d78ss5"]
 
 [ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_i388d"]
-[ext_resource type="Script" path="res://instances/pnl_chat.gd" id="1_x2vuy"]
+[ext_resource type="Script" uid="uid://o423163rrbby" path="res://instances/pnl_chat.gd" id="1_x2vuy"]
 [ext_resource type="PackedScene" uid="uid://csqa2q3atku2i" path="res://instances/pnl_connect.tscn" id="3_e1ino"]
 [ext_resource type="Texture2D" uid="uid://ca6xdmc1afmql" path="res://ui/bootstrap_icons/x.svg" id="3_i32xj"]
 [ext_resource type="PackedScene" uid="uid://d4lkycruly2ye" path="res://instances/pnl_mods.tscn" id="4_v34se"]
@@ -73,6 +73,7 @@ placeholder_text = "announcement"
 unique_name_in_owner = true
 layout_mode = 2
 item_count = 6
+popup/item_0/id = 0
 popup/item_1/id = 5
 popup/item_1/separator = true
 popup/item_2/text = "blue"

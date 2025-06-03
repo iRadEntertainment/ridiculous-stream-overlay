@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cwbekbjfcqjml"]
 
-[ext_resource type="Script" path="res://instances/pnl_vetting.gd" id="1_2dfew"]
+[ext_resource type="Script" uid="uid://dcxjv310twc4d" path="res://instances/pnl_vetting.gd" id="1_2dfew"]
 [ext_resource type="Texture2D" uid="uid://b2mtooi658yq0" path="res://ui/sprites/loading.png" id="2_2s25a"]
 [ext_resource type="Texture2D" uid="uid://bhau4fpfk2m1v" path="res://ui/sprites/ico_warn.png" id="2_mc2ay"]
 

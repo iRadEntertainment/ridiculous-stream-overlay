@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dqavfwer14b4j"]
 
-[ext_resource type="Script" path="res://instances/lb_rigidbody.gd" id="1_he81n"]
+[ext_resource type="Script" uid="uid://dpyg40icexdk4" path="res://instances/lb_rigidbody.gd" id="1_he81n"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3de8c"]
 friction = 0.97

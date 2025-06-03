@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://dhwexcg4happa"]
 
-[ext_resource type="Script" path="res://instances/pnl_twitch_user_fields.gd" id="1_t6b5i"]
+[ext_resource type="Script" uid="uid://0gr4nw1r0v6f" path="res://instances/pnl_twitch_user_fields.gd" id="1_t6b5i"]
 [ext_resource type="Texture2D" uid="uid://dqxomv5pykt6i" path="res://ui/bootstrap_icons/search-heart.svg" id="2_iqcnk"]
 [ext_resource type="Texture2D" uid="uid://cfs6apvwuggtt" path="res://ui/bootstrap_icons/person-bounding-box.svg" id="2_yln12"]
 [ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://ui/sprites/twitch_user_profile_pic.png" id="3_6ldp6"]

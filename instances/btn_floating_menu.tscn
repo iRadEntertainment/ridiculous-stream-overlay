@@ -1,6 +1,6 @@
 [gd_scene load_steps=30 format=3 uid="uid://cdgelqh5th1pl"]
 
-[ext_resource type="Script" path="res://instances/btn_floating_menu.gd" id="1_osqlv"]
+[ext_resource type="Script" uid="uid://do408jnt2icgr" path="res://instances/btn_floating_menu.gd" id="1_osqlv"]
 [ext_resource type="Theme" uid="uid://ce52ib0ugeqlb" path="res://ui/floating_menu.tres" id="1_rrnku"]
 [ext_resource type="Texture2D" uid="uid://brq45fxn0wqha" path="res://ui/sprites/menu.png" id="2_y16f1"]
 [ext_resource type="Texture2D" uid="uid://x1kro6q7tj46" path="res://ui/gravity.png" id="4_bia5b"]
@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://d1aln31is10do" path="res://ui/nuke.png" id="7_dobih"]
 [ext_resource type="Texture2D" uid="uid://dr3a3o2jhf2if" path="res://ui/bootstrap_icons/window.svg" id="7_y65x8"]
 [ext_resource type="Texture2D" uid="uid://d0js7uqs6nswe" path="res://ui/zerog.png" id="8_56bnq"]
-[ext_resource type="Script" path="res://classes/RSSubMenuButton.gd" id="8_nsbul"]
+[ext_resource type="Script" uid="uid://bh0kof5lgt3u6" path="res://classes/RSSubMenuButton.gd" id="8_nsbul"]
 [ext_resource type="Texture2D" uid="uid://h1by403q5s8f" path="res://ui/sword.png" id="9_d5ryv"]
 [ext_resource type="Texture2D" uid="uid://brjnbmesobfjv" path="res://ui/granade.png" id="10_xo0od"]
 [ext_resource type="Texture2D" uid="uid://dvynskgheu0ei" path="res://ui/bootstrap_icons/bug-fill.svg" id="11_e26wg"]

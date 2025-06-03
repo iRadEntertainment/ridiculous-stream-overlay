@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://lw7lx1p8i8tx"]
 
 [ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_qg7pe"]
-[ext_resource type="Script" path="res://instances/welcome/twitch/pnl_twitch_features.gd" id="2_crosi"]
+[ext_resource type="Script" uid="uid://1ncn1x50s8t" path="res://instances/welcome/twitch/pnl_twitch_features.gd" id="2_crosi"]
 [ext_resource type="StyleBox" uid="uid://dp1gxe3ir730n" path="res://ui/panel_flat_dark.tres" id="3_q4cyh"]
 [ext_resource type="StyleBox" uid="uid://be1r1ht3qo0ct" path="res://ui/panel_flat_dark_semitransparent.tres" id="4_hmc1q"]
 
