@@ -2,8 +2,8 @@ extends Node
 class_name RSTwitcher
 
 
-var irc : TwitchIRC
-var api : TwitchRestAPI
+var irc: TwitchIRC
+var api: TwitchRestAPI
 var eventsub: TwitchEventsub
 var commands: TwitchCommandHandler
 var l: RSLogger
@@ -91,24 +91,24 @@ func _init_eventsub() -> void:
 ## Get data about a user by USER_ID see get_user for by username
 func get_user_by_id(user_id: String) -> TwitchUser:
 	if !api: return null
-	var user_data : TwitchGetUsersResponse = await api.get_users([user_id], []);
+	var user_data: TwitchGetUsersResponse = await api.get_users([user_id], []);
 	if user_data.data.is_empty(): return null;
 	return user_data.data[0];
 
 ## Get data about a user by USERNAME see get_user_by_id for by user_id
 func get_user(username: String) -> TwitchUser:
 	if !api: return null
-	var res : TwitchGetUsersResponse = await api.get_users([], [username])
+	var res: TwitchGetUsersResponse = await api.get_users([], [username])
 	if res.data.is_empty():
 		return null
-	var t_user : TwitchUser = res.data[0]
+	var t_user: TwitchUser = res.data[0]
 	return t_user
 
 func get_user_color(user_id: int) -> Color:
 	var res_col := await api.get_user_chat_color([str(user_id)])
 	if res_col.data.is_empty():
 		return Color.BLACK
-	var data_col : TwitchUserChatColor = res_col.data[0]
+	var data_col: TwitchUserChatColor = res_col.data[0]
 	if !data_col.color.is_valid_html_color():
 		return Color.BLACK
 	return Color(data_col.color)
@@ -137,7 +137,7 @@ func get_users_online(users: PackedStringArray) -> PackedStringArray:
 	if not is_connected_to_twitch: return online
 	var max_user_query = 30
 	while not users.is_empty():
-		var batch : Array[String] = []
+		var batch: Array[String] = []
 		var count = 0
 		for i in range(users.size()-1, -1, -1):
 			var username = users[i]
@@ -145,7 +145,7 @@ func get_users_online(users: PackedStringArray) -> PackedStringArray:
 			batch.append(username)
 			if count > max_user_query:
 				var res := await api.get_streams([], batch, [], "live", [], 1, "", "")
-				for stream : TwitchStream in res.data:
+				for stream: TwitchStream in res.data:
 					online.append(stream.user_login)
 				break
 			count += 1
@@ -153,7 +153,7 @@ func get_users_online(users: PackedStringArray) -> PackedStringArray:
 
 ## Refer to https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/ for details on
 ## which API versions are available and which conditions are required.
-func subscribe_event(event_name : String, version : String, conditions : Dictionary, session_id: String):
+func subscribe_event(event_name: String, version: String, conditions: Dictionary, session_id: String):
 	eventsub.subscribe_event(event_name, version, conditions, session_id)
 
 ## Waits for connection to eventsub. Eventsub is ready to subscribe events.
@@ -163,7 +163,7 @@ func wait_for_connection() -> void:
 func _on_irc_received_privmsg(channel_name: String, username: String, message: String, tags: TwitchTags.PrivMsg):
 	received_chat_message.emit(channel_name, username, message, tags)
 
-func chat(msg : String, channel_name := ""):
+func chat(msg: String, channel_name := ""):
 	if (not channel_name is String) or channel_name.strip_edges().is_empty():
 		if !RS.settings.chatbot_channels.is_empty():
 			irc.chat(msg, RS.settings.chatbot_channels.front());
@@ -174,7 +174,7 @@ func whisper(_message: String, _username: String) -> void:
 	l.e("Whipser from bots aren't supported by Twitch anymore. See https://dev.twitch.tv/docs/irc/chat-commands/ at /w")
 
 ## Possible colors are: * blue * green * orange * purple * primary (default)
-func announcement(msg : String, color := ""):
+func announcement(msg: String, color := ""):
 	var body := TwitchSendChatAnnouncementBody.new()
 	body.message = msg
 	body.color = color
@@ -238,8 +238,8 @@ func get_cheermotes(cheermote: TwitchCheermote,
 	return await cheer_repository.get_cheermotes(cheermote, theme, type, scale);
 
 func add_command(command: String, callback: Callable, args_min: int = 0, args_max: int = -1,
-	permission_level : TwitchCommandHandler.PermissionFlag = TwitchCommandHandler.PermissionFlag.EVERYONE,
-	where : TwitchCommandHandler.WhereFlag = TwitchCommandHandler.WhereFlag.CHAT) -> void:
+	permission_level: TwitchCommandHandler.PermissionFlag = TwitchCommandHandler.PermissionFlag.EVERYONE,
+	where: TwitchCommandHandler.WhereFlag = TwitchCommandHandler.WhereFlag.CHAT) -> void:
 
 	l.i("Register command %s" % command)
 	commands.add_command(command, callback, args_min, args_max, permission_level, where);
@@ -248,7 +248,7 @@ func remove_command(command: String) -> void:
 	l.i("Remove command %s" % command)
 	commands.remove_command(command);
 
-func on_event(type : String, _data : Dictionary) -> void:
+func on_event(type: String, _data: Dictionary) -> void:
 	var data := RSTwitchEventData.create_from_event_body(type, _data)
 	match(type):
 		"channel.follow": followed.emit(data)
@@ -261,9 +261,9 @@ func is_magick_available() -> bool:
 	var transformer = MagicImageTransformer.new()
 	return transformer.is_supported()
 
-func gather_user_info(username : String) -> RSTwitchUser:
+func gather_user_info(username: String) -> RSTwitchUser:
 	var user = RSTwitchUser.new()
-	var response : TwitchGetUsersResponse = await api.get_users([], [username]) 
+	var response: TwitchGetUsersResponse = await api.get_users([], [username]) 
 	if response.data.is_empty(): return
 	user.user_id = response.data[0]["id"]
 	user.display_name = response.data[0]["display_name"]
@@ -271,7 +271,8 @@ func gather_user_info(username : String) -> RSTwitchUser:
 	user.profile_image_url = response.data[0]["profile_image_url"]
 	return user
 
-func get_live_streamers_data(user_names_or_ids : Array = []) -> Dictionary:
+
+func get_live_streamers_data(user_names_or_ids: Array = []) -> Dictionary:
 	if not is_connected_to_twitch:
 		return {}
 
@@ -282,10 +283,10 @@ func get_live_streamers_data(user_names_or_ids : Array = []) -> Dictionary:
 					user_names_or_ids.append(user.username)
 	
 	var live_streamers_data := {}
-	var max_user_query = 10
+	var max_user_query = 20
 	while not user_names_or_ids.is_empty():
-		var names : Array[String] = []
-		var ids : Array[String] = []
+		var names: Array[String] = []
+		var ids: Array[String] = []
 		var count = 0
 		for i in range(user_names_or_ids.size()-1, -1, -1):
 			var user_name_id = user_names_or_ids[i]
@@ -297,8 +298,8 @@ func get_live_streamers_data(user_names_or_ids : Array = []) -> Dictionary:
 			
 			if count > max_user_query:
 				var res := await api.get_streams(ids, names, [], "live", [], 1, "", "")
-				for stream : TwitchStream in res.data:
-					live_streamers_data[stream.user_login] = stream
+				for stream: TwitchStream in res.data:
+					live_streamers_data[int(stream.user_id)] = stream
 				break
 			count += 1
 	
@@ -309,7 +310,7 @@ func check_first_msg(_channel_name: String, username: String, _message: String, 
 		first_session_message_username_list.append(username)
 		first_session_message.emit(username, tags)
 
-func check_user_twitch_color(username : String, tags: TwitchTags.PrivMsg) -> void:
+func check_user_twitch_color(username: String, tags: TwitchTags.PrivMsg) -> void:
 	if tags.color.is_empty(): return
 	if RS.user_mng.is_username_known(username):
 		var user: RSTwitchUser = await RS.user_mng.get_user_from_username(username)
@@ -317,7 +318,7 @@ func check_user_twitch_color(username : String, tags: TwitchTags.PrivMsg) -> voi
 			user.twitch_chat_color = Color(tags.color)
 			RSUserMng.save_user_to_json(user, RSSettings.get_users_path())
 
-func raid(to_broadcaster_id : String):
+func raid(to_broadcaster_id: String):
 	var path = "/helix/raids?from_broadcaster_id={from}&to_broadcaster_id={to}".format(
 		{"from": str(RS.settings.broadcaster_id),
 		"to":to_broadcaster_id})
@@ -342,7 +343,7 @@ func get_follower_count() -> int:
 	return count
 
 func get_moderators() -> Array[TwitchUserModerator]:
-	var total : Array[TwitchUserModerator] = []
+	var total: Array[TwitchUserModerator] = []
 	
 	var path = "/helix/moderation/moderators?"
 	path += "first=" + str(100) + "&"

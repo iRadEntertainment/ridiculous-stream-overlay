@@ -34,6 +34,8 @@ corner_radius_bottom_left = 8
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qd0h3"]
 
 [node name="btn_user" type="HBoxContainer"]
+offset_right = 313.0
+offset_bottom = 48.0
 script = ExtResource("1_uxmoy")
 
 [node name="user_pic" type="TextureRect" parent="."]

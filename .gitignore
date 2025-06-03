@@ -6,6 +6,7 @@
 
 # Dario doesn't want this
 ~*.dll
+~*.TMP
 stored.txt
 /addons/editorscriptmanager/
 /addons/ridiculous_coding/

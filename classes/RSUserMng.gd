@@ -13,9 +13,12 @@ var known := {} # {user_id (int): user_object (RSTwitchUser)}
 # TODO: populate unknown users
 var unknown := {} # {user_id (int): user_object (RSTwitchUser)} CACHE
 var username_to_user_id := {} # -> {username (String): user_id (int)} # used for known and cached unknown
+var live_streamers_data: Dictionary = {} #user-ids
+var tmr_refresh_live: Timer
 
 signal user_updated(user: RSTwitchUser)
 signal all_users_updated
+signal live_streamers_updated
 
 
 #region INIT
@@ -31,7 +34,7 @@ func start():
 
 
 func connect_signals() -> void:
-	# RS.twitcher.connected_to_twitch.connect(_on_twitch_connected)
+	RS.twitcher.connected_to_twitch.connect(_on_twitch_connected)
 	RS.twitcher.first_session_message.connect(_on_first_session_message)
 #endregion
 
@@ -61,7 +64,23 @@ func delete_user(user: RSTwitchUser) -> void:
 #endregion
 
 
-#region UTILITIES
+#region TWITCH
+func create_refresh_live_stream_timer() -> void:
+	tmr_refresh_live = Timer.new()
+	tmr_refresh_live.wait_time = 240
+	tmr_refresh_live.one_shot = false
+	tmr_refresh_live.timeout.connect(_on_tmr_refresh_live_timeout)
+	add_child(tmr_refresh_live)
+	tmr_refresh_live.start()
+
+
+func refresh_live_streamers() -> void:
+	live_streamers_data = await RS.twitcher.get_live_streamers_data()
+	live_streamers_updated.emit()
+#endregion
+
+
+#region USER UTILITIES
 func get_user_from_username(username : String) -> RSTwitchUser:
 	var user: RSTwitchUser
 	var user_id: int = 0
@@ -156,6 +175,15 @@ func _on_first_session_message(_username: String, tags: TwitchTags.PrivMsg) -> v
 	if is_user_id_known(user_id):
 		var user: RSTwitchUser = await get_user_from_user_id(user_id)
 		await update_known_user_from_twitch(user)
+
+
+func _on_twitch_connected() -> void:
+	create_refresh_live_stream_timer()
+	refresh_live_streamers()
+
+
+func _on_tmr_refresh_live_timeout() -> void:
+	refresh_live_streamers()
 #endregion
 
 
