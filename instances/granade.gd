@@ -8,6 +8,11 @@ extends RSImageToRigid
 var is_detonated := false
 
 
+func _init() -> void:
+	# override original
+	pass
+
+
 func start():
 	if randf() > 0.5:
 		$sprite.texture = preload("res://local_res/grenade_adamgda2.png")
