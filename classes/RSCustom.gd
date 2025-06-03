@@ -26,6 +26,8 @@ func add_commands() -> void:
 	RS.twitcher.commands.add_command("whostream", whostream)
 	
 	RS.twitcher.commands.add_command("b", spawn_can, 0, 1)
+	RS.twitcher.commands.add_command("d", play_discord_notification)
+	RS.twitcher.commands.add_command("n", add_name_to_scene)
 	
 	RS.twitcher.commands.add_command("laser", laser, 0, 1)
 	RS.twitcher.commands.add_command("nuke", nuke)
@@ -86,7 +88,6 @@ func on_channel_points_redeemed(data : RSTwitchEventData):
 		"beans": beans(data.username)
 		"open useless website": open_useless_website()
 		"open browser history": open_browser_history()
-		"Activate CoPilot for 5min": activate_copilot(300)
 		"remove the cig break overlay": toggle_cig_overlay()
 		"Give advice": RS.vetting.custom_rewards_vetting(give_advice, data)
 		"Get advice": get_advice(data)
@@ -251,6 +252,7 @@ func zero_g(_info : TwitchCommandInfo = null, _args := [], duration := 20.0):
 func shake_bodies(_info : TwitchCommandInfo = null, _args := []) -> void:
 	RS.physic_scene.shake_bodies()
 
+
 func laser(_info : TwitchCommandInfo = null, args := []):
 	if RS.physic_scene.is_closing: return
 	const ANGLE_DEFAULT = PI/2.85
@@ -268,6 +270,7 @@ func spawn_can(_info : TwitchCommandInfo = null, args := []) -> void:
 			#"sfx_can_03.ogg",
 			#"sfx_can_04.ogg",
 		]
+	fake_can.sfx_volume = -12
 	fake_can.is_destroy = true
 	fake_can.is_pickable = true
 	fake_can.scale = randf_range(0.10, 0.25)
@@ -303,8 +306,18 @@ func spawn_grenade(_info : TwitchCommandInfo = null, args := []) -> void:
 			break
 		await get_tree().create_timer(0.03).timeout
 
+
+func play_discord_notification(_info : TwitchCommandInfo = null, _args := []) -> void:
+	RS.play_sfx("discord")
+
+
+func add_name_to_scene(info : TwitchCommandInfo = null, _args := []) -> void:
+	destructibles_names(info.username, 1, 48)
+
+
 func nuke(_info : TwitchCommandInfo = null, _args := []):
 	RS.physic_scene.nuke()
+
 
 func destructibles_names(username := "", quantity : int = 1, font_size := 96):
 	var user: RSTwitchUser
@@ -387,8 +400,6 @@ func open_useless_website():
 	OS.shell_open("https://theuselessweb.com/")
 func open_browser_history():
 	OS.execute("C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe", ['about:history'])
-func activate_copilot(secondos : float):
-	RS.copilot.activate(secondos)
 func open_silent_itch_io_page():
 	pass
 func play_carbrix_or_woop():
@@ -429,6 +440,7 @@ func iRad_follow_somebody(_data : RSTwitchEventData):
 ##(6)it_IT: TTS_MS_IT-IT_ELSA_11.0
 ##(7)pl_PL: TTS_MS_PL-PL_PAULINA_11.0
 ##(8)ru_RU: TTS_MS_RU-RU_IRINA_11.0
+
 
 func tts(text: String, localization := "en_GB") -> void:
 	var voices = DisplayServer.tts_get_voices()

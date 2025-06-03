@@ -16,24 +16,74 @@
 			"uuid": "c20e68d3-38c2-4086-85d1-193c4b85e02b",
 			"title": "Todo",
 			"tasks": [
-				"59803251-6342-4695-99dd-b5ce863992f2"
+				"677a644d-9a64-4c1c-a5d9-ecc5b0d974b5",
+				"4d87e856-19fd-4e75-9c69-475943bc0d7e",
+				"ac31b291-15f7-4fce-a9c5-357fee217279",
+				"7fdf5bf8-4b57-4301-a0d4-82b9f43b4432"
 			]
 		},
 		{
 			"uuid": "3fe624ce-48d2-4324-b6ea-2d2777a8a52f",
 			"title": "Doing",
-			"tasks": []
+			"tasks": [
+				"9c35058b-eb04-4ac4-8e07-98b80f329050",
+				"66f8d938-df58-4dbe-9873-814ce00f462c"
+			]
 		},
 		{
 			"uuid": "3056a553-9c8d-4864-8288-fac01ba7416d",
 			"title": "Done",
-			"tasks": []
+			"tasks": [
+				"59803251-6342-4695-99dd-b5ce863992f2"
+			]
 		}
 	],
 	"tasks": [
 		{
 			"uuid": "59803251-6342-4695-99dd-b5ce863992f2",
 			"title": "List of known users LIVE tab",
+			"description": "",
+			"category": "5cb6e5bd-6da9-452f-9c5b-285aabd09166",
+			"steps": []
+		},
+		{
+			"uuid": "677a644d-9a64-4c1c-a5d9-ecc5b0d974b5",
+			"title": "individual chat messages",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "9c35058b-eb04-4ac4-8e07-98b80f329050",
+			"title": "Better handling of the known users list",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "4d87e856-19fd-4e75-9c69-475943bc0d7e",
+			"title": "quick button for user list",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "ac31b291-15f7-4fce-a9c5-357fee217279",
+			"title": "Switch to Twitcher v2.0",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "7fdf5bf8-4b57-4301-a0d4-82b9f43b4432",
+			"title": "Give access to the redeems to the overlay",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "66f8d938-df58-4dbe-9873-814ce00f462c",
+			"title": "reloading user pic doesn't update the link. It uses the old one",
 			"description": "",
 			"category": "5cb6e5bd-6da9-452f-9c5b-285aabd09166",
 			"steps": []

@@ -6,7 +6,7 @@ extends PanelContainer
 @onready var tabs = %tabs
 @onready var ln_chat_live_streamer = %ln_chat_live_streamer
 
-var user : RSTwitchUser
+var user: RSTwitchUser
 var live_data : TwitchStream
 
 @onready var pnl_info = %pnl_info

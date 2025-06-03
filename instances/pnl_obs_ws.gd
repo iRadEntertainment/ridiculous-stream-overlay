@@ -1,3 +1,4 @@
+@warning_ignore("missing_tool")
 extends PanelFormContainer
 class_name PanelObsWs
 

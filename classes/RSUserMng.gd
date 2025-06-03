@@ -9,15 +9,16 @@ static var l: RSLogger
 var folder: String:
 	get(): return RSSettings.get_users_path()
 
-var known := {} # {user_id (int): user_object (RSTwitchUser)}
+var known: Dictionary = {} # {user_id (int): user_object (RSTwitchUser)}
 # TODO: populate unknown users
-var unknown := {} # {user_id (int): user_object (RSTwitchUser)} CACHE
-var username_to_user_id := {} # -> {username (String): user_id (int)} # used for known and cached unknown
+var unknown: Dictionary = {} # {user_id (int): user_object (RSTwitchUser)} CACHE
+var username_to_user_id: Dictionary = {} # -> {username (String): user_id (int)} # used for known and cached unknown
 var live_streamers_data: Dictionary = {} #user-ids
 var tmr_refresh_live: Timer
 
 signal user_updated(user: RSTwitchUser)
-signal all_users_updated
+signal known_users_updated
+signal live_streamers_updating
 signal live_streamers_updated
 
 
@@ -31,6 +32,7 @@ func start():
 	for user_id: int in known:
 		var user: RSTwitchUser = known[user_id]
 		username_to_user_id[user.username] = user_id
+	known_users_updated.emit()
 
 
 func connect_signals() -> void:
@@ -42,12 +44,11 @@ func connect_signals() -> void:
 #region LOAD/SAVE/DELETE
 func save_user(user: RSTwitchUser) -> void:
 	var filename: String = get_filename_from_user_id(user.user_id, folder)
-	while not filename.is_empty():
-		delete_user(user)
-		filename = get_filename_from_user_id(user.user_id, folder)
-	
-	known[user.username] = user
 	save_user_to_json(user, folder)
+	
+	known[user.user_id] = user
+	username_to_user_id[user.username] = user.user_id
+	known_users_updated.emit()
 
 
 func save_all() -> void:
@@ -57,10 +58,15 @@ func save_all() -> void:
 
 func delete_user(user: RSTwitchUser) -> void:
 	var filename: String = get_filename_from_user_id(user.user_id, folder)
-	if filename.is_empty():
-		return
-	OS.move_to_trash(folder + filename)
-
+	while not filename.is_empty():
+		OS.move_to_trash(folder + filename)
+		filename = get_filename_from_user_id(user.user_id, folder)
+	
+	if known.has(user.user_id):
+		known.erase(user.user_id)
+	if username_to_user_id.has(user.username):
+		username_to_user_id.erase(user.username)
+	known_users_updated.emit()
 #endregion
 
 
@@ -75,6 +81,7 @@ func create_refresh_live_stream_timer() -> void:
 
 
 func refresh_live_streamers() -> void:
+	live_streamers_updating.emit()
 	live_streamers_data = await RS.twitcher.get_live_streamers_data()
 	live_streamers_updated.emit()
 #endregion

@@ -2,24 +2,24 @@
 extends Resource
 class_name RSTwitchUser
 
-var username : String
-var display_name : String
-var user_id : int
-var twitch_chat_color : Color
-var profile_image_url : String
+var username: String
+var display_name: String
+var user_id: int
+var twitch_chat_color: Color
+var profile_image_url: String
 
-var is_streamer : bool
-var auto_shoutout : bool
-var auto_promotion : bool
+var is_streamer: bool
+var auto_shoutout: bool
+var auto_promotion: bool
 
-var custom_chat_color : Color
-var custom_notification_sfx : String
-var custom_action : String
-var custom_beans_params : RSBeansParam
+var custom_chat_color: Color
+var custom_notification_sfx: String
+var custom_action: String
+var custom_beans_params: RSBeansParam
 
-var shoutout_description : String
-var promotion_description : String
-var last_shout_unix_time : int
+var shoutout_description: String
+var promotion_description: String
+var last_shout_unix_time: int
 
 
 func to_dict() -> Dictionary:
@@ -70,6 +70,11 @@ func to_dict() -> Dictionary:
 
 func to_json() -> String:
 	return JSON.stringify(to_dict())
+
+
+func update_with_user(other_user: RSTwitchUser) -> void:
+	pass
+
 
 static func from_json(d: Dictionary) -> RSTwitchUser:
 	var user := RSTwitchUser.new()

@@ -6,22 +6,38 @@ signal user_selected(user, live_data)
 
 var filter_live := false
 
-func start():
+
+func start() -> void:
 	populate_user_button_list()
+	
+	%pnl_loading_live.stop()
+	RS.user_mng.live_streamers_updating.connect(_on_live_streamers_updating)
+	RS.user_mng.live_streamers_updated.connect(_on_live_streamers_updated)
+	RS.user_mng.known_users_updated.connect(_on_known_users_updated)
 
 
-func populate_user_button_list():
+func populate_user_button_list() -> void:
 	%ln_filter.text = ""
 	for btn in %user_list.get_children():
 		btn.queue_free()
 	
 	for user_id in RS.user_mng.known.keys():
-		var user := RS.user_mng.known[user_id] as RSTwitchUser
-		if not user: continue
-		var btn_user_instance: RSTwitchUserEntry = RSGlobals.btn_user_pack.instantiate()
-		btn_user_instance.user = user
-		btn_user_instance.user_selected.connect(user_selected_pressed)
-		%user_list.add_child(btn_user_instance)
+		add_user_btn_entry_from_user_id(user_id)
+
+
+func add_user_btn_entry_from_user_id(user_id: int) -> void:
+	var user: RSTwitchUser = RS.user_mng.known[user_id]
+	if not user: return
+	var btn_user_instance: RSTwitchUserEntry = RSGlobals.btn_user_pack.instantiate()
+	btn_user_instance.user = user
+	btn_user_instance.user_selected.connect(user_selected_pressed)
+	%user_list.add_child(btn_user_instance)
+
+
+func toggle_live_users(toggled_on: bool) -> void:
+	for user_button in %user_list.get_children():
+		user_button.visible = !toggled_on or \
+				user_button.user.user_id in RS.user_mng.live_streamers_data.keys()
 
 
 ## Called by btn_user_instance
@@ -32,26 +48,29 @@ func user_selected_pressed(btn_user: RSTwitchUser) -> void:
 	user_selected.emit(user, live_data)
 
 
-func _on_btn_filter_live_pressed():
-	filter_live = !filter_live
-	for user_button in %user_list.get_children():
-		user_button.visible = !filter_live or user_button.user.user_id in RS.user_mng.live_streamers_data.keys()
-#func _on_btn_check_live_pressed():
-	#var live_data := await RS.gift.get_live_streamers_data()
-	#
-	#for user_button in %user_list.get_children():
-		#user_button.visible = user_button.user.username in live_data.keys()
-		#if user_button.user.username in live_data.keys():
-			#user_button.live_data = live_data[user_button.user.username]
-		#else:
-			#user_button.live_data = null
+func _on_live_streamers_updating() -> void:
+	%pnl_loading_live.start()
+func _on_live_streamers_updated() -> void:
+	%pnl_loading_live.stop()
+func _on_known_users_updated() -> void:
+	var known_ids: Array = RS.user_mng.known.keys()
+	for btn: RSTwitchUserEntry in %user_list.get_children():
+		var user: RSTwitchUser = btn.user
+		known_ids.erase(user.user_id)
+		if not user.user_id in RS.user_mng.known.keys():
+			btn.queue_free()
+	
+	for user_id: int in known_ids:
+		add_user_btn_entry_from_user_id(user_id)
 
-func _on_btn_reload_pressed():
+
+func _on_btn_filter_live_pressed() -> void:
+	filter_live = !filter_live
+	toggle_live_users(filter_live)
+func _on_btn_reload_pressed() -> void:
 	RS.user_mng.refresh_live_streamers()
-	for key in RS.user_mng.live_streamers_data.keys():
-		print(key)
-	print("live: %d" % RS.user_mng.live_streamers_data.size())
-func _on_ln_filter_text_changed(new_text: String):
+	
+func _on_ln_filter_text_changed(new_text: String) -> void:
 	new_text = new_text.to_lower()
 	for user_line in %user_list.get_children():
 		user_line.visible = user_line.user.username.find(new_text) != -1 or new_text.is_empty()

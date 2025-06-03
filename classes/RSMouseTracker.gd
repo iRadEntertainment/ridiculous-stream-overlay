@@ -24,6 +24,7 @@ func _ready() -> void:
 func start():
 	set_process(true)
 
+
 func _process(_d) -> void:
 	m_pos = RS.get_global_mouse_position()
 	is_on_title_bar = is_m_pos_in_title(m_pos)
@@ -38,10 +39,12 @@ func _process(_d) -> void:
 		is_gui_active = checks
 		mouse_track_updated.emit(!is_gui_active)
 
+
 func is_pixel_transparent(pos: Vector2) -> bool:
 	if !RS.get_rect().has_point(pos):
 		return true
 	return !get_window().get_texture().get_image().get_pixelv(pos).a > 0
+
 
 func is_m_pos_in_control_nodes(pos: Vector2) -> bool:
 	if !RS.get_rect().has_point(pos):
