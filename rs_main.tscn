@@ -1,6 +1,5 @@
-[gd_scene load_steps=23 format=3 uid="uid://d345j5een73bf"]
+[gd_scene load_steps=22 format=3 uid="uid://d345j5een73bf"]
 
-[ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_33ebf"]
 [ext_resource type="Script" uid="uid://brw4mp8qnlxxh" path="res://RSMain.gd" id="1_y2jdm"]
 [ext_resource type="Script" uid="uid://copo7pkldfbov" path="res://classes/RSMousePass.cs" id="2_4s2fq"]
 [ext_resource type="Script" uid="uid://doxabl7ha832k" path="res://classes/RSMouseTracker.gd" id="2_xjlao"]
@@ -31,7 +30,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme = ExtResource("1_33ebf")
 script = ExtResource("1_y2jdm")
 metadata/_edit_lock_ = true
 
@@ -68,6 +66,8 @@ script = ExtResource("8_ex7ik")
 [node name="RSCustom" type="Node" parent="Modules"]
 unique_name_in_owner = true
 script = ExtResource("9_by474")
+
+[node name="sfx_custom" type="AudioStreamPlayer" parent="Modules/RSCustom"]
 
 [node name="RSVetting" type="Node" parent="Modules"]
 unique_name_in_owner = true
@@ -118,6 +118,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
+theme = null
 
 [node name="debug_view" parent="." instance=ExtResource("5_j4imi")]
 unique_name_in_owner = true
@@ -133,6 +134,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 offset_right = 1152.0
 offset_bottom = 648.0
+theme = null
 
 [node name="pnl_notifications" parent="." instance=ExtResource("17_sodyi")]
 unique_name_in_owner = true
@@ -151,6 +153,7 @@ layout_mode = 1
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
+theme = null
 metadata/_edit_lock_ = true
 
 [node name="btn_floating_menu" parent="." instance=ExtResource("5_xf57p")]

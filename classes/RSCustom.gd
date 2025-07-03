@@ -25,9 +25,11 @@ func add_commands() -> void:
 	RS.twitcher.commands.add_command("pandano", pandano)
 	RS.twitcher.commands.add_command("whostream", whostream)
 	
-	RS.twitcher.commands.add_command("b", spawn_can, 0, 1)
+	RS.twitcher.commands.add_command("b", spawn_fake_beans, 0, 1)
 	RS.twitcher.commands.add_command("d", play_discord_notification)
 	RS.twitcher.commands.add_command("n", add_name_to_scene)
+	RS.twitcher.commands.add_command("toggle_music", toggle_music)
+	RS.twitcher.commands.add_command("mika", play_mika_system_of_a_down)
 	
 	RS.twitcher.commands.add_command("laser", laser, 0, 1)
 	RS.twitcher.commands.add_command("nuke", nuke)
@@ -110,10 +112,12 @@ func on_subscribed(_data : RSTwitchEventData):
 func on_cheered(_data : RSTwitchEventData):
 	pass
 
+
 func add_notification_scene(username: String) -> void:
 	var new_notif_inst = RSGlobals.msg_notif_pack.instantiate()
 	RS.add_child(new_notif_inst)
 	new_notif_inst.start(username)
+
 
 func parse_tts_command(_info : TwitchCommandInfo = null, args := [], localizazion := "") -> void:
 	var text = " ".join(args)
@@ -140,15 +144,6 @@ func change_streamer_colour(user_input: String) -> void:
 	var settings_composite: Dictionary = {
 		"opacity": col.a,
 	}
-	#{
-		#"brightness": -0.0345,
-		#"color_multiply": 16711935, # 65280
-		#"contrast": -0.25,
-		#"gamma": 0.5,
-		#"hue_shift": 0,
-		#"opacity": 1,
-		#"saturation": -0.07
-	#}
 	RS.no_obs_ws.set_item_filter_setting("Cam-cutout", "Colour Correction", settings_cutout)
 	RS.no_obs_ws.set_item_filter_setting("Cam-composite", "Colour Correction", settings_composite)
 
@@ -260,20 +255,14 @@ func laser(_info : TwitchCommandInfo = null, args := []):
 	RS.physic_scene.add_laser(angle)
 
 
-func spawn_can(_info : TwitchCommandInfo = null, args := []) -> void:
-	var fake_can := RSBeansParam.new()
-	fake_can.img_paths = ["can.png"]
-	fake_can.sfx_paths = [
-			"sfx_notification_discord.ogg",
-			#"sfx_can_01.ogg",
-			#"sfx_can_02.ogg",
-			#"sfx_can_03.ogg",
-			#"sfx_can_04.ogg",
-		]
-	fake_can.sfx_volume = -12
-	fake_can.is_destroy = true
-	fake_can.is_pickable = true
-	fake_can.scale = randf_range(0.10, 0.25)
+func spawn_fake_beans(_info : TwitchCommandInfo = null, args := []) -> void:
+	var fake_beans := RSBeansParam.new()
+	fake_beans.img_paths = ["can.png"]
+	fake_beans.sfx_paths = ["sfx_notification_discord.ogg"]
+	fake_beans.sfx_volume = -12
+	fake_beans.is_destroy = true
+	fake_beans.is_pickable = true
+	fake_beans.scale = randf_range(0.10, 0.25)
 	
 	var count: int = 1
 	if !args.is_empty():
@@ -281,13 +270,47 @@ func spawn_can(_info : TwitchCommandInfo = null, args := []) -> void:
 		if count != 69:
 			count = wrapi(count, 0, 6)
 		
-		if args[0] == "giganzo":
-			count = 1000
-	
+		match args[0]:
+			"giganzo":
+				count = 100
+			"jake":
+				fake_beans.img_paths = ["pickle.png", "pickle_jar.png"]
+				fake_beans.scale = randf_range(0.3, 0.6)
+				count = 69
+			"anihan":
+				var rand_idx: int = randi_range(0,1)
+				fake_beans.img_paths = [
+					[
+						"bean_03.png",
+						"bean_04.png",
+						"bean_05.png",
+						"bean_06.png",
+					],
+					[
+						"cheese_01_swiss.png",
+						"cheese_02_swiss.png",
+						"cheese_03_swiss.png",
+						"cheese_04_cheddar.png",
+						"cheese_05_provolone.png",
+						"cheese_06_gouda.png",
+						"cheese_07_gouda.png",
+						"cheese_08_muenster.png",
+						"cheese_09_colbyjack.png",
+						"cheese_10_colbyjack.png",
+					]
+				][rand_idx]
+				fake_beans.scale = [randf_range(3.0, 4.0), randf_range(0.8, 1.0)][rand_idx]
+				count = [420, 128][rand_idx]
+			"vex":
+				fake_beans.img_paths = ["vex.png"]
+				fake_beans.scale = randf_range(0.25, 0.35)
+				count = 667
+				var msg = "BUY Zooika! by Vex667 <3 -> https://s.team/a/2994730 <-"
+				RS.twitcher.chat(msg)
 	
 	for i: int in count:
-		fake_can.coll_mask = fake_can.coll_layer + 0b001
-		RS.physic_scene.add_image_bodies(fake_can)
+		fake_beans.coll_mask = fake_beans.coll_layer + 0b001
+		RS.physic_scene.add_image_bodies(fake_beans)
 		if RS.physic_scene.obj_count > RS.physic_scene.SHARD_BODIES_CAP:
 			break
 		await get_tree().create_timer(0.03).timeout
@@ -313,6 +336,17 @@ func play_discord_notification(_info : TwitchCommandInfo = null, _args := []) ->
 
 func add_name_to_scene(info : TwitchCommandInfo = null, _args := []) -> void:
 	destructibles_names(info.username, 1, 48)
+
+
+func toggle_music(_info : TwitchCommandInfo = null, _args := []) -> void:
+	var is_mozilla_input_mute: bool = await RS.no_obs_ws.get_input_mute("Mozilla")
+	RS.no_obs_ws.set_input_mute("Mozilla", !is_mozilla_input_mute)
+
+
+func play_mika_system_of_a_down(_info : TwitchCommandInfo = null, _args := []) -> void:
+	$sfx_custom.stop()
+	$sfx_custom.stream = RS.loader.load_sfx_from_sfx_folder("sfx_chop_suey_by_Mika.ogg")
+	$sfx_custom.play()
 
 
 func nuke(_info : TwitchCommandInfo = null, _args := []):
@@ -367,10 +401,11 @@ func suggest_no_ads(on_cig_break_activation := true) -> void:
 	var streamers_live_data: Dictionary = await RS.twitcher.get_live_streamers_data()
 	if streamers_live_data.is_empty():
 		return
-	var suggested_streamer = streamers_live_data.keys().pick_random()
+	var suggested_streamer_id: int = streamers_live_data.keys().pick_random()
+	var streamer: RSTwitchUser = await RS.user_mng.get_user_from_user_id(suggested_streamer_id)
 	var msg := """Do not watch the ADS.
 	 Excessive ad exposure manipulates behavior, fuels anxiety, and undermines mental well-being by promoting
-	unrealistic standards and decision fatigue. Watch twitch.tv/%s instead, they are live NOW!"""%suggested_streamer
+	unrealistic standards and decision fatigue. Watch twitch.tv/%s instead, they are live NOW!""" % streamer.username
 	RS.twitcher.chat(msg)
 
 
