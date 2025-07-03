@@ -261,10 +261,22 @@ func is_magick_available() -> bool:
 	var transformer = MagicImageTransformer.new()
 	return transformer.is_supported()
 
-func gather_user_info(username: String) -> RSTwitchUser:
+
+func gather_user_info_from_username(username: String) -> RSTwitchUser:
+	var response: TwitchGetUsersResponse = await api.get_users([], [username])
+	return gather_user_info_from_response(response)
+
+
+func gather_user_info_from_user_id(user_id: int) -> RSTwitchUser:
+	var response: TwitchGetUsersResponse = await api.get_users([str(user_id)], [])
+	return gather_user_info_from_response(response)
+
+
+func gather_user_info_from_response(response: TwitchGetUsersResponse) -> RSTwitchUser:
+	if response.data.is_empty():
+		return
+	
 	var user = RSTwitchUser.new()
-	var response: TwitchGetUsersResponse = await api.get_users([], [username]) 
-	if response.data.is_empty(): return
 	user.user_id = response.data[0]["id"]
 	user.display_name = response.data[0]["display_name"]
 	user.username = response.data[0]["login"]

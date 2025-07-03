@@ -180,3 +180,81 @@ static func get_newest_file(file_absolute_paths: Array) -> String:
 			newest_file = path
 
 	return newest_file
+
+
+static func opt_btn_select_from_text(opt_button: OptionButton, text: String) -> void:
+	for i in opt_button.item_count:
+		if opt_button.get_item_text(i) == text:
+			opt_button.select(i)
+			break
+
+
+static func convert_html_to_bbcode(html: String) -> String:
+	# 1. Unescape HTML entities
+	var bb = html_unescape(html)
+
+	# 2. Replace <img ... src="..."> with [img]...[/img]
+	var img_re = RegEx.create_from_string(r'<img[^>]*src=["\']([^"\']+)["\'][^>]*/?>')
+	bb = img_re.sub(bb, "[img]$1[/img]", true)
+
+	# 3. Replace <h2 ...>...</h2> with [b]...[/b]
+	var h2_open_re = RegEx.create_from_string(r'<h2[^>]*>')
+	bb = h2_open_re.sub(bb, "[b]", true)
+	bb = bb.replace("</h2>", "[/b]\n")
+
+	# 4. Remove <p> tags, convert </p> to newline
+	var p_open_re = RegEx.create_from_string(r'<p[^>]*>')
+	bb = p_open_re.sub(bb, "", true)
+	bb = bb.replace("</p>", "\n")
+
+	# 5. List items: <li> → •, </li> → newline
+	bb = bb.replace("<li>", "• ")
+	bb = bb.replace("</li>", "\n")
+	# Remove <ul> and </ul>
+	var ul_re = RegEx.create_from_string(r'</?ul[^>]*>')
+	bb = ul_re.sub(bb, "", true)
+
+	# 6. Remove <div ...> and </div>
+	var div_re = RegEx.create_from_string(r'</?div[^>]*>')
+	bb = div_re.sub(bb, "", true)
+
+	# 7. Strip any remaining tags
+	var any_tag_re = RegEx.create_from_string(r'<[^>]+>')
+	bb = any_tag_re.sub(bb, "", true)
+
+	# 8. Trim and normalize spacing
+	bb = bb.strip_edges()
+	bb = bb.replace("\n\n\n", "\n\n")
+
+	return bb
+
+
+static func html_unescape(text: String) -> String:
+	var replacements = {
+		"&lt;": "<",
+		"&gt;": ">",
+		"&amp;": "&",
+		"&quot;": "\"",
+		"&#39;": "'",
+		"&#x27;": "'",
+		"&#x2F;": "/",
+		"&#96;": "`",
+		"&nbsp;": " ",
+		"&copy;": "©",
+		"&reg;": "®",
+		"&euro;": "€",
+		"&pound;": "£",
+		"&yen;": "¥",
+		"&ndash;": "–",
+		"&mdash;": "—",
+		"&lsquo;": "‘",
+		"&rsquo;": "’",
+		"&ldquo;": "“",
+		"&rdquo;": "”",
+		"&hellip;": "…",
+		"&bull;": "•"
+	}
+
+	for key in replacements.keys():
+		text = text.replace(key, replacements[key])
+	return text

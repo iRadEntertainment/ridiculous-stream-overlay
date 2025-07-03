@@ -1,16 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://dhwexcg4happa"]
+[gd_scene load_steps=11 format=3 uid="uid://dhwexcg4happa"]
 
 [ext_resource type="Script" uid="uid://0gr4nw1r0v6f" path="res://instances/pnl_twitch_user_fields.gd" id="1_t6b5i"]
-[ext_resource type="Texture2D" uid="uid://dqxomv5pykt6i" path="res://ui/bootstrap_icons/search-heart.svg" id="2_iqcnk"]
-[ext_resource type="Texture2D" uid="uid://cfs6apvwuggtt" path="res://ui/bootstrap_icons/person-bounding-box.svg" id="2_yln12"]
 [ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://ui/sprites/twitch_user_profile_pic.png" id="3_6ldp6"]
+[ext_resource type="PackedScene" uid="uid://dps0a5js2rxa6" path="res://instances/pnl_search_user.tscn" id="3_qryt4"]
 [ext_resource type="StyleBox" uid="uid://c0aj4762xvg73" path="res://ui/editor_light_panel.stylebox" id="4_18mwm"]
-[ext_resource type="Texture2D" uid="uid://dpj8cbyofxney" path="res://ui/bootstrap_icons/arrow-down-circle-fill.svg" id="4_u4ajm"]
-[ext_resource type="Texture2D" uid="uid://boqo7e7i8rips" path="res://ui/bootstrap_icons/filetype-exe.svg" id="5_qr2m6"]
 [ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://ui/bootstrap_icons/folder2-open.svg" id="6_1qe2s"]
-[ext_resource type="PackedScene" uid="uid://csqa2q3atku2i" path="res://instances/pnl_connect.tscn" id="6_jv0c3"]
 [ext_resource type="Texture2D" uid="uid://dbpv7xe18l2r6" path="res://ui/sprites/raid_icon.png" id="7_ayv7u"]
 [ext_resource type="Theme" uid="uid://0k8rsjlg003m" path="res://ui/chat_message.tres" id="10_b8h00"]
+[ext_resource type="PackedScene" uid="uid://b0w820dulgunt" path="res://instances/pnl_rs_twitch_user_info.tscn" id="10_lwrr5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nb1op"]
 content_margin_left = 4.0
@@ -25,7 +22,6 @@ bg_color = Color(0.129412, 0.14902, 0.180392, 1)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 251.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("4_18mwm")
@@ -36,227 +32,21 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="top" type="PanelContainer" parent="vb"]
-layout_mode = 2
-
-[node name="vb" type="VBoxContainer" parent="vb/top"]
-layout_mode = 2
-
-[node name="search" type="HBoxContainer" parent="vb/top/vb"]
-layout_mode = 2
-
-[node name="ico2" type="TextureRect" parent="vb/top/vb/search"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-texture = ExtResource("2_iqcnk")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="ico" type="TextureRect" parent="vb/top/vb/search"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-texture = ExtResource("2_yln12")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="ln_search" type="LineEdit" parent="vb/top/vb/search"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "search"
-
-[node name="twitch_info" type="HBoxContainer" parent="vb/top/vb"]
-layout_mode = 2
-
-[node name="tex_profile_pic" type="TextureRect" parent="vb/top/vb/twitch_info"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 128)
-layout_mode = 2
-size_flags_horizontal = 3
-texture = ExtResource("3_6ldp6")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="vb" type="VBoxContainer" parent="vb/top/vb/twitch_info"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ln_username" type="LineEdit" parent="vb/top/vb/twitch_info/vb"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "username"
-editable = false
-
-[node name="ln_display_name" type="LineEdit" parent="vb/top/vb/twitch_info/vb"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "display name"
-editable = false
-
-[node name="ln_user_id" type="LineEdit" parent="vb/top/vb/twitch_info/vb"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "user id"
-editable = false
-
-[node name="ln_profile_picture_url" type="LineEdit" parent="vb/top/vb/twitch_info/vb"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "profile picture url"
-editable = false
-
-[node name="hb" type="HBoxContainer" parent="vb/top/vb/twitch_info/vb"]
-layout_mode = 2
-
-[node name="lb" type="Label" parent="vb/top/vb/twitch_info/vb/hb"]
-layout_mode = 2
-text = "Twich chat colour"
-
-[node name="cr_user_twitch_irc_color" type="ColorRect" parent="vb/top/vb/twitch_info/vb/hb"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 16)
-layout_mode = 2
-size_flags_horizontal = 3
-color = Color(0, 0, 0, 1)
-
-[node name="pnl_connect_to_gift" parent="vb/top" instance=ExtResource("6_jv0c3")]
-unique_name_in_owner = true
-visible = false
+[node name="pnl_search_user" parent="vb" instance=ExtResource("3_qryt4")]
 layout_mode = 2
 
 [node name="sep" type="HSeparator" parent="vb"]
 layout_mode = 2
 
-[node name="hb3" type="HBoxContainer" parent="vb"]
-layout_mode = 2
-size_flags_vertical = 8
-
-[node name="btn_save" type="Button" parent="vb/hb3"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Save"
-icon = ExtResource("4_u4ajm")
-expand_icon = true
-
-[node name="btn_open_file" type="Button" parent="vb/hb3"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Open user file"
-icon = ExtResource("5_qr2m6")
-expand_icon = true
-
-[node name="btn_open_folder" type="Button" parent="vb/hb3"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Open folder"
-icon = ExtResource("6_1qe2s")
-expand_icon = true
-
 [node name="tabs" type="TabContainer" parent="vb"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 2
+current_tab = 0
 
-[node name="pnl_info" type="PanelContainer" parent="vb/tabs"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-metadata/_tab_index = 0
-
-[node name="vb" type="VBoxContainer" parent="vb/tabs/pnl_info"]
-layout_mode = 2
-
-[node name="hb2" type="HBoxContainer" parent="vb/tabs/pnl_info/vb"]
-layout_mode = 2
-
-[node name="pnl" type="PanelContainer" parent="vb/tabs/pnl_info/vb/hb2"]
-layout_mode = 2
-theme_override_styles/panel = ExtResource("4_18mwm")
-
-[node name="grid_flags" type="GridContainer" parent="vb/tabs/pnl_info/vb/hb2/pnl"]
-layout_mode = 2
-columns = 2
-
-[node name="fl_is_streamer" type="CheckButton" parent="vb/tabs/pnl_info/vb/hb2/pnl/grid_flags"]
+[node name="pnl_rs_twitch_user_info" parent="vb/tabs" instance=ExtResource("10_lwrr5")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Streamer"
-alignment = 2
-
-[node name="fl_auto_shoutout" type="CheckButton" parent="vb/tabs/pnl_info/vb/hb2/pnl/grid_flags"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Auto-shoutout"
-alignment = 2
-
-[node name="fl_auto_promotion" type="CheckButton" parent="vb/tabs/pnl_info/vb/hb2/pnl/grid_flags"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Auto-promotion"
-alignment = 2
-
-[node name="grid_custom" type="GridContainer" parent="vb/tabs/pnl_info/vb/hb2"]
-layout_mode = 2
-size_flags_horizontal = 3
-columns = 2
-
-[node name="lb4" type="Label" parent="vb/tabs/pnl_info/vb/hb2/grid_custom"]
-layout_mode = 2
-text = "Godot chat colour"
-
-[node name="btn_custom_color" type="ColorPickerButton" parent="vb/tabs/pnl_info/vb/hb2/grid_custom"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="lb5" type="Label" parent="vb/tabs/pnl_info/vb/hb2/grid_custom"]
-layout_mode = 2
-text = "Custom sfx"
-
-[node name="opt_custom_sfx" type="OptionButton" parent="vb/tabs/pnl_info/vb/hb2/grid_custom"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="lb7" type="Label" parent="vb/tabs/pnl_info/vb/hb2/grid_custom"]
-layout_mode = 2
-text = "Custom actions"
-
-[node name="opt_custom_actions" type="OptionButton" parent="vb/tabs/pnl_info/vb/hb2/grid_custom"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="vb" type="VBoxContainer" parent="vb/tabs/pnl_info/vb/hb2"]
-layout_mode = 2
-
-[node name="te_so" type="TextEdit" parent="vb/tabs/pnl_info/vb"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-placeholder_text = "shoutout message"
-wrap_mode = 1
-scroll_fit_content_height = true
-caret_blink = true
-
-[node name="te_promote" type="TextEdit" parent="vb/tabs/pnl_info/vb"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-placeholder_text = "promotion message"
-wrap_mode = 1
-scroll_fit_content_height = true
-caret_blink = true
 
 [node name="pnl_beans" type="PanelContainer" parent="vb/tabs"]
 visible = false
@@ -292,6 +82,7 @@ layout_mode = 2
 
 [node name="pnl_live" type="PanelContainer" parent="vb/tabs"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -368,16 +159,19 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "15"
 
+[node name="btn_open_folder" type="Button" parent="vb"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Open users folder"
+icon = ExtResource("6_1qe2s")
+expand_icon = true
+
 [node name="sfx_prev" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 
-[connection signal="text_submitted" from="vb/top/vb/search/ln_search" to="." method="_on_ln_search_text_submitted"]
-[connection signal="pressed" from="vb/hb3/btn_save" to="." method="_on_btn_save_pressed"]
-[connection signal="pressed" from="vb/hb3/btn_open_file" to="." method="_on_btn_open_file_pressed"]
-[connection signal="pressed" from="vb/hb3/btn_open_folder" to="." method="_on_btn_open_folder_pressed"]
-[connection signal="item_selected" from="vb/tabs/pnl_info/vb/hb2/grid_custom/opt_custom_sfx" to="." method="_on_opt_custom_sfx_item_selected"]
 [connection signal="pressed" from="vb/tabs/pnl_beans/scroll/vb/hb/btn_test_beans" to="." method="_on_btn_test_beans_pressed"]
 [connection signal="toggled" from="vb/tabs/pnl_beans/scroll/vb/hb/btn_add_custom_beans" to="." method="_on_btn_add_custom_beans_toggled"]
 [connection signal="pressed" from="vb/tabs/pnl_live/vb/stream_title/btn_stream_title" to="." method="_on_stream_title_pressed"]
 [connection signal="pressed" from="vb/tabs/pnl_live/vb/bot/hb/btn_raid_current" to="." method="_on_btn_raid_current_pressed"]
 [connection signal="text_submitted" from="vb/tabs/pnl_live/vb/bot/hb/ln_chat_live_streamer" to="." method="_on_ln_chat_live_streamer_text_submitted"]
+[connection signal="pressed" from="vb/btn_open_folder" to="." method="_on_btn_open_folder_pressed"]

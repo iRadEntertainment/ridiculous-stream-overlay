@@ -7,15 +7,15 @@ extends PanelContainer
 @onready var ln_chat_live_streamer = %ln_chat_live_streamer
 
 var user: RSTwitchUser
-var live_data : TwitchStream
+var live_data: TwitchStream
 
-@onready var pnl_info = %pnl_info
-@onready var pnl_live : PanelContainer = %pnl_live
-@onready var stream_title : Label = %stream_title
-@onready var btn_stream_title : Button = %btn_stream_title
-@onready var stream_thumbnail : TextureRect = %stream_thumbnail
-@onready var stream_time : Label = %stream_time
-@onready var stream_viewer_count : Label = %stream_viewer_count
+@onready var pnl_rs_twitch_user_info = %pnl_rs_twitch_user_info
+@onready var pnl_live: PanelContainer = %pnl_live
+@onready var stream_title: Label = %stream_title
+@onready var btn_stream_title: Button = %btn_stream_title
+@onready var stream_thumbnail: TextureRect = %stream_thumbnail
+@onready var stream_time: Label = %stream_time
+@onready var stream_viewer_count: Label = %stream_viewer_count
 
 
 func _ready():
@@ -35,41 +35,17 @@ func set_tab_names():
 		tabs.set_tab_title(pnl.get_index(), tab_title)
 
 
-func populate_fields(_user : RSTwitchUser, _live_data : TwitchStream):
+func populate_fields(_user: RSTwitchUser, _live_data: TwitchStream):
 	user = _user
 	live_data = _live_data
-	update_user_fields()
+	%pnl_rs_twitch_user_info.user = _user
 	update_live_fields()
 
-
-func update_user_fields():
-	%tex_profile_pic.texture = await RS.loader.load_texture_from_url(user.profile_image_url)
-	%ln_username.text = user.username
-	%ln_display_name.text = user.display_name
-	%ln_user_id.text = str(user.user_id)
-	%ln_profile_picture_url.text = user.profile_image_url
-	%cr_user_twitch_irc_color.color = user.twitch_chat_color
-	
-	%fl_is_streamer.button_pressed = user.is_streamer
-	%fl_auto_shoutout.button_pressed = user.auto_shoutout
-	%fl_auto_promotion.button_pressed = user.auto_promotion
-	
-	%btn_custom_color.color = user.custom_chat_color
-	opt_btn_select_from_text(%opt_custom_sfx, user.custom_notification_sfx)
-	opt_btn_select_from_text(%opt_custom_actions, user.custom_action)
-	
-	check_param_and_add_inspector(user.custom_beans_params)
-	#clear_param_inspector()
-	%btn_add_custom_beans.button_pressed = user.custom_beans_params != null
-		
-	%te_so.text = user.shoutout_description
-	%te_promote.text = user.promotion_description
-	
 
 func update_live_fields():
 	set_process(live_data != null)
 	var live_tab_idx = tabs.get_tab_idx_from_control(pnl_live)
-	var info_tab_idx = tabs.get_tab_idx_from_control(pnl_info)
+	var info_tab_idx = tabs.get_tab_idx_from_control(pnl_rs_twitch_user_info)
 	tabs.set_tab_disabled(live_tab_idx, live_data == null)
 	tabs.current_tab = live_tab_idx if live_data else info_tab_idx
 	
@@ -111,7 +87,7 @@ func _process(_d):
 	process_stream_time_elapsed()
 
 
-func check_param_and_add_inspector(params : RSBeansParam):
+func check_param_and_add_inspector(params: RSBeansParam):
 	clear_param_inspector()
 	%btn_add_custom_beans.button_pressed = false
 	if params == null: return
@@ -145,24 +121,12 @@ func user_from_fields() -> RSTwitchUser:
 	#-----------------------------
 	user_from_field.custom_beans_params = null
 	if %btn_add_custom_beans.button_pressed:
-		var param_inspector : RSParamInspector = %sub_res.get_child(0)
+		var param_inspector: RSParamInspector = %sub_res.get_child(0)
 		user_from_field.custom_beans_params = param_inspector.get_params()
 	
 	user_from_field.shoutout_description = %te_so.text
 	user_from_field.promotion_description = %te_promote.text
 	return user_from_field
-
-
-func clear_custom_fields():
-	%fl_is_streamer.button_pressed = false
-	%fl_auto_shoutout.button_pressed = false
-	%fl_auto_promotion.button_pressed = false
-	%btn_custom_color.color = Color()
-	%opt_custom_sfx.selected = 0
-	#%opt_custom_beans.selected = 0
-	%opt_custom_actions.selected = 0
-	%te_so.text = ""
-	%te_promote.text = ""
 
 
 func update_user():
@@ -173,28 +137,13 @@ func update_user():
 	#new_user_file.emit()
 
 
-func search_user(_username : String):
+func search_user(_username: String):
 	# TODO: What do I need search user for?
 	pass
 
 
-func gather_username_info_from_api():
-	var possible_username = %ln_search.text
-	if possible_username in RS.user_mng.known.keys():
-		populate_fields(RS.user_mng.known[possible_username], null)
-	else:
-		clear_custom_fields()
-	var _user = await RS.twitcher.gather_user_info(possible_username)
-	if !_user: return
-	%tex_profile_pic.texture = await RS.loader.load_texture_from_url(_user.profile_image_url)
-	%ln_username.text = _user.username
-	%ln_display_name.text = _user.display_name
-	%ln_user_id.text = str(_user.user_id)
-	%ln_profile_picture_url.text = _user.profile_image_url
-
-
 func update_dropdown_fields():
-	var sfx_paths : Array[String] = [RSSettings.get_sfx_path(), RSSettings.LOCAL_RES_FOLDER]
+	var sfx_paths: Array[String] = [RSSettings.get_sfx_path(), RSSettings.LOCAL_RES_FOLDER]
 	RSUtl.populate_opt_btn_from_files_in_folder(%opt_custom_sfx, sfx_paths, ["ogg"])
 	
 	var custom_script = ResourceLoader.load("res://classes/RSCustom.gd", "GDScript", ResourceLoader.CACHE_MODE_IGNORE) as GDScript
@@ -208,7 +157,7 @@ func update_dropdown_fields():
 	opt_btn_populate_from_list(%opt_custom_actions, functions)
 
 
-func opt_btn_populate_from_list(opt_button : OptionButton, list : Array, add_empty := true):
+func opt_btn_populate_from_list(opt_button: OptionButton, list: Array, add_empty := true):
 	opt_button.clear()
 	if add_empty:
 		opt_button.add_item("", 0)
@@ -217,16 +166,6 @@ func opt_btn_populate_from_list(opt_button : OptionButton, list : Array, add_emp
 		opt_button.add_item(file_name, i+1)
 
 
-func opt_btn_select_from_text(opt_button : OptionButton, text : String):
-	for i in opt_button.item_count:
-		if opt_button.get_item_text(i) == text:
-			opt_button.select(i)
-			break
-
-
-func _on_ln_search_text_submitted(_new_text):
-	if RS.twitcher.is_connected_to_twitch:
-		gather_username_info_from_api()
 func _on_opt_custom_sfx_item_selected(index):
 	%sfx_prev.stop()
 	var sfx_name = %opt_custom_sfx.get_item_text(index)
@@ -288,7 +227,7 @@ func add_param_inspector():
 		check_param_and_add_inspector(user.custom_beans_params)
 	else:
 		check_param_and_add_inspector(RSBeansParam.from_json(RSGlobals.PARAMS_CANS))
-	#var param_inspector : RSParamInspector = RSGlobals.param_inspector_pack.instantiate()
+	#var param_inspector: RSParamInspector = RSGlobals.param_inspector_pack.instantiate()
 	#%sub_res.add_child(param_inspector)
 	#param_inspector.owner = owner
 	#param_inspector.params = RSGlobals.params_can

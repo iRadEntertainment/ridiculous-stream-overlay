@@ -1,0 +1,83 @@
+[gd_scene load_steps=4 format=3 uid="uid://8ii1ja40nqt0"]
+
+[ext_resource type="Script" uid="uid://ddcykxjtoalof" path="res://test/steam_api_test.gd" id="1_sip72"]
+[ext_resource type="Script" uid="uid://h7rmxgkdk3dk" path="res://lib/steamapi/SteamAppData.gd" id="2_7t7i1"]
+
+[sub_resource type="Resource" id="Resource_7t7i1"]
+script = ExtResource("2_7t7i1")
+type = "game"
+name = "Zooika"
+steam_appid = 2994730
+required_age = 0
+is_free = false
+short_description = "Like Suika games? Like animals? You'll love Zooika! Merge animals into larger and larger animals, while still keeping them all in the box!"
+detailed_description = "<p class=\"bb_paragraph\">Drop cute animals into a box, pack as many in as you can, but if two of the same collide they'll merge into a larger animal! </p><p class=\"bb_paragraph\"><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/extras/InLineTitle-About.png?t=1749839140\" /></div></p><p class=\"bb_paragraph\">Zooika is a delightful casual game where you'll encounter a parade of adorable animals! But watch out! These critters aren't happy when they meet their twin, match two animals of the same kind and POP! They'll combine to form a brand new, even larger animal! It's your job to strategically contain them all.  </p><p class=\"bb_paragraph\"> </p><p class=\"bb_paragraph\"><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/extras/Zooika_SteamInline_Popping-optimize.gif?t=1749839140\" /></div></p><p class=\"bb_paragraph\">With every critter combined, you'll earn points and build up your score. Zooika is easy to pick up and play, but mastering the art of animal combination will take some strategic thinking. So, are you ready to box in some fun? Get ready for Zooika! </p><p class=\"bb_paragraph\"><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/extras/InLineTitle-Features.png?t=1749839140\" /></div></p><ul class=\"bb_ul\"><li><p class=\"bb_paragraph\">Different sets of animals</p></li><li><p class=\"bb_paragraph\">Multiple play areas</p></li><li><p class=\"bb_paragraph\">Dynamic music and effects</p></li><li><p class=\"bb_paragraph\">Steam integrations</p></li></ul><p class=\"bb_paragraph\"></p><p class=\"bb_paragraph\"><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/extras/Zooika_SteamInline_animals-optimize.gif?t=1749839140\" /></div></p><p class=\"bb_paragraph\"></p>"
+header_image = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/header.jpg?t=1749839140"
+capsule_image = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/capsule_231x87.jpg?t=1749839140"
+capsule_imagev5 = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/capsule_184x69.jpg?t=1749839140"
+website = ""
+developers = Array[String](["Graphic Reality"])
+publishers = Array[String](["Graphic Reality"])
+platforms = {
+"linux": true,
+"mac": false,
+"windows": true
+}
+genres = Array[Dictionary]([{
+"description": "Casual",
+"id": "4"
+}, {
+"description": "Indie",
+"id": "23"
+}])
+release_date = {
+"coming_soon": false,
+"date": "23 May, 2025"
+}
+screenshots_full = Array[String](["https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/0e6a52a6a0d0841df870c134910bd2ef5c277f1e/ss_0e6a52a6a0d0841df870c134910bd2ef5c277f1e.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/9df3c26a964221322902fa52582fb5f8aa7e45c4/ss_9df3c26a964221322902fa52582fb5f8aa7e45c4.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/12aaff2e487a756fcbe7663db7479e6d86c2aa81/ss_12aaff2e487a756fcbe7663db7479e6d86c2aa81.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/922c1459db46286319696239dcce80c3197ed994/ss_922c1459db46286319696239dcce80c3197ed994.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/124031c2d6c860a75e5c3f992e7785265f376a6a/ss_124031c2d6c860a75e5c3f992e7785265f376a6a.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/100d56a1848a4ed1115f32e348a6ff7ae3c750c5/ss_100d56a1848a4ed1115f32e348a6ff7ae3c750c5.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/c6858503650964e186c00a56caa23d8c56884d81/ss_c6858503650964e186c00a56caa23d8c56884d81.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/d9f77aa8d45e9e97d5ebfdfdc70b80fa3894bca9/ss_d9f77aa8d45e9e97d5ebfdfdc70b80fa3894bca9.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/ec10929d5a624a66fe726fdefbc7779a9e526594/ss_ec10929d5a624a66fe726fdefbc7779a9e526594.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/46590bf525512331cb5203fe7d9d0560b6db2f2d/ss_46590bf525512331cb5203fe7d9d0560b6db2f2d.1920x1080.jpg?t=1749839140"])
+screenshots_thumbs = Array[String](["https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/0e6a52a6a0d0841df870c134910bd2ef5c277f1e/ss_0e6a52a6a0d0841df870c134910bd2ef5c277f1e.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/9df3c26a964221322902fa52582fb5f8aa7e45c4/ss_9df3c26a964221322902fa52582fb5f8aa7e45c4.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/12aaff2e487a756fcbe7663db7479e6d86c2aa81/ss_12aaff2e487a756fcbe7663db7479e6d86c2aa81.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/922c1459db46286319696239dcce80c3197ed994/ss_922c1459db46286319696239dcce80c3197ed994.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/124031c2d6c860a75e5c3f992e7785265f376a6a/ss_124031c2d6c860a75e5c3f992e7785265f376a6a.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/100d56a1848a4ed1115f32e348a6ff7ae3c750c5/ss_100d56a1848a4ed1115f32e348a6ff7ae3c750c5.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/c6858503650964e186c00a56caa23d8c56884d81/ss_c6858503650964e186c00a56caa23d8c56884d81.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/d9f77aa8d45e9e97d5ebfdfdc70b80fa3894bca9/ss_d9f77aa8d45e9e97d5ebfdfdc70b80fa3894bca9.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/ec10929d5a624a66fe726fdefbc7779a9e526594/ss_ec10929d5a624a66fe726fdefbc7779a9e526594.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/46590bf525512331cb5203fe7d9d0560b6db2f2d/ss_46590bf525512331cb5203fe7d9d0560b6db2f2d.600x338.jpg?t=1749839140"])
+trailer_mp4 = {
+"480": "http://video.akamai.steamstatic.com/store_trailers/257143838/movie480.mp4?t=1749839138",
+"max": "http://video.akamai.steamstatic.com/store_trailers/257143838/movie_max.mp4?t=1749839138"
+}
+trailer_webm = {
+"480": "http://video.akamai.steamstatic.com/store_trailers/257143838/movie480_vp9.webm?t=1749839138",
+"max": "http://video.akamai.steamstatic.com/store_trailers/257143838/movie_max_vp9.webm?t=1749839138"
+}
+trailer_thumbnail = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/257143838/882e402a14c094a6a6a811f7ae00b6b9afbd84f7/movie_600x337.jpg?t=1749839138"
+
+[node name="steam_api_test" type="Node"]
+script = ExtResource("1_sip72")
+selected_game = 5
+app_data = SubResource("Resource_7t7i1")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "Drop cute animals into a box, pack as many in as you can, but if two of the same collide they'll merge into a larger animal! 
+[img]https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/extras/InLineTitle-About.png?t=1749839140[/img]
+Zooika is a delightful casual game where you'll encounter a parade of adorable animals! But watch out! These critters aren't happy when they meet their twin, match two animals of the same kind and POP! They'll combine to form a brand new, even larger animal! It's your job to strategically contain them all.  
+ 
+[img]https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/extras/Zooika_SteamInline_Popping-optimize.gif?t=1749839140[/img]
+With every critter combined, you'll earn points and build up your score. Zooika is easy to pick up and play, but mastering the art of animal combination will take some strategic thinking. So, are you ready to box in some fun? Get ready for Zooika! 
+[img]https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/extras/InLineTitle-Features.png?t=1749839140[/img]
+• Different sets of animals
+
+• Multiple play areas
+
+• Dynamic music and effects
+
+• Steam integrations
+
+[img]https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/extras/Zooika_SteamInline_animals-optimize.gif?t=1749839140[/img]"
