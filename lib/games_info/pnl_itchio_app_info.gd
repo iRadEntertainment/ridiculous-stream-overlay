@@ -32,6 +32,7 @@ const ITCHIO_APP_URLS: Dictionary[ItchIOGames, String] = {
 @export() var test_data: ItchIOAppData
 #endregion
 
+const IMG_VALID_FORMATS = ["png", "jpeg", "jpg", "bmp", "webp", "svg"]
 
 var l: TwitchLogger = TwitchLogger.new("PnlSteamAppInfo")
 var data: ItchIOAppData:
@@ -82,11 +83,14 @@ func display_app_info(_data: ItchIOAppData) -> void:
 			authors_string += ", "
 	
 	%lb_authors.text = "[i]by %s[/i]" % authors_string
-	%tex_capsule_img.texture = await load_texture_from_url(data.cover_image)
+	if data.cover_image:
+		if data.cover_image.get_extension() in IMG_VALID_FORMATS:
+			%tex_capsule_img.texture = await load_texture_from_url(data.cover_image)
 	if not data.screenshots_thumbnails.is_empty():
-		var texture: Texture2D = await load_texture_from_url(data.screenshots_thumbnails.front())
-		if texture:
-			%bg_img.texture = texture
+		if data.screenshots_thumbnails.front().get_extension() in IMG_VALID_FORMATS:
+			var texture: Texture2D = await load_texture_from_url(data.screenshots_thumbnails.front())
+			if texture:
+				%bg_img.texture = texture
 	
 	%lb_price_descr.visible = !data.is_free
 	if data.is_free:
@@ -113,13 +117,11 @@ func clear() -> void:
 #region Utils
 func load_texture_from_url(url: String) -> ImageTexture:
 	var file_type = url.get_extension()
-	if not file_type in ["png", "jpeg", "jpg", "bmp", "webp", "svg"]:
-		print("Wrong filetype %s" % file_type)
+	if not file_type in IMG_VALID_FORMATS:
 		return
 	
 	var _err = %HTTPRequest.request(url)
 	if _err != OK:
-		print("_err != OK")
 		#l.e("Error request: %s" % error_string(_err))
 		return
 	
@@ -129,7 +131,6 @@ func load_texture_from_url(url: String) -> ImageTexture:
 	var _headers: PackedStringArray = http_result[2]
 	var image_buffer: PackedByteArray = http_result[3]
 	if response_code != HTTPClient.RESPONSE_OK:
-		print("response_code != HTTPClient.RESPONSE_OK")
 		return
 	
 	var tex_image := Image.new()
