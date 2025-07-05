@@ -26,7 +26,7 @@ func populate_user_button_list() -> void:
 
 
 func add_user_btn_entry_from_user_id(user_id: int) -> void:
-	var user: RSTwitchUser = RS.user_mng.known[user_id]
+	var user: RSUser = RS.user_mng.known[user_id]
 	if not user: return
 	var btn_user_instance: RSTwitchUserEntry = RSGlobals.btn_user_pack.instantiate()
 	btn_user_instance.user = user
@@ -41,9 +41,9 @@ func toggle_live_users(toggled_on: bool) -> void:
 
 
 ## Called by btn_user_instance
-func user_selected_pressed(btn_user: RSTwitchUser) -> void:
+func user_selected_pressed(btn_user: RSUser) -> void:
 	%ln_filter.text = ""
-	var user: RSTwitchUser = await RS.user_mng.known.get(btn_user.user_id)
+	var user: RSUser = await RS.user_mng.known.get(btn_user.user_id)
 	var live_data: TwitchStream = RS.user_mng.live_streamers_data.get(btn_user.user_id)
 	user_selected.emit(user, live_data)
 
@@ -55,7 +55,7 @@ func _on_live_streamers_updated() -> void:
 func _on_known_users_updated() -> void:
 	var known_ids: Array = RS.user_mng.known.keys()
 	for btn: RSTwitchUserEntry in %user_list.get_children():
-		var user: RSTwitchUser = btn.user
+		var user: RSUser = btn.user
 		known_ids.erase(user.user_id)
 		if not user.user_id in RS.user_mng.known.keys():
 			btn.queue_free()

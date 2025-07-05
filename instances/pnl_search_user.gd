@@ -1,7 +1,7 @@
 extends PanelContainer
 class_name PnlSearchTwitchUser
 
-var user: RSTwitchUser
+var user: RSUser
 var username_search: String
 
 

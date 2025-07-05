@@ -262,21 +262,21 @@ func is_magick_available() -> bool:
 	return transformer.is_supported()
 
 
-func gather_user_info_from_username(username: String) -> RSTwitchUser:
+func gather_user_info_from_username(username: String) -> RSUser:
 	var response: TwitchGetUsersResponse = await api.get_users([], [username])
 	return gather_user_info_from_response(response)
 
 
-func gather_user_info_from_user_id(user_id: int) -> RSTwitchUser:
+func gather_user_info_from_user_id(user_id: int) -> RSUser:
 	var response: TwitchGetUsersResponse = await api.get_users([str(user_id)], [])
 	return gather_user_info_from_response(response)
 
 
-func gather_user_info_from_response(response: TwitchGetUsersResponse) -> RSTwitchUser:
+func gather_user_info_from_response(response: TwitchGetUsersResponse) -> RSUser:
 	if response.data.is_empty():
 		return
 	
-	var user = RSTwitchUser.new()
+	var user = RSUser.new()
 	user.user_id = response.data[0]["id"]
 	user.display_name = response.data[0]["display_name"]
 	user.username = response.data[0]["login"]
@@ -289,7 +289,7 @@ func get_live_streamers_data(user_names_or_ids: Array = []) -> Dictionary:
 		return {}
 
 	if user_names_or_ids.is_empty():
-		for user: RSTwitchUser in RS.user_mng.known.values():
+		for user: RSUser in RS.user_mng.known.values():
 			if user.get("is_streamer") != null:
 				if user.is_streamer:
 					user_names_or_ids.append(user.username)
@@ -325,7 +325,7 @@ func check_first_msg(_channel_name: String, username: String, _message: String, 
 func check_user_twitch_color(username: String, tags: TwitchTags.PrivMsg) -> void:
 	if tags.color.is_empty(): return
 	if RS.user_mng.is_username_known(username):
-		var user: RSTwitchUser = await RS.user_mng.get_user_from_username(username)
+		var user: RSUser = await RS.user_mng.get_user_from_username(username)
 		if user.twitch_chat_color != Color(tags.color):
 			user.twitch_chat_color = Color(tags.color)
 			RSUserMng.save_user_to_json(user, RSSettings.get_users_path())

@@ -1,16 +1,16 @@
 extends PanelContainer
 class_name PnlRSTwitchUserInfo
 
-var user: RSTwitchUser: set = set_user
+var user: RSUser: set = set_user
 
 
 func _ready() -> void:
 	# populate Work With option button
-	for id: int in RSTwitchUser.WorkWith.size():
-		%opt_work_with.add_item(RSTwitchUser.WorkWith.keys()[id], id)
+	for id: int in RSUser.WorkWith.size():
+		%opt_work_with.add_item(RSUser.WorkWith.keys()[id], id)
 
 
-func set_user(_user: RSTwitchUser) -> void:
+func set_user(_user: RSUser) -> void:
 	if user == _user:
 		return
 	user = _user

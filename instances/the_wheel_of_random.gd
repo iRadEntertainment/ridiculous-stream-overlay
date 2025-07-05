@@ -109,7 +109,7 @@ func wheel_sector(
 		points.append(p)
 	new_polygon.polygon = points
 	
-	#var user : RSTwitchUser = main.known_users[_streamer_info.user_login]
+	#var user : RSUser = main.known_users[_streamer_info.user_login]
 	#new_polygon.texture = await main.loader.load_texture_from_url(user.profile_image_url)
 	#new_polygon.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	

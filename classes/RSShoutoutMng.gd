@@ -2,8 +2,8 @@
 extends Node
 class_name RSShoutoutMng
 
-var queued_user_shoutout : Array[RSTwitchUser] = []
-var already_shoutout_list : Array[RSTwitchUser] = []
+var queued_user_shoutout : Array[RSUser] = []
+var already_shoutout_list : Array[RSUser] = []
 var last_shoutout_unix : int
 const SHOUTOUT_COOLDOWN = 125 #sec
 const SHOUTOUT_COOLDOWN_SAME_USER = 3600 #sec
@@ -30,7 +30,7 @@ func _process(_d):
 	give_shoutout(next_user)
 
 
-func give_shoutout(user : RSTwitchUser):
+func give_shoutout(user : RSUser):
 	RS.twitcher.api.send_a_shoutout(
 		str(RS.settings.broadcaster_id),
 		str(user.user_id),
@@ -40,7 +40,7 @@ func give_shoutout(user : RSTwitchUser):
 		RS.twitcher.chat(user.shoutout_description)
 
 
-func add_shoutout(user : RSTwitchUser):
+func add_shoutout(user : RSUser):
 	if !user.is_streamer:
 		print("RSShoutoutMng: %s is not a streamer according to your list!"%[user.display_name])
 		return

@@ -1,15 +1,17 @@
 
 extends Resource
-class_name RSTwitchUser
+class_name RSUser
 
 enum WorkWith {UNASSIGNED, GODOT, UNITY, UNREAL, ART, PIXELART, ASEPRITE, KRITA}
 
+# twitch user
 var username: String
 var display_name: String
 var user_id: int
 var twitch_chat_color: Color
 var profile_image_url: String
 
+# promo
 var is_streamer: bool
 var auto_shoutout: bool
 var auto_promotion: bool
@@ -17,15 +19,16 @@ var steam_app_ids: Array[int]
 var work_with: WorkWith
 var youtube_handle: String
 var website: String
+var shoutout_description: String
+var promotion_description: String
+var last_shout_unix_time: int
 
+# customization
 var custom_chat_color: Color
 var custom_notification_sfx: String
 var custom_action: String
 var custom_beans_params: RSBeansParam
 
-var shoutout_description: String
-var promotion_description: String
-var last_shout_unix_time: int
 
 
 func to_dict() -> Dictionary:
@@ -84,12 +87,12 @@ func to_json() -> String:
 	return JSON.stringify(to_dict())
 
 
-func update_with_user(other_user: RSTwitchUser) -> void:
+func update_with_user(other_user: RSUser) -> void:
 	pass
 
 
-static func from_json(d: Dictionary) -> RSTwitchUser:
-	var user := RSTwitchUser.new()
+static func from_json(d: Dictionary) -> RSUser:
+	var user := RSUser.new()
 	user.username = d.get("username", "")
 	user.display_name = d.get("display_name", "")
 	user.user_id = d.get("user_id", -1)
@@ -117,8 +120,8 @@ static func from_json(d: Dictionary) -> RSTwitchUser:
 	return user
 
 
-static func from_twitcher_user(t_user: TwitchUser) -> RSTwitchUser:
-	var user := RSTwitchUser.new()
+static func from_twitcher_user(t_user: TwitchUser) -> RSUser:
+	var user := RSUser.new()
 	user.username = t_user.login
 	user.user_id = int(t_user.id)
 	user.display_name = t_user.display_name

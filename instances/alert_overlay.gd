@@ -23,7 +23,7 @@ func start():
 	vb_cnt.child_exiting_tree.connect(func(_n): visible = vb_cnt.get_child_count() > 1)
 
 
-func initialize_stop_streaming(user: RSTwitchUser, message: String) -> void:
+func initialize_stop_streaming(user: RSUser, message: String) -> void:
 	var bbcode := "{user} will forcefully end the strem in {sec_left} s\nbecause {message}."
 	bbcode = RSAlertOverlay.decorate_all_tags(bbcode, PRE, SUF)
 	bbcode = bbcode.format(
@@ -33,7 +33,7 @@ func initialize_stop_streaming(user: RSTwitchUser, message: String) -> void:
 	var callable : Callable = RS.custom.stop_streaming
 	instantiate_new_bar(bbcode, callable)
 
-func initialize_raid(user: RSTwitchUser, to_user : RSTwitchUser, message: String = "") -> void:
+func initialize_raid(user: RSUser, to_user : RSUser, message: String = "") -> void:
 	var bbcode := "{user} is starting a raid to {to_user}\nbecause {message}."
 	bbcode = RSAlertOverlay.decorate_all_tags(bbcode, PRE, SUF)
 	bbcode = bbcode.format(
@@ -44,7 +44,7 @@ func initialize_raid(user: RSTwitchUser, to_user : RSTwitchUser, message: String
 	var callable : Callable = RS.twitcher.raid.bind(str(to_user.user_id))
 	instantiate_new_bar(bbcode, callable)
 
-func wheel_of_random_raid(user: RSTwitchUser, message: String = "") -> void:
+func wheel_of_random_raid(user: RSUser, message: String = "") -> void:
 	var online: PackedStringArray = await RS.twitcher.get_users_online(RS.user_mng.known.keys())
 	if online.is_empty():
 		return
@@ -52,8 +52,8 @@ func wheel_of_random_raid(user: RSTwitchUser, message: String = "") -> void:
 	vb_cnt.add_child(wheel)
 	wheel.start(online)
 	wheel.winner_selected.connect(raid_selected_username.bind(user, message))
-func raid_selected_username(to_username: String, from_user: RSTwitchUser, message: String = "") -> void:
-	var user_to_raid: RSTwitchUser = await RS.user_mng.get_user_from_username(to_username)
+func raid_selected_username(to_username: String, from_user: RSUser, message: String = "") -> void:
+	var user_to_raid: RSUser = await RS.user_mng.get_user_from_username(to_username)
 	initialize_raid(from_user, user_to_raid, message)
 
 

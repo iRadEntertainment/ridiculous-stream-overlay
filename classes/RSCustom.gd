@@ -71,7 +71,7 @@ func chat_on_stream_off(username: String) -> void:
 
 func on_first_session_message(username: String, _tags: TwitchTags.PrivMsg) -> void:
 	if !RS.no_obs_ws.is_stream_on: return
-	var user: RSTwitchUser = await RS.user_mng.get_user_from_username(username)
+	var user: RSUser = await RS.user_mng.get_user_from_username(username)
 	if RS.user_mng.is_username_known(username):
 		user.twitch_chat_color = await RS.twitcher.get_user_color(user.user_id)
 		# TODO: move this to user manager
@@ -84,7 +84,7 @@ func on_first_session_message(username: String, _tags: TwitchTags.PrivMsg) -> vo
 
 func on_channel_points_redeemed(data : RSTwitchEventData):
 	l.i("Channel points redeemed. %s -> %s" % [data.username, data.reward_title] )
-	var user: RSTwitchUser = await RS.user_mng.get_user_from_username(data.username)
+	var user: RSUser = await RS.user_mng.get_user_from_username(data.username)
 	#if await !RS.no_obs_ws.is_stream_on: chat_on_stream_off(data.username); return
 	match data.reward_title:
 		"beans": beans(data.username)
@@ -223,7 +223,7 @@ func chat_commands_help(_info : TwitchCommandInfo = null, _args := []):
 
 func beans(username : String):
 	#if RS.physic_scene.is_closing: return
-	var user: RSTwitchUser
+	var user: RSUser
 	if username.is_empty() and !RS.user_mng.known.is_empty():
 		user = RS.user_mng.known.values().pick_random()
 	elif not username.is_empty():
@@ -354,7 +354,7 @@ func nuke(_info : TwitchCommandInfo = null, _args := []):
 
 
 func destructibles_names(username := "", quantity : int = 1, font_size := 96):
-	var user: RSTwitchUser
+	var user: RSUser
 	if username.is_empty() and !RS.user_mng.known.is_empty():
 		user = RS.user_mng.known.values().pick_random()
 	else:
@@ -402,14 +402,14 @@ func suggest_no_ads(on_cig_break_activation := true) -> void:
 	if streamers_live_data.is_empty():
 		return
 	var suggested_streamer_id: int = streamers_live_data.keys().pick_random()
-	var streamer: RSTwitchUser = await RS.user_mng.get_user_from_user_id(suggested_streamer_id)
+	var streamer: RSUser = await RS.user_mng.get_user_from_user_id(suggested_streamer_id)
 	var msg := """Do not watch the ADS.
 	 Excessive ad exposure manipulates behavior, fuels anxiety, and undermines mental well-being by promoting
 	unrealistic standards and decision fatigue. Watch twitch.tv/%s instead, they are live NOW!""" % streamer.username
 	RS.twitcher.chat(msg)
 
 
-func alert_on_stop_streaming(user: RSTwitchUser, data: RSTwitchEventData):
+func alert_on_stop_streaming(user: RSUser, data: RSTwitchEventData):
 	RS.alert_scene.initialize_stop_streaming(user, data.user_input)
 
 
@@ -417,8 +417,8 @@ func stop_streaming():
 	RS.no_obs_ws.stop_stream()
 
 
-func raid_kani(user: RSTwitchUser, data: RSTwitchEventData):
-	var kani_rs_user: RSTwitchUser = await RS.user_mng.get_user_from_username("kani_dev")
+func raid_kani(user: RSUser, data: RSTwitchEventData):
+	var kani_rs_user: RSUser = await RS.user_mng.get_user_from_username("kani_dev")
 	RS.alert_scene.initialize_raid(user, kani_rs_user, data.user_input)
 
 

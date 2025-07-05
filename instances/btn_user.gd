@@ -1,12 +1,12 @@
 extends PanelContainer
 class_name RSTwitchUserEntry
 
-var user: RSTwitchUser
+var user: RSUser
 
 var tw_hidden: Tween
 var is_expanded: bool = false
 
-signal user_selected(user: RSTwitchUser)
+signal user_selected(user: RSUser)
 
 
 func _ready() -> void:
@@ -90,7 +90,7 @@ func _process(_delta: float) -> void:
 
 
 #region Signals
-func _on_user_updated(_user: RSTwitchUser) -> void:
+func _on_user_updated(_user: RSUser) -> void:
 	if _user.user_id != user.user_id:
 		return
 	user = _user

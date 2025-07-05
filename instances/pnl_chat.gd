@@ -59,7 +59,7 @@ func put_chat(username: String, message: String, _tags: TwitchTags.PrivMsg):
 	
 	if _tags.display_name == "IAmAMerlin":
 		color = Color.BROWN.to_html()
-	var user : RSTwitchUser = await RS.user_mng.get_user_from_username(username)
+	var user : RSUser = await RS.user_mng.get_user_from_username(username)
 	if user:
 		if user.custom_chat_color != Color.BLACK:
 			color = user.custom_chat_color.to_html()

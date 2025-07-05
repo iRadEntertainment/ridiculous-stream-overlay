@@ -6,7 +6,7 @@ const USERS_FOLDER_PATH = "C:/Git/TwitchStream/RidiculousStream/users/"
 
 var user_id_to_username: Dictionary = {} # {user_id (String): username (String)}
 var username_to_user_id: Dictionary = {} # {username (String): user_id (String)}
-var known_users: Dictionary = {} # {username (String): user_object (RSTwitchUser)}
+var known_users: Dictionary = {} # {username (String): user_object (RSUser)}
 
 # user_anihanshard.json -> 1234567_anihanshard.json
 
@@ -21,14 +21,14 @@ func _run() -> void:
 
 func convert_filenames() -> void:
 	var user_id_to_files: Dictionary = {} # { user_id(int): [filenames](Array) }
-	var users: Array[RSTwitchUser] = []
+	var users: Array[RSUser] = []
 	var user_ids: Array[int] = []
 
 	var user_files = RSUtl.list_file_in_folder(USERS_FOLDER_PATH, ["json"])
 	# var dir := DirAccess.open(USERS_FOLDER_PATH)
 	for user_file in user_files:
 		# var username = RSUserMng.username_from_filename(user_file)
-		var user: RSTwitchUser = RSUserMng.load_user_from_json(USERS_FOLDER_PATH + user_file)
+		var user: RSUser = RSUserMng.load_user_from_json(USERS_FOLDER_PATH + user_file)
 		if !user:
 			print("user not valid: ", user_file)
 			continue
@@ -63,7 +63,7 @@ func convert_filenames() -> void:
 				DirAccess.remove_absolute(file)
 	
 	# print("---- Saving new users -----")
-	# for user: RSTwitchUser in users:
+	# for user: RSUser in users:
 	# 	save_user_to_tres(user)
 
 
@@ -84,7 +84,7 @@ func convert_filenames() -> void:
 func test_filenames_and_users() -> void:
 	known_users = RSUserMng.load_all_users_from_folder(USERS_FOLDER_PATH)
 	
-	for user: RSTwitchUser in known_users.values():
+	for user: RSUser in known_users.values():
 		var test_filename = RSUserMng.user_filename_json_from_user(user)
 		var test_user_id_from_filename = RSUserMng.user_id_from_filename(test_filename)
 		var test_username_from_filename = RSUserMng.username_from_filename(test_filename)
@@ -107,16 +107,16 @@ func convert_all_users():
 	for user_file in user_files:
 		var path = RSSettings.get_users_path() + user_file
 		var username = RSUserMng.username_from_filename(user_file)
-		var res = ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_IGNORE) as RSTwitchUser
+		var res = ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_IGNORE) as RSUser
 		if res.username:
 			pass
 			# print("user loaded OK: ", res.username)
 		else:
 			print("user missing info: ", username)
-		dic[username] = {"RSTwitchUser": res, "path": path}
+		dic[username] = {"RSUser": res, "path": path}
 
 	for username in dic.keys():
-		var res := dic[username]["RSTwitchUser"] as RSTwitchUser
+		var res := dic[username]["RSUser"] as RSUser
 		var path := dic[username]["path"] as String
 		path = path.trim_suffix("tres") + "json"
 		RSUtl.save_to_json(path, res.to_dict())

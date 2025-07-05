@@ -6,7 +6,7 @@ extends PanelContainer
 @onready var tabs = %tabs
 @onready var ln_chat_live_streamer = %ln_chat_live_streamer
 
-var user: RSTwitchUser
+var user: RSUser
 var live_data: TwitchStream
 
 @onready var pnl_rs_twitch_user_info = %pnl_rs_twitch_user_info
@@ -35,7 +35,7 @@ func set_tab_names():
 		tabs.set_tab_title(pnl.get_index(), tab_title)
 
 
-func populate_fields(_user: RSTwitchUser, _live_data: TwitchStream):
+func populate_fields(_user: RSUser, _live_data: TwitchStream):
 	user = _user
 	live_data = _live_data
 	%pnl_rs_twitch_user_info.user = _user
@@ -104,8 +104,8 @@ func clear_param_inspector():
 		child.queue_free()
 
 
-func user_from_fields() -> RSTwitchUser:
-	var user_from_field := RSTwitchUser.new()
+func user_from_fields() -> RSUser:
+	var user_from_field := RSUser.new()
 	user_from_field.username = %ln_username.text
 	user_from_field.display_name = %ln_display_name.text
 	user_from_field.user_id = %ln_user_id.text as int
