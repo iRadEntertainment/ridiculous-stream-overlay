@@ -1,9 +1,11 @@
 @tool
 extends Node
 
-const STEAM_SERVICE_URL = "https://api.steampowered.com/IStoreService/"
-const ENDPOINT_GET_APP_INFO = "GetAppInfo/v1/?key={steamkey}&appid={appid}&include_games=true"
-enum Games{
+const STEAM_SERVICE_ISTORE_API_URL = "https://api.steampowered.com/IStoreService/"
+const STEAM_SERVICE_STORE_API_URL = "https://store.steampowered.com/api/"
+const ENDPOINT_ISTORE_GET_APP_INFO = "GetAppInfo/v1/?key={steamkey}&appid={appid}&include_games=true"
+const ENDPOINT_STORE_GET_APP_INFO = "appdetails?appids={appid}"
+enum SteamGames{
 	BLOOD_AND_MEAD,
 	RIDICULOUS_SHIPPING,
 	MEMORI,
@@ -11,28 +13,46 @@ enum Games{
 	FIELD_OF_HEROES,
 	ZOOIKA,
 	KOOK,
+	ALPINE_LAKE,
+	REPLICAT,
 }
-const APP_IDS: Dictionary[Games, int] = {
-	Games.BLOOD_AND_MEAD: 1081830,
-	Games.RIDICULOUS_SHIPPING: 2649940,
-	Games.MEMORI: 1712700,
-	Games.BLOCK_SHOP: 2731590,
-	Games.FIELD_OF_HEROES: 1267290,
-	Games.ZOOIKA: 2994730,
-	Games.KOOK: 2329690,
+enum ItchIOGames{
+	RIDICULOUS_SHOPPING,
+}
+const STEAM_APP_IDS: Dictionary[SteamGames, int] = {
+	SteamGames.BLOOD_AND_MEAD: 1081830,
+	SteamGames.RIDICULOUS_SHIPPING: 2649940,
+	SteamGames.MEMORI: 1712700,
+	SteamGames.BLOCK_SHOP: 2731590,
+	SteamGames.FIELD_OF_HEROES: 1267290,
+	SteamGames.ZOOIKA: 2994730,
+	SteamGames.KOOK: 2329690,
+	SteamGames.ALPINE_LAKE: 2341620,
+	SteamGames.REPLICAT: 3509430,
+}
+const ITCHIO_APP_IDS: Dictionary[ItchIOGames, String] = {
+	ItchIOGames.RIDICULOUS_SHOPPING: "https://uff.itch.io/ridiculous-shopping",
 }
 
 @onready var http_request: HTTPRequest = $HTTPRequest
-@export_tool_button("Run Test", "Button") var _test_btn = run_test
-@export() var selected_game: Games:
+
+@export() var selected_steam_game: SteamGames:
 	set(val):
-		selected_game = val
-		selected_app_id = APP_IDS[selected_game]
+		selected_steam_game = val
+		selected_steam_app_id = STEAM_APP_IDS[selected_steam_game]
+		if is_node_ready(): fetch_steam_app_data()
+@export() var selected_itchio_game: ItchIOGames:
+	set(val):
+		selected_itchio_game = val
+		selected_itchio_app_url = ITCHIO_APP_IDS[selected_itchio_game]
+		if is_node_ready(): fetch_itchio_app_data()
 
-@export var app_data: SteamAppData
+@export var steam_app_data: SteamAppData
+@export var itchio_app_data: ItchIOAppData
 
 
-var selected_app_id: int
+var selected_steam_app_id: int
+var selected_itchio_app_url: String
 var api_steamkey: String = ""
 
 
@@ -40,23 +60,25 @@ func _ready() -> void:
 	http_request.request_completed.connect(_on_request_completed)
 
 
-func run_test() -> void:
-	var file_steam_key = FileAccess.open("res://api_steam.key", FileAccess.READ)
-	api_steamkey = file_steam_key.get_as_text().strip_edges().uri_encode()
-	get_steam_game_description(selected_app_id)
+func fetch_itchio_app_data() -> void:
+	itchio_app_data = await $ItchService.get_itch_app_data(selected_itchio_app_url)
+
+
+func fetch_steam_app_data() -> void:
+	steam_app_data = await $SteamService.get_steam_app_data(selected_steam_app_id)
+	#var file_steam_key = FileAccess.open("res://api_steam.key", FileAccess.READ)
+	#api_steamkey = file_steam_key.get_as_text().strip_edges().uri_encode()
+	#get_steam_game_description(selected_steam_app_id)
 
 
 func get_steam_game_description(app_id: int) -> void:
 	# build request
-	var request_query: Dictionary = {
-		"steamkey": api_steamkey,
+	var store_request_query: Dictionary = {
 		"appid": app_id,
 	}
-	var request_url: String = STEAM_SERVICE_URL + ENDPOINT_GET_APP_INFO
-	request_url = request_url.format(request_query)
-	
-	var alt_url = "https://store.steampowered.com/api/appdetails?appids={appid}".format(request_query)
-	var err = http_request.request(alt_url)
+	var request_url: String = STEAM_SERVICE_STORE_API_URL + ENDPOINT_STORE_GET_APP_INFO
+	request_url = request_url.format(store_request_query)
+	var _err = http_request.request(request_url)
 	#print_rich("[color=yellow]Requested appID[/color] %s | [color=red]Error[/color]: %s" % [app_id, error_string(err)])
 
 
@@ -68,7 +90,5 @@ func _on_request_completed(
 		) -> void:
 	#print_rich("Result %s | Response %s" % [result, response_code])
 	var response_json: Dictionary = JSON.parse_string(body.get_string_from_utf8())
-	var game_data = response_json[str(selected_app_id)]["data"]
-	app_data = SteamAppData.from_json(game_data)
-	if app_data:
-		$RichTextLabel.text = app_data.detailed_description_bbcode
+	var game_data = response_json[str(selected_steam_app_id)]["data"]
+	steam_app_data = SteamAppData.from_json(game_data)

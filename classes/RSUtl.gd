@@ -45,60 +45,55 @@ const TYPE_NAMES := {
 
 static func save_to_json(file_path: String, variant: Variant) -> void:
 	var file := FileAccess.open(file_path, FileAccess.WRITE)
-
 	if file == null:
 		push_warning("[RSUtl.save_to_json] Failed to open %s" % [file_path])
 		return
-
 	file.store_string(JSON.stringify(variant, "\t"))
+	file.close()
+
 
 static func load_json(file_path: String) -> Variant:
 	var file := FileAccess.open(file_path, FileAccess.READ)
-
 	if file == null:
 		push_warning("[RSUtl.load_json] Failed to open %s" % [file_path])
 		return null
-
 	var content := file.get_as_text()
 	var parsed = JSON.parse_string(content)
 	if parsed == null:
 		push_warning("[RSUtl.load_json] Failed to parse JSON in %s" % [file_path])
 		return null
-
 	return parsed
+
 
 static func get_type_string(p_value: Variant) -> String:
 	var type_of_value := typeof(p_value)
 	if type_of_value == TYPE_NIL:
 		return &"null"
-
 	if type_of_value >= TYPE_MAX:
 		return "Invalid/unknown type %d" % type_of_value
-
 	var type_name = TYPE_NAMES.get(type_of_value)
 	if type_of_value != TYPE_OBJECT:
 		if type_name == null:
 			return "Invalid/unknown type %d" % type_of_value
 		else:
 			return type_name
-
 	var value_object := p_value as Object
 	var value_class := value_object.get_class()
 	if value_class == null:
 		return "%s (unknown)" % [type_name]
-
 	@warning_ignore("incompatible_ternary")
 	return "%s (%s)" % [
 		type_name,
 		&"unknown" if value_class == null else value_class
 	]
 
+
 static func make_path(path):
 	if !DirAccess.dir_exists_absolute(path):
 		DirAccess.make_dir_recursive_absolute(path)
 
 
-static func fix_external_res(file_path : String, from : String, to : String):
+static func fix_external_res(file_path: String, from: String, to: String):
 	if !FileAccess.file_exists(file_path):
 		push_error("%s is not a valid file_path"%file_path)
 		return
@@ -107,8 +102,8 @@ static func fix_external_res(file_path : String, from : String, to : String):
 	file.close()
 
 
-static func list_file_in_folder(folder_path : String, types : Array = [], full_path := false) -> PackedStringArray:
-	var found_files : PackedStringArray = []
+static func list_file_in_folder(folder_path: String, types: Array = [], full_path := false) -> PackedStringArray:
+	var found_files: PackedStringArray = []
 
 	if !folder_path.ends_with("/"):
 		folder_path += "/"
@@ -131,8 +126,8 @@ static func list_file_in_folder(folder_path : String, types : Array = [], full_p
 			file_name = dir.get_next()
 	else:
 		print("An error occurred when trying to access the directory: %s" % folder_path)
-
 	return found_files
+
 
 static func fit_and_center_window_to_display(p_window: Window) -> void:
 	var current_screen := p_window.current_screen
@@ -146,13 +141,14 @@ static func fit_and_center_window_to_display(p_window: Window) -> void:
 	p_window.size = target_size
 	p_window.position = Vector2(current_screen_usable_rect.position) - (target_size - p_window.get_size_with_decorations()) / 2.0
 
-static func opt_btn_from_files_in_folder(folder_paths : Array[String], types : Array[String] = [], full_path := false) -> OptionButton:
+
+static func opt_btn_from_files_in_folder(folder_paths: Array[String], types: Array[String] = [], full_path := false) -> OptionButton:
 	var new_opt_btn := OptionButton.new()
 	populate_opt_btn_from_files_in_folder(new_opt_btn, folder_paths, types, full_path)
 	return new_opt_btn
 
 
-static func populate_opt_btn_from_files_in_folder(opt_btn : OptionButton, folder_paths : Array[String], types : Array[String] = [], full_path := false):
+static func populate_opt_btn_from_files_in_folder(opt_btn: OptionButton, folder_paths: Array[String], types: Array[String] = [], full_path := false):
 	opt_btn.clear()
 	opt_btn.add_item("", 0)
 	opt_btn.add_separator("External Resources")
@@ -172,13 +168,11 @@ static func rename_file(from_abs: String, to_abs: String) -> void:
 static func get_newest_file(file_absolute_paths: Array) -> String:
 	var newest_file = ""
 	var latest_time = 0
-
 	for path in file_absolute_paths:
 		var modified_time = FileAccess.get_modified_time(path)
 		if modified_time > latest_time:
 			latest_time = modified_time
 			newest_file = path
-
 	return newest_file
 
 

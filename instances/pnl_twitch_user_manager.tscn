@@ -1,13 +1,13 @@
 [gd_scene load_steps=11 format=3 uid="uid://dhwexcg4happa"]
 
-[ext_resource type="Script" uid="uid://0gr4nw1r0v6f" path="res://instances/pnl_twitch_user_fields.gd" id="1_t6b5i"]
-[ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://ui/sprites/twitch_user_profile_pic.png" id="3_6ldp6"]
-[ext_resource type="PackedScene" uid="uid://dps0a5js2rxa6" path="res://instances/pnl_search_user.tscn" id="3_qryt4"]
-[ext_resource type="StyleBox" uid="uid://c0aj4762xvg73" path="res://ui/editor_light_panel.stylebox" id="4_18mwm"]
-[ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://ui/bootstrap_icons/folder2-open.svg" id="6_1qe2s"]
-[ext_resource type="Texture2D" uid="uid://dbpv7xe18l2r6" path="res://ui/sprites/raid_icon.png" id="7_ayv7u"]
-[ext_resource type="Theme" uid="uid://0k8rsjlg003m" path="res://ui/chat_message.tres" id="10_b8h00"]
-[ext_resource type="PackedScene" uid="uid://b0w820dulgunt" path="res://instances/pnl_rs_twitch_user_info.tscn" id="10_lwrr5"]
+[ext_resource type="StyleBox" uid="uid://c0aj4762xvg73" path="res://ui/editor_light_panel.stylebox" id="1_104ra"]
+[ext_resource type="Script" uid="uid://0gr4nw1r0v6f" path="res://instances/pnl_twitch_user_manager.gd" id="2_c82vs"]
+[ext_resource type="PackedScene" uid="uid://dps0a5js2rxa6" path="res://instances/pnl_search_user.tscn" id="3_xl0mj"]
+[ext_resource type="PackedScene" uid="uid://b0w820dulgunt" path="res://instances/pnl_rs_twitch_user_info.tscn" id="4_uvcps"]
+[ext_resource type="Theme" uid="uid://0k8rsjlg003m" path="res://ui/chat_message.tres" id="5_2p74v"]
+[ext_resource type="Texture2D" uid="uid://dbpv7xe18l2r6" path="res://ui/sprites/raid_icon.png" id="6_u5abe"]
+[ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://ui/sprites/twitch_user_profile_pic.png" id="7_ug52l"]
+[ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://ui/bootstrap_icons/folder2-open.svg" id="8_0tp1s"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nb1op"]
 content_margin_left = 4.0
@@ -18,21 +18,21 @@ content_margin_bottom = 4.0
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dft32"]
 bg_color = Color(0.129412, 0.14902, 0.180392, 1)
 
-[node name="pnl_twitch_user_fields" type="PanelContainer"]
+[node name="pnl_twitch_user_manager" type="PanelContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = ExtResource("4_18mwm")
-script = ExtResource("1_t6b5i")
+theme_override_styles/panel = ExtResource("1_104ra")
+script = ExtResource("2_c82vs")
 
 [node name="vb" type="VBoxContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="pnl_search_user" parent="vb" instance=ExtResource("3_qryt4")]
+[node name="pnl_search_user" parent="vb" instance=ExtResource("3_xl0mj")]
 layout_mode = 2
 
 [node name="sep" type="HSeparator" parent="vb"]
@@ -44,7 +44,7 @@ layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
 
-[node name="pnl_rs_twitch_user_info" parent="vb/tabs" instance=ExtResource("10_lwrr5")]
+[node name="pnl_rs_twitch_user_info" parent="vb/tabs" instance=ExtResource("4_uvcps")]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -87,7 +87,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
-theme = ExtResource("10_b8h00")
+theme = ExtResource("5_2p74v")
 metadata/_tab_index = 2
 
 [node name="vb" type="VBoxContainer" parent="vb/tabs/pnl_live"]
@@ -133,7 +133,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 text = "Raid!"
-icon = ExtResource("7_ayv7u")
+icon = ExtResource("6_u5abe")
 expand_icon = true
 
 [node name="ln_chat_live_streamer" type="LineEdit" parent="vb/tabs/pnl_live/vb/bot/hb"]
@@ -150,7 +150,7 @@ text = "00:15:32"
 [node name="icon" type="TextureRect" parent="vb/tabs/pnl_live/vb/bot/hb"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
-texture = ExtResource("3_6ldp6")
+texture = ExtResource("7_ug52l")
 expand_mode = 1
 stretch_mode = 5
 
@@ -163,7 +163,7 @@ text = "15"
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Open users folder"
-icon = ExtResource("6_1qe2s")
+icon = ExtResource("8_0tp1s")
 expand_icon = true
 
 [node name="sfx_prev" type="AudioStreamPlayer" parent="."]

@@ -1,26 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://8ii1ja40nqt0"]
+[gd_scene load_steps=8 format=3 uid="uid://8ii1ja40nqt0"]
 
 [ext_resource type="Script" uid="uid://ddcykxjtoalof" path="res://test/steam_api_test.gd" id="1_sip72"]
-[ext_resource type="Script" uid="uid://h7rmxgkdk3dk" path="res://lib/steamapi/SteamAppData.gd" id="2_7t7i1"]
+[ext_resource type="Script" uid="uid://h7rmxgkdk3dk" path="res://lib/games_info/SteamAppData.gd" id="2_kkvsp"]
+[ext_resource type="Script" uid="uid://dd5s3v6y22kq8" path="res://lib/games_info/ItchIOAppData.gd" id="3_5q7su"]
+[ext_resource type="Script" uid="uid://bekexbn2gr1dv" path="res://lib/games_info/SteamService.gd" id="3_kkvsp"]
+[ext_resource type="Script" uid="uid://dc576m26xm0qe" path="res://lib/games_info/ItchIOService.gd" id="4_kn7jk"]
 
-[sub_resource type="Resource" id="Resource_7t7i1"]
-script = ExtResource("2_7t7i1")
+[sub_resource type="Resource" id="Resource_5q7su"]
+script = ExtResource("2_kkvsp")
 type = "game"
-name = "Zooika"
-steam_appid = 2994730
+name = "Alpine Lake"
+steam_appid = 2341620
 required_age = 0
 is_free = false
-short_description = "Like Suika games? Like animals? You'll love Zooika! Merge animals into larger and larger animals, while still keeping them all in the box!"
-detailed_description = "<p class=\"bb_paragraph\">Drop cute animals into a box, pack as many in as you can, but if two of the same collide they'll merge into a larger animal! </p><p class=\"bb_paragraph\"><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/extras/InLineTitle-About.png?t=1749839140\" /></div></p><p class=\"bb_paragraph\">Zooika is a delightful casual game where you'll encounter a parade of adorable animals! But watch out! These critters aren't happy when they meet their twin, match two animals of the same kind and POP! They'll combine to form a brand new, even larger animal! It's your job to strategically contain them all.  </p><p class=\"bb_paragraph\"> </p><p class=\"bb_paragraph\"><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/extras/Zooika_SteamInline_Popping-optimize.gif?t=1749839140\" /></div></p><p class=\"bb_paragraph\">With every critter combined, you'll earn points and build up your score. Zooika is easy to pick up and play, but mastering the art of animal combination will take some strategic thinking. So, are you ready to box in some fun? Get ready for Zooika! </p><p class=\"bb_paragraph\"><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/extras/InLineTitle-Features.png?t=1749839140\" /></div></p><ul class=\"bb_ul\"><li><p class=\"bb_paragraph\">Different sets of animals</p></li><li><p class=\"bb_paragraph\">Multiple play areas</p></li><li><p class=\"bb_paragraph\">Dynamic music and effects</p></li><li><p class=\"bb_paragraph\">Steam integrations</p></li></ul><p class=\"bb_paragraph\"></p><p class=\"bb_paragraph\"><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/extras/Zooika_SteamInline_animals-optimize.gif?t=1749839140\" /></div></p><p class=\"bb_paragraph\"></p>"
-header_image = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/header.jpg?t=1749839140"
-capsule_image = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/capsule_231x87.jpg?t=1749839140"
-capsule_imagev5 = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/capsule_184x69.jpg?t=1749839140"
-website = ""
-developers = Array[String](["Graphic Reality"])
-publishers = Array[String](["Graphic Reality"])
+short_description = "Build, decorate, and customize every detail of your inn to welcome guests to your cozy escape in the woods. Entertain tourists, farm, cook meals, research wildlife, and ski - all while helping a colorful cast of townspeople save the struggling mountain town from a hostile takeover."
+detailed_description = "If you're a fan of Stardew Valley, The Sims, or Animal Crossing, Alpine Lake is the perfect cozy getaway for you.<br><br><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/extras/Category_Title_Graphic_Build.png?t=1750371200\" /></div><br><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/extras/Construction_v01.gif?t=1750371200\" /></div><br>Shape your inn from the ground up by designing and constructing buildings entirely from scratch. Your imagination sets the limits – create any layout you can envision!<br><br><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/extras/Category_Title_Graphic_Hospitality.png?t=1750371200\" /></div><br><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/extras/Checkin_v01.gif?t=1750371200\" /></div><br>Every guest arrives with their own personality and narrative. Extend a warm welcome, provide them a cozy haven, and unravel the stories they carry within.<br><br><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/extras/Category_Title_Graphic_Explore.png?t=1750371200\" /></div><br><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/extras/Dog_v01.gif?t=1750371200\" /></div><br>Embark on a journey through an expansive alpine region, uncovering hidden treasures and valuable resources. Bring along your faithful canine companion for a hike and see what buried goodies you might unearth along the way!<br><br><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/extras/Category_Title_Graphic_Help.png?t=1750371200\" /></div><br><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/extras/Town_v01.gif?t=1750371200\" /></div><br>Engage with a lively community of townspeople, each with their own unique stories. Support your neighbors by sending your guests to local businesses, adding to the collective growth of the town.<br><br><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/extras/Category_Title_Graphic_Cooking.png?t=1750371200\" /></div><br><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/extras/Farming_Gif_v01.gif?t=1750371200\" /></div><br>Cultivate your own farm to harvest top-notch ingredients, ensuring delightful meals for your guests. Enhance your culinary expertise by upgrading your kitchen and mastering an expanding assortment of recipes acquired on your journey! You may even build, decorate, and open your restaurant on your property for the best eating experience you can provide for your guests!<br><br><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/extras/Category_Title_Graphic_Fishing.png?t=1750371200\" /></div><br><div class=\"bb_img_ctn\"><img class=\"bb_img\" src=\"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/extras/Fishing_Gif_25fps.gif?t=1750371200\" /></div><br>Lose yourself in one of the many relaxing activities, such as fishing, photography, and crafting."
+header_image = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/header.jpg?t=1750371200"
+capsule_image = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/capsule_231x87.jpg?t=1750371200"
+capsule_imagev5 = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/capsule_184x69.jpg?t=1750371200"
+website = "https://www.mossygrovegames.com/games"
+developers = Array[String](["Mossy Grove Games"])
+publishers = Array[String](["Mossy Grove Games"])
 platforms = {
-"linux": true,
-"mac": false,
+"linux": false,
+"mac": true,
 "windows": true
 }
 genres = Array[Dictionary]([{
@@ -29,55 +32,90 @@ genres = Array[Dictionary]([{
 }, {
 "description": "Indie",
 "id": "23"
+}, {
+"description": "RPG",
+"id": "3"
+}, {
+"description": "Simulation",
+"id": "28"
 }])
 release_date = {
-"coming_soon": false,
-"date": "23 May, 2025"
+"coming_soon": true,
+"date": "2026"
 }
-screenshots_full = Array[String](["https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/0e6a52a6a0d0841df870c134910bd2ef5c277f1e/ss_0e6a52a6a0d0841df870c134910bd2ef5c277f1e.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/9df3c26a964221322902fa52582fb5f8aa7e45c4/ss_9df3c26a964221322902fa52582fb5f8aa7e45c4.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/12aaff2e487a756fcbe7663db7479e6d86c2aa81/ss_12aaff2e487a756fcbe7663db7479e6d86c2aa81.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/922c1459db46286319696239dcce80c3197ed994/ss_922c1459db46286319696239dcce80c3197ed994.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/124031c2d6c860a75e5c3f992e7785265f376a6a/ss_124031c2d6c860a75e5c3f992e7785265f376a6a.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/100d56a1848a4ed1115f32e348a6ff7ae3c750c5/ss_100d56a1848a4ed1115f32e348a6ff7ae3c750c5.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/c6858503650964e186c00a56caa23d8c56884d81/ss_c6858503650964e186c00a56caa23d8c56884d81.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/d9f77aa8d45e9e97d5ebfdfdc70b80fa3894bca9/ss_d9f77aa8d45e9e97d5ebfdfdc70b80fa3894bca9.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/ec10929d5a624a66fe726fdefbc7779a9e526594/ss_ec10929d5a624a66fe726fdefbc7779a9e526594.1920x1080.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/46590bf525512331cb5203fe7d9d0560b6db2f2d/ss_46590bf525512331cb5203fe7d9d0560b6db2f2d.1920x1080.jpg?t=1749839140"])
-screenshots_thumbs = Array[String](["https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/0e6a52a6a0d0841df870c134910bd2ef5c277f1e/ss_0e6a52a6a0d0841df870c134910bd2ef5c277f1e.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/9df3c26a964221322902fa52582fb5f8aa7e45c4/ss_9df3c26a964221322902fa52582fb5f8aa7e45c4.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/12aaff2e487a756fcbe7663db7479e6d86c2aa81/ss_12aaff2e487a756fcbe7663db7479e6d86c2aa81.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/922c1459db46286319696239dcce80c3197ed994/ss_922c1459db46286319696239dcce80c3197ed994.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/124031c2d6c860a75e5c3f992e7785265f376a6a/ss_124031c2d6c860a75e5c3f992e7785265f376a6a.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/100d56a1848a4ed1115f32e348a6ff7ae3c750c5/ss_100d56a1848a4ed1115f32e348a6ff7ae3c750c5.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/c6858503650964e186c00a56caa23d8c56884d81/ss_c6858503650964e186c00a56caa23d8c56884d81.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/d9f77aa8d45e9e97d5ebfdfdc70b80fa3894bca9/ss_d9f77aa8d45e9e97d5ebfdfdc70b80fa3894bca9.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/ec10929d5a624a66fe726fdefbc7779a9e526594/ss_ec10929d5a624a66fe726fdefbc7779a9e526594.600x338.jpg?t=1749839140", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/46590bf525512331cb5203fe7d9d0560b6db2f2d/ss_46590bf525512331cb5203fe7d9d0560b6db2f2d.600x338.jpg?t=1749839140"])
+screenshots_full = Array[String](["https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_19440d5d2470163dab7ea4096af0cf1b7a87afe3.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_844a1dc79722a1900c297cae1052f5687e93c2f2.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_da8948cf7ddf54ea3d62f54fd0d630d7df958536.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_4c2aea70935df8b861cc547c42c665da0610a3e1.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_f8a37af6e9a9a664d9b51495d3bc5d7f717e1dde.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_f90883f41a02634d3dfb0553487b2be2854740c6.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_cc9ba4bd8dddc0f5ce673af94c2793aea9e0c4a5.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_d696d7df8ac13861516ca51c0a9e0118010f1469.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_092229efc501775b0683f2025ee7ead5366a58e6.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_7ecabff8cbd4feac820fe85fbeae225fca297bf0.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_01fc229e4443bd67f30758e5d1d4803025e90e1b.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_6356c6482f18662300b91ccd98e5128fce01959a.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_bf1cb0a56233dd2c60079d00c766cfa083652b18.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_90b99a03e9b3bb03b46d23979af040fbee8de38c.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_c15a8dd48fe0a10720102e28be01155e1f0c2ab4.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_a530936d574a5c03b98a939c1bd53e5079082d7c.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_9ae0581939c5a4745a0cac75edaf1b6f68a948d7.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_65cdfb573ec92eba2c9a94c910c49b6b726a92d9.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_64176a63fe1370935c34c413e6bef7202b3817ad.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_7ffecce836268e1c3aea0f4ae7b2783aa9c6e124.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_dd39f71731c6200e7bddf5bc5e1eef8d2883bc1f.1920x1080.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_63bf346b7070b7508f577d8dc75e05d20ef34620.1920x1080.jpg?t=1750371200"])
+screenshots_thumbs = Array[String](["https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_19440d5d2470163dab7ea4096af0cf1b7a87afe3.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_844a1dc79722a1900c297cae1052f5687e93c2f2.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_da8948cf7ddf54ea3d62f54fd0d630d7df958536.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_4c2aea70935df8b861cc547c42c665da0610a3e1.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_f8a37af6e9a9a664d9b51495d3bc5d7f717e1dde.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_f90883f41a02634d3dfb0553487b2be2854740c6.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_cc9ba4bd8dddc0f5ce673af94c2793aea9e0c4a5.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_d696d7df8ac13861516ca51c0a9e0118010f1469.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_092229efc501775b0683f2025ee7ead5366a58e6.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_7ecabff8cbd4feac820fe85fbeae225fca297bf0.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_01fc229e4443bd67f30758e5d1d4803025e90e1b.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_6356c6482f18662300b91ccd98e5128fce01959a.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_bf1cb0a56233dd2c60079d00c766cfa083652b18.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_90b99a03e9b3bb03b46d23979af040fbee8de38c.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_c15a8dd48fe0a10720102e28be01155e1f0c2ab4.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_a530936d574a5c03b98a939c1bd53e5079082d7c.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_9ae0581939c5a4745a0cac75edaf1b6f68a948d7.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_65cdfb573ec92eba2c9a94c910c49b6b726a92d9.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_64176a63fe1370935c34c413e6bef7202b3817ad.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_7ffecce836268e1c3aea0f4ae7b2783aa9c6e124.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_dd39f71731c6200e7bddf5bc5e1eef8d2883bc1f.600x338.jpg?t=1750371200", "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/ss_63bf346b7070b7508f577d8dc75e05d20ef34620.600x338.jpg?t=1750371200"])
 trailer_mp4 = {
-"480": "http://video.akamai.steamstatic.com/store_trailers/257143838/movie480.mp4?t=1749839138",
-"max": "http://video.akamai.steamstatic.com/store_trailers/257143838/movie_max.mp4?t=1749839138"
+"480": "http://video.akamai.steamstatic.com/store_trailers/257098256/movie480.mp4?t=1739685888",
+"max": "http://video.akamai.steamstatic.com/store_trailers/257098256/movie_max.mp4?t=1739685888"
 }
 trailer_webm = {
-"480": "http://video.akamai.steamstatic.com/store_trailers/257143838/movie480_vp9.webm?t=1749839138",
-"max": "http://video.akamai.steamstatic.com/store_trailers/257143838/movie_max_vp9.webm?t=1749839138"
+"480": "http://video.akamai.steamstatic.com/store_trailers/257098256/movie480_vp9.webm?t=1739685888",
+"max": "http://video.akamai.steamstatic.com/store_trailers/257098256/movie_max_vp9.webm?t=1739685888"
 }
-trailer_thumbnail = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/257143838/882e402a14c094a6a6a811f7ae00b6b9afbd84f7/movie_600x337.jpg?t=1749839138"
+trailer_thumbnail = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/257098256/ed6eaaca049f62d5b140670ab6ad1cf057864591/movie_600x337.jpg?t=1739685888"
+price_currency = ""
+price_initial = 0
+price_final = 0
+price_discount_percent = 0
+price_initial_formatted = ""
+price_final_formatted = ""
+categories = Array[Dictionary]([{
+"description": "Single-player",
+"id": 2.0
+}, {
+"description": "Full controller support",
+"id": 28.0
+}, {
+"description": "Family Sharing",
+"id": 62.0
+}])
+dlc = Array[int]([])
+packages = Array[int]([])
+total_achievements = 0
+highlighted_achievements = Array[Dictionary]([])
+pc_requirements = "<strong>Minimum:</strong><br><ul class=\"bb_ul\"><li>Requires a 64-bit processor and operating system<br></li><li><strong>OS *:</strong> Windows 7<br></li><li><strong>Processor:</strong> Intel Core i5<br></li><li><strong>Memory:</strong> 4 GB RAM<br></li><li><strong>Graphics:</strong> NVIDIA GTX 560 or equivalent<br></li><li><strong>Storage:</strong> 1 GB available space</li></ul>"
+mac_requirements = "{ \"minimum\": \"<strong>Minimum:</strong><br><ul class=\\\"bb_ul\\\"><li><strong>OS:</strong> Mac OSX 10.10<br></li><li><strong>Processor:</strong> 2ghz<br></li><li><strong>Memory:</strong> 4 GB RAM</li></ul>\", \"recommended\": \"<strong>Recommended:</strong><br><ul class=\\\"bb_ul\\\"></ul>\" }"
+linux_requirements = "{ \"minimum\": \"<strong>Minimum:</strong><br><ul class=\\\"bb_ul\\\"></ul>\", \"recommended\": \"<strong>Recommended:</strong><br><ul class=\\\"bb_ul\\\"></ul>\" }"
+support_email = "mossygrovegames@gmail.com"
+support_url = "https://www.mossygrovegames.com"
+background_image = "https://store.akamai.steamstatic.com/images/storepagebackground/app/2341620?t=1750371200"
+background_image_raw = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2341620/page_bg_raw.jpg?t=1750371200"
+
+[sub_resource type="Resource" id="Resource_3h2gq"]
+script = ExtResource("3_5q7su")
+id = 3593864
+title = "Ridiculous Shopping"
+authors = Array[Dictionary]([{
+"name": "iRad Dev",
+"url": "https://uff.itch.io"
+}, {
+"name": "konradgryt",
+"url": "https://konradgryt.itch.io"
+}, {
+"name": "Andreadbx Games",
+"url": "https://andreadbx-games.itch.io"
+}])
+tags = Array[String](["jigglejam", "no-ai", "racing"])
+links = {
+"comments": "https://uff.itch.io/ridiculous-shopping/comments",
+"self": "https://uff.itch.io/ridiculous-shopping"
+}
+cover_image = "https://img.itch.zone/aW1nLzIxMzk4MjU4LnBuZw==/315x250%23c/aNWPr5.png"
+price = "$0.00"
 
 [node name="steam_api_test" type="Node"]
 script = ExtResource("1_sip72")
-selected_game = 5
-app_data = SubResource("Resource_7t7i1")
+selected_steam_game = 8
+steam_app_data = SubResource("Resource_5q7su")
+itchio_app_data = SubResource("Resource_3h2gq")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="SteamService" type="Node" parent="."]
+script = ExtResource("3_kkvsp")
+metadata/_custom_type_script = "uid://bekexbn2gr1dv"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "Drop cute animals into a box, pack as many in as you can, but if two of the same collide they'll merge into a larger animal! 
-[img]https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/extras/InLineTitle-About.png?t=1749839140[/img]
-Zooika is a delightful casual game where you'll encounter a parade of adorable animals! But watch out! These critters aren't happy when they meet their twin, match two animals of the same kind and POP! They'll combine to form a brand new, even larger animal! It's your job to strategically contain them all.  
- 
-[img]https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/extras/Zooika_SteamInline_Popping-optimize.gif?t=1749839140[/img]
-With every critter combined, you'll earn points and build up your score. Zooika is easy to pick up and play, but mastering the art of animal combination will take some strategic thinking. So, are you ready to box in some fun? Get ready for Zooika! 
-[img]https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/extras/InLineTitle-Features.png?t=1749839140[/img]
-• Different sets of animals
-
-• Multiple play areas
-
-• Dynamic music and effects
-
-• Steam integrations
-
-[img]https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2994730/extras/Zooika_SteamInline_animals-optimize.gif?t=1749839140[/img]"
+[node name="ItchService" type="Node" parent="."]
+script = ExtResource("4_kn7jk")
+metadata/_custom_type_script = "uid://dc576m26xm0qe"

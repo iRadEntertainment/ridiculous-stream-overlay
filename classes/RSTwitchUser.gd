@@ -15,6 +15,8 @@ var auto_shoutout: bool
 var auto_promotion: bool
 var steam_app_ids: Array[int]
 var work_with: WorkWith
+var youtube_handle: String
+var website: String
 
 var custom_chat_color: Color
 var custom_notification_sfx: String
@@ -40,6 +42,8 @@ func to_dict() -> Dictionary:
 	for steam_id: int in steam_app_ids:
 		d["steam_app_ids"].append(steam_id)
 	d["work_with"] = int(work_with)
+	d["youtube_handle"] = youtube_handle
+	d["website"] = website
 	
 	d["custom_chat_color"] = custom_chat_color.to_html()
 	d["custom_notification_sfx"] = custom_notification_sfx
@@ -99,6 +103,8 @@ static func from_json(d: Dictionary) -> RSTwitchUser:
 		steam_id = int(steam_id)
 		user.steam_app_ids.append(steam_id)
 	user.work_with = d.get("work_with", WorkWith.UNASSIGNED)
+	user.youtube_handle = d.get("youtube_handle", "")
+	user.website = d.get("website", "")
 	
 	user.custom_chat_color = Color.from_string(d["custom_chat_color"], Color.BLACK)
 	user.custom_notification_sfx = d.get("custom_notification_sfx", "")

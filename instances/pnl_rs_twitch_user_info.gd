@@ -32,6 +32,7 @@ func populate_info() -> void:
 	%btn_custom_color.color = user.custom_chat_color
 	RSUtl.opt_btn_select_from_text(%opt_custom_sfx, user.custom_notification_sfx)
 	RSUtl.opt_btn_select_from_text(%opt_custom_actions, user.custom_action)
+	%opt_work_with.select(user.work_with)
 	
 	check_param_and_add_inspector(user.custom_beans_params)
 	#clear_param_inspector()
