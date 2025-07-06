@@ -15,6 +15,8 @@ enum ItchIOGames{
 	VOID_DRIVE_THROUGH,
 	POTION_QUEST,
 	SUPER_ROLL_OUT,
+	COVINOS_ROTTEN_FRUIT,
+	AUTENTIC_ITALIAN_PIZZA,
 }
 const ITCHIO_APP_URLS: Dictionary[ItchIOGames, String] = {
 	ItchIOGames.RIDICULOUS_SHOPPING: "https://uff.itch.io/ridiculous-shopping",
@@ -23,6 +25,8 @@ const ITCHIO_APP_URLS: Dictionary[ItchIOGames, String] = {
 	ItchIOGames.VOID_DRIVE_THROUGH: "https://fgaha56.itch.io/void-drive-through",
 	ItchIOGames.POTION_QUEST: "https://vex667.itch.io/potion-quest",
 	ItchIOGames.SUPER_ROLL_OUT: "https://seano4d.itch.io/super-roll-out",
+	ItchIOGames.COVINOS_ROTTEN_FRUIT: "https://jerem-watts.itch.io/gorley-cleans-up-covinos-rotten-fruit",
+	ItchIOGames.AUTENTIC_ITALIAN_PIZZA: "https://trevron.itch.io/authentic-italian-pizza",
 }
 
 @export() var selected_itchio_game: ItchIOGames:

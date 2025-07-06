@@ -23,8 +23,7 @@ func _ready():
 
 
 func start():
-	update_dropdown_fields()
-	%pnl_connect_to_gift.start()
+	#%pnl_connect_to_gift.start()
 	reset_pnl_live()
 	set_tab_names()
 
@@ -104,34 +103,34 @@ func clear_param_inspector():
 		child.queue_free()
 
 
-func user_from_fields() -> RSUser:
-	var user_from_field := RSUser.new()
-	user_from_field.username = %ln_username.text
-	user_from_field.display_name = %ln_display_name.text
-	user_from_field.user_id = %ln_user_id.text as int
-	user_from_field.profile_image_url = %ln_profile_picture_url.text
-	
-	user_from_field.is_streamer = %fl_is_streamer.button_pressed
-	user_from_field.auto_shoutout = %fl_auto_shoutout.button_pressed
-	user_from_field.auto_promotion = %fl_auto_promotion.button_pressed
-	
-	user_from_field.custom_chat_color = %btn_custom_color.color
-	user_from_field.custom_notification_sfx = %opt_custom_sfx.get_item_text(%opt_custom_sfx.selected)
-	user_from_field.custom_action = %opt_custom_actions.get_item_text(%opt_custom_actions.selected)
-	#-----------------------------
-	user_from_field.custom_beans_params = null
-	if %btn_add_custom_beans.button_pressed:
-		var param_inspector: RSParamInspector = %sub_res.get_child(0)
-		user_from_field.custom_beans_params = param_inspector.get_params()
-	
-	user_from_field.shoutout_description = %te_so.text
-	user_from_field.promotion_description = %te_promote.text
-	return user_from_field
+#func user_from_fields() -> RSUser:
+	#var user_from_field := RSUser.new()
+	#user_from_field.username = %ln_username.text
+	#user_from_field.display_name = %ln_display_name.text
+	#user_from_field.user_id = %ln_user_id.text as int
+	#user_from_field.profile_image_url = %ln_profile_picture_url.text
+	#
+	#user_from_field.is_streamer = %fl_is_streamer.button_pressed
+	#user_from_field.auto_shoutout = %fl_auto_shoutout.button_pressed
+	#user_from_field.auto_promotion = %fl_auto_promotion.button_pressed
+	#
+	#user_from_field.custom_chat_color = %btn_custom_color.color
+	#user_from_field.custom_notification_sfx = %opt_custom_sfx.get_item_text(%opt_custom_sfx.selected)
+	#user_from_field.custom_action = %opt_custom_actions.get_item_text(%opt_custom_actions.selected)
+	##-----------------------------
+	#user_from_field.custom_beans_params = null
+	#if %btn_add_custom_beans.button_pressed:
+		#var param_inspector: RSParamInspector = %sub_res.get_child(0)
+		#user_from_field.custom_beans_params = param_inspector.get_params()
+	#
+	#user_from_field.shoutout_description = %te_so.text
+	#user_from_field.promotion_description = %te_promote.text
+	#return user_from_field
 
 
-func update_user():
-	var updated_user = user_from_fields()
-	RS.user_mng.save_user(updated_user)
+#func update_user():
+	#var updated_user = user_from_fields()
+	#RS.user_mng.save_user(updated_user)
 	# TODO: update the user list after updating the user json file
 	#await RS.load_known_user(updated_user.username)
 	#new_user_file.emit()
@@ -142,37 +141,11 @@ func search_user(_username: String):
 	pass
 
 
-func update_dropdown_fields():
-	var sfx_paths: Array[String] = [RSSettings.get_sfx_path(), RSSettings.LOCAL_RES_FOLDER]
-	RSUtl.populate_opt_btn_from_files_in_folder(%opt_custom_sfx, sfx_paths, ["ogg"])
-	
-	var custom_script = ResourceLoader.load("res://classes/RSCustom.gd", "GDScript", ResourceLoader.CACHE_MODE_IGNORE) as GDScript
-	var functions_dics = custom_script.get_script_method_list()
-	var functions = []
-	var exclude = ["start", "discord"]
-	for f_dic in functions_dics:
-		if f_dic.name in exclude: continue
-		if f_dic.name.begins_with("on_"): continue
-		functions.append(f_dic.name)
-	opt_btn_populate_from_list(%opt_custom_actions, functions)
-
-
-func opt_btn_populate_from_list(opt_button: OptionButton, list: Array, add_empty := true):
-	opt_button.clear()
-	if add_empty:
-		opt_button.add_item("", 0)
-	for i in list.size():
-		var file_name = list[i]
-		opt_button.add_item(file_name, i+1)
-
-
 func _on_opt_custom_sfx_item_selected(index):
 	%sfx_prev.stop()
 	var sfx_name = %opt_custom_sfx.get_item_text(index)
 	%sfx_prev.stream = RS.loader.load_sfx_from_sfx_folder(sfx_name)
 	%sfx_prev.play()
-func _on_btn_save_pressed():
-	update_user()
 # TODO:
 #func _on_btn_open_file_pressed():
 	#OS.shell_open(RS.settings.get_user_filepath(%ln_username.text))
@@ -244,10 +217,10 @@ func _on_btn_add_custom_beans_toggled(toggled_on):
 		clear_param_inspector()
 
 
-func _on_btn_test_beans_pressed():
-	var _user := user_from_fields()
-	if !_user.username.is_empty():
-		RS.custom.beans(_user.username)
+#func _on_btn_test_beans_pressed():
+	#var _user := user_from_fields()
+	#if !_user.username.is_empty():
+		#RS.custom.beans(_user.username)
 
 
 func _on_stream_title_pressed():

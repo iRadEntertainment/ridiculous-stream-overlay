@@ -1,18 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://b0w820dulgunt"]
+[gd_scene load_steps=10 format=3 uid="uid://b0w820dulgunt"]
 
-[ext_resource type="Script" uid="uid://qbgpoqjrvtdi" path="res://instances/pnl_rs_user_info.gd" id="1_ukuq0"]
-[ext_resource type="PackedScene" uid="uid://dpc8qa00yqwrs" path="res://instances/pnl_twitch_user_info.tscn" id="2_ukuq0"]
-[ext_resource type="StyleBox" uid="uid://cly0o4e4fqaop" path="res://ui/editor_light_panel_transp.stylebox" id="3_8s78h"]
-[ext_resource type="PackedScene" uid="uid://d0cdydbgdy7ob" path="res://lib/games_info/pnl_steam_app_info.tscn" id="4_mvsug"]
-[ext_resource type="Texture2D" uid="uid://c2bfapbqs6yn8" path="res://ui/bootstrap_icons/floppy-fill.png" id="5_sbuj8"]
-[ext_resource type="Texture2D" uid="uid://dyvulwkiqobgx" path="res://ui/bootstrap_icons/arrow-through-heart-fill.png" id="6_tisqw"]
-[ext_resource type="Texture2D" uid="uid://bl85mbqfcw114" path="res://ui/bootstrap_icons/filetype-json.png" id="7_t2nae"]
-[ext_resource type="Texture2D" uid="uid://j610yfm3clvy" path="res://ui/bootstrap_icons/heartbreak-fill.png" id="8_b0pvd"]
+[ext_resource type="Script" uid="uid://qbgpoqjrvtdi" path="res://instances/pnl_rs_user.gd" id="1_vc4pp"]
+[ext_resource type="PackedScene" uid="uid://dpc8qa00yqwrs" path="res://instances/pnl_twitch_user_info.tscn" id="2_pux1v"]
+[ext_resource type="PackedScene" uid="uid://ca0xs5357oq1u" path="res://instances/pnl_user_beans.tscn" id="3_umsy5"]
+[ext_resource type="StyleBox" uid="uid://cly0o4e4fqaop" path="res://ui/editor_light_panel_transp.stylebox" id="4_5ojrs"]
+[ext_resource type="PackedScene" uid="uid://d0cdydbgdy7ob" path="res://lib/games_info/pnl_steam_app_info.tscn" id="5_my1fj"]
+[ext_resource type="Texture2D" uid="uid://c2bfapbqs6yn8" path="res://ui/bootstrap_icons/floppy-fill.png" id="6_wohka"]
+[ext_resource type="Texture2D" uid="uid://dyvulwkiqobgx" path="res://ui/bootstrap_icons/arrow-through-heart-fill.png" id="7_d1l5p"]
+[ext_resource type="Texture2D" uid="uid://bl85mbqfcw114" path="res://ui/bootstrap_icons/filetype-json.png" id="8_5yi8w"]
+[ext_resource type="Texture2D" uid="uid://j610yfm3clvy" path="res://ui/bootstrap_icons/heartbreak-fill.png" id="9_akubr"]
 
-[node name="pnl_rs_user_info" type="PanelContainer"]
+[node name="pnl_rs_user" type="PanelContainer"]
 offset_right = 1454.0
 offset_bottom = 994.0
-script = ExtResource("1_ukuq0")
+script = ExtResource("1_vc4pp")
 metadata/_tab_index = 0
 
 [node name="vb" type="VBoxContainer" parent="."]
@@ -24,7 +25,8 @@ layout_mode = 2
 [node name="hb" type="HBoxContainer" parent="vb/pnl_top"]
 layout_mode = 2
 
-[node name="pnl_twitch_user_info" parent="vb/pnl_top/hb" instance=ExtResource("2_ukuq0")]
+[node name="pnl_twitch_user_info" parent="vb/pnl_top/hb" instance=ExtResource("2_pux1v")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="grid_custom" type="GridContainer" parent="vb/pnl_top/hb"]
@@ -43,7 +45,7 @@ size_flags_horizontal = 3
 
 [node name="lb5" type="Label" parent="vb/pnl_top/hb/grid_custom"]
 layout_mode = 2
-text = "Custom sfx"
+text = "Notification sfx"
 
 [node name="opt_custom_sfx" type="OptionButton" parent="vb/pnl_top/hb/grid_custom"]
 unique_name_in_owner = true
@@ -59,10 +61,14 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="pnl_user_beans" parent="vb/pnl_top/hb" instance=ExtResource("3_umsy5")]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="pnl_bot" type="PanelContainer" parent="vb"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = ExtResource("3_8s78h")
+theme_override_styles/panel = ExtResource("4_5ojrs")
 
 [node name="hb" type="HBoxContainer" parent="vb/pnl_bot"]
 layout_mode = 2
@@ -121,6 +127,7 @@ layout_mode = 2
 text = "Youtube"
 
 [node name="ln_youtube_handle" type="LineEdit" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/hb2"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "@handle"
@@ -134,6 +141,7 @@ layout_mode = 2
 text = "Website"
 
 [node name="ln_website" type="LineEdit" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/hb3"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "https://"
@@ -240,39 +248,40 @@ size_flags_horizontal = 3
 current_tab = 0
 tabs_visible = false
 
-[node name="pnl_steam_app_info" parent="vb/pnl_bot/hb/tab_game_info" instance=ExtResource("4_mvsug")]
+[node name="pnl_steam_app_info" parent="vb/pnl_bot/hb/tab_game_info" instance=ExtResource("5_my1fj")]
 layout_mode = 2
 metadata/_tab_index = 0
 
 [node name="hb_tools" type="HBoxContainer" parent="vb"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="btn_save" type="Button" parent="vb/hb_tools"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Save"
-icon = ExtResource("5_sbuj8")
+icon = ExtResource("6_wohka")
 expand_icon = true
 
 [node name="btn_reload" type="Button" parent="vb/hb_tools"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Reload from file"
-icon = ExtResource("6_tisqw")
+icon = ExtResource("7_d1l5p")
 expand_icon = true
 
 [node name="btn_open_file" type="Button" parent="vb/hb_tools"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Open user file"
-icon = ExtResource("7_t2nae")
+icon = ExtResource("8_5yi8w")
 expand_icon = true
 
 [node name="btn_delete" type="Button" parent="vb/hb_tools"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Delete user"
-icon = ExtResource("8_b0pvd")
+icon = ExtResource("9_akubr")
 expand_icon = true
 
 [connection signal="pressed" from="vb/hb_tools/btn_save" to="." method="_on_btn_save_pressed"]

@@ -161,6 +161,36 @@ static func populate_opt_btn_from_files_in_folder(opt_btn: OptionButton, folder_
 			opt_btn.add_separator("Local Resources")
 
 
+static func opt_btn_populate_from_list(opt_button: OptionButton, list: Array[String], add_empty := true):
+	opt_button.clear()
+	if add_empty:
+		opt_button.add_item("", 0)
+	for i in list.size():
+		var file_name = list[i]
+		opt_button.add_item(file_name, i+1)
+
+
+static func get_methods_from_script(
+			script_filepath: String,
+			exclude: Array[String] = [],
+			exclude_begin_with: String = "",
+		) -> Array[String]:
+	
+	var custom_script: GDScript = ResourceLoader.load(
+		script_filepath,
+		"GDScript",
+		ResourceLoader.CACHE_MODE_IGNORE
+	)
+	var functions_dics: Array[Dictionary] = custom_script.get_script_method_list()
+	var functions: Array[String] = []
+	for f_dic: Dictionary in functions_dics:
+		if f_dic.name in exclude: continue
+		if exclude_begin_with != "":
+			if f_dic.name.begins_with(exclude_begin_with): continue
+		functions.append(f_dic.name)
+	return functions
+
+
 static func rename_file(from_abs: String, to_abs: String) -> void:
 	DirAccess.rename_absolute(from_abs, to_abs)
 

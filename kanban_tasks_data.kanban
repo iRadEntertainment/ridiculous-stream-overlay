@@ -28,7 +28,6 @@
 			"uuid": "3fe624ce-48d2-4324-b6ea-2d2777a8a52f",
 			"title": "Doing",
 			"tasks": [
-				"109f3c37-86e2-4742-ad8c-05340dccede4",
 				"251f9bdd-93ca-4cc9-b8dc-1f509e17a0e9",
 				"7aa983ff-60b0-4a35-a1e9-4d5cb367d8b5"
 			]
@@ -37,7 +36,9 @@
 			"uuid": "3056a553-9c8d-4864-8288-fac01ba7416d",
 			"title": "Done",
 			"tasks": [
-				"59803251-6342-4695-99dd-b5ce863992f2"
+				"59803251-6342-4695-99dd-b5ce863992f2",
+				"109f3c37-86e2-4742-ad8c-05340dccede4",
+				"a73a100d-0c67-42db-8cfa-af65ac9a3d87"
 			]
 		}
 	],
@@ -109,6 +110,13 @@
 			"uuid": "7aa983ff-60b0-4a35-a1e9-4d5cb367d8b5",
 			"title": "detatch the list of known user from the user panel",
 			"description": "Have it floating and eventually open the edit user panel when clicked",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "a73a100d-0c67-42db-8cfa-af65ac9a3d87",
+			"title": "itchio app url promote card",
+			"description": "",
 			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
 			"steps": []
 		}

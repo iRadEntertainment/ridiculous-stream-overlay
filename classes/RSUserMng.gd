@@ -16,7 +16,9 @@ var username_to_user_id: Dictionary = {} # -> {username (String): user_id (int)}
 var live_streamers_data: Dictionary = {} #user-ids
 var tmr_refresh_live: Timer
 
+signal user_added(user: RSUser)
 signal user_updated(user: RSUser)
+signal user_deleted(user: RSUser)
 signal known_users_updated
 signal live_streamers_updating
 signal live_streamers_updated
@@ -46,8 +48,11 @@ func save_user(user: RSUser) -> void:
 	var filename: String = get_filename_from_user_id(user.user_id, folder)
 	save_user_to_json(user, folder)
 	
+	var user_is_new: bool = not is_user_id_known(user.user_id)
 	known[user.user_id] = user
 	username_to_user_id[user.username] = user.user_id
+	if user_is_new: user_added.emit(user)
+	else: user_updated.emit(user)
 	known_users_updated.emit()
 
 
@@ -66,6 +71,7 @@ func delete_user(user: RSUser) -> void:
 		known.erase(user.user_id)
 	if username_to_user_id.has(user.username):
 		username_to_user_id.erase(user.username)
+	user_deleted.emit(user)
 	known_users_updated.emit()
 #endregion
 
@@ -227,7 +233,7 @@ static func save_user_to_json(user: RSUser, user_folder: String) -> void:
 		RSUtl.save_to_json(abs_path, dict)
 	else:
 		l.e("Failed to save user. Missing data.")
-static func get_filename_from_user_id(user_id: int, user_folder: String) -> String:
+static func get_filename_from_user_id(user_id: int, user_folder: String = "") -> String:
 	var dir := DirAccess.open(user_folder)
 	for filename in dir.get_files():
 		var file_user_id: int = user_id_from_filename(filename)

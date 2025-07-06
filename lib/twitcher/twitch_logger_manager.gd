@@ -9,4 +9,4 @@ static var log_registry : Dictionary = {};
 ## Register the logger and set the enabled state
 static func register(logger: TwitchLogger) -> void:
 	log_registry[logger.context_name] = logger;
-	logger.set_enabled(RS.settings.is_log_enabled(logger.context_name));
+	#logger.set_enabled(RS.settings.is_log_enabled(logger.context_name));
