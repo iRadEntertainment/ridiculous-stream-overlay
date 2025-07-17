@@ -10,6 +10,8 @@ bg_color = Color(0, 0, 0, 0.0745098)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6tupd"]
 
 [node name="pnl_twitch_user_info" type="PanelContainer"]
+offset_right = 395.0
+offset_bottom = 163.0
 script = ExtResource("1_obwb5")
 
 [node name="hb" type="HBoxContainer" parent="."]

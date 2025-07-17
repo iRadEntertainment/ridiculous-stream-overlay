@@ -19,6 +19,9 @@ func _ready() -> void:
 
 #region Update
 func update() -> void:
+	if not user:
+		push_error("No user for button.")
+		return
 	%btn_user.text = user.display_name
 	%btn_shoutout.disabled = !user.is_streamer
 	%btn_promote.disabled = user.promotion_description == ""
@@ -33,6 +36,9 @@ func reload_profile_pic() -> void:
 
 func reload_all_info_from_twitch() -> void:
 	user = await RS.user_mng.user_from_twitch_api("", user.user_id)
+	if not user:
+		queue_free()
+		return
 	RS.user_mng.save_user(user)
 	update()
 	reload_profile_pic()
@@ -91,6 +97,8 @@ func _process(_delta: float) -> void:
 
 #region Signals
 func _on_user_updated(_user: RSUser) -> void:
+	if not user:
+		return
 	if _user.user_id != user.user_id:
 		return
 	user = _user

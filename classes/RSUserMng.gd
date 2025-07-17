@@ -45,6 +45,9 @@ func connect_signals() -> void:
 
 #region LOAD/SAVE/DELETE
 func save_user(user: RSUser) -> void:
+	if not user:
+		push_warning("RSUserMng: Trying to save user null")
+		return
 	var filename: String = get_filename_from_user_id(user.user_id, folder)
 	save_user_to_json(user, folder)
 	
@@ -62,6 +65,9 @@ func save_all() -> void:
 
 
 func delete_user(user: RSUser) -> void:
+	if not user:
+		push_warning("RSUserMng: attempt to delete null User")
+		return
 	var filename: String = get_filename_from_user_id(user.user_id, folder)
 	while not filename.is_empty():
 		OS.move_to_trash(folder + filename)

@@ -19,6 +19,7 @@ var is_streamer: bool
 var auto_shoutout: bool
 var auto_promotion: bool
 var steam_app_ids: Array[int]
+var itchio_app_urls: Array[String]
 var work_with: WorkWith
 var youtube_handle: String
 var website: String
@@ -48,9 +49,9 @@ func to_dict() -> Dictionary:
 	d["is_streamer"] = is_streamer
 	d["auto_shoutout"] = auto_shoutout
 	d["auto_promotion"] = auto_promotion
-	d["steam_app_ids"] = []
-	for steam_id: int in steam_app_ids:
-		d["steam_app_ids"].append(steam_id)
+	d["steam_app_ids"] = steam_app_ids
+	d["itchio_app_urls"] = itchio_app_urls
+		
 	d["work_with"] = int(work_with)
 	d["youtube_handle"] = youtube_handle
 	d["website"] = website
@@ -148,6 +149,10 @@ func update_from_dict(d: Dictionary) -> void:
 	for steam_id in d.get("steam_app_ids", []):
 		steam_id = int(steam_id)
 		steam_app_ids.append(steam_id)
+	itchio_app_urls = []
+	if d.get("itchio_app_urls", []) != null:
+		for itchio_url: String in d.get("itchio_app_urls", []):
+			itchio_app_urls.append(itchio_url)
 	work_with = d.get("work_with", WorkWith.UNASSIGNED)
 	youtube_handle = d.get("youtube_handle", "")
 	website = d.get("website", "")

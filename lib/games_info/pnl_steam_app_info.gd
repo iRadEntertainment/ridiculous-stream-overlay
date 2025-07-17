@@ -46,6 +46,8 @@ enum SteamGames{
 	TORSO_TENNIS,
 	STICK_AND_STACK,
 	FALINERE_FANTASY,
+	MR_FARMBOY,
+	ECHO_SHREDD,
 }
 const STEAM_APP_IDS: Dictionary[SteamGames, int] = {
 	SteamGames.BLOOD_AND_MEAD: 1081830,
@@ -85,6 +87,8 @@ const STEAM_APP_IDS: Dictionary[SteamGames, int] = {
 	SteamGames.TORSO_TENNIS: 2824780,
 	SteamGames.STICK_AND_STACK: 3655080,
 	SteamGames.FALINERE_FANTASY: 1976930,
+	SteamGames.MR_FARMBOY: 2795090,
+	SteamGames.ECHO_SHREDD: 3232000,
 }
 
 @export() var selected_steam_game: SteamGames:

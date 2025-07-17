@@ -7,6 +7,8 @@ var user: RSUser: set = set_user
 func _ready() -> void:
 	update_dropdown_fields()
 	toggle_tool_button(false)
+	%pnl_games.pnl_steam_app_info = %pnl_steam_app_info
+	%pnl_games.pnl_itchio_app_info = %pnl_itchio_app_info
 
 
 func set_user(_user: RSUser) -> void:

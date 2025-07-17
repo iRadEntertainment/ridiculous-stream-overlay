@@ -1,18 +1,20 @@
-[gd_scene load_steps=10 format=3 uid="uid://b0w820dulgunt"]
+[gd_scene load_steps=12 format=3 uid="uid://b0w820dulgunt"]
 
 [ext_resource type="Script" uid="uid://qbgpoqjrvtdi" path="res://instances/pnl_rs_user.gd" id="1_vc4pp"]
 [ext_resource type="PackedScene" uid="uid://dpc8qa00yqwrs" path="res://instances/pnl_twitch_user_info.tscn" id="2_pux1v"]
 [ext_resource type="PackedScene" uid="uid://ca0xs5357oq1u" path="res://instances/pnl_user_beans.tscn" id="3_umsy5"]
 [ext_resource type="StyleBox" uid="uid://cly0o4e4fqaop" path="res://ui/editor_light_panel_transp.stylebox" id="4_5ojrs"]
 [ext_resource type="PackedScene" uid="uid://d0cdydbgdy7ob" path="res://lib/games_info/pnl_steam_app_info.tscn" id="5_my1fj"]
+[ext_resource type="PackedScene" uid="uid://blvbbujltlmrb" path="res://instances/pnl_games.tscn" id="5_umsy5"]
 [ext_resource type="Texture2D" uid="uid://c2bfapbqs6yn8" path="res://ui/bootstrap_icons/floppy-fill.png" id="6_wohka"]
 [ext_resource type="Texture2D" uid="uid://dyvulwkiqobgx" path="res://ui/bootstrap_icons/arrow-through-heart-fill.png" id="7_d1l5p"]
 [ext_resource type="Texture2D" uid="uid://bl85mbqfcw114" path="res://ui/bootstrap_icons/filetype-json.png" id="8_5yi8w"]
+[ext_resource type="PackedScene" uid="uid://dxohy88odqn5f" path="res://lib/games_info/pnl_itchio_app_info.tscn" id="9_5yi8w"]
 [ext_resource type="Texture2D" uid="uid://j610yfm3clvy" path="res://ui/bootstrap_icons/heartbreak-fill.png" id="9_akubr"]
 
 [node name="pnl_rs_user" type="PanelContainer"]
-offset_right = 1454.0
-offset_bottom = 994.0
+offset_right = 1411.0
+offset_bottom = 903.0
 script = ExtResource("1_vc4pp")
 metadata/_tab_index = 0
 
@@ -70,7 +72,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = ExtResource("4_5ojrs")
 
-[node name="hb" type="HBoxContainer" parent="vb/pnl_bot"]
+[node name="hb" type="HSplitContainer" parent="vb/pnl_bot"]
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -146,6 +148,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "https://"
 
+[node name="pnl_games" parent="vb/pnl_bot/hb/pnl_promo/vb_promo" instance=ExtResource("5_umsy5")]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="te_so" type="TextEdit" parent="vb/pnl_bot/hb/pnl_promo/vb_promo"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -166,91 +172,22 @@ wrap_mode = 1
 scroll_fit_content_height = true
 caret_blink = true
 
-[node name="pnl_games" type="PanelContainer" parent="vb/pnl_bot/hb"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="vb_games" type="VBoxContainer" parent="vb/pnl_bot/hb/pnl_games"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="lb" type="Label" parent="vb/pnl_bot/hb/pnl_games/vb_games"]
-layout_mode = 2
-text = "Games"
-horizontal_alignment = 1
-
-[node name="sep" type="HSeparator" parent="vb/pnl_bot/hb/pnl_games/vb_games"]
-layout_mode = 2
-
-[node name="hb" type="HBoxContainer" parent="vb/pnl_bot/hb/pnl_games/vb_games"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="vb_steam" type="VBoxContainer" parent="vb/pnl_bot/hb/pnl_games/vb_games/hb"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ln_add_steam_app_id" type="LineEdit" parent="vb/pnl_bot/hb/pnl_games/vb_games/hb/vb_steam"]
-layout_mode = 2
-placeholder_text = "steam app id"
-
-[node name="pnl" type="PanelContainer" parent="vb/pnl_bot/hb/pnl_games/vb_games/hb/vb_steam"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="scr" type="ScrollContainer" parent="vb/pnl_bot/hb/pnl_games/vb_games/hb/vb_steam/pnl"]
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="vb_steam_app_list" type="VBoxContainer" parent="vb/pnl_bot/hb/pnl_games/vb_games/hb/vb_steam/pnl/scr"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="entry_steam_app" type="PanelContainer" parent="vb/pnl_bot/hb/pnl_games/vb_games/hb/vb_steam/pnl/scr/vb_steam_app_list"]
-layout_mode = 2
-
-[node name="hb" type="HBoxContainer" parent="vb/pnl_bot/hb/pnl_games/vb_games/hb/vb_steam/pnl/scr/vb_steam_app_list/entry_steam_app"]
-layout_mode = 2
-
-[node name="lb_game_name" type="Label" parent="vb/pnl_bot/hb/pnl_games/vb_games/hb/vb_steam/pnl/scr/vb_steam_app_list/entry_steam_app/hb"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Name of The GAME very very long name so that we check it the ellipsis work"
-text_overrun_behavior = 3
-
-[node name="vb_itch" type="VBoxContainer" parent="vb/pnl_bot/hb/pnl_games/vb_games/hb"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ln_add_itch_io_link" type="LineEdit" parent="vb/pnl_bot/hb/pnl_games/vb_games/hb/vb_itch"]
-layout_mode = 2
-placeholder_text = "itch.io link"
-
-[node name="pnl" type="PanelContainer" parent="vb/pnl_bot/hb/pnl_games/vb_games/hb/vb_itch"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="scr" type="ScrollContainer" parent="vb/pnl_bot/hb/pnl_games/vb_games/hb/vb_itch/pnl"]
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="vb_itch_app_list" type="VBoxContainer" parent="vb/pnl_bot/hb/pnl_games/vb_games/hb/vb_itch/pnl/scr"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
 [node name="tab_game_info" type="TabContainer" parent="vb/pnl_bot/hb"]
+custom_minimum_size = Vector2(480, 0)
 layout_mode = 2
-size_flags_horizontal = 3
 current_tab = 0
 tabs_visible = false
 
 [node name="pnl_steam_app_info" parent="vb/pnl_bot/hb/tab_game_info" instance=ExtResource("5_my1fj")]
+unique_name_in_owner = true
 layout_mode = 2
 metadata/_tab_index = 0
+
+[node name="pnl_itchio_app_info" parent="vb/pnl_bot/hb/tab_game_info" instance=ExtResource("9_5yi8w")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="hb_tools" type="HBoxContainer" parent="vb"]
 unique_name_in_owner = true

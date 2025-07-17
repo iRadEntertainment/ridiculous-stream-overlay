@@ -42,6 +42,8 @@ func toggle_live_users(toggled_on: bool) -> void:
 
 ## Called by btn_user_instance
 func user_selected_pressed(btn_user: RSUser) -> void:
+	if not btn_user:
+		return
 	%ln_filter.text = ""
 	var user: RSUser = await RS.user_mng.known.get(btn_user.user_id)
 	var live_data: TwitchStream = RS.user_mng.live_streamers_data.get(btn_user.user_id)

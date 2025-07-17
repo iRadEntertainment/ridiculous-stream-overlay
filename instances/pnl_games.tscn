@@ -1,0 +1,133 @@
+[gd_scene load_steps=5 format=3 uid="uid://blvbbujltlmrb"]
+
+[ext_resource type="Script" uid="uid://bmtdchgl2tvxe" path="res://instances/pnl_games.gd" id="1_o0rmx"]
+[ext_resource type="Texture2D" uid="uid://dqxomv5pykt6i" path="res://ui/bootstrap_icons/search-heart.svg" id="1_oaguf"]
+[ext_resource type="Texture2D" uid="uid://kxiiuf0d0kip" path="res://ui/bootstrap_icons/plus-circle.svg" id="2_o0rmx"]
+[ext_resource type="PackedScene" uid="uid://l2xg7yj7bfhe" path="res://instances/entry_game_list.tscn" id="3_apgtw"]
+
+[node name="pnl_user_games" type="PanelContainer"]
+offset_right = 548.0
+offset_bottom = 493.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+script = ExtResource("1_o0rmx")
+
+[node name="vb_games" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb" type="Label" parent="vb_games"]
+layout_mode = 2
+text = "Games"
+horizontal_alignment = 1
+
+[node name="sep" type="HSeparator" parent="vb_games"]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="vb_games"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="vb_steam" type="VBoxContainer" parent="vb_games/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="hb_search" type="HBoxContainer" parent="vb_games/hb/vb_steam"]
+layout_mode = 2
+
+[node name="ln_add_steam_appid" type="LineEdit" parent="vb_games/hb/vb_steam/hb_search"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "steam app id"
+
+[node name="btn_steam_get_info" type="Button" parent="vb_games/hb/vb_steam/hb_search"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+icon = ExtResource("1_oaguf")
+text_overrun_behavior = 3
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_steam_add_game" type="Button" parent="vb_games/hb/vb_steam/hb_search"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+icon = ExtResource("2_o0rmx")
+text_overrun_behavior = 3
+icon_alignment = 1
+expand_icon = true
+
+[node name="pnl" type="PanelContainer" parent="vb_games/hb/vb_steam"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="scr" type="ScrollContainer" parent="vb_games/hb/vb_steam/pnl"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="vb_steam_app_list" type="VBoxContainer" parent="vb_games/hb/vb_steam/pnl/scr"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="entry_game_list" parent="vb_games/hb/vb_steam/pnl/scr/vb_steam_app_list" instance=ExtResource("3_apgtw")]
+layout_mode = 2
+
+[node name="vb_itch" type="VBoxContainer" parent="vb_games/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="hb_search" type="HBoxContainer" parent="vb_games/hb/vb_itch"]
+layout_mode = 2
+
+[node name="ln_add_itch_io_link" type="LineEdit" parent="vb_games/hb/vb_itch/hb_search"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "itch.io link"
+
+[node name="btn_itchio_get_info" type="Button" parent="vb_games/hb/vb_itch/hb_search"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+icon = ExtResource("1_oaguf")
+text_overrun_behavior = 3
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_itchio_add_game" type="Button" parent="vb_games/hb/vb_itch/hb_search"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+icon = ExtResource("2_o0rmx")
+text_overrun_behavior = 3
+icon_alignment = 1
+expand_icon = true
+
+[node name="pnl" type="PanelContainer" parent="vb_games/hb/vb_itch"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="scr" type="ScrollContainer" parent="vb_games/hb/vb_itch/pnl"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="vb_itch_app_list" type="VBoxContainer" parent="vb_games/hb/vb_itch/pnl/scr"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="entry_game_list" parent="vb_games/hb/vb_itch/pnl/scr/vb_itch_app_list" instance=ExtResource("3_apgtw")]
+layout_mode = 2
+
+[connection signal="pressed" from="vb_games/hb/vb_steam/hb_search/btn_steam_get_info" to="." method="_on_btn_steam_get_info_pressed"]
+[connection signal="pressed" from="vb_games/hb/vb_steam/hb_search/btn_steam_add_game" to="." method="_on_btn_steam_add_game_pressed"]
+[connection signal="pressed" from="vb_games/hb/vb_itch/hb_search/btn_itchio_get_info" to="." method="_on_btn_itchio_get_info_pressed"]
+[connection signal="pressed" from="vb_games/hb/vb_itch/hb_search/btn_itchio_add_game" to="." method="_on_btn_itchio_add_game_pressed"]

@@ -36,10 +36,10 @@ func to_json() -> Dictionary:
 	data["price"] = price
 	data["description"] = description
 	data["screenshots"] = []
-	for url: String in screenshots_thumbnails:
-		data["screenshots_thumbnails"].append(url)
-	for url: String in screenshots_full:
-		data["screenshots_full"].append(url)
+	for _url: String in screenshots_thumbnails:
+		data["screenshots_thumbnails"].append(_url)
+	for _url: String in screenshots_full:
+		data["screenshots_full"].append(_url)
 	return data
 
 
@@ -60,10 +60,10 @@ static func from_json(data: Dictionary) -> ItchIOAppData:
 	app.links = data.get("links", {}).duplicate()
 	
 	app.description = data.get("description", "")
-	for url: String in data.get("screenshots_thumbnails", []):
-		app.screenshots_thumbnails.append(str(url))
-	for url: String in data.get("screenshots_full", []):
-		app.screenshots_full.append(str(url))
+	for _url: String in data.get("screenshots_thumbnails", []):
+		app.screenshots_thumbnails.append(str(_url))
+	for _url: String in data.get("screenshots_full", []):
+		app.screenshots_full.append(str(_url))
 	return app
 
 

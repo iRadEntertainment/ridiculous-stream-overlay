@@ -1,0 +1,75 @@
+[gd_scene load_steps=9 format=3 uid="uid://l2xg7yj7bfhe"]
+
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_eou4i"]
+[ext_resource type="Script" uid="uid://bl8vxs83kwb7a" path="res://instances/entry_game_list.gd" id="2_a61ca"]
+[ext_resource type="Script" uid="uid://bekexbn2gr1dv" path="res://lib/games_info/SteamService.gd" id="3_2kuv8"]
+[ext_resource type="Texture2D" uid="uid://bmgt2xi3i1310" path="res://lib/games_info/itchio_icon.svg" id="3_5pn3y"]
+[ext_resource type="Texture2D" uid="uid://eowifokyak3b" path="res://ui/bootstrap_icons/megaphone.svg" id="4_a61ca"]
+[ext_resource type="Script" uid="uid://dc576m26xm0qe" path="res://lib/games_info/ItchIOService.gd" id="4_awlx5"]
+[ext_resource type="Texture2D" uid="uid://dl5wxcoiaiu4g" path="res://ui/bootstrap_icons/steam.png" id="5_5pn3y"]
+[ext_resource type="Texture2D" uid="uid://ca6xdmc1afmql" path="res://ui/bootstrap_icons/x.svg" id="5_eou4i"]
+
+[node name="entry_game_list" type="PanelContainer"]
+offset_right = 385.0
+offset_bottom = 32.0
+theme = ExtResource("1_eou4i")
+script = ExtResource("2_a61ca")
+
+[node name="SteamService" type="Node" parent="."]
+script = ExtResource("3_2kuv8")
+metadata/_custom_type_script = "uid://bekexbn2gr1dv"
+
+[node name="ItchIOService" type="Node" parent="."]
+script = ExtResource("4_awlx5")
+metadata/_custom_type_script = "uid://dc576m26xm0qe"
+
+[node name="bg_img" type="TextureRect" parent="."]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.337255)
+layout_mode = 2
+texture = ExtResource("3_5pn3y")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="hb" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="btn_game_name" type="Button" parent="hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Name of The GAME very very long name so that we check it the ellipsis work"
+text_overrun_behavior = 3
+
+[node name="btn_promote" type="Button" parent="hb"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+text = "Name of The GAME very very long name so that we check it the ellipsis work"
+icon = ExtResource("4_a61ca")
+text_overrun_behavior = 3
+expand_icon = true
+
+[node name="btn_open_link" type="Button" parent="hb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+text = "Name of The GAME very very long name so that we check it the ellipsis work"
+icon = ExtResource("5_5pn3y")
+text_overrun_behavior = 3
+expand_icon = true
+
+[node name="btn_delete" type="Button" parent="hb"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+text = "Name of The GAME very very long name so that we check it the ellipsis work"
+icon = ExtResource("5_eou4i")
+text_overrun_behavior = 3
+expand_icon = true
+
+[connection signal="pressed" from="hb/btn_game_name" to="." method="_on_btn_game_name_pressed"]
+[connection signal="pressed" from="hb/btn_promote" to="." method="_on_btn_promote_pressed"]
+[connection signal="pressed" from="hb/btn_open_link" to="." method="_on_btn_open_link_pressed"]
+[connection signal="pressed" from="hb/btn_delete" to="." method="_on_btn_delete_pressed"]
