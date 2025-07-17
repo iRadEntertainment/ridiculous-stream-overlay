@@ -12,7 +12,7 @@ class_name RSPhysicsScene
 @onready var sfx_nuke: AudioStreamPlayer = %sfx_nuke
 @onready var sfx_pluck: AudioStreamPlayer = %sfx_pluck
 
-const SHARD_BODIES_CAP = 1200
+const SHARD_BODIES_CAP = 900
 
 
 var laser_scene
