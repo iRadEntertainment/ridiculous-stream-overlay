@@ -46,15 +46,15 @@ func add_commands() -> void:
 	RS.twitcher.commands.add_alias("zeroG", "0g")
 	RS.twitcher.commands.add_alias("zeroG", "0G")
 	
-	RS.twitcher.commands.add_command("tts", parse_tts_command, 1, 256)
-	RS.twitcher.commands.add_command("tts_gb", parse_tts_command.bind("en_GB"), 1, 256)
-	RS.twitcher.commands.add_command("tts_us", parse_tts_command.bind("en_US"), 1, 256)
-	RS.twitcher.commands.add_command("tts_it", parse_tts_command.bind("it_IT"), 1, 256)
-	RS.twitcher.commands.add_command("tts_es", parse_tts_command.bind("es_ES"), 1, 256)
-	RS.twitcher.commands.add_command("tts_fr", parse_tts_command.bind("fr_FR"), 1, 256)
-	RS.twitcher.commands.add_command("tts_de", parse_tts_command.bind("de_DE"), 1, 256)
-	RS.twitcher.commands.add_command("tts_pl", parse_tts_command.bind("pl_PL"), 1, 256)
-	RS.twitcher.commands.add_command("tts_ru", parse_tts_command.bind("ru_RU"), 1, 256)
+	#RS.twitcher.commands.add_command("tts", parse_tts_command, 1, 256)
+	#RS.twitcher.commands.add_command("tts_gb", parse_tts_command.bind("en_GB"), 1, 256)
+	#RS.twitcher.commands.add_command("tts_us", parse_tts_command.bind("en_US"), 1, 256)
+	#RS.twitcher.commands.add_command("tts_it", parse_tts_command.bind("it_IT"), 1, 256)
+	#RS.twitcher.commands.add_command("tts_es", parse_tts_command.bind("es_ES"), 1, 256)
+	#RS.twitcher.commands.add_command("tts_fr", parse_tts_command.bind("fr_FR"), 1, 256)
+	#RS.twitcher.commands.add_command("tts_de", parse_tts_command.bind("de_DE"), 1, 256)
+	#RS.twitcher.commands.add_command("tts_pl", parse_tts_command.bind("pl_PL"), 1, 256)
+	#RS.twitcher.commands.add_command("tts_ru", parse_tts_command.bind("ru_RU"), 1, 256)
 	l.i("Command added to the handler.")
 
 func on_chat(_channel_name: String, username: String, message: String, _tags: TwitchTags.PrivMsg):
@@ -271,6 +271,22 @@ func spawn_fake_beans(_info : TwitchCommandInfo = null, args := []) -> void:
 			count = wrapi(count, 0, 6)
 		
 		match args[0]:
+			"temptic":
+				count = [4, 40, 404].pick_random()
+				fake_beans.sfx_paths = ["sfx_notification_discord.ogg"]
+				fake_beans.img_paths = [
+					"fishBlue.png",
+					"fishGray.png",
+					"fishGreen.png",
+					"fishOrange.png",
+					"fishYellow.png",
+					"fishRed.png",
+					"fishPink.png",
+					"fishPurple.png",
+				]
+				fake_beans.scale = randf_range(0.6, 0.8)
+				await get_tree().create_timer(1.5).timeout
+				zero_g()
 			"giganzo":
 				count = 100
 			"jake":
@@ -434,7 +450,7 @@ func save_all_scenes_and_scripts():
 func open_useless_website():
 	OS.shell_open("https://theuselessweb.com/")
 func open_browser_history():
-	OS.execute("C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe", ['about:history'])
+	OS.execute("C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe", ['brave://history'])
 func open_silent_itch_io_page():
 	pass
 func play_carbrix_or_woop():
