@@ -21,9 +21,10 @@ signal entry_deleted(entry: EntryGameList)
 
 
 func _ready() -> void:
-	#if not user:
-		#push_warning("EntryGameList: Missing user")
-		#return
+	populate()
+
+
+func populate() -> void:
 	%btn_open_link.icon = ICONS[int(type)]
 	match type:
 		Type.STEAM:
@@ -40,6 +41,17 @@ func _ready() -> void:
 			%bg_img.texture = await RS.loader.load_texture_from_url(url)
 
 
+#region Inspector Signals
+func _on_btn_reload_pressed() -> void:
+	match type:
+		Type.STEAM:
+			steam_data = await $SteamService.get_steam_app_data(steam_app_id)
+			populate()
+			game_info_steam_pressed.emit(steam_data)
+		Type.ITCHIO:
+			itchio_data = await $ItchIOService.get_itch_app_data(itchio_app_url)
+			populate()
+			game_info_itchio_pressed.emit(itchio_data)
 func _on_btn_game_name_pressed() -> void:
 	match type:
 		Type.STEAM: game_info_steam_pressed.emit(steam_data)
@@ -59,7 +71,7 @@ func _on_btn_promote_pressed() -> void:
 		Type.ITCHIO:
 			title = itchio_data.title
 			developer = itchio_data.authors.front()["name"]
-			description = itchio_data.description
+			description = itchio_data.description.left(200) + "..."
 			link = itchio_data.url
 	msg = msg.format(
 		{
@@ -78,3 +90,4 @@ func _on_btn_open_link_pressed() -> void:
 	OS.shell_open(link)
 func _on_btn_delete_pressed() -> void:
 	queue_free()
+#endregion

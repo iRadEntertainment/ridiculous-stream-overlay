@@ -208,6 +208,8 @@ func _on_entry_game_info_pressed(_data: Variant) -> void:
 func _on_entry_deleted(entry: EntryGameList) -> void:
 	_delete_entry(entry)
 
+func _on_ln_add_steam_app_id_text_submitted(_new_text: String) -> void:
+	_on_btn_steam_add_game_pressed()
 func _on_btn_steam_get_info_pressed() -> void:
 	if %ln_add_steam_app_id.text.is_empty():
 		return
@@ -216,8 +218,11 @@ func _on_btn_steam_add_game_pressed() -> void:
 	if %ln_add_steam_app_id.text.is_empty():
 		return
 	add_steam_entry( int(%ln_add_steam_app_id.text), true )
+	%ln_add_steam_app_id.text = ""
 
 
+func _on_ln_add_itch_io_link_text_submitted(_new_text: String) -> void:
+	_on_btn_itchio_add_game_pressed()
 func _on_btn_itchio_get_info_pressed() -> void:
 	if %ln_add_itch_io_link.text.is_empty():
 		return
@@ -226,3 +231,4 @@ func _on_btn_itchio_add_game_pressed() -> void:
 	if %ln_add_itch_io_link.text.is_empty():
 		return
 	add_itchio_entry( %ln_add_itch_io_link.text, true )
+	%ln_add_itch_io_link.text = ""

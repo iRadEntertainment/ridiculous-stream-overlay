@@ -127,7 +127,9 @@ size_flags_vertical = 3
 [node name="entry_game_list" parent="vb_games/hb/vb_itch/pnl/scr/vb_itch_app_list" instance=ExtResource("3_apgtw")]
 layout_mode = 2
 
+[connection signal="text_submitted" from="vb_games/hb/vb_steam/hb_search/ln_add_steam_app_id" to="." method="_on_ln_add_steam_app_id_text_submitted"]
 [connection signal="pressed" from="vb_games/hb/vb_steam/hb_search/btn_steam_get_info" to="." method="_on_btn_steam_get_info_pressed"]
 [connection signal="pressed" from="vb_games/hb/vb_steam/hb_search/btn_steam_add_game" to="." method="_on_btn_steam_add_game_pressed"]
+[connection signal="text_submitted" from="vb_games/hb/vb_itch/hb_search/ln_add_itch_io_link" to="." method="_on_ln_add_itch_io_link_text_submitted"]
 [connection signal="pressed" from="vb_games/hb/vb_itch/hb_search/btn_itchio_get_info" to="." method="_on_btn_itchio_get_info_pressed"]
 [connection signal="pressed" from="vb_games/hb/vb_itch/hb_search/btn_itchio_add_game" to="." method="_on_btn_itchio_add_game_pressed"]

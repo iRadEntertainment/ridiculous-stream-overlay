@@ -5,7 +5,7 @@ class_name SteamAppData
 
 @export var type: String
 @export var name: String
-@export var steam_app_id: int
+@export var steam_app_id: int # steam_appid in the HTTP response
 @export var required_age: int
 @export var is_free: bool
 @export var short_description: String

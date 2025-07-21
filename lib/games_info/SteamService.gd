@@ -46,6 +46,7 @@ func get_steam_app_data(app_id: int) -> SteamAppData:
 		return null
 	if not response_json[str(app_id)].has("data"):
 		return null
-	var game_data = response_json[str(app_id)]["data"]
+	var game_data: Dictionary = response_json[str(app_id)]["data"]
+	game_data["steam_app_id"] = game_data["steam_appid"]
 	http_request.queue_free()
 	return SteamAppData.from_json(game_data)

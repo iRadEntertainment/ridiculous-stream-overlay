@@ -12,7 +12,7 @@
 script = ExtResource("3_8vb77")
 type = "game"
 name = "Replicat"
-steam_app_id = null
+steam_app_id = 0
 required_age = 0
 is_free = false
 short_description = "A roguelike memory deckbuilder where you bend the rules of card matching with wild combos, strategy-defining items and cards featuring some personality-packed cats."

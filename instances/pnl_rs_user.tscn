@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://b0w820dulgunt"]
+[gd_scene load_steps=13 format=3 uid="uid://b0w820dulgunt"]
 
 [ext_resource type="Script" uid="uid://qbgpoqjrvtdi" path="res://instances/pnl_rs_user.gd" id="1_vc4pp"]
 [ext_resource type="PackedScene" uid="uid://dpc8qa00yqwrs" path="res://instances/pnl_twitch_user_info.tscn" id="2_pux1v"]
 [ext_resource type="PackedScene" uid="uid://ca0xs5357oq1u" path="res://instances/pnl_user_beans.tscn" id="3_umsy5"]
 [ext_resource type="StyleBox" uid="uid://cly0o4e4fqaop" path="res://ui/editor_light_panel_transp.stylebox" id="4_5ojrs"]
+[ext_resource type="Texture2D" uid="uid://1ndihbuunqkm" path="res://ui/bootstrap_icons/megaphone-fill.svg" id="5_5ojrs"]
 [ext_resource type="PackedScene" uid="uid://d0cdydbgdy7ob" path="res://lib/games_info/pnl_steam_app_info.tscn" id="5_my1fj"]
 [ext_resource type="PackedScene" uid="uid://blvbbujltlmrb" path="res://instances/pnl_games.tscn" id="5_umsy5"]
 [ext_resource type="Texture2D" uid="uid://c2bfapbqs6yn8" path="res://ui/bootstrap_icons/floppy-fill.png" id="6_wohka"]
@@ -247,6 +248,15 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Youtube"
 
+[node name="btn_yt_promo" type="Button" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+icon = ExtResource("5_5ojrs")
+icon_alignment = 1
+expand_icon = true
+
 [node name="ln_youtube_handle" type="LineEdit" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 0)
@@ -263,6 +273,15 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Bluesky"
 
+[node name="btn_bsky_promo" type="Button" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb4"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+icon = ExtResource("5_5ojrs")
+icon_alignment = 1
+expand_icon = true
+
 [node name="ln_bluesky_handle" type="LineEdit" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb4"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 0)
@@ -278,6 +297,15 @@ size_flags_horizontal = 3
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Website"
+
+[node name="btn_web_promo" type="Button" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb3"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+icon = ExtResource("5_5ojrs")
+icon_alignment = 1
+expand_icon = true
 
 [node name="ln_website" type="LineEdit" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb3"]
 unique_name_in_owner = true
@@ -360,10 +388,13 @@ text = "Delete user"
 icon = ExtResource("9_akubr")
 expand_icon = true
 
+[connection signal="pressed" from="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb2/btn_yt_promo" to="." method="_on_btn_yt_promo_pressed"]
 [connection signal="focus_exited" from="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb2/ln_youtube_handle" to="." method="_on_ln_youtube_handle_focus_exited"]
 [connection signal="text_submitted" from="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb2/ln_youtube_handle" to="." method="_on_ln_youtube_handle_text_submitted"]
+[connection signal="pressed" from="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb4/btn_bsky_promo" to="." method="_on_btn_bsky_promo_pressed"]
 [connection signal="focus_exited" from="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb4/ln_bluesky_handle" to="." method="_on_ln_bluesky_handle_focus_exited"]
 [connection signal="text_submitted" from="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb4/ln_bluesky_handle" to="." method="_on_ln_bluesky_handle_text_submitted"]
+[connection signal="pressed" from="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb3/btn_web_promo" to="." method="_on_btn_web_promo_pressed"]
 [connection signal="pressed" from="vb/hb_tools/btn_save" to="." method="_on_btn_save_pressed"]
 [connection signal="pressed" from="vb/hb_tools/btn_reload" to="." method="_on_btn_reload_pressed"]
 [connection signal="pressed" from="vb/hb_tools/btn_open_file" to="." method="_on_btn_open_file_pressed"]

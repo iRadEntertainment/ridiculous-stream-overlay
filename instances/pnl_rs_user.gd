@@ -97,7 +97,7 @@ func apply_edits_to_user() -> void:
 	
 	user.work_with = %opt_work_with.selected
 	user.youtube_handle = %ln_youtube_handle.text
-	user.bluesky_handle = %ln_youtube_handle.text
+	user.bluesky_handle = %ln_bluesky_handle.text
 	user.website = %ln_website.text
 	user.shoutout_description = %te_so.text
 	user.promotion_description = %te_promote.text
@@ -141,6 +141,27 @@ func _on_btn_open_file_pressed() -> void:
 func _on_btn_delete_pressed() -> void:
 	RS.user_mng.delete_user(user)
 	clear()
+func _on_btn_yt_promo_pressed() -> void:
+	var msg: String = "Check out {user}'s YouTube channel: {link}"
+	var param: Dictionary = {
+		"user": user.display_name,
+		"link": "youtube.com/" + user.youtube_handle,
+	}
+	RS.twitcher.announcement(msg.format(param))
+func _on_btn_bsky_promo_pressed() -> void:
+	var msg: String = "Follow {user} on BlueSky: {link}"
+	var param: Dictionary = {
+		"user": user.display_name,
+		"link": "bsky.app/profile/" + user.bluesky_handle.trim_prefix("@") + ".bsky.social",
+	}
+	RS.twitcher.announcement(msg.format(param))
+func _on_btn_web_promo_pressed() -> void:
+	var msg: String = "Check out {user}'s website: {link}"
+	var param: Dictionary = {
+		"user": user.display_name,
+		"link": user.website,
+	}
+	RS.twitcher.announcement(msg.format(param))
 #endregion
 
 
