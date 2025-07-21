@@ -83,7 +83,9 @@ func load_texture_from_url(url : String, use_cached := true) -> ImageTexture:
 		_:
 			l.e("%s format not recognised."%file_type)
 			return
-	
+	if tex_image.is_empty():
+		push_warning("Image %s is empty" % url)
+		return
 	var tex = ImageTexture.create_from_image(tex_image)
 	cached[url] = tex
 	return tex

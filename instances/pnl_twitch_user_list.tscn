@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://biy3s0e3yb44c" path="res://instances/pnl_loading_simple.tscn" id="4_lsxhr"]
 
 [node name="pnl_twitch_user_list" type="PanelContainer"]
+custom_minimum_size = Vector2(460, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

@@ -2,7 +2,27 @@
 extends Resource
 class_name RSUser
 
-enum WorkWith {UNASSIGNED, GODOT, UNITY, UNREAL, ART, PIXELART, ASEPRITE, KRITA}
+enum WorkWith {
+	UNASSIGNED,
+	GODOT,
+	UNITY,
+	UNREAL,
+	ART,
+	PIXELART,
+	ASEPRITE,
+	KRITA,
+	BLENDER,
+	GAME_MAKER,
+	OTHER_ENGINE,
+	GAMING,
+}
+
+# stats
+var added_on: int # UNIX time
+var messages_count: int
+var redeems_count: int
+var raids_in_count: int
+var raids_out_count: int
 
 # twitch user
 var username: String
@@ -18,10 +38,11 @@ var offline_image_url: String
 var is_streamer: bool
 var auto_shoutout: bool
 var auto_promotion: bool
-var steam_app_ids: Array[int]
-var itchio_app_urls: Array[String]
+var steam_app_ids: Dictionary[int, SteamAppData] # {int: SteamAppData} # TODO
+var itchio_app_urls: Dictionary[String, ItchIOAppData] # {String: ItchIOAppData}
 var work_with: WorkWith
 var youtube_handle: String
+var bluesky_handle: String
 var website: String
 var shoutout_description: String
 var promotion_description: String
@@ -37,6 +58,12 @@ var custom_beans_params: RSBeansParam
 
 func to_dict() -> Dictionary:
 	var d = {}
+	d["added_on"] = added_on
+	d["messages_count"] = messages_count
+	d["redeems_count"] = redeems_count
+	d["raids_in_count"] = raids_in_count
+	d["raids_out_count"] = raids_out_count
+	
 	d["username"] = username
 	d["display_name"] = display_name
 	d["user_id"] = user_id
@@ -49,11 +76,15 @@ func to_dict() -> Dictionary:
 	d["is_streamer"] = is_streamer
 	d["auto_shoutout"] = auto_shoutout
 	d["auto_promotion"] = auto_promotion
-	d["steam_app_ids"] = steam_app_ids
-	d["itchio_app_urls"] = itchio_app_urls
-		
+	d["steam_app_ids"] = {}
+	for steam_app_id: int in steam_app_ids.keys():
+		d["steam_app_ids"][steam_app_id] = steam_app_ids[steam_app_id].to_json()
+	d["itchio_app_urls"] = {}
+	for itchio_app_url: String in itchio_app_urls.keys():
+		d["itchio_app_urls"][itchio_app_url] = itchio_app_urls[itchio_app_url].to_json()
 	d["work_with"] = int(work_with)
 	d["youtube_handle"] = youtube_handle
+	d["bluesky_handle"] = bluesky_handle
 	d["website"] = website
 	
 	d["custom_chat_color"] = custom_chat_color.to_html()
@@ -133,6 +164,12 @@ func update_with_user(updated_user: RSUser) -> void:
 
 
 func update_from_dict(d: Dictionary) -> void:
+	added_on = d.get("added_on", Time.get_unix_time_from_system())
+	messages_count = d.get("messages_count", 0)
+	redeems_count = d.get("redeems_count", 0)
+	raids_in_count = d.get("raids_in_count", 0)
+	raids_out_count = d.get("raids_out_count", 0)
+	
 	username = d.get("username", "")
 	display_name = d.get("display_name", "")
 	user_id = d.get("user_id", -1)
@@ -145,16 +182,30 @@ func update_from_dict(d: Dictionary) -> void:
 	is_streamer = d.get("is_streamer", false)
 	auto_shoutout = d.get("auto_shoutout", false)
 	auto_promotion = d.get("auto_promotion", false)
-	steam_app_ids = []
-	for steam_id in d.get("steam_app_ids", []):
-		steam_id = int(steam_id)
-		steam_app_ids.append(steam_id)
-	itchio_app_urls = []
-	if d.get("itchio_app_urls", []) != null:
-		for itchio_url: String in d.get("itchio_app_urls", []):
-			itchio_app_urls.append(itchio_url)
+	
+	steam_app_ids = {}
+	# TODO: remove the check from Array to Dict
+	if typeof(d.get("steam_app_ids")) == TYPE_ARRAY:
+		pass
+	elif d.get("steam_app_ids", {}) != null:
+		for steam_id: String in d.get("steam_app_ids", {}).keys():
+			var steam_data_dict: Dictionary = d.get("steam_app_ids", {}).get(steam_id, {})
+			if steam_data_dict.is_empty(): continue
+			steam_app_ids[int(steam_id)] = SteamAppData.from_json(steam_data_dict)
+	
+	itchio_app_urls = {}
+	# TODO: remove the check from Array to Dict
+	if typeof(d.get("itchio_app_urls")) == TYPE_ARRAY:
+		pass
+	elif d.get("itchio_app_urls", []) != null:
+		for itchio_url: String in d.get("itchio_app_urls", {}).keys():
+			var itchio_data_dict: Dictionary = d.get("itchio_app_urls", {}).get(itchio_url, {})
+			if itchio_data_dict.is_empty(): continue
+			itchio_app_urls[itchio_url] = ItchIOAppData.from_json(itchio_data_dict)
+	
 	work_with = d.get("work_with", WorkWith.UNASSIGNED)
 	youtube_handle = d.get("youtube_handle", "")
+	bluesky_handle = d.get("bluesky_handle", "")
 	website = d.get("website", "")
 	
 	custom_chat_color = Color.from_string(d["custom_chat_color"], Color.BLACK)
@@ -175,6 +226,8 @@ static func from_json(d: Dictionary) -> RSUser:
 
 static func from_twitcher_user(t_user: TwitchUser) -> RSUser:
 	var user := RSUser.new()
+	user.added_on = int(Time.get_unix_time_from_system())
+	
 	user.username = t_user.login
 	user.user_id = int(t_user.id)
 	user.display_name = t_user.display_name

@@ -35,10 +35,11 @@ func reload_profile_pic() -> void:
 
 
 func reload_all_info_from_twitch() -> void:
-	user = await RS.user_mng.user_from_twitch_api("", user.user_id)
-	if not user:
-		queue_free()
+	var t_user: TwitchUser = await RS.user_mng.get_t_user_from_twitch_api(user.user_id)
+	if not t_user:
+		_on_btn_delete_pressed()
 		return
+	user.update_from_twitch_user(t_user)
 	RS.user_mng.save_user(user)
 	update()
 	reload_profile_pic()

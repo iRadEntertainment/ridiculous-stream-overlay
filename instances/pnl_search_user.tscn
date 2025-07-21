@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dps0a5js2rxa6"]
+[gd_scene load_steps=8 format=3 uid="uid://dps0a5js2rxa6"]
 
 [ext_resource type="Script" uid="uid://dbxy0aqwvedm1" path="res://instances/pnl_search_user.gd" id="1_5t2mi"]
 [ext_resource type="Texture2D" uid="uid://dqxomv5pykt6i" path="res://ui/bootstrap_icons/search-heart.svg" id="1_c1yuu"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dpc8qa00yqwrs" path="res://instances/pnl_twitch_user_info.tscn" id="4_lqy1a"]
 [ext_resource type="Texture2D" uid="uid://c2bfapbqs6yn8" path="res://ui/bootstrap_icons/floppy-fill.png" id="5_h73xo"]
 [ext_resource type="Texture2D" uid="uid://bakllpvm882ei" path="res://ui/bootstrap_icons/person-heart.png" id="6_h73xo"]
+[ext_resource type="Texture2D" uid="uid://hudfe6pxykni" path="res://ui/bootstrap_icons/x.png" id="6_lqy1a"]
 
 [node name="pnl_search_twitch_user" type="PanelContainer"]
 offset_right = 926.0
@@ -41,7 +42,10 @@ placeholder_text = "search by user ID"
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="btn_save" type="Button" parent="vb"]
+[node name="HBoxContainer" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+
+[node name="btn_save" type="Button" parent="vb/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -50,13 +54,19 @@ text = "Save new user"
 icon = ExtResource("5_h73xo")
 expand_icon = true
 
-[node name="btn_update" type="Button" parent="vb"]
+[node name="btn_update" type="Button" parent="vb/HBoxContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Update user"
 icon = ExtResource("6_h73xo")
+expand_icon = true
+
+[node name="btn_close" type="Button" parent="vb/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Close"
+icon = ExtResource("6_lqy1a")
 expand_icon = true
 
 [node name="pnl_connect_to_gift" parent="." instance=ExtResource("4_h73xo")]
@@ -66,5 +76,6 @@ layout_mode = 2
 
 [connection signal="text_submitted" from="vb/search/ln_search_username" to="." method="_on_ln_search_username_text_submitted"]
 [connection signal="text_submitted" from="vb/search/ln_search_user_id" to="." method="_on_ln_search_user_id_text_submitted"]
-[connection signal="pressed" from="vb/btn_save" to="." method="_on_btn_save_pressed"]
-[connection signal="pressed" from="vb/btn_update" to="." method="_on_btn_update_pressed"]
+[connection signal="pressed" from="vb/HBoxContainer/btn_save" to="." method="_on_btn_save_pressed"]
+[connection signal="pressed" from="vb/HBoxContainer/btn_update" to="." method="_on_btn_update_pressed"]
+[connection signal="pressed" from="vb/HBoxContainer/btn_close" to="." method="_on_btn_close_pressed"]

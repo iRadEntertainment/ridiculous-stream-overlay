@@ -35,9 +35,10 @@ func to_json() -> Dictionary:
 	data["cover_image"] = cover_image
 	data["price"] = price
 	data["description"] = description
-	data["screenshots"] = []
+	data["screenshots_thumbnails"] = []
 	for _url: String in screenshots_thumbnails:
 		data["screenshots_thumbnails"].append(_url)
+	data["screenshots_full"] = []
 	for _url: String in screenshots_full:
 		data["screenshots_full"].append(_url)
 	return data

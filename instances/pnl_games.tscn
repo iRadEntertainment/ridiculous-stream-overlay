@@ -36,7 +36,7 @@ size_flags_horizontal = 3
 [node name="hb_search" type="HBoxContainer" parent="vb_games/hb/vb_steam"]
 layout_mode = 2
 
-[node name="ln_add_steam_appid" type="LineEdit" parent="vb_games/hb/vb_steam/hb_search"]
+[node name="ln_add_steam_app_id" type="LineEdit" parent="vb_games/hb/vb_steam/hb_search"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

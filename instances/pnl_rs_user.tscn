@@ -18,52 +18,164 @@ offset_bottom = 903.0
 script = ExtResource("1_vc4pp")
 metadata/_tab_index = 0
 
+[node name="bg_img" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
 [node name="vb" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="pnl_top" type="PanelContainer" parent="vb"]
+[node name="pnl_info" type="PanelContainer" parent="vb"]
 layout_mode = 2
 
-[node name="hb" type="HBoxContainer" parent="vb/pnl_top"]
+[node name="hb" type="HBoxContainer" parent="vb/pnl_info"]
 layout_mode = 2
 
-[node name="pnl_twitch_user_info" parent="vb/pnl_top/hb" instance=ExtResource("2_pux1v")]
+[node name="pnl_twitch_user_info" parent="vb/pnl_info/hb" instance=ExtResource("2_pux1v")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="grid_custom" type="GridContainer" parent="vb/pnl_top/hb"]
+[node name="pnl_stats" type="PanelContainer" parent="vb/pnl_info/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="vb" type="VBoxContainer" parent="vb/pnl_info/hb/pnl_stats"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="vb/pnl_info/hb/pnl_stats/vb"]
+layout_mode = 2
+text = "Stats"
+horizontal_alignment = 1
+
+[node name="sep" type="HSeparator" parent="vb/pnl_info/hb/pnl_stats/vb"]
+layout_mode = 2
+
+[node name="scroll" type="ScrollContainer" parent="vb/pnl_info/hb/pnl_stats/vb"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="flow" type="HFlowContainer" parent="vb/pnl_info/hb/pnl_stats/vb/scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="hb1" type="HBoxContainer" parent="vb/pnl_info/hb/pnl_stats/vb/scroll/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb" type="Label" parent="vb/pnl_info/hb/pnl_stats/vb/scroll/flow/hb1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Added on"
+
+[node name="ln_added_on" type="LineEdit" parent="vb/pnl_info/hb/pnl_stats/vb/scroll/flow/hb1"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "22 Jan 2024"
+expand_to_text_length = true
+
+[node name="hb2" type="HBoxContainer" parent="vb/pnl_info/hb/pnl_stats/vb/scroll/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb" type="Label" parent="vb/pnl_info/hb/pnl_stats/vb/scroll/flow/hb2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Messages"
+
+[node name="ln_tot_messages" type="LineEdit" parent="vb/pnl_info/hb/pnl_stats/vb/scroll/flow/hb2"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "0"
+expand_to_text_length = true
+
+[node name="hb3" type="HBoxContainer" parent="vb/pnl_info/hb/pnl_stats/vb/scroll/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb" type="Label" parent="vb/pnl_info/hb/pnl_stats/vb/scroll/flow/hb3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Redeems"
+
+[node name="ln_tot_redeems" type="LineEdit" parent="vb/pnl_info/hb/pnl_stats/vb/scroll/flow/hb3"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "0"
+expand_to_text_length = true
+
+[node name="hb4" type="HBoxContainer" parent="vb/pnl_info/hb/pnl_stats/vb/scroll/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb" type="Label" parent="vb/pnl_info/hb/pnl_stats/vb/scroll/flow/hb4"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Raids in"
+
+[node name="ln_tot_raids_in" type="LineEdit" parent="vb/pnl_info/hb/pnl_stats/vb/scroll/flow/hb4"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "0"
+expand_to_text_length = true
+
+[node name="hb5" type="HBoxContainer" parent="vb/pnl_info/hb/pnl_stats/vb/scroll/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb" type="Label" parent="vb/pnl_info/hb/pnl_stats/vb/scroll/flow/hb5"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Raided out"
+
+[node name="ln_tot_raids_out" type="LineEdit" parent="vb/pnl_info/hb/pnl_stats/vb/scroll/flow/hb5"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "0"
+expand_to_text_length = true
+
+[node name="pnl_custom" type="PanelContainer" parent="vb"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="hb" type="HBoxContainer" parent="vb/pnl_custom"]
+layout_mode = 2
+
+[node name="grid" type="GridContainer" parent="vb/pnl_custom/hb"]
 layout_mode = 2
 columns = 2
 
-[node name="lb4" type="Label" parent="vb/pnl_top/hb/grid_custom"]
+[node name="lb4" type="Label" parent="vb/pnl_custom/hb/grid"]
 layout_mode = 2
 text = "Godot chat colour"
 
-[node name="btn_custom_color" type="ColorPickerButton" parent="vb/pnl_top/hb/grid_custom"]
+[node name="btn_custom_color" type="ColorPickerButton" parent="vb/pnl_custom/hb/grid"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="lb5" type="Label" parent="vb/pnl_top/hb/grid_custom"]
+[node name="lb5" type="Label" parent="vb/pnl_custom/hb/grid"]
 layout_mode = 2
 text = "Notification sfx"
 
-[node name="opt_custom_sfx" type="OptionButton" parent="vb/pnl_top/hb/grid_custom"]
+[node name="opt_custom_sfx" type="OptionButton" parent="vb/pnl_custom/hb/grid"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="lb7" type="Label" parent="vb/pnl_top/hb/grid_custom"]
+[node name="lb7" type="Label" parent="vb/pnl_custom/hb/grid"]
 layout_mode = 2
 text = "Custom actions"
 
-[node name="opt_custom_actions" type="OptionButton" parent="vb/pnl_top/hb/grid_custom"]
+[node name="opt_custom_actions" type="OptionButton" parent="vb/pnl_custom/hb/grid"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="pnl_user_beans" parent="vb/pnl_top/hb" instance=ExtResource("3_umsy5")]
+[node name="pnl_user_beans" parent="vb/pnl_custom/hb" instance=ExtResource("3_umsy5")]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -79,6 +191,7 @@ size_flags_vertical = 3
 [node name="pnl_promo" type="PanelContainer" parent="vb/pnl_bot/hb"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="vb_promo" type="VBoxContainer" parent="vb/pnl_bot/hb/pnl_promo"]
 layout_mode = 2
@@ -107,50 +220,71 @@ layout_mode = 2
 text = "Auto-promotion"
 alignment = 2
 
-[node name="hb1" type="HBoxContainer" parent="vb/pnl_bot/hb/pnl_promo/vb_promo"]
+[node name="HFlowContainer" type="HFlowContainer" parent="vb/pnl_bot/hb/pnl_promo/vb_promo"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/hb1"]
+[node name="hb1" type="HBoxContainer" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb" type="Label" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb1"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Works with"
 
-[node name="opt_work_with" type="OptionButton" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/hb1"]
+[node name="opt_work_with" type="OptionButton" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb1"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="hb2" type="HBoxContainer" parent="vb/pnl_bot/hb/pnl_promo/vb_promo"]
+[node name="hb2" type="HBoxContainer" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="lb" type="Label" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/hb2"]
+[node name="lb" type="Label" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb2"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Youtube"
 
-[node name="ln_youtube_handle" type="LineEdit" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/hb2"]
+[node name="ln_youtube_handle" type="LineEdit" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb2"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "@handle"
+placeholder_text = "YouTube @handle"
 
-[node name="hb3" type="HBoxContainer" parent="vb/pnl_bot/hb/pnl_promo/vb_promo"]
+[node name="hb4" type="HBoxContainer" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="lb" type="Label" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/hb3"]
+[node name="lb" type="Label" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb4"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Bluesky"
+
+[node name="ln_bluesky_handle" type="LineEdit" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb4"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "b.sky @handle"
+
+[node name="hb3" type="HBoxContainer" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb" type="Label" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb3"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Website"
 
-[node name="ln_website" type="LineEdit" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/hb3"]
+[node name="ln_website" type="LineEdit" parent="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb3"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "https://"
-
-[node name="pnl_games" parent="vb/pnl_bot/hb/pnl_promo/vb_promo" instance=ExtResource("5_umsy5")]
-unique_name_in_owner = true
-layout_mode = 2
 
 [node name="te_so" type="TextEdit" parent="vb/pnl_bot/hb/pnl_promo/vb_promo"]
 unique_name_in_owner = true
@@ -172,7 +306,12 @@ wrap_mode = 1
 scroll_fit_content_height = true
 caret_blink = true
 
+[node name="pnl_games" parent="vb/pnl_bot/hb/pnl_promo/vb_promo" instance=ExtResource("5_umsy5")]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="tab_game_info" type="TabContainer" parent="vb/pnl_bot/hb"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(480, 0)
 layout_mode = 2
 current_tab = 0
@@ -221,6 +360,10 @@ text = "Delete user"
 icon = ExtResource("9_akubr")
 expand_icon = true
 
+[connection signal="focus_exited" from="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb2/ln_youtube_handle" to="." method="_on_ln_youtube_handle_focus_exited"]
+[connection signal="text_submitted" from="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb2/ln_youtube_handle" to="." method="_on_ln_youtube_handle_text_submitted"]
+[connection signal="focus_exited" from="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb4/ln_bluesky_handle" to="." method="_on_ln_bluesky_handle_focus_exited"]
+[connection signal="text_submitted" from="vb/pnl_bot/hb/pnl_promo/vb_promo/HFlowContainer/hb4/ln_bluesky_handle" to="." method="_on_ln_bluesky_handle_text_submitted"]
 [connection signal="pressed" from="vb/hb_tools/btn_save" to="." method="_on_btn_save_pressed"]
 [connection signal="pressed" from="vb/hb_tools/btn_reload" to="." method="_on_btn_reload_pressed"]
 [connection signal="pressed" from="vb/hb_tools/btn_open_file" to="." method="_on_btn_open_file_pressed"]

@@ -48,7 +48,6 @@ func save_user(user: RSUser) -> void:
 	if not user:
 		push_warning("RSUserMng: Trying to save user null")
 		return
-	var filename: String = get_filename_from_user_id(user.user_id, folder)
 	save_user_to_json(user, folder)
 	
 	var user_is_new: bool = not is_user_id_known(user.user_id)
@@ -122,8 +121,13 @@ func get_user_from_user_id(user_id : int) -> RSUser:
 	return user
 
 
+func get_t_user_from_twitch_api(user_id: int) -> TwitchUser:
+	var t_user: TwitchUser = await RS.twitcher.get_user_by_id(str(user_id))
+	return t_user
+
+
 func user_from_twitch_api(username: String = "", user_id: int = 0) -> RSUser:
-	var t_user : TwitchUser
+	var t_user: TwitchUser
 	if !username.is_empty():
 		t_user = await RS.twitcher.get_user(username)
 	elif user_id != 0:

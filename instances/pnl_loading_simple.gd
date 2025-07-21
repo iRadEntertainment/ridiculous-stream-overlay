@@ -2,17 +2,13 @@ extends PanelContainer
 
 @export var rotation_speed: float = 1.0
 
+
 func _ready() -> void:
-	stop()
-
-func start() -> void:
-	show()
-	set_process(true)
+	visibility_changed.connect(_on_visibility_changed)
 
 
-func stop() -> void:
-	hide()
-	set_process(false)
+func _on_visibility_changed() -> void:
+	set_process(is_visible_in_tree())
 
 
 func _process(d: float) -> void:

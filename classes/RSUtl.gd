@@ -282,3 +282,45 @@ static func html_unescape(text: String) -> String:
 	for key in replacements.keys():
 		text = text.replace(key, replacements[key])
 	return text
+
+
+static func validate_handle(handle_text: String) -> String:
+	handle_text = handle_text.strip_edges()
+	handle_text = handle_text.replace("@", "")
+	handle_text = "@" + handle_text
+	return handle_text
+
+
+#region Time Parsers
+const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+const MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Set", "Oct", "Nov", "Dec"]
+const FORMAT_STRING_TIME = "%d:%02d:%02d"
+const FORMAT_STRING_DATE = "{day} {month} {year}"
+
+
+static func get_unix_time_utc_from_system() -> int:
+	var dict = Time.get_datetime_dict_from_system()
+	return Time.get_unix_time_from_datetime_dict(dict)
+
+
+static func unix_to_string(
+			unix: int,
+			include_weekday := true,
+			include_time := true,
+			dz_enabled := true) -> String:
+	if !unix: return "Never"
+	if dz_enabled:
+		var tz_offset_usec = Time.get_time_zone_from_system().bias * 60
+		unix += tz_offset_usec
+	var dict: Dictionary = Time.get_datetime_dict_from_unix_time(unix)
+	dict.weekday = WEEKDAYS[dict.weekday]
+	dict.month = MONTHS_SHORT[dict.month-1]
+	
+	var format_string: String = FORMAT_STRING_DATE
+	if include_weekday:
+		format_string = "{weekday} " + format_string
+	if include_time:
+		var time_string: String = (FORMAT_STRING_TIME % [dict.hour, dict.minute, dict.second])
+		format_string = format_string + " - " + time_string
+	return format_string.format(dict)
+#endregion

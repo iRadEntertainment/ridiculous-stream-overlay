@@ -10,7 +10,7 @@ var filter_live := false
 func start() -> void:
 	populate_user_button_list()
 	
-	%pnl_loading_live.stop()
+	%pnl_loading_live.hide()
 	RS.user_mng.live_streamers_updating.connect(_on_live_streamers_updating)
 	RS.user_mng.live_streamers_updated.connect(_on_live_streamers_updated)
 	RS.user_mng.known_users_updated.connect(_on_known_users_updated)
@@ -51,9 +51,9 @@ func user_selected_pressed(btn_user: RSUser) -> void:
 
 
 func _on_live_streamers_updating() -> void:
-	%pnl_loading_live.start()
+	%pnl_loading_live.show()
 func _on_live_streamers_updated() -> void:
-	%pnl_loading_live.stop()
+	%pnl_loading_live.hide()
 func _on_known_users_updated() -> void:
 	var known_ids: Array = RS.user_mng.known.keys()
 	for btn: RSTwitchUserEntry in %user_list.get_children():

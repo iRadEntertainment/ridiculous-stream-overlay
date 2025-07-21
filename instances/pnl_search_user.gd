@@ -74,3 +74,7 @@ func _on_btn_update_pressed() -> void:
 		RS.user_mng.save_user(user)
 		clear()
 #endregion
+
+
+func _on_btn_close_pressed() -> void:
+	clear()

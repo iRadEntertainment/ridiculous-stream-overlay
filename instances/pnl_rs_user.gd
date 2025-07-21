@@ -27,6 +27,7 @@ func toggle_tool_button(val: bool) -> void:
 
 func populate_info() -> void:
 	if not user: return
+	%pnl_games.user = user
 	%pnl_twitch_user_info.populate_from_rs_user(user)
 	
 	%fl_is_streamer.button_pressed = user.is_streamer
@@ -39,12 +40,23 @@ func populate_info() -> void:
 	
 	%opt_work_with.select(user.work_with)
 	%ln_youtube_handle.text = user.youtube_handle
+	%ln_bluesky_handle.text = user.bluesky_handle
 	%ln_website.text = user.website
 	%te_so.text = user.shoutout_description
 	%te_promote.text = user.promotion_description
 	
+	%ln_added_on.text = RSUtl.unix_to_string(user.added_on, false, false)
+	%ln_tot_messages.text = str(user.messages_count)
+	%ln_tot_redeems.text = str(user.redeems_count)
+	%ln_tot_raids_in.text = str(user.raids_in_count)
+	%ln_tot_raids_out.text = str(user.raids_out_count)
+	
 	# TODO: Add custom beans part
 	%pnl_user_beans.populate_from_user(user)
+	if user.offline_image_url.is_empty():
+		%bg_img.texture = null
+	else:
+		%bg_img.texture = await RS.loader.load_texture_from_url(user.offline_image_url)
 
 
 func clear() -> void:
@@ -60,9 +72,16 @@ func clear() -> void:
 	
 	%opt_work_with.select(-1)
 	%ln_youtube_handle.text = ""
+	%ln_bluesky_handle.text = ""
 	%ln_website.text = ""
 	%te_so.text = ""
 	%te_promote.text = ""
+	
+	%ln_added_on.text = ""
+	%ln_tot_messages.text = ""
+	%ln_tot_redeems.text = ""
+	%ln_tot_raids_in.text = ""
+	%ln_tot_raids_out.text = ""
 	
 	%pnl_user_beans.populate_from_user(user)
 
@@ -78,6 +97,7 @@ func apply_edits_to_user() -> void:
 	
 	user.work_with = %opt_work_with.selected
 	user.youtube_handle = %ln_youtube_handle.text
+	user.bluesky_handle = %ln_youtube_handle.text
 	user.website = %ln_website.text
 	user.shoutout_description = %te_so.text
 	user.promotion_description = %te_promote.text
@@ -113,12 +133,24 @@ func _on_btn_save_pressed() -> void:
 	apply_edits_to_user()
 	RS.user_mng.save_user(user)
 func _on_btn_reload_pressed() -> void:
-	var filepath: String = RS.user_mng.get_filename_from_user_id(user.user_id, RS.user_mng.folder)
-	user = RS.user_mng.load_user_from_json(filepath)
+	var filepath: String = RSUserMng.get_filename_from_user_id(user.user_id, RS.user_mng.folder)
+	user = RSUserMng.load_user_from_json(filepath)
 func _on_btn_open_file_pressed() -> void:
-	var filepath: String = RS.user_mng.get_filename_from_user_id(user.user_id, RS.user_mng.folder)
-	OS.shell_open(filepath)
+	var filepath: String = RSUserMng.get_filename_from_user_id(user.user_id, RS.user_mng.folder)
+	OS.shell_open(RS.user_mng.folder + filepath)
 func _on_btn_delete_pressed() -> void:
 	RS.user_mng.delete_user(user)
 	clear()
+#endregion
+
+
+#region Fields Validation
+func _on_ln_youtube_handle_text_submitted(new_text: String) -> void:
+	%ln_youtube_handle.text = RSUtl.validate_handle(new_text)
+func _on_ln_youtube_handle_focus_exited() -> void:
+	%ln_youtube_handle.text = RSUtl.validate_handle(%ln_youtube_handle.text)
+func _on_ln_bluesky_handle_text_submitted(new_text: String) -> void:
+	%ln_bluesky_handle.text = RSUtl.validate_handle(%ln_bluesky_handle.text)
+func _on_ln_bluesky_handle_focus_exited() -> void:
+	%ln_bluesky_handle.text = RSUtl.validate_handle(%ln_bluesky_handle.text)
 #endregion

@@ -5,7 +5,7 @@ class_name SteamAppData
 
 @export var type: String
 @export var name: String
-@export var steam_appid: int
+@export var steam_app_id: int
 @export var required_age: int
 @export var is_free: bool
 @export var short_description: String
@@ -55,20 +55,20 @@ var detailed_description_bbcode: String:
 
 
 var short_url: String:
-	get(): return "https://store.steampowered.com/app/%d" % steam_appid
+	get(): return "https://store.steampowered.com/app/%d" % steam_app_id
 
 var seo_url: String:
 	get():
 		if name.is_empty():
 			return short_url
 		var slug = name.strip_edges().replace(" ", "_")
-		return "https://store.steampowered.com/app/%d/%s" % [steam_appid, slug]
+		return "https://store.steampowered.com/app/%d/%s" % [steam_app_id, slug]
 
 var protocol_url: String:
-	get(): return "steam://store/%d" % steam_appid
+	get(): return "steam://store/%d" % steam_app_id
 
 var s_team_url: String:
-	get(): return "https://s.team/a/%d" % steam_appid
+	get(): return "https://s.team/a/%d" % steam_app_id
 
 var utm_url: String:
 	get():
@@ -80,7 +80,7 @@ func to_json() -> Dictionary:
 	var data := {}
 	data["type"] = type
 	data["name"] = name
-	data["steam_appid"] = steam_appid
+	data["steam_app_id"] = steam_app_id
 	data["required_age"] = required_age
 	data["is_free"] = is_free
 	data["short_description"] = short_description
@@ -155,7 +155,7 @@ static func from_json(data: Dictionary) -> SteamAppData:
 	var app = SteamAppData.new()
 	app.type = data.get("type", "")
 	app.name = data.get("name", "")
-	app.steam_appid = data.get("steam_appid", 0)
+	app.steam_app_id = data.get("steam_app_id", 0)
 	app.required_age = data.get("required_age", 0)
 	app.is_free = data.get("is_free", false)
 	app.short_description = data.get("short_description", "")

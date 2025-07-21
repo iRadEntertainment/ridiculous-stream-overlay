@@ -108,7 +108,6 @@ metadata/_edit_lock_ = true
 
 [node name="pnl_settings" parent="split_chat/empty" instance=ExtResource("15_8wfva")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 
 [node name="pnl_chat" parent="split_chat" instance=ExtResource("16_ege2h")]

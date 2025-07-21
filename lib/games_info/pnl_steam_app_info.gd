@@ -4,6 +4,7 @@ class_name PnlSteamAppInfo
 
 
 @export var enable_logger: bool = true
+@warning_ignore("unused_private_class_variable")
 @export_tool_button("Search", "Button") var _search = tool_search
 @export var tool_app_id: int
 
@@ -135,7 +136,7 @@ func get_app_info(app_id: int) -> SteamAppData:
 
 func display_app_info(_data: SteamAppData) -> void:
 	data = _data
-	%ln_search.text = str(data.steam_appid)
+	%ln_search.text = str(data.steam_app_id)
 	%lb_name.text = data.name
 	%lb_author.text = "[i]by [b]%s[/b][/i]" % data.developers.front()
 	%tex_capsule_img.texture = await load_texture_from_url(data.header_image)
@@ -174,6 +175,8 @@ func clear() -> void:
 
 #region Utils
 func load_texture_from_url(url: String) -> ImageTexture:
+	var http_request: HTTPRequest = HTTPRequest.new()
+	add_child(http_request)
 	var url_no_query: String = url.split("?")[0]
 	var file_type = url_no_query.get_extension()
 	if not file_type in ["png", "jpeg", "jpg", "bmp", "webp", "svg"]:
@@ -182,14 +185,14 @@ func load_texture_from_url(url: String) -> ImageTexture:
 		#print("Wrong filetype %s" % file_type)
 		#return
 	
-	var _err = %HTTPRequest.request(url)
+	var _err = http_request.request(url)
 	if _err != OK:
 		print("_err != OK")
 		#l.e("Error request: %s" % error_string(_err))
 		return
 	
-	var http_result: Array = await %HTTPRequest.request_completed
-	var result: int = http_result[0]
+	var http_result: Array = await http_request.request_completed
+	var _result: int = http_result[0]
 	var response_code: int = http_result[1]
 	var _headers: PackedStringArray = http_result[2]
 	var image_buffer: PackedByteArray = http_result[3]
@@ -209,6 +212,7 @@ func load_texture_from_url(url: String) -> ImageTexture:
 			return
 	
 	var tex = ImageTexture.create_from_image(tex_image)
+	http_request.queue_free()
 	return tex
 #endregion
 

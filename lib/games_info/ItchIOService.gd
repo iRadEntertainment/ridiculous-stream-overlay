@@ -4,35 +4,28 @@ extends Node
 class_name ItchIOService
 
 @onready var l := TwitchLogger.new("ItchIOService")
-var http_request: HTTPRequest
 
 
 func _ready() -> void:
 	l.color = Color.ORANGE_RED.to_html()
 	l.enabled = true
 	l.debug = false
-	if not http_request:
-		http_request = HTTPRequest.new()
-		add_child(http_request)
 
 
 func get_itch_app_data(game_url: String) -> ItchIOAppData:
-	if not http_request:
-		l.e("HTTPRequest node not initialized")
-		return null
-	if http_request.get_http_client_status() == HTTPClient.STATUS_REQUESTING:
-		l.w("HTTPClient busy")
-		return null
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
 
 	var base_url := game_url.strip_edges().rstrip("/")
 	var json_url := base_url + "/data.json"
+	
 	var err := http_request.request(json_url)
 	if err != OK:
 		l.e("Error requesting Itch data: %s" % error_string(err))
 		return null
 
 	var json_result: Array = await http_request.request_completed
-	var result: int = json_result[0]
+	var _result: int = json_result[0]
 	var response_code: int = json_result[1]
 	var body: PackedByteArray = json_result[3]
 
@@ -60,8 +53,8 @@ func get_itch_app_data(game_url: String) -> ItchIOAppData:
 		var extra_info: Dictionary = scrape_html(html)
 		json.merge(extra_info)
 	else:
-		l.w("Could not retrieve HTML content. Skipping description/screenshot parsing.")
-
+		l.e("Could not retrieve HTML content. Skipping description/screenshot parsing.")
+	http_request.queue_free()
 	return ItchIOAppData.from_json(json)
 
 

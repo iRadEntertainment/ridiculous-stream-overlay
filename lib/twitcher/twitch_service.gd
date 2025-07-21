@@ -48,7 +48,6 @@ static func setup() -> void:
 #
 
 #region User
-
 ## Get data about a user by USER_ID see get_user for by username
 static func get_user_by_id(user_id: String) -> TwitchUser:
 	if user_id == null || user_id == "": return null;
@@ -96,8 +95,9 @@ static func load_profile_image(user: TwitchUser) -> ImageTexture:
 	return texture;
 
 #endregion
-#region EventSub
 
+
+#region EventSub
 static func _init_eventsub() -> void:
 	eventsub.connect_to_eventsub(RS.settings.eventsub_live_server_url);
 
@@ -109,11 +109,10 @@ static func subscribe_event(event_name : String, version : String, conditions : 
 ## Waits for connection to eventsub. Eventsub is ready to subscribe events.
 static func wait_for_connection() -> void:
 	await eventsub.wait_for_connection();
-
 #endregion
 
-#region Chat
 
+#region Chat
 ## Initializes the chat connects to IRC and preloads everything
 static func _init_chat() -> void:
 	irc.received_privmsg.connect(commands.handle_chat_command);
@@ -186,10 +185,10 @@ static func get_emotes_by_definition(emotes: Array[TwitchEmoteDefinition]) -> Di
 ## Key: Badge Composite ; Value: SpriteFrames
 static func get_badges(badge: Array[String], channel_id: String = "global", _scale: int = 1) -> Dictionary:
 	return await icon_loader.get_badges(badge, channel_id);
-
 #endregion
-#region Cheermotes
 
+
+#region Cheermotes
 static func _init_cheermotes() -> void:
 	cheer_repository = TwitchCheerRepository.new(api); # await?
 
@@ -216,5 +215,4 @@ static func get_cheermotes(cheermote: TwitchCheermote,
 	type: TwitchCheerRepository.Types = TwitchCheerRepository.Types.ANIMATED,
 	scale: TwitchCheerRepository.Scales = TwitchCheerRepository.Scales._1) -> Dictionary:
 	return await cheer_repository.get_cheermotes(cheermote, theme, type, scale);
-
 #endregion

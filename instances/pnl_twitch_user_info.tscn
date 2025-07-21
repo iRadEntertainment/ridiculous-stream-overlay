@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dpc8qa00yqwrs"]
+[gd_scene load_steps=7 format=3 uid="uid://dpc8qa00yqwrs"]
 
 [ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://ui/sprites/twitch_user_profile_pic.png" id="1_kgbgf"]
 [ext_resource type="Script" uid="uid://b5r6qu61ghn1y" path="res://instances/pnl_twitch_user_info.gd" id="1_obwb5"]
 [ext_resource type="Texture2D" uid="uid://deuf2rqcfddbn" path="res://ui/bootstrap_icons/caret-right-fill.png" id="3_qltwk"]
+[ext_resource type="PackedScene" uid="uid://biy3s0e3yb44c" path="res://instances/pnl_loading_simple.tscn" id="4_6tupd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qltwk"]
 bg_color = Color(0, 0, 0, 0.0745098)
@@ -25,51 +26,52 @@ texture = ExtResource("1_kgbgf")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="vb" type="VBoxContainer" parent="hb"]
+[node name="btn_update_twitch_info" type="Button" parent="hb/tex_profile_pic"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="hb_description" type="VBoxContainer" parent="hb"]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="hb/hb_description"]
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ln_username" type="LineEdit" parent="hb/vb"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "username"
-editable = false
-
-[node name="ln_display_name" type="LineEdit" parent="hb/vb"]
+[node name="ln_display_name" type="LineEdit" parent="hb/hb_description/hb"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "display name"
 editable = false
 
-[node name="ln_user_id" type="LineEdit" parent="hb/vb"]
+[node name="ln_user_id" type="LineEdit" parent="hb/hb_description/hb"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "user id"
 editable = false
 
-[node name="ln_profile_picture_url" type="LineEdit" parent="hb/vb"]
+[node name="lb" type="Label" parent="hb/hb_description"]
+visible = false
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "About"
+
+[node name="ln_description" type="TextEdit" parent="hb/hb_description"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(420, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "profile picture url"
+size_flags_vertical = 3
+placeholder_text = "Channel description"
 editable = false
-
-[node name="hb" type="HBoxContainer" parent="hb/vb"]
-layout_mode = 2
-
-[node name="lb" type="Label" parent="hb/vb/hb"]
-layout_mode = 2
-text = "Twich chat colour"
-
-[node name="cr_user_twitch_irc_color" type="ColorRect" parent="hb/vb/hb"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(64, 16)
-layout_mode = 2
-size_flags_horizontal = 3
-color = Color(0, 0, 0, 1)
+wrap_mode = 1
 
 [node name="pnl_extra" type="PanelContainer" parent="hb"]
 layout_mode = 2
@@ -83,6 +85,7 @@ theme_override_constants/separation = 0
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
+focus_mode = 0
 icon = ExtResource("3_qltwk")
 expand_icon = true
 
@@ -100,7 +103,36 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="ln_username" type="LineEdit" parent="hb/pnl_extra/hb/pnl_expand/scr/vb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "username"
+editable = false
+
+[node name="ln_profile_picture_url" type="LineEdit" parent="hb/pnl_extra/hb/pnl_expand/scr/vb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "profile picture url"
+editable = false
+
+[node name="hb" type="HBoxContainer" parent="hb/pnl_extra/hb/pnl_expand/scr/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="hb/pnl_extra/hb/pnl_expand/scr/vb/hb"]
+layout_mode = 2
+text = "Twich chat colour"
+
+[node name="cr_user_twitch_irc_color" type="ColorRect" parent="hb/pnl_extra/hb/pnl_expand/scr/vb/hb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0, 0, 0, 1)
+
 [node name="hb_type" type="HBoxContainer" parent="hb/pnl_extra/hb/pnl_expand/scr/vb"]
+visible = false
 layout_mode = 2
 
 [node name="lb" type="Label" parent="hb/pnl_extra/hb/pnl_expand/scr/vb/hb_type"]
@@ -113,22 +145,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 editable = false
-
-[node name="hb_descriiption" type="HBoxContainer" parent="hb/pnl_extra/hb/pnl_expand/scr/vb"]
-layout_mode = 2
-
-[node name="lb" type="Label" parent="hb/pnl_extra/hb/pnl_expand/scr/vb/hb_descriiption"]
-custom_minimum_size = Vector2(140, 0)
-layout_mode = 2
-text = "description"
-
-[node name="ln_description" type="TextEdit" parent="hb/pnl_extra/hb/pnl_expand/scr/vb/hb_descriiption"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-editable = false
-wrap_mode = 1
-scroll_fit_content_height = true
 
 [node name="hb_broadcaster_type" type="HBoxContainer" parent="hb/pnl_extra/hb/pnl_expand/scr/vb"]
 layout_mode = 2
@@ -159,6 +175,7 @@ size_flags_horizontal = 3
 editable = false
 
 [node name="hb_view_count" type="HBoxContainer" parent="hb/pnl_extra/hb/pnl_expand/scr/vb"]
+visible = false
 layout_mode = 2
 
 [node name="lb" type="Label" parent="hb/pnl_extra/hb/pnl_expand/scr/vb/hb_view_count"]
@@ -172,4 +189,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 editable = false
 
+[node name="pnl_loading_simple" parent="." instance=ExtResource("4_6tupd")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[connection signal="pressed" from="hb/tex_profile_pic/btn_update_twitch_info" to="." method="_on_btn_update_twitch_info_pressed"]
 [connection signal="pressed" from="hb/pnl_extra/hb/btn_expand" to="." method="_on_btn_expand_pressed"]

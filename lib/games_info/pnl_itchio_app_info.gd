@@ -4,6 +4,7 @@ class_name PnlItchIOAppInfo
 
 
 @export var enable_logger: bool = true
+@warning_ignore("unused_private_class_variable")
 @export_tool_button("Search", "Button") var _search = tool_search
 @export var tool_app_url: String
 
@@ -120,17 +121,19 @@ func clear() -> void:
 
 #region Utils
 func load_texture_from_url(url: String) -> ImageTexture:
+	var http_request: HTTPRequest = HTTPRequest.new()
+	add_child(http_request)
 	var file_type = url.get_extension()
 	if not file_type in IMG_VALID_FORMATS:
 		return
 	
-	var _err = %HTTPRequest.request(url)
+	var _err = http_request.request(url)
 	if _err != OK:
 		#l.e("Error request: %s" % error_string(_err))
 		return
 	
-	var http_result: Array = await %HTTPRequest.request_completed
-	var result: int = http_result[0]
+	var http_result: Array = await http_request.request_completed
+	var _result: int = http_result[0]
 	var response_code: int = http_result[1]
 	var _headers: PackedStringArray = http_result[2]
 	var image_buffer: PackedByteArray = http_result[3]
@@ -149,6 +152,7 @@ func load_texture_from_url(url: String) -> ImageTexture:
 			return
 	
 	var tex = ImageTexture.create_from_image(tex_image)
+	http_request.queue_free()
 	return tex
 #endregion
 
@@ -160,3 +164,7 @@ func _on_btn_visit_page_pressed() -> void:
 	if data:
 		OS.shell_open(data.short_url)
 #endregion
+
+
+func _on_lb_authors_meta_clicked(meta: Variant) -> void:
+	OS.shell_open(meta)

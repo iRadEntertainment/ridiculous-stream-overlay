@@ -9,25 +9,17 @@ const STEAM_SERVICE_STORE_API_URL = "https://store.steampowered.com/api/"
 const ENDPOINT_STORE_GET_APP_INFO = "appdetails?appids={appid}"
 
 @onready var l: TwitchLogger = TwitchLogger.new("SteamService")
-var http_request: HTTPRequest
 
 
 func _ready() -> void:
 	l.color = Color.CORNFLOWER_BLUE.to_html()
 	l.enabled = true
 	l.debug = false
-	if !http_request:
-		http_request = HTTPRequest.new()
-		add_child(http_request)
 
 
 func get_steam_app_data(app_id: int) -> SteamAppData:
-	if not http_request:
-		l.e("HTTPRequest node not initialized")
-		return
-	if http_request.get_http_client_status() == HTTPClient.STATUS_REQUESTING:
-		l.w("HTTPClient busy")
-		return
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
 	
 	var store_request_query: Dictionary = {
 		"appid": app_id,
@@ -50,5 +42,10 @@ func get_steam_app_data(app_id: int) -> SteamAppData:
 		l.e("Request failed. Response code %s" % response_code)
 		return
 	var response_json: Dictionary = JSON.parse_string(body.get_string_from_utf8())
+	if not response_json.has(str(app_id)):
+		return null
+	if not response_json[str(app_id)].has("data"):
+		return null
 	var game_data = response_json[str(app_id)]["data"]
+	http_request.queue_free()
 	return SteamAppData.from_json(game_data)

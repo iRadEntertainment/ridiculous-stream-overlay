@@ -136,7 +136,6 @@ metadata/_tab_index = 1
 
 [node name="pnl_twitch_user_list" parent="vb/hb/tabs/users" instance=ExtResource("4_j0n41")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(384, 0)
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
 

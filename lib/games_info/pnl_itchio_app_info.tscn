@@ -70,9 +70,6 @@ unique_name_in_owner = true
 script = ExtResource("3_qmkjg")
 metadata/_custom_type_script = "uid://dc576m26xm0qe"
 
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
-unique_name_in_owner = true
-
 [node name="bg_img" type="TextureRect" parent="."]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.529412)
@@ -236,4 +233,5 @@ layout_mode = 2
 text = "Visit Itch.io Page"
 
 [connection signal="pressed" from="vb/title/btn_close_pnl" to="." method="_on_btn_close_pnl_pressed"]
+[connection signal="meta_clicked" from="vb/pnl_info/scr/vb_info/lb_authors" to="." method="_on_lb_authors_meta_clicked"]
 [connection signal="pressed" from="vb/btn_visit_page" to="." method="_on_btn_visit_page_pressed"]

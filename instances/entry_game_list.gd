@@ -9,7 +9,7 @@ const ICONS = [
 enum Type {STEAM, ITCHIO}
 var type: Type
 #var user: RSUser
-var steam_appid: int
+var steam_app_id: int
 var itchio_app_url: String
 
 var steam_data: SteamAppData
@@ -17,6 +17,7 @@ var itchio_data: ItchIOAppData
 
 signal game_info_steam_pressed(steam_data: SteamAppData)
 signal game_info_itchio_pressed(itchio_data: ItchIOAppData)
+signal entry_deleted(entry: EntryGameList)
 
 
 func _ready() -> void:
@@ -27,7 +28,7 @@ func _ready() -> void:
 	match type:
 		Type.STEAM:
 			if not steam_data:
-				steam_data = await $SteamService.get_steam_app_data(steam_appid)
+				steam_data = await $SteamService.get_steam_app_data(steam_app_id)
 			%btn_game_name.text = steam_data.name
 			var url_no_query: String = steam_data.header_image.split("?")[0]
 			%bg_img.texture = await RS.loader.load_texture_from_url(url_no_query)
@@ -72,7 +73,7 @@ func _on_btn_promote_pressed() -> void:
 func _on_btn_open_link_pressed() -> void:
 	var link: String
 	match type:
-		Type.STEAM: link = "https://s.team/a/%d" % steam_appid
+		Type.STEAM: link = "https://s.team/a/%d" % steam_app_id
 		Type.ITCHIO: link = itchio_app_url
 	OS.shell_open(link)
 func _on_btn_delete_pressed() -> void:

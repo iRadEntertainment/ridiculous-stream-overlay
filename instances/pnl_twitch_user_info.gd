@@ -5,31 +5,45 @@ const CARETS_TEX = [
 	preload("res://ui/bootstrap_icons/caret-left-fill.png"),
 	preload("res://ui/bootstrap_icons/caret-right-fill.png"),
 ]
+@export var expanded: bool = true
 
 var is_extra_panel_expanded: bool
 var tw_expand: Tween
 
+var t_user: TwitchUser
+var user: RSUser
 
-func populate_from_twitch_user(user: TwitchUser) -> void:
+
+func _ready() -> void:
+	toggle_extra_panel(expanded)
+	%pnl_loading_simple.hide()
+
+
+func populate_from_twitch_user(_t_user: TwitchUser) -> void:
+	%pnl_loading_simple.show()
 	clear()
-	if not user: return
-	OptionButton
-	%ln_username.text = user.login
-	%ln_display_name.text = user.display_name
-	%ln_user_id.text = user.id
-	%ln_profile_picture_url.text = user.profile_image_url
-	if user.profile_image_url:
-		%tex_profile_pic.texture = await RS.loader.load_texture_from_url(user.profile_image_url)
+	t_user = _t_user
+	if not t_user: return
+	%ln_username.text = t_user.login
+	%ln_display_name.text = t_user.display_name
+	%ln_user_id.text = t_user.id
+	%ln_profile_picture_url.text = t_user.profile_image_url
+	if t_user.profile_image_url:
+		%tex_profile_pic.texture = await RS.loader.load_texture_from_url(t_user.profile_image_url)
+	else:
+		%tex_profile_pic.texture = preload("res://ui/sprites/twitch_user_profile_pic.png")
 	
-	%ln_type.text = user.type
-	%ln_description.text = user.description
-	%ln_broadcaster_type.text = user.broadcaster_type
-	%ln_offline_image_url.text = user.offline_image_url
-	%ln_view_count.text = str(user.view_count)
+	%ln_type.text = t_user.type
+	%ln_description.text = t_user.description
+	%ln_broadcaster_type.text = t_user.broadcaster_type
+	%ln_offline_image_url.text = t_user.offline_image_url
+	%ln_view_count.text = str(t_user.view_count)
+	%pnl_loading_simple.hide()
 
 
-func populate_from_rs_user(user: RSUser) -> void:
+func populate_from_rs_user(_rs_user: RSUser) -> void:
 	clear()
+	user = _rs_user
 	if not user: return
 	%ln_username.text = user.username
 	%ln_display_name.text = user.display_name
@@ -38,6 +52,12 @@ func populate_from_rs_user(user: RSUser) -> void:
 	%cr_user_twitch_irc_color.color = user.twitch_chat_color
 	if user.profile_image_url:
 		%tex_profile_pic.texture = await RS.loader.load_texture_from_url(user.profile_image_url)
+	else:
+		%tex_profile_pic.texture = preload("res://ui/sprites/twitch_user_profile_pic.png")
+	
+	%ln_description.text = user.description
+	%ln_broadcaster_type.text = user.broadcaster_type
+	%ln_offline_image_url.text = user.offline_image_url
 
 
 func clear() -> void:
@@ -72,3 +92,22 @@ func toggle_extra_panel(val: bool) -> void:
 
 func _on_btn_expand_pressed() -> void:
 	toggle_extra_panel(!is_extra_panel_expanded)
+
+
+func _on_btn_update_twitch_info_pressed() -> void:
+	%pnl_loading_simple.show()
+	var user_id: int
+	if user: user_id = user.user_id
+	elif t_user: user_id = int(t_user.id)
+	if not user_id: return
+	
+	var new_t_user: TwitchUser = await RS.user_mng.get_t_user_from_twitch_api(user_id)
+	if not new_t_user:
+		clear()
+		return
+	t_user = new_t_user
+	populate_from_twitch_user(t_user)
+	if user:
+		user.update_from_twitch_user(t_user)
+		RS.user_mng.save_user(user)
+	%pnl_loading_simple.hide()
