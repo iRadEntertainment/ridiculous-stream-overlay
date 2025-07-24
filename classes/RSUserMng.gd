@@ -227,13 +227,13 @@ func _on_tmr_refresh_live_timeout() -> void:
 static func load_all_users_from_folder(user_folder: String) -> Dictionary:
 	var dic: Dictionary = {}
 	var user_files = RSUtl.list_file_in_folder(user_folder, ["json"])
-	
 	for user_file in user_files:
 		var abs_path = user_folder + user_file
 		var user_dic: Dictionary = RSUtl.load_json(abs_path)
 		var user: RSUser = RSUser.from_json(user_dic)
 		dic[user.user_id] = user
 	return dic
+
 
 static func save_all_users_to_folder(users_dic: Dictionary, user_folder: String) -> void:
 	for user: RSUser in users_dic.values():

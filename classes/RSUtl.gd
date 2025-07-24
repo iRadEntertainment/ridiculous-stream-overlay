@@ -129,6 +129,26 @@ static func list_file_in_folder(folder_path: String, types: Array = [], full_pat
 	return found_files
 
 
+static func get_file_creation_unix(abs_path: String) -> float:
+	abs_path = abs_path.replace("/", "\\")
+	var args := [
+		"-NoProfile",
+		"-Command",
+		"(Get-Date (Get-Item '%s').CreationTime -UFormat '%%s')" % abs_path
+	]
+	
+	var output := []
+	var exit_code := OS.execute("powershell", args, output, true)
+	
+	if exit_code == 0 and output.size() > 0:
+		var creation_date_str: String = output[0].strip_edges()
+		return float(creation_date_str)
+	
+	push_warning("Failed to get creation date for: %s" % abs_path)
+	return -1.0
+
+
+
 static func fit_and_center_window_to_display(p_window: Window) -> void:
 	var current_screen := p_window.current_screen
 	var current_screen_usable_rect := DisplayServer.screen_get_usable_rect(current_screen)
@@ -305,7 +325,7 @@ static func get_unix_time_utc_from_system() -> int:
 
 
 static func unix_to_string(
-			unix: int,
+			unix: float,
 			include_weekday := true,
 			include_time := true,
 			dz_enabled := true) -> String:

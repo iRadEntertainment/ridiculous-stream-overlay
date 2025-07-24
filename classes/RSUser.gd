@@ -19,7 +19,7 @@ enum WorkWith {
 }
 
 # stats
-var added_on: int # UNIX time
+var added_on: float # UNIX time
 var global_interactions: Interactions
 
 # twitch user
@@ -218,7 +218,7 @@ static func from_json(d: Dictionary) -> RSUser:
 
 static func from_twitcher_user(t_user: TwitchUser) -> RSUser:
 	var user := RSUser.new()
-	user.added_on = int(Time.get_unix_time_from_system())
+	user.added_on = Time.get_unix_time_from_system()
 	
 	user.username = t_user.login
 	user.user_id = int(t_user.id)

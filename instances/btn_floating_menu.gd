@@ -167,51 +167,24 @@ func _on_btn_maximize_pressed() -> void:
 
 
 func _on_btn_test_pressed() -> void:
-	var param := RSBeansParam.new()
-	param.img_paths = ["can.png"]
-	param.sfx_paths = [
-			"sfx_can_01.ogg",
-			"sfx_can_02.ogg",
-			"sfx_can_03.ogg",
-			"sfx_can_04.ogg",
+	var folder: String = RSSettings.get_users_path()
+	var files: PackedStringArray = RSUtl.list_file_in_folder(folder)
+	for filepath: String in files:
+		filepath = folder + filepath
+		var abs_path: String = filepath.replace("/", "\\")
+		var powershell_cmd = "powershell"
+		var args = [
+			"-NoProfile",
+			"-Command",
+			"(Get-Date (Get-Item '%s').CreationTime -UFormat '%%s')" % abs_path
 		]
-	param.scale = 0.2
-	
-	param.spawn_count_min = 5
-	param.spawn_count_max = 200
-	param.is_pickable = true
-	param.is_destroy = true
-	
-	#param.destroy_shard_params
-	
-	
-	RS.physic_scene.add_image_bodies(param)
-	
-	
-	#RS.alert_scene.wheel_of_random_raid()
-	#var e_theme := EditorInterface.get_editor_theme()
-	#ResourceSaver.save(e_theme, "res://godot_4_3.theme")
-	#RS.twitcher.api.create_custom_rewards()
-	
-	#var res := await RS.twitcher.api.get_custom_reward([], false, str(RS.settings.broadcaster_id))
-	#for reward : TwitchCustomReward in res.data:
-		#if reward.image:
-			#var icon_4 := await RS.loader.load_texture_from_url(reward.image.url_4x, false)
-			#var icon_2 := await RS.loader.load_texture_from_url(reward.image.url_2x, false)
-			#var icon_1 := await RS.loader.load_texture_from_url(reward.image.url_1x, false)
-			#var save_name = "res://ui/rewards_icons/" + reward.title.validate_filename()
-			#ResourceSaver.save(icon_4, save_name + "4.png")
-			#ResourceSaver.save(icon_2, save_name + "2.png")
-			#ResourceSaver.save(icon_1, save_name + "1.png")
-	
-	#var u = await RS.twitcher.get_teams_users("indiegamedevs")
-	#print(u)
-	#for username in u:
-		#if not username.to_lower() in RS.user_mng.known.keys():
-			#print(username)
-	#var test_text = "{user} something {else}"
-	#var prefix = "[color=#f00]"
-	#var suffix = "[/color]"
-	#var res = RSAlertOverlay.decorate_all_tags(test_text, prefix, suffix)
-	#RS.twitcher.chat(res)
+		
+		var output = []
+		var exit_code = OS.execute(powershell_cmd, args, output, true)
+		
+		if exit_code == 0 and output.size() > 0:
+			var creation_date_str = output[0].strip_edges()
+			var creation_float: float = float(creation_date_str)
+			prints(abs_path, creation_float)
+
 #endregion
