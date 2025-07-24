@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://ui/icons/bootstrap_icons/arrow-repeat.svg" id="2_wy2yy"]
 [ext_resource type="Texture2D" uid="uid://boa5ns6c4c07k" path="res://ui/icons/bootstrap_icons/twitch.svg" id="3_w8rq1"]
 [ext_resource type="PackedScene" uid="uid://biy3s0e3yb44c" path="res://instances/pnl_loading_simple.tscn" id="4_a0ub3"]
-[ext_resource type="Texture2D" uid="uid://3e3gs7m6ta6k" path="res://ui/icons/bootstrap_icons/sort-down-alt.svg" id="5_w8rq1"]
+[ext_resource type="Texture2D" uid="uid://cc2c2tfqoo08h" path="res://ui/icons/bootstrap_icons/sort-up.svg" id="5_wy2yy"]
 
 [node name="pnl_rs_user_list" type="PanelContainer"]
 custom_minimum_size = Vector2(460, 0)
@@ -55,7 +55,7 @@ layout_mode = 1
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-icon = ExtResource("5_w8rq1")
+icon = ExtResource("5_wy2yy")
 flat = false
 icon_alignment = 1
 expand_icon = true

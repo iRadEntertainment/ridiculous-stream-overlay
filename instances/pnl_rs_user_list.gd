@@ -49,26 +49,34 @@ func sort_and_update_entries() -> void:
 
 
 func sort_by_username(a: RSTwitchUserEntry, b: RSTwitchUserEntry, ascendent: bool) -> bool:
-	return a.user.username > b.user.username == ascendent
+	return a.user.username < b.user.username == ascendent
 func sort_by_added_on(a: RSTwitchUserEntry, b: RSTwitchUserEntry, ascendent: bool) -> bool:
-	return a.user.added_on < b.user.added_on == ascendent
+	if a.user.added_on == b.user.added_on: return false
+	return a.user.added_on > b.user.added_on == ascendent
 func sort_by_points(a: RSTwitchUserEntry, b: RSTwitchUserEntry, ascendent: bool) -> bool:
 	var a_points: int = a.user.current_global_interactions.global_points
 	var b_points: int = b.user.current_global_interactions.global_points
 	if a_points == b_points: return false
-	return a_points < b_points == ascendent
+	return a_points > b_points == ascendent
 func sort_by_games(a: RSTwitchUserEntry, b: RSTwitchUserEntry, ascendent: bool) -> bool:
 	var a_games: int = a.user.steam_app_ids.size() + a.user.itchio_app_urls.size()
 	var b_games: int = b.user.steam_app_ids.size() + b.user.itchio_app_urls.size()
-	if a_games == b_games: return false
-	return a_games < b_games == ascendent
-
+	if a_games == b_games:
+		if a.user.steam_app_ids.size() == b.user.steam_app_ids.size():
+			return false
+		return a.user.steam_app_ids.size() > b.user.steam_app_ids.size() == ascendent
+	return a_games > b_games == ascendent
+func sort_by_messages(a: RSTwitchUserEntry, b: RSTwitchUserEntry, ascendent: bool) -> bool:
+	var a_msg: int = a.user.current_global_interactions.messages_count
+	var b_msg: int = b.user.current_global_interactions.messages_count
+	if a_msg == b_msg: return false
+	return a_msg > b_msg == ascendent
 
 #endregion
 
 
 #region Menus
-var sort_menu = [
+var sort_menu_items_dict = [
 	{
 		"icon": preload("res://ui/icons/bootstrap_icons/person-heart.svg"),
 		"item_name": "Name",
@@ -89,27 +97,33 @@ var sort_menu = [
 		"item_name": "Games",
 		"callable": _on_sort_by_games_pressed,
 	},
+	{
+		"icon": preload("res://ui/icons/bootstrap_icons/chat-fill.svg"),
+		"item_name": "Messages",
+		"callable": _on_sort_by_messages_pressed,
+	},
 ]
 
 
 func init_menus() -> void:
 	var pop: PopupMenu = btn_sort.get_popup()
 	pop.index_pressed.connect(_on_sort_menu_index_pressed)
-	for i: int in sort_menu.size():
-		var item_dict: Dictionary = sort_menu[i]
+	for i: int in sort_menu_items_dict.size():
+		var item_dict: Dictionary = sort_menu_items_dict[i]
 		var icon: Texture2D = item_dict.icon
 		var item_name: String = item_dict.item_name
 		pop.add_icon_item(icon, item_name)
 		pop.set_item_icon_max_width(i, 24)
 
 func _on_sort_menu_index_pressed(index: int) -> void:
-	var callable: Callable = sort_menu[index].callable
+	var callable: Callable = sort_menu_items_dict[index].callable
 	callable.call()
 
 func _on_sort_by_name_pressed() -> void: sort_func = sort_by_username
 func _on_sort_by_added_on_pressed() -> void: sort_func = sort_by_added_on
 func _on_sort_by_points_pressed() -> void: sort_func = sort_by_points
 func _on_sort_by_games_pressed() -> void: sort_func = sort_by_games
+func _on_sort_by_messages_pressed() -> void: sort_func = sort_by_messages
 #endregion
 
 
@@ -121,6 +135,9 @@ func populate_user_button_list() -> void:
 	
 	for user_id in RS.user_mng.known.keys():
 		add_user_btn_entry_from_user_id(user_id)
+	
+	sort_func = sort_by_points
+	sort_and_update_entries()
 
 
 func add_user_btn_entry_from_user_id(user_id: int) -> void:
