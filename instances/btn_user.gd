@@ -28,6 +28,21 @@ func update() -> void:
 	%btn_special.disabled = user.custom_action == ""
 	%user_live_rect.visible = user.user_id in RS.user_mng.live_streamers_data.keys()
 	%user_pic.texture = await RS.loader.load_texture_from_url(user.profile_image_url)
+	
+	for rect: Control in %hb_games_count.get_children():
+		rect.free()
+	for i: int in user.steam_app_ids.size():
+		var rect_steam: ColorRect = ColorRect.new()
+		rect_steam.color = Color("3e7dc4")
+		rect_steam.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		rect_steam.custom_minimum_size = Vector2.ONE * 4.0 # px
+		%hb_games_count.add_child(rect_steam)
+	for i: int in user.itchio_app_urls.size():
+		var rect_itchio: ColorRect = ColorRect.new()
+		rect_itchio.color = Color("fa5c5b")
+		rect_itchio.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		rect_itchio.custom_minimum_size = Vector2.ONE * 4.0 # px
+		%hb_games_count.add_child(rect_itchio)
 
 
 func reload_profile_pic() -> void:

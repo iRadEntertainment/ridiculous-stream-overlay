@@ -167,11 +167,11 @@ func _on_known_users_updated() -> void:
 
 
 func _on_btn_filter_live_pressed() -> void:
+	await RS.user_mng.refresh_live_streamers()
 	filter_live = !filter_live
 	toggle_live_users(filter_live)
 func _on_btn_reload_pressed() -> void:
-	RS.user_mng.refresh_live_streamers()
-	
+	populate_user_button_list()
 func _on_ln_filter_text_changed(new_text: String) -> void:
 	new_text = new_text.to_lower()
 	for user_line in %user_list.get_children():

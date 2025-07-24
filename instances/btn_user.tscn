@@ -42,7 +42,7 @@ corner_radius_bottom_left = 8
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_51clj"]
 
 [node name="btn_user" type="PanelContainer"]
-offset_right = 379.0
+offset_right = 496.0
 offset_bottom = 48.0
 theme = ExtResource("1_ji5ec")
 theme_override_styles/panel = SubResource("StyleBoxEmpty_f1m1r")
@@ -91,6 +91,34 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0.509804, 0.0196078, 0.705882, 0.254902)
+
+[node name="hb_games_count" type="HBoxContainer" parent="hb/btn_user"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_bottom = -8.0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="col1" type="ColorRect" parent="hb/btn_user/hb_games_count"]
+custom_minimum_size = Vector2(4, 4)
+layout_mode = 2
+color = Color(0.244144, 0.488732, 0.768396, 1)
+
+[node name="col2" type="ColorRect" parent="hb/btn_user/hb_games_count"]
+custom_minimum_size = Vector2(4, 4)
+layout_mode = 2
+
+[node name="col3" type="ColorRect" parent="hb/btn_user/hb_games_count"]
+custom_minimum_size = Vector2(4, 4)
+layout_mode = 2
+
+[node name="col4" type="ColorRect" parent="hb/btn_user/hb_games_count"]
+custom_minimum_size = Vector2(4, 4)
+layout_mode = 2
 
 [node name="btn_shoutout" type="Button" parent="hb"]
 unique_name_in_owner = true
