@@ -35,7 +35,7 @@ stretch = true
 [node name="sub" type="SubViewport" parent="vb/subc"]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(1904, 975)
+size = Vector2i(2, 2)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 

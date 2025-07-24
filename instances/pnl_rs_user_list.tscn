@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=3 uid="uid://bext4in78rfy6"]
 
-[ext_resource type="Script" uid="uid://dug71s0nsj5gy" path="res://instances/pnl_twitch_user_list.gd" id="1_5rx57"]
-[ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://ui/icons/bootstrap_icons/arrow-repeat.svg" id="2_y1dcg"]
-[ext_resource type="Texture2D" uid="uid://boa5ns6c4c07k" path="res://ui/icons/bootstrap_icons/twitch.svg" id="3_q20ft"]
-[ext_resource type="PackedScene" uid="uid://biy3s0e3yb44c" path="res://instances/pnl_loading_simple.tscn" id="4_lsxhr"]
+[ext_resource type="Script" uid="uid://dug71s0nsj5gy" path="res://instances/pnl_rs_user_list.gd" id="1_kdj8l"]
+[ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://ui/icons/bootstrap_icons/arrow-repeat.svg" id="2_wy2yy"]
+[ext_resource type="Texture2D" uid="uid://boa5ns6c4c07k" path="res://ui/icons/bootstrap_icons/twitch.svg" id="3_w8rq1"]
+[ext_resource type="PackedScene" uid="uid://biy3s0e3yb44c" path="res://instances/pnl_loading_simple.tscn" id="4_a0ub3"]
 
-[node name="pnl_twitch_user_list" type="PanelContainer"]
+[node name="pnl_rs_user_list" type="PanelContainer"]
 custom_minimum_size = Vector2(460, 0)
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,7 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_5rx57")
+script = ExtResource("1_kdj8l")
 
 [node name="hb" type="HSplitContainer" parent="."]
 layout_mode = 2
@@ -37,16 +37,16 @@ placeholder_text = "filter"
 [node name="btn_reload" type="Button" parent="hb/vb/hb"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-icon = ExtResource("2_y1dcg")
+icon = ExtResource("2_wy2yy")
 expand_icon = true
 
 [node name="btn_filter_live" type="Button" parent="hb/vb/hb"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-icon = ExtResource("3_q20ft")
+icon = ExtResource("3_w8rq1")
 expand_icon = true
 
-[node name="pnl_loading_live" parent="hb/vb/hb/btn_filter_live" instance=ExtResource("4_lsxhr")]
+[node name="pnl_loading_live" parent="hb/vb/hb/btn_filter_live" instance=ExtResource("4_a0ub3")]
 unique_name_in_owner = true
 layout_mode = 1
 

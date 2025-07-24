@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cfs6apvwuggtt" path="res://ui/icons/bootstrap_icons/person-bounding-box.svg" id="3_7xqlq"]
 [ext_resource type="PackedScene" uid="uid://dhwexcg4happa" path="res://instances/pnl_twitch_user_manager.tscn" id="3_tus6h"]
 [ext_resource type="Texture2D" uid="uid://boa5ns6c4c07k" path="res://ui/icons/bootstrap_icons/twitch.svg" id="4_7hk7t"]
-[ext_resource type="PackedScene" uid="uid://bext4in78rfy6" path="res://instances/pnl_twitch_user_list.tscn" id="4_j0n41"]
+[ext_resource type="PackedScene" uid="uid://bext4in78rfy6" path="res://instances/pnl_rs_user_list.tscn" id="4_j0n41"]
 [ext_resource type="Texture2D" uid="uid://ctpfh3qqwicqq" path="res://ui/sprites/btn_settings.png" id="5_574cn"]
 [ext_resource type="Texture2D" uid="uid://bykc5hku6ubu8" path="res://ui/icons/icon_irad.png" id="5_pus7l"]
 [ext_resource type="PackedScene" uid="uid://rvb1iyen7vu3" path="res://instances/pnl_rewards.tscn" id="6_d22ns"]

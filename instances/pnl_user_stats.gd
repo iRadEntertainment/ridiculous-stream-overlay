@@ -28,7 +28,7 @@ func _populate() -> void:
 	elif current:
 		interactions = current
 	_populate_from_interactions(interactions)
-	%ln_added_on.text = RSUtl.unix_to_string(user.added_on)
+	%ln_added_on.text = RSUtl.unix_to_string(user.added_on, false, false)
 
 
 func _populate_from_interactions(interactions: RSUser.Interactions) -> void:
