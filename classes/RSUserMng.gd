@@ -99,7 +99,20 @@ func refresh_live_streamers() -> void:
 
 
 #region USER UTILITIES
-func get_user_from_username(username : String) -> RSUser:
+func get_known_user_from_user_id(user_id: int) -> RSUser:
+	if !is_user_id_known(user_id):
+		return
+	return known[user_id]
+
+
+func get_known_user_from_username(username: String) -> RSUser:
+	if !is_username_known(username):
+		return
+	var user_id = username_to_user_id[username]
+	return known[user_id]
+
+
+func get_user_from_username(username: String) -> RSUser:
 	var user: RSUser
 	var user_id: int = 0
 	if username in username_to_user_id.keys():
@@ -110,7 +123,7 @@ func get_user_from_username(username : String) -> RSUser:
 	return user
 	
 
-func get_user_from_user_id(user_id : int) -> RSUser:
+func get_user_from_user_id(user_id: int) -> RSUser:
 	var user: RSUser
 	if known.has(user_id):
 		user = known[user_id]
@@ -193,7 +206,7 @@ func update_known_user_from_twitch(user: RSUser) -> void:
 
 
 #region CONNECTED METHODS
-func _on_first_session_message(_username: String, tags: TwitchTags.PrivMsg) -> void:
+func _on_first_session_message(_username: String, _message: String, tags: TwitchTags.PrivMsg) -> void:
 	var user_id: int = int(tags.user_id)
 	if is_user_id_known(user_id):
 		var user: RSUser = await get_user_from_user_id(user_id)

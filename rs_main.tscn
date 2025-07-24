@@ -1,5 +1,6 @@
-[gd_scene load_steps=22 format=3 uid="uid://d345j5een73bf"]
+[gd_scene load_steps=28 format=3 uid="uid://d345j5een73bf"]
 
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_1q0ot"]
 [ext_resource type="Script" uid="uid://brw4mp8qnlxxh" path="res://RSMain.gd" id="1_y2jdm"]
 [ext_resource type="Script" uid="uid://copo7pkldfbov" path="res://classes/RSMousePass.cs" id="2_4s2fq"]
 [ext_resource type="Script" uid="uid://doxabl7ha832k" path="res://classes/RSMouseTracker.gd" id="2_xjlao"]
@@ -21,6 +22,27 @@
 [ext_resource type="PackedScene" uid="uid://cokv6nhefofwl" path="res://instances/pnl_welcome.tscn" id="19_3rcuc"]
 [ext_resource type="PackedScene" uid="uid://dregwshpiqg8j" path="res://instances/alert_overlay.tscn" id="19_gj13v"]
 [ext_resource type="AudioStream" uid="uid://cidanglkg6lrp" path="res://local_res/sfx_quack_01.ogg" id="21_637v1"]
+[ext_resource type="Shader" uid="uid://fpir2i2pnixe" path="res://shaders/snow_shader.gdshader" id="22_38gvb"]
+[ext_resource type="Texture2D" uid="uid://buikegrssuuph" path="res://local_res/snowflake-2.svg" id="23_mhtf1"]
+[ext_resource type="Script" uid="uid://du1vhw4tu6yv5" path="res://classes/RSSummaryMng.gd" id="24_rr657"]
+[ext_resource type="PackedScene" uid="uid://dduocy5paeeuu" path="res://classes/pnl_summary.tscn" id="25_ht5xl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mhtf1"]
+shader = ExtResource("22_38gvb")
+shader_parameter/dimensions = Vector2(1152, 652.125)
+shader_parameter/rows = 20.0
+shader_parameter/columns = 5.0
+shader_parameter/vertical_scroll = 0.2
+shader_parameter/horizontal_scroll = 0.03
+shader_parameter/size_min = 0.3
+shader_parameter/size_max = 0.7
+shader_parameter/wave_min = 0.1
+shader_parameter/wave_max = 1.0
+shader_parameter/wave_speed = 0.5
+shader_parameter/wave_rotation = 1.0
+shader_parameter/far_color = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/near_color = Color(1, 1, 1, 1)
+shader_parameter/particle_texture = ExtResource("23_mhtf1")
 
 [node name="rs_main" type="Control"]
 layout_mode = 3
@@ -30,6 +52,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("1_1q0ot")
 script = ExtResource("1_y2jdm")
 metadata/_edit_lock_ = true
 
@@ -76,6 +99,11 @@ script = ExtResource("5_joslx")
 [node name="RSDisplay" type="Node" parent="Modules"]
 unique_name_in_owner = true
 script = ExtResource("12_qc4sr")
+
+[node name="RSSummaryMng" type="Node" parent="Modules"]
+unique_name_in_owner = true
+script = ExtResource("24_rr657")
+metadata/_custom_type_script = "uid://du1vhw4tu6yv5"
 
 [node name="sfx" type="Node" parent="."]
 unique_name_in_owner = true
@@ -154,6 +182,23 @@ visible = false
 layout_mode = 1
 theme = null
 metadata/_edit_lock_ = true
+
+[node name="pnl_summary" parent="." instance=ExtResource("25_ht5xl")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="manadono_snow" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_mhtf1")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="btn_floating_menu" parent="." instance=ExtResource("5_xf57p")]
 unique_name_in_owner = true

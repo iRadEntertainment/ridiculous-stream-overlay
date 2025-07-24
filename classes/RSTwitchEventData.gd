@@ -1,29 +1,29 @@
 extends RefCounted
 class_name RSTwitchEventData
 
-var type : String
+var type: String
 
-var user_id : int
-var username : String     # from twitch API username is "user_login"
-var display_name : String # from twitch API display_name is "user_name"
-var followed_at : String
-var from_broadcaster_user_id : int
-var from_broadcaster_username : String     # from twitch API username is "user_login"
-var from_broadcaster_display_name : String # from twitch API display_name is "user_name"
-var viewers : int
-var user_input : String
-var status : String
-var reward_title : String
-var reward_cost : int
-var reward_prompt : String
-var is_anonymous : bool
-var message : String
-var bits : int
-var tier : int
-var is_gift : bool
+var user_id: int
+var username: String     # from twitch API username is "user_login"
+var display_name: String # from twitch API display_name is "user_name"
+var followed_at: String
+var from_broadcaster_user_id: int
+var from_broadcaster_username: String     # from twitch API username is "user_login"
+var from_broadcaster_display_name: String # from twitch API display_name is "user_name"
+var viewers: int
+var user_input: String
+var status: String
+var reward_title: String
+var reward_cost: int
+var reward_prompt: String
+var is_anonymous: bool
+var message: String
+var bits: int
+var tier: int
+var is_gift: bool
 
 
-static func create_from_event_body(_type : String, body : Dictionary) -> RSTwitchEventData:
+static func create_from_event_body(_type: String, body: Dictionary) -> RSTwitchEventData:
 	var data := RSTwitchEventData.new()
 	data.type = _type
 	if body.has("user_id"): data.user_id = body.user_id as int

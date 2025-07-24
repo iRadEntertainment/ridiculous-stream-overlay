@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://ui/sprites/twitch_user_profile_pic.png" id="1_kgbgf"]
 [ext_resource type="Script" uid="uid://b5r6qu61ghn1y" path="res://instances/pnl_twitch_user_info.gd" id="1_obwb5"]
-[ext_resource type="Texture2D" uid="uid://deuf2rqcfddbn" path="res://ui/bootstrap_icons/caret-right-fill.png" id="3_qltwk"]
+[ext_resource type="Texture2D" uid="uid://deuf2rqcfddbn" path="res://ui/icons/bootstrap_icons/caret-right-fill.png" id="3_qltwk"]
 [ext_resource type="PackedScene" uid="uid://biy3s0e3yb44c" path="res://instances/pnl_loading_simple.tscn" id="4_6tupd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qltwk"]

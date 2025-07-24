@@ -1,20 +1,23 @@
 extends Node
 class_name RSVetting
 
-var l : RSLogger
+var l: RSLogger
+var vetting_filepath: String:
+	get(): return RSSettings.data_dir + "/" + RSSettings.RS_VETTING_FILE_NAME
 
-var user_vetting_list : Dictionary = {}
+var user_vetting_list: Dictionary = {}
 enum Responses{ACCEPT, ACCEPT_ALL, DECLINE, DECLINE_WARN, DECLINE_ALL}
 
-signal notification_queued(callable : Callable, data: RSTwitchEventData, warnings: int)
+signal notification_queued(callable: Callable, data: RSTwitchEventData, warnings: int)
 signal list_updated
 
-func start():
+
+func start() -> void:
 	l = RSLogger.new(RSSettings.LOGGER_NAME_VETTING)
 	load_user_vetting_list()
 
 
-func custom_rewards_vetting(callable : Callable, data : RSTwitchEventData):
+func custom_rewards_vetting(callable: Callable, data: RSTwitchEventData) -> void:
 	var user = data.username
 	var title = data.reward_title
 	
@@ -57,7 +60,7 @@ func custom_rewards_vetting(callable : Callable, data : RSTwitchEventData):
 
 func is_allowed(data: RSTwitchEventData) -> bool:
 	if "Impersonate" in data.reward_title:
-		var broadcaster_login : String = data.user_input.split(" ", true, 1)[0]
+		var broadcaster_login: String = data.user_input.split(" ", true, 1)[0]
 		broadcaster_login = broadcaster_login.strip_edges()
 		broadcaster_login = broadcaster_login.lstrip("@")
 		broadcaster_login = broadcaster_login.to_lower()
@@ -72,7 +75,7 @@ func is_allowed(data: RSTwitchEventData) -> bool:
 	return true
 
 
-func receive_response(callable : Callable, data: RSTwitchEventData, response: Responses) -> void:
+func receive_response(callable: Callable, data: RSTwitchEventData, response: Responses) -> void:
 	var user = data.username
 	var title = data.reward_title
 	
@@ -99,17 +102,15 @@ func receive_response(callable : Callable, data: RSTwitchEventData, response: Re
 			user_vetting_list[user]["rewards"].merge({title: response}, true)
 			save_user_vetting_list()
 			list_updated.emit()
-	
 
 
-func load_user_vetting_list():
-	var path := RSSettings.data_dir + RSSettings.RS_VETTING_FILE_NAME
-	if FileAccess.file_exists(path):
-		user_vetting_list = RSUtl.load_json(path)
-		l.i("List loaded (%s)" % path)
-func save_user_vetting_list():
-	var path := RSSettings.data_dir + RSSettings.RS_VETTING_FILE_NAME
-	RSUtl.save_to_json(path, user_vetting_list)
+func load_user_vetting_list() -> void:
+	if FileAccess.file_exists(vetting_filepath):
+		user_vetting_list = RSUtl.load_json(vetting_filepath)
+		l.i("List loaded (%s)" % vetting_filepath)
+func save_user_vetting_list() -> void:
+	RSUtl.save_to_json(vetting_filepath, user_vetting_list)
+	l.i("List saved (%s)" % vetting_filepath)
 func clear(user, _reward_title) -> void:
 	if user_vetting_list.has(user):
 		#TODO: finish this

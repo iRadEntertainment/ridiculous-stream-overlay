@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://dmujd48su58h8"]
 
-[ext_resource type="Texture2D" uid="uid://c3b5m08mgn3ns" path="res://ui/bootstrap_icons/sparkles.svg" id="1_fdolg"]
+[ext_resource type="Texture2D" uid="uid://c3b5m08mgn3ns" path="res://ui/icons/bootstrap_icons/sparkles.svg" id="1_fdolg"]
 [ext_resource type="Script" uid="uid://bh2l26761vmoc" path="res://instances/entry_bean.gd" id="1_wssom"]
-[ext_resource type="Texture2D" uid="uid://ca6xdmc1afmql" path="res://ui/bootstrap_icons/x.svg" id="2_wssom"]
+[ext_resource type="Texture2D" uid="uid://ca6xdmc1afmql" path="res://ui/icons/bootstrap_icons/x.svg" id="2_wssom"]
 
 [node name="entry_bean" type="PanelContainer"]
 size_flags_horizontal = 3

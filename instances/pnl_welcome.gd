@@ -115,9 +115,9 @@ func _on_panel_form_container_completion_changed(p_panel_form_container: PanelFo
 func _on_tabs_welcome_tab_changed(tab: int) -> void:
 	%btn_prev.disabled = tab < 1
 	if %tabs_welcome.current_tab + 1 < %tabs_welcome.get_tab_count():
-		%btn_next.icon = preload("res://ui/bootstrap_icons/arrow-right.png")
+		%btn_next.icon = preload("res://ui/icons/bootstrap_icons/arrow-right.png")
 	else:
-		%btn_next.icon = preload("res://ui/bootstrap_icons/check2.png")
+		%btn_next.icon = preload("res://ui/icons/bootstrap_icons/check2.png")
 
 
 func _on_btn_prev_pressed() -> void:

@@ -5,7 +5,7 @@
 [ext_resource type="StyleBox" uid="uid://dp1gxe3ir730n" path="res://ui/panel_flat_dark.tres" id="3_e8nhk"]
 [ext_resource type="PackedScene" uid="uid://cwg72p5gy7ib3" path="res://instances/btn_collapse.tscn" id="3_if16f"]
 [ext_resource type="StyleBox" uid="uid://be1r1ht3qo0ct" path="res://ui/panel_flat_dark_semitransparent.tres" id="4_wka65"]
-[ext_resource type="Texture2D" uid="uid://gvhb68vjfckm" path="res://ui/bootstrap_icons/arrow-counterclockwise.png" id="5_eh3fm"]
+[ext_resource type="Texture2D" uid="uid://gvhb68vjfckm" path="res://ui/icons/bootstrap_icons/arrow-counterclockwise.png" id="5_eh3fm"]
 [ext_resource type="StyleBox" uid="uid://bbm13ghfao7l3" path="res://ui/editor_panel_light_borderless.tres" id="6_p4tjg"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_gtt40"]

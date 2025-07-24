@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://desh1w40padq8"]
 
 [ext_resource type="Script" uid="uid://bhbvch82sjvku" path="res://ui/twitch/feature_entry.gd" id="1_fc2bb"]
-[ext_resource type="Texture2D" uid="uid://dbht7ll6ygloq" path="res://ui/bootstrap_icons/caret-down-fill.png" id="2_2kmva"]
-[ext_resource type="Texture2D" uid="uid://deuf2rqcfddbn" path="res://ui/bootstrap_icons/caret-right-fill.png" id="3_5onmf"]
+[ext_resource type="Texture2D" uid="uid://dbht7ll6ygloq" path="res://ui/icons/bootstrap_icons/caret-down-fill.png" id="2_2kmva"]
+[ext_resource type="Texture2D" uid="uid://deuf2rqcfddbn" path="res://ui/icons/bootstrap_icons/caret-right-fill.png" id="3_5onmf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cq6sb"]
 content_margin_left = 4.0

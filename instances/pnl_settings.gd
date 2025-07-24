@@ -43,10 +43,10 @@ func open_tab(index : int) -> void:
 		btn.button_pressed = btn.get_index() == index
 	index = min(index, tabs.get_child_count()-1)
 	tabs.current_tab = index
-	update_sidebar_pos()
+	update_sidebar_pos.call_deferred()
 
 
-func update_sidebar_pos():
+func update_sidebar_pos() -> void:
 	var btn_num = side_vb.get_child_count()
 	var idx = tabs.current_tab
 	var rect : Rect2 = side_vb.get_rect()

@@ -23,20 +23,29 @@ var l: RSLogger
 @onready var custom: RSCustom = %RSCustom
 @onready var vetting: RSVetting = %RSVetting
 @onready var display: RSDisplay = %RSDisplay
+@onready var summary_mng: RSSummaryMng = %RSSummaryMng
 
 # Control nodes
 @onready var btn_floating_menu: RSFloatingMenu = %btn_floating_menu
-@onready var pnl_notifications: PanelContainer = %pnl_notifications
+@onready var manadono_snow: ColorRect = %manadono_snow
 
 # Panels
 @onready var pnl_welcome: PanelWelcome = %pnl_welcome
+@onready var pnl_notifications: PanelContainer = %pnl_notifications
+@onready var pnl_chat: RSPnlChat = %pnl_chat
+@onready var pnl_settings: RSPnlSettings = %pnl_settings
+@onready var pnl_summary: PnlSummary = %pnl_summary
+@onready var alert_scene: RSAlertOverlay = %alert_scene
+@onready var physic_scene: RSPhysicsScene = %physics_scene
 
-@onready var alert_scene : RSAlertOverlay = %alert_scene
-@onready var physic_scene : RSPhysicsScene = %physics_scene
+var wheel_of_random: RSWheelOfRandom
 
-var wheel_of_random : RSWheelOfRandom
-
-var pnls: Array[Control] = []
+@onready var pnls_to_start: Array[Control] = [
+	pnl_chat,
+	pnl_settings,
+	pnl_summary,
+	#pnl_welcome,
+]
 
 
 signal all_started
@@ -91,10 +100,6 @@ func get_all_control_nodes(node_to_search: Node, found: Array[Control] = []) -> 
 
 
 func start_everything() -> void:
-	pnls = [
-		%pnl_chat,
-		%pnl_settings
-	]
 	await Engine.get_main_loop().process_frame
 	get_window().always_on_top = true
 	
@@ -113,8 +118,9 @@ func start_everything() -> void:
 	physic_scene.start()
 	pnl_notifications.start()
 	alert_scene.start()
+	summary_mng.start()
 	
-	for pnl: Control in pnls:
+	for pnl: Control in pnls_to_start:
 		if pnl.has_method("start"):
 			pnl.start()
 	
@@ -156,7 +162,8 @@ func quit():
 	if !pnl_welcome.should_show():
 		save_settings()
 		user_mng.save_all()
-
+		summary_mng.save_summary()
+	
 	get_tree().quit()
 
 

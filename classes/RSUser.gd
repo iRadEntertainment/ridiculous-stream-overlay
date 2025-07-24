@@ -15,14 +15,12 @@ enum WorkWith {
 	GAME_MAKER,
 	OTHER_ENGINE,
 	GAMING,
+	CUSTOM_ENGINE,
 }
 
 # stats
 var added_on: int # UNIX time
-var messages_count: int
-var redeems_count: int
-var raids_in_count: int
-var raids_out_count: int
+var global_interactions: Interactions
 
 # twitch user
 var username: String
@@ -59,10 +57,7 @@ var custom_beans_params: RSBeansParam
 func to_dict() -> Dictionary:
 	var d = {}
 	d["added_on"] = added_on
-	d["messages_count"] = messages_count
-	d["redeems_count"] = redeems_count
-	d["raids_in_count"] = raids_in_count
-	d["raids_out_count"] = raids_out_count
+	d["global_interactions"] = global_interactions.to_dict()
 	
 	d["username"] = username
 	d["display_name"] = display_name
@@ -165,10 +160,7 @@ func update_with_user(updated_user: RSUser) -> void:
 
 func update_from_dict(d: Dictionary) -> void:
 	added_on = d.get("added_on", Time.get_unix_time_from_system())
-	messages_count = d.get("messages_count", 0)
-	redeems_count = d.get("redeems_count", 0)
-	raids_in_count = d.get("raids_in_count", 0)
-	raids_out_count = d.get("raids_out_count", 0)
+	global_interactions = Interactions.from_dict( d.get("global_interactions", {}) )
 	
 	username = d.get("username", "")
 	display_name = d.get("display_name", "")
@@ -236,3 +228,136 @@ static func from_twitcher_user(t_user: TwitchUser) -> RSUser:
 	user.description = t_user.description
 	user.offline_image_url = t_user.offline_image_url
 	return user
+
+
+class Interactions:
+	enum SubTier {TIER1, TIER2, TIER3} # TODO: update from twitch API
+	
+	var is_global: bool = false
+	var messages_count: int = 0
+	var commands_count: int = 0
+	var fake_commands_count: int = 0
+	var channel_points_spent_count: int = 0
+	var redeems: Dictionary[String, int] = {}
+	var gigantify_count: int = 0
+	var bits_count: int = 0
+	var raids_in_count: int = 0
+	var raids_out_count: int = 0
+	var subscriptions: Dictionary[SubTier, int] = {}
+	
+	var redeems_count: int: get = _get_redeem_count
+	var subscriptions_count: int: get = _get_subscriptions_count
+	var global_points: int: get = _get_global_points
+	
+	var messages_points: int:
+		get(): return messages_count * 3
+	var commands_points: int:
+		get(): return commands_count * 2
+	var fake_commands_points: int:
+		get(): return fake_commands_count * 1
+	var channel_points_spent_points: int:
+		get():
+			@warning_ignore("integer_division")
+			return channel_points_spent_count / 10
+	var gigantify_points: int:
+		get(): return gigantify_count * 100
+	var bits_points: int:
+		get(): return bits_count * 4
+	var raids_in_points: int:
+		get(): return raids_in_count * 100
+	var subscription_points: int:
+		get(): return raids_in_count * 100
+	
+	
+	func merge_current_interations(_current_interactions: Interactions) -> void:
+		messages_count += _current_interactions.messages_count
+		commands_count += _current_interactions.commands_count
+		fake_commands_count += _current_interactions.fake_commands_count
+		channel_points_spent_count += _current_interactions.channel_points_spent_count
+		for key: String in _current_interactions.redeems.keys():
+			if redeems.has(key):
+				redeems[key] += _current_interactions.redeems[key]
+			else:
+				redeems[key] = _current_interactions.redeems[key]
+		gigantify_count += _current_interactions.gigantify_count
+		bits_count += _current_interactions.bits_count
+		raids_in_count += _current_interactions.raids_in_count
+		raids_out_count += _current_interactions.raids_out_count
+		for key: SubTier in _current_interactions.subscriptions.keys():
+			if subscriptions.has(key):
+				subscriptions[key] += _current_interactions.subscriptions[key]
+			else:
+				subscriptions[key] = _current_interactions.subscriptions[key]
+	
+	
+	func merged_with_interactions(other_interactions: Interactions) -> Interactions:
+		var merged: Interactions = Interactions.from_dict(to_dict())
+		merged.merge_current_interations(other_interactions)
+		return merged
+	
+	
+	func to_dict() -> Dictionary:
+		var d: Dictionary
+		d["is_global"] = is_global
+		d["messages_count"] = messages_count
+		d["commands_count"] = commands_count
+		d["fake_commands_count"] = fake_commands_count
+		d["channel_points_spent_count"] = channel_points_spent_count
+		d["redeems"] = {}
+		for redeem_name: String in redeems:
+			d["redeems"][redeem_name] = redeems[redeem_name]
+		d["gigantify_count"] = gigantify_count
+		d["bits_count"] = bits_count
+		d["raids_in_count"] = raids_in_count
+		d["raids_out_count"] = raids_out_count
+		d["subscriptions"] = {}
+		for tier: SubTier in subscriptions:
+			d["subscriptions"][tier] = subscriptions[tier]
+		return d
+	
+	
+	func _get_redeem_count() -> int:
+		var count: int = 0
+		for value: int in redeems.values():
+			count += value
+		return count
+	
+	
+	func _get_subscriptions_count() -> int:
+		var count: int = 0
+		for value: int in subscriptions.values():
+			count += value
+		return count
+	
+	
+	func _get_global_points() -> int:
+		var _global_points: int = 0
+		_global_points += messages_points
+		_global_points += commands_points
+		_global_points += fake_commands_points
+		_global_points += channel_points_spent_points
+		_global_points += gigantify_points
+		_global_points += bits_points
+		_global_points += raids_in_points
+		return _global_points
+	
+	
+	static func from_dict(d: Dictionary) -> Interactions:
+		var new_interactions: Interactions = Interactions.new()
+		new_interactions.is_global = d.get("is_global", true)
+		new_interactions.messages_count = d.get("messages_count", 0)
+		new_interactions.commands_count = d.get("commands_count", 0)
+		new_interactions.fake_commands_count = d.get("fake_commands_count", 0)
+		new_interactions.channel_points_spent_count = d.get("channel_points_spent_count", 0)
+		new_interactions.redeems = {}
+		for key: String in d.get("redeems", {}):
+			new_interactions.redeems[key] = int(d["redeems"][key])
+		new_interactions.gigantify_count = d.get("gigantify_count", 0)
+		new_interactions.bits_count = d.get("bits_count", 0)
+		new_interactions.raids_in_count = d.get("raids_in_count", 0)
+		new_interactions.raids_out_count = d.get("raids_out_count", 0)
+		new_interactions.subscriptions = {}
+		for key: int in d.get("subscriptions", {}):
+			var tier_key: SubTier = SubTier.values()[key]
+			new_interactions.subscriptions[tier_key] = int(d["subscriptions"][key])
+		return new_interactions

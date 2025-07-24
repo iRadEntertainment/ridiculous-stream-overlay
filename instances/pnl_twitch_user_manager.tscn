@@ -7,7 +7,7 @@
 [ext_resource type="Theme" uid="uid://0k8rsjlg003m" path="res://ui/chat_message.tres" id="5_2p74v"]
 [ext_resource type="Texture2D" uid="uid://dbpv7xe18l2r6" path="res://ui/sprites/raid_icon.png" id="6_u5abe"]
 [ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://ui/sprites/twitch_user_profile_pic.png" id="7_ug52l"]
-[ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://ui/bootstrap_icons/folder2-open.svg" id="8_0tp1s"]
+[ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://ui/icons/bootstrap_icons/folder2-open.svg" id="8_0tp1s"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nb1op"]
 content_margin_left = 4.0

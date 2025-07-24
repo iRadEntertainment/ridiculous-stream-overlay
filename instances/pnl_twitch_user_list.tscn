@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://bext4in78rfy6"]
 
 [ext_resource type="Script" uid="uid://dug71s0nsj5gy" path="res://instances/pnl_twitch_user_list.gd" id="1_5rx57"]
-[ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://ui/bootstrap_icons/arrow-repeat.svg" id="2_y1dcg"]
-[ext_resource type="Texture2D" uid="uid://boa5ns6c4c07k" path="res://ui/bootstrap_icons/twitch.svg" id="3_q20ft"]
+[ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://ui/icons/bootstrap_icons/arrow-repeat.svg" id="2_y1dcg"]
+[ext_resource type="Texture2D" uid="uid://boa5ns6c4c07k" path="res://ui/icons/bootstrap_icons/twitch.svg" id="3_q20ft"]
 [ext_resource type="PackedScene" uid="uid://biy3s0e3yb44c" path="res://instances/pnl_loading_simple.tscn" id="4_lsxhr"]
 
 [node name="pnl_twitch_user_list" type="PanelContainer"]

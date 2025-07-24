@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://b1ahlikq7p0dk"]
 
-[ext_resource type="FontFile" uid="uid://b4ttfqwa7fl0x" path="res://ui/jetbrains_mono_ttf/JetBrainsMonoNL-Regular.ttf" id="1_abb2p"]
+[ext_resource type="FontFile" uid="uid://b4ttfqwa7fl0x" path="res://ui/fonts/jetbrains_mono_ttf/JetBrainsMonoNL-Regular.ttf" id="1_abb2p"]
 
 [resource]
 default_font = ExtResource("1_abb2p")

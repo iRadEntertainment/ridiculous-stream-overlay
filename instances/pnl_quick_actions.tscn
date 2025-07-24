@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cm77spqiel43k"]
 
 [ext_resource type="Script" uid="uid://u58kwg4btgdw" path="res://instances/pnl_quick_actions.gd" id="1_wcf5d"]
-[ext_resource type="Texture2D" uid="uid://mijaq0gueewe" path="res://ui/bootstrap_icons/chevron-compact-down.svg" id="2_72ah7"]
+[ext_resource type="Texture2D" uid="uid://mijaq0gueewe" path="res://ui/icons/bootstrap_icons/chevron-compact-down.svg" id="2_72ah7"]
 [ext_resource type="StyleBox" uid="uid://c0aj4762xvg73" path="res://ui/editor_light_panel.stylebox" id="3_qsojj"]
 
 [node name="pnl_quick_actions" type="PanelContainer"]

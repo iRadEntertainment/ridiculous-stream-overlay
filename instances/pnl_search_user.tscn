@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://dps0a5js2rxa6"]
 
 [ext_resource type="Script" uid="uid://dbxy0aqwvedm1" path="res://instances/pnl_search_user.gd" id="1_5t2mi"]
-[ext_resource type="Texture2D" uid="uid://dqxomv5pykt6i" path="res://ui/bootstrap_icons/search-heart.svg" id="1_c1yuu"]
+[ext_resource type="Texture2D" uid="uid://dqxomv5pykt6i" path="res://ui/icons/bootstrap_icons/search-heart.svg" id="1_c1yuu"]
 [ext_resource type="PackedScene" uid="uid://csqa2q3atku2i" path="res://instances/pnl_connect.tscn" id="4_h73xo"]
 [ext_resource type="PackedScene" uid="uid://dpc8qa00yqwrs" path="res://instances/pnl_twitch_user_info.tscn" id="4_lqy1a"]
-[ext_resource type="Texture2D" uid="uid://c2bfapbqs6yn8" path="res://ui/bootstrap_icons/floppy-fill.png" id="5_h73xo"]
-[ext_resource type="Texture2D" uid="uid://bakllpvm882ei" path="res://ui/bootstrap_icons/person-heart.png" id="6_h73xo"]
-[ext_resource type="Texture2D" uid="uid://hudfe6pxykni" path="res://ui/bootstrap_icons/x.png" id="6_lqy1a"]
+[ext_resource type="Texture2D" uid="uid://c2bfapbqs6yn8" path="res://ui/icons/bootstrap_icons/floppy-fill.png" id="5_h73xo"]
+[ext_resource type="Texture2D" uid="uid://bakllpvm882ei" path="res://ui/icons/bootstrap_icons/person-heart.png" id="6_h73xo"]
+[ext_resource type="Texture2D" uid="uid://hudfe6pxykni" path="res://ui/icons/bootstrap_icons/x.png" id="6_lqy1a"]
 
 [node name="pnl_search_twitch_user" type="PanelContainer"]
 offset_right = 926.0

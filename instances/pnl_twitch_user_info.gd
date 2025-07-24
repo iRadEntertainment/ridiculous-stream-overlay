@@ -2,8 +2,8 @@ extends PanelContainer
 class_name PnlTwitchUserInfo
 
 const CARETS_TEX = [
-	preload("res://ui/bootstrap_icons/caret-left-fill.png"),
-	preload("res://ui/bootstrap_icons/caret-right-fill.png"),
+	preload("res://ui/icons/bootstrap_icons/caret-left-fill.png"),
+	preload("res://ui/icons/bootstrap_icons/caret-right-fill.png"),
 ]
 @export var expanded: bool = true
 

@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://blvbbujltlmrb"]
 
 [ext_resource type="Script" uid="uid://bmtdchgl2tvxe" path="res://instances/pnl_games.gd" id="1_o0rmx"]
-[ext_resource type="Texture2D" uid="uid://dqxomv5pykt6i" path="res://ui/bootstrap_icons/search-heart.svg" id="1_oaguf"]
-[ext_resource type="Texture2D" uid="uid://kxiiuf0d0kip" path="res://ui/bootstrap_icons/plus-circle.svg" id="2_o0rmx"]
+[ext_resource type="Texture2D" uid="uid://dqxomv5pykt6i" path="res://ui/icons/bootstrap_icons/search-heart.svg" id="1_oaguf"]
+[ext_resource type="Texture2D" uid="uid://kxiiuf0d0kip" path="res://ui/icons/bootstrap_icons/plus-circle.svg" id="2_o0rmx"]
 [ext_resource type="PackedScene" uid="uid://l2xg7yj7bfhe" path="res://instances/entry_game_list.tscn" id="3_apgtw"]
 
 [node name="pnl_user_games" type="PanelContainer"]

@@ -13,11 +13,11 @@ class_name RSSubMenuButton
 			if mouse_entered.is_connected(expand_menu):
 				mouse_entered.disconnect(expand_menu)
 @export var is_radial := false
-@export_range (0.0, 64.0, 0.5) var offset_gap : float = 8:
+@export_range (0.0, 64.0, 0.5) var offset_gap: float = 8:
 	set(val):
 		offset_gap = val
 		expand_menu(is_open)
-@export_range (0.0, 360.0, 0.5) var radial_angle : float = 180:
+@export_range (0.0, 360.0, 0.5) var radial_angle: float = 180:
 	set(val):
 		radial_angle = val
 		_radial_angle_rad = deg_to_rad(radial_angle)
@@ -33,7 +33,7 @@ var tw: Tween
 enum Edge{UP, LEFT, BOT, RIGHT}
 var closest_edge := Edge.RIGHT
 
-var _radial_angle_rad : float = PI
+var _radial_angle_rad: float = PI
 var parent: RSSubMenuButton
 var parent_dir := Vector2.DOWN
 var custom_pos := Vector2()
@@ -43,7 +43,7 @@ var is_sub_menu := false
 var is_dragged := false
 var is_mouse_click_down := false
 var grabbed_at := Vector2()
-var all_btns : Array[Button]
+var all_btns: Array[Button]
 
 signal btn_child_expanded(btn_child: RSSubMenuButton, is_open: bool)
 signal properly_pressed
@@ -85,12 +85,16 @@ func _on_btn_child_expanded(btn_expanded: RSSubMenuButton, opened: bool) -> void
 	#else:
 		#expand_menu(true, btn)
 
-func expand_menu(value: bool, except : RSSubMenuButton = null) -> void:
+func expand_menu(value: bool, except: RSSubMenuButton = null) -> void:
 	if !is_node_ready(): await ready
 	if all_btns.is_empty(): return
+	if parent:
+		if parent.tw:
+			if parent.tw.is_running():
+				return
 	is_open = value
 	if is_sub_menu:
-		var parent_center : Vector2 = parent.size/2
+		var parent_center: Vector2 = parent.size/2
 		var this_center := size/2 + position
 		parent_dir = parent_center.direction_to(this_center)
 	
@@ -110,7 +114,7 @@ func expand_menu(value: bool, except : RSSubMenuButton = null) -> void:
 		var btn: Button = all_btns[i]
 		if btn == except:
 			continue
-		var delay : float = i * anim_delay
+		var delay: float = i * anim_delay
 		var new_pos := size / 2.0 -(btn.size / 2.0)
 		if is_open:
 			if btn is RSSubMenuButton and btn.custom_pos != Vector2():

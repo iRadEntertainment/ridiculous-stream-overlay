@@ -287,8 +287,9 @@ static func html_unescape(text: String) -> String:
 static func validate_handle(handle_text: String) -> String:
 	handle_text = handle_text.strip_edges()
 	handle_text = handle_text.replace("@", "")
-	handle_text = "@" + handle_text
-	return handle_text
+	if handle_text.is_empty():
+		return ""
+	return "@" + handle_text
 
 
 #region Time Parsers

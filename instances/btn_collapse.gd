@@ -1,8 +1,8 @@
 @tool
 extends PanelContainer
 
-const CARET_RIGHT = preload("res://ui/bootstrap_icons/caret-right-fill.png")
-const CARET_DOWN = preload("res://ui/bootstrap_icons/caret-down-fill.png")
+const CARET_RIGHT = preload("res://ui/icons/bootstrap_icons/caret-right-fill.png")
+const CARET_DOWN = preload("res://ui/icons/bootstrap_icons/caret-down-fill.png")
 
 @export var text: String:
 	set(val):

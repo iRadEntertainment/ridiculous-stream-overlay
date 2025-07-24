@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://cokx3oev2rafs"]
 
-[ext_resource type="FontFile" uid="uid://dg17yq7nlpphp" path="res://ui/jetbrains_mono_ttf/JetBrainsMono-Bold.ttf" id="1_6idbc"]
+[ext_resource type="FontFile" uid="uid://dg17yq7nlpphp" path="res://ui/fonts/jetbrains_mono_ttf/JetBrainsMono-Bold.ttf" id="1_6idbc"]
 [ext_resource type="Script" uid="uid://cke08fx67vxb2" path="res://instances/notification_vetting_reward.gd" id="2_xw4nt"]
-[ext_resource type="FontFile" uid="uid://p7jfcodcae6n" path="res://ui/jetbrains_mono_ttf/JetBrainsMono-Thin.ttf" id="3_o38ho"]
+[ext_resource type="FontFile" uid="uid://p7jfcodcae6n" path="res://ui/fonts/jetbrains_mono_ttf/JetBrainsMono-Thin.ttf" id="3_o38ho"]
 [ext_resource type="Texture2D" uid="uid://c0ftqqm0pd0hw" path="res://ui/sprites/ico_tick_double.png" id="3_vej0d"]
 [ext_resource type="Texture2D" uid="uid://838cfol1rq3b" path="res://ui/sprites/ico_tick.png" id="4_yjwsg"]
 [ext_resource type="Texture2D" uid="uid://bhau4fpfk2m1v" path="res://ui/sprites/ico_warn.png" id="5_b7qhp"]

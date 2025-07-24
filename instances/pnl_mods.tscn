@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://d4lkycruly2ye"]
 
 [ext_resource type="Script" uid="uid://l2dyx2ymveti" path="res://instances/pnl_mods.gd" id="1_adgd2"]
-[ext_resource type="Texture2D" uid="uid://h1by403q5s8f" path="res://ui/sword.png" id="1_e4eer"]
-[ext_resource type="Texture2D" uid="uid://6weky3a0q5r5" path="res://ui/bootstrap_icons/person-heart.svg" id="2_avnvt"]
+[ext_resource type="Texture2D" uid="uid://h1by403q5s8f" path="res://ui/icons/sword.png" id="1_e4eer"]
+[ext_resource type="Texture2D" uid="uid://6weky3a0q5r5" path="res://ui/icons/bootstrap_icons/person-heart.svg" id="2_avnvt"]
 [ext_resource type="PackedScene" uid="uid://biy3s0e3yb44c" path="res://instances/pnl_loading_simple.tscn" id="4_v6h6o"]
 
 [node name="pnl_mods" type="PanelContainer"]

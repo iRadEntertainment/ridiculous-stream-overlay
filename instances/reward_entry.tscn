@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://wl1340ejrqt0"]
 
 [ext_resource type="Script" uid="uid://bc1a6qb8oaan1" path="res://instances/reward_entry.gd" id="1_bd50v"]
-[ext_resource type="Texture2D" uid="uid://b4gxd48s477ky" path="res://ui/icon-github.png" id="2_nn7ct"]
+[ext_resource type="Texture2D" uid="uid://b4gxd48s477ky" path="res://ui/icons/icon-github.png" id="2_nn7ct"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o7420"]
 bg_color = Color(0.211765, 0.239216, 0.290196, 1)

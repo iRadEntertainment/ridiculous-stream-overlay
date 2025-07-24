@@ -18,7 +18,7 @@ var is_connected_to_twitch := false
 
 # irc
 signal received_chat_message(channel_name: String, username: String, message: String, tags: TwitchTags.PrivMsg)
-signal first_session_message(username: String, tags: TwitchTags.PrivMsg)
+signal first_session_message(username: String, message: String, tags: TwitchTags.PrivMsg)
 var first_session_message_username_list: PackedStringArray = []
 
 # api
@@ -317,12 +317,14 @@ func get_live_streamers_data(user_names_or_ids: Array = []) -> Dictionary:
 	
 	return live_streamers_data
 
-func check_first_msg(_channel_name: String, username: String, _message: String, tags: TwitchTags.PrivMsg):
+
+func check_first_msg(_channel_name: String, username: String, message: String, tags: TwitchTags.PrivMsg):
 	if not username in first_session_message_username_list:
 		first_session_message_username_list.append(username)
-		first_session_message.emit(username, tags)
+		first_session_message.emit(username, message, tags)
 
-func check_user_twitch_color(username: String, tags: TwitchTags.PrivMsg) -> void:
+
+func check_user_twitch_color(username: String, _message: String, tags: TwitchTags.PrivMsg) -> void:
 	if tags.color.is_empty(): return
 	if RS.user_mng.is_username_known(username):
 		var user: RSUser = await RS.user_mng.get_user_from_username(username)

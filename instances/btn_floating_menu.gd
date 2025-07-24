@@ -24,6 +24,7 @@ func start(_main_menu_button: RSSubMenuButton = null) -> void:
 	start_indicators()
 	if RS.physic_scene:
 		RS.physic_scene.count_updated.connect(update_obj_count)
+	%btn_close.visibility_changed.connect(func(): print_stack())
 
 func start_indicators() -> void:
 	if !RS.no_obs_ws:
@@ -39,6 +40,7 @@ func start_indicators() -> void:
 	var tot = indicators.get_child_count()
 	for i in tot:
 		var ind : TextureRect = indicators.get_child(i)
+		ind.show()
 		ind.position = (size/2 - ind.size/2)
 		ind.position += Vector2.from_angle(TAU*i/tot + PI/2) * (size.x/2 - ind.size.x/2)
 	
@@ -49,7 +51,7 @@ func start_indicators() -> void:
 func generate_panels_buttons() -> void:
 	if !RS.is_node_ready():
 		await RS.ready
-	for pnl: Control in RS.pnls:
+	for pnl: Control in RS.pnls_to_start:
 		var btn := Button.new()
 		btn.focus_mode = Control.FOCUS_NONE
 		btn.text = pnl.name.lstrip("pnl_").left(3)
@@ -111,24 +113,35 @@ func calculate_anchored_pos():
 	
 	anchored_position = anchored_position.clamp(Vector2(), Vector2(w_size)-size)
 
-
+#region Physics Signals
 func _on_btn_beans_pressed() -> void: RS.custom.beans("")
 func _on_btn_laser_pressed() -> void: RS.custom.laser()
 func _on_btn_nuke_pressed() -> void: RS.physic_scene.nuke()
 func _on_btn_zerog_pressed() -> void: RS.custom.zero_g()
 func _on_btn_names_pressed() -> void: RS.custom.destructibles_names()
 func _on_btn_granade_pressed() -> void: RS.physic_scene.spawn_grenade()
+#endregion
 
+
+#region Panels Signals
+func _on_btn_chat_pressed() -> void:
+	RS.pnl_chat.visible = !RS.pnl_chat.visible
+func _on_btn_user_list_pressed() -> void:
+	RS.pnl_settings.open_tab(1)
+	RS.pnl_settings.visible = !RS.pnl_settings.visible
+#endregion
+
+
+#region End Stream Signals
 func _on_btn_close_pressed() -> void:
 	RS.quit()
-func _on_btn_debug_pressed() -> void:
-	RS.debug_view.visible = !RS.debug_view.visible
-func _on_btn_maximize_pressed() -> void:
-	RS.display.set_borderless_maximized(!RS.display.is_maximized)
-
-func _on_btn_spam_form_pressed() -> void:
-	RS.twitcher.chat("Person, you have been invited to join the coolest team https://www.twitch.tv/team/indiegamedevs on Twitch. Compile this form to get an invitation link. Remember that when you get the link: you need to go to Creator Dashboard > Settings > Channel > Featured Content > scroll all the way to the bottom. Here is the form link https://forms.gle/bU2WXAYfoZyVpwWW9")
-	OS.shell_open("https://www.twitch.tv/team/indiegamedevs")
+func _on_btn_summary_pressed() -> void:
+	RS.pnl_summary.visible = !RS.pnl_summary.visible
+#endregion
+#func _on_btn_spam_form_pressed() -> void:
+	#RS.twitcher.chat("Person, you have been invited to join the coolest team https://www.twitch.tv/team/indiegamedevs on Twitch. Compile this form to get an invitation link. Remember that when you get the link: you need to go to Creator Dashboard > Settings > Channel > Featured Content > scroll all the way to the bottom. Here is the form link https://forms.gle/bU2WXAYfoZyVpwWW9")
+	#OS.shell_open("https://www.twitch.tv/team/indiegamedevs")
+#region OBS Signals
 func _on_btn_cig_pressed() -> void:
 	RS.custom.suggest_no_ads()
 	RS.custom.toggle_cig_overlay()
@@ -141,6 +154,17 @@ func _on_btn_pixelate_pressed() -> void:
 	var filter_name = "Blur"
 	RS.no_obs_ws.is_pixelate_on = !RS.no_obs_ws.is_pixelate_on
 	RS.no_obs_ws.set_item_filter_enabled(source_name, filter_name, RS.no_obs_ws.is_pixelate_on)
+#endregion
+
+
+#region Settings Signals
+func _on_btn_debug_pressed() -> void:
+	RS.debug_view.visible = !RS.debug_view.visible
+
+
+func _on_btn_maximize_pressed() -> void:
+	RS.display.set_borderless_maximized(!RS.display.is_maximized)
+
 
 func _on_btn_test_pressed() -> void:
 	var param := RSBeansParam.new()
@@ -190,3 +214,4 @@ func _on_btn_test_pressed() -> void:
 	#var suffix = "[/color]"
 	#var res = RSAlertOverlay.decorate_all_tags(test_text, prefix, suffix)
 	#RS.twitcher.chat(res)
+#endregion

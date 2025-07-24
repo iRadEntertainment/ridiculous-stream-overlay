@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://desh1w40padq8" path="res://ui/twitch/feature_entry.tscn" id="1_12yd1"]
 [ext_resource type="Script" uid="uid://bryibsah01bqr" path="res://ui/twitch/feature_category.gd" id="1_kxcsa"]
-[ext_resource type="Texture2D" uid="uid://dbht7ll6ygloq" path="res://ui/bootstrap_icons/caret-down-fill.png" id="2_oexvr"]
-[ext_resource type="Texture2D" uid="uid://deuf2rqcfddbn" path="res://ui/bootstrap_icons/caret-right-fill.png" id="3_pcctu"]
+[ext_resource type="Texture2D" uid="uid://dbht7ll6ygloq" path="res://ui/icons/bootstrap_icons/caret-down-fill.png" id="2_oexvr"]
+[ext_resource type="Texture2D" uid="uid://deuf2rqcfddbn" path="res://ui/icons/bootstrap_icons/caret-right-fill.png" id="3_pcctu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_33dpg"]
 content_margin_left = 4.0

@@ -26,9 +26,11 @@ func toggle_tool_button(val: bool) -> void:
 
 
 func populate_info() -> void:
-	if not user: return
 	%pnl_games.user = user
 	%pnl_twitch_user_info.populate_from_rs_user(user)
+	%pnl_user_stats.user = user
+	%pnl_user_beans.populate_from_user(user) # TODO: Add custom beans part
+	if not user: return
 	
 	%fl_is_streamer.button_pressed = user.is_streamer
 	%fl_auto_shoutout.button_pressed = user.auto_shoutout
@@ -45,14 +47,6 @@ func populate_info() -> void:
 	%te_so.text = user.shoutout_description
 	%te_promote.text = user.promotion_description
 	
-	%ln_added_on.text = RSUtl.unix_to_string(user.added_on, false, false)
-	%ln_tot_messages.text = str(user.messages_count)
-	%ln_tot_redeems.text = str(user.redeems_count)
-	%ln_tot_raids_in.text = str(user.raids_in_count)
-	%ln_tot_raids_out.text = str(user.raids_out_count)
-	
-	# TODO: Add custom beans part
-	%pnl_user_beans.populate_from_user(user)
 	if user.offline_image_url.is_empty():
 		%bg_img.texture = null
 	else:
@@ -61,6 +55,8 @@ func populate_info() -> void:
 
 func clear() -> void:
 	%pnl_twitch_user_info.clear()
+	%pnl_user_stats.clear()
+	%pnl_user_beans.clear()
 	
 	%fl_is_streamer.button_pressed = false
 	%fl_auto_shoutout.button_pressed = false
@@ -77,13 +73,6 @@ func clear() -> void:
 	%te_so.text = ""
 	%te_promote.text = ""
 	
-	%ln_added_on.text = ""
-	%ln_tot_messages.text = ""
-	%ln_tot_redeems.text = ""
-	%ln_tot_raids_in.text = ""
-	%ln_tot_raids_out.text = ""
-	
-	%pnl_user_beans.populate_from_user(user)
 
 
 func apply_edits_to_user() -> void:
@@ -166,11 +155,11 @@ func _on_btn_web_promo_pressed() -> void:
 
 
 #region Fields Validation
-func _on_ln_youtube_handle_text_submitted(new_text: String) -> void:
-	%ln_youtube_handle.text = RSUtl.validate_handle(new_text)
+func _on_ln_youtube_handle_text_submitted(_new_text: String) -> void:
+	%ln_youtube_handle.text = RSUtl.validate_handle(%ln_youtube_handle.text)
 func _on_ln_youtube_handle_focus_exited() -> void:
 	%ln_youtube_handle.text = RSUtl.validate_handle(%ln_youtube_handle.text)
-func _on_ln_bluesky_handle_text_submitted(new_text: String) -> void:
+func _on_ln_bluesky_handle_text_submitted(_new_text: String) -> void:
 	%ln_bluesky_handle.text = RSUtl.validate_handle(%ln_bluesky_handle.text)
 func _on_ln_bluesky_handle_focus_exited() -> void:
 	%ln_bluesky_handle.text = RSUtl.validate_handle(%ln_bluesky_handle.text)

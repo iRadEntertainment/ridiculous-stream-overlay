@@ -2,7 +2,7 @@ extends PanelContainer
 class_name EntryGameList
 
 const ICONS = [
-	preload("res://ui/bootstrap_icons/steam.png"),
+	preload("res://ui/icons/bootstrap_icons/steam.png"),
 	preload("res://lib/games_info/itchio_icon.svg"),
 ]
 

@@ -4,11 +4,11 @@
 [ext_resource type="Script" uid="uid://bl8vxs83kwb7a" path="res://instances/entry_game_list.gd" id="2_a61ca"]
 [ext_resource type="Script" uid="uid://bekexbn2gr1dv" path="res://lib/games_info/SteamService.gd" id="3_2kuv8"]
 [ext_resource type="Texture2D" uid="uid://bmgt2xi3i1310" path="res://lib/games_info/itchio_icon.svg" id="3_5pn3y"]
-[ext_resource type="Texture2D" uid="uid://eowifokyak3b" path="res://ui/bootstrap_icons/megaphone.svg" id="4_a61ca"]
+[ext_resource type="Texture2D" uid="uid://eowifokyak3b" path="res://ui/icons/bootstrap_icons/megaphone.svg" id="4_a61ca"]
 [ext_resource type="Script" uid="uid://dc576m26xm0qe" path="res://lib/games_info/ItchIOService.gd" id="4_awlx5"]
-[ext_resource type="Texture2D" uid="uid://dl5wxcoiaiu4g" path="res://ui/bootstrap_icons/steam.png" id="5_5pn3y"]
-[ext_resource type="Texture2D" uid="uid://ca6xdmc1afmql" path="res://ui/bootstrap_icons/x.svg" id="5_eou4i"]
-[ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://ui/bootstrap_icons/arrow-repeat.svg" id="6_awlx5"]
+[ext_resource type="Texture2D" uid="uid://dl5wxcoiaiu4g" path="res://ui/icons/bootstrap_icons/steam.png" id="5_5pn3y"]
+[ext_resource type="Texture2D" uid="uid://ca6xdmc1afmql" path="res://ui/icons/bootstrap_icons/x.svg" id="5_eou4i"]
+[ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://ui/icons/bootstrap_icons/arrow-repeat.svg" id="6_awlx5"]
 
 [node name="entry_game_list" type="PanelContainer"]
 offset_right = 385.0

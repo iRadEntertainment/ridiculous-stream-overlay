@@ -30,6 +30,7 @@ func add_commands() -> void:
 	RS.twitcher.commands.add_command("n", add_name_to_scene)
 	RS.twitcher.commands.add_command("toggle_music", toggle_music)
 	RS.twitcher.commands.add_command("mika", play_mika_system_of_a_down)
+	RS.twitcher.commands.add_command("snow", let_it_snow)
 	
 	RS.twitcher.commands.add_command("laser", laser, 0, 1)
 	RS.twitcher.commands.add_command("nuke", nuke)
@@ -69,7 +70,7 @@ func chat_on_stream_off(username: String) -> void:
 	var message := "%s thank you for trying. The stream is off, but yeah, the plugin is still on..."%username
 	RS.twitcher.chat(message)
 
-func on_first_session_message(username: String, _tags: TwitchTags.PrivMsg) -> void:
+func on_first_session_message(username: String, _message: String, _tags: TwitchTags.PrivMsg) -> void:
 	if !RS.no_obs_ws.is_stream_on: return
 	var user: RSUser = await RS.user_mng.get_user_from_username(username)
 	if RS.user_mng.is_username_known(username):
@@ -160,7 +161,7 @@ func impersonate_iRad(data : RSTwitchEventData):
 
 func give_advice(data : RSTwitchEventData) -> void:
 	var folder_path := RSSettings.data_dir
-	var advice_file = folder_path + "advice_collection.json"
+	var advice_file = folder_path + "/advice_collection.json"
 	var advice_list : Array = []
 	check_if_advice_file_exists(advice_file)
 	advice_list = RSUtl.load_json(advice_file)
@@ -187,7 +188,7 @@ func check_if_advice_file_exists(advice_file : String):
 
 func get_advice(data : RSTwitchEventData) -> void:
 	var folder_path := RSSettings.data_dir
-	var advice_file = folder_path + "advice_collection.json"
+	var advice_file = folder_path + "/advice_collection.json"
 	var advice_list : Array
 	check_if_advice_file_exists(advice_file)
 	advice_list = RSUtl.load_json(advice_file)
@@ -523,3 +524,11 @@ func yag_welcome_back():
 		await get_tree().process_frame
 	await get_tree().create_timer(1).timeout
 	tts("The Yagich welcomes the streamer back!")
+
+
+func let_it_snow(_info: TwitchCommandInfo = null, _args := []) -> void:
+	if RS.manadono_snow.visible:
+		return
+	RS.manadono_snow.show()
+	await get_tree().create_timer(10.0).timeout
+	RS.manadono_snow.hide()

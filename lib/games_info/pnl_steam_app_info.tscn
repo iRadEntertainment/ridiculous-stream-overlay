@@ -2,9 +2,9 @@
 
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_sad7k"]
 [ext_resource type="Script" uid="uid://c7pqs18u4yecg" path="res://lib/games_info/pnl_steam_app_info.gd" id="2_a0il5"]
-[ext_resource type="Texture2D" uid="uid://dl5wxcoiaiu4g" path="res://ui/bootstrap_icons/steam.png" id="2_n5jhx"]
+[ext_resource type="Texture2D" uid="uid://dl5wxcoiaiu4g" path="res://ui/icons/bootstrap_icons/steam.png" id="2_n5jhx"]
 [ext_resource type="Script" uid="uid://h7rmxgkdk3dk" path="res://lib/games_info/SteamAppData.gd" id="3_8vb77"]
-[ext_resource type="Texture2D" uid="uid://hudfe6pxykni" path="res://ui/bootstrap_icons/x.png" id="3_a0il5"]
+[ext_resource type="Texture2D" uid="uid://hudfe6pxykni" path="res://ui/icons/bootstrap_icons/x.png" id="3_a0il5"]
 [ext_resource type="Script" uid="uid://bekexbn2gr1dv" path="res://lib/games_info/SteamService.gd" id="3_cicoc"]
 [ext_resource type="StyleBox" uid="uid://cly0o4e4fqaop" path="res://ui/editor_light_panel_transp.stylebox" id="7_8vb77"]
 

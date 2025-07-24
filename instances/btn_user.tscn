@@ -1,15 +1,15 @@
 [gd_scene load_steps=16 format=3 uid="uid://c10luse40ekhw"]
 
-[ext_resource type="Texture2D" uid="uid://1ndihbuunqkm" path="res://ui/bootstrap_icons/megaphone-fill.svg" id="1_4vx60"]
+[ext_resource type="Texture2D" uid="uid://1ndihbuunqkm" path="res://ui/icons/bootstrap_icons/megaphone-fill.svg" id="1_4vx60"]
 [ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_ji5ec"]
 [ext_resource type="Script" uid="uid://8jh4xihpue7w" path="res://instances/btn_user.gd" id="1_uxmoy"]
 [ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://ui/sprites/twitch_user_profile_pic.png" id="2_hunba"]
-[ext_resource type="Texture2D" uid="uid://eowifokyak3b" path="res://ui/bootstrap_icons/megaphone.svg" id="2_rng5j"]
-[ext_resource type="Texture2D" uid="uid://hqibc1sfinhq" path="res://ui/bootstrap_icons/stars.svg" id="4_8vciy"]
-[ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://ui/bootstrap_icons/arrow-repeat.svg" id="5_ga51h"]
+[ext_resource type="Texture2D" uid="uid://eowifokyak3b" path="res://ui/icons/bootstrap_icons/megaphone.svg" id="2_rng5j"]
+[ext_resource type="Texture2D" uid="uid://hqibc1sfinhq" path="res://ui/icons/bootstrap_icons/stars.svg" id="4_8vciy"]
+[ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://ui/icons/bootstrap_icons/arrow-repeat.svg" id="5_ga51h"]
 [ext_resource type="Texture2D" uid="uid://dbpv7xe18l2r6" path="res://ui/sprites/raid_icon.png" id="7_im4q3"]
-[ext_resource type="Texture2D" uid="uid://dkms4psqrsyxy" path="res://ui/bootstrap_icons/trash.png" id="9_8yw8a"]
-[ext_resource type="Texture2D" uid="uid://bg38yaygfklda" path="res://ui/bootstrap_icons/three-dots.png" id="10_ji5ec"]
+[ext_resource type="Texture2D" uid="uid://dkms4psqrsyxy" path="res://ui/icons/bootstrap_icons/trash.png" id="9_8yw8a"]
+[ext_resource type="Texture2D" uid="uid://bg38yaygfklda" path="res://ui/icons/bootstrap_icons/three-dots.png" id="10_ji5ec"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f1m1r"]
 

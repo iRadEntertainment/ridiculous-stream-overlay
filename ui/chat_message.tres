@@ -1,10 +1,10 @@
 [gd_resource type="Theme" load_steps=6 format=3 uid="uid://0k8rsjlg003m"]
 
-[ext_resource type="FontFile" uid="uid://dg17yq7nlpphp" path="res://ui/jetbrains_mono_ttf/JetBrainsMono-Bold.ttf" id="1_i5gqd"]
-[ext_resource type="FontFile" uid="uid://626uoo4jb81x" path="res://ui/jetbrains_mono_ttf/JetBrainsMono-BoldItalic.ttf" id="2_7xsmx"]
-[ext_resource type="FontFile" uid="uid://dahdnqrromul5" path="res://ui/jetbrains_mono_ttf/JetBrainsMono-Italic.ttf" id="3_nyo50"]
-[ext_resource type="FontFile" uid="uid://p7jfcodcae6n" path="res://ui/jetbrains_mono_ttf/JetBrainsMono-Thin.ttf" id="4_0q6wa"]
-[ext_resource type="FontFile" uid="uid://dv0qxnquen18a" path="res://ui/jetbrains_mono_ttf/JetBrainsMono-Regular.ttf" id="5_vsghk"]
+[ext_resource type="FontFile" uid="uid://dg17yq7nlpphp" path="res://ui/fonts/jetbrains_mono_ttf/JetBrainsMono-Bold.ttf" id="1_i5gqd"]
+[ext_resource type="FontFile" uid="uid://626uoo4jb81x" path="res://ui/fonts/jetbrains_mono_ttf/JetBrainsMono-BoldItalic.ttf" id="2_7xsmx"]
+[ext_resource type="FontFile" uid="uid://dahdnqrromul5" path="res://ui/fonts/jetbrains_mono_ttf/JetBrainsMono-Italic.ttf" id="3_nyo50"]
+[ext_resource type="FontFile" uid="uid://p7jfcodcae6n" path="res://ui/fonts/jetbrains_mono_ttf/JetBrainsMono-Thin.ttf" id="4_0q6wa"]
+[ext_resource type="FontFile" uid="uid://dv0qxnquen18a" path="res://ui/fonts/jetbrains_mono_ttf/JetBrainsMono-Regular.ttf" id="5_vsghk"]
 
 [resource]
 RichTextLabel/font_sizes/bold_font_size = 19
