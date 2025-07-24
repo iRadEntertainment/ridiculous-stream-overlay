@@ -47,10 +47,10 @@ func populate_info() -> void:
 	%te_so.text = user.shoutout_description
 	%te_promote.text = user.promotion_description
 	
-	if user.offline_image_url.is_empty():
-		%bg_img.texture = null
-	else:
-		%bg_img.texture = await RS.loader.load_texture_from_url(user.offline_image_url)
+	#if user.offline_image_url.is_empty():
+		#%bg_img.texture = null
+	#else:
+		#%bg_img.texture = await RS.loader.load_texture_from_url(user.offline_image_url)
 
 
 func clear() -> void:
