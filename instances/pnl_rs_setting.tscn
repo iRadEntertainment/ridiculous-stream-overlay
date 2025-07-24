@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://d3jcvhnykltfd"]
+[gd_scene load_steps=7 format=3 uid="uid://d3jcvhnykltfd"]
 
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_cnk24"]
 [ext_resource type="Script" uid="uid://o1hn40gc1uac" path="res://instances/pnl_rs_setting.gd" id="1_mw25e"]
 [ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://ui/icons/bootstrap_icons/folder2-open.svg" id="2_5jph2"]
 [ext_resource type="Texture2D" uid="uid://03d7hycvt6ym" path="res://ui/sprites/led.png" id="3_kgjpx"]
@@ -18,6 +19,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource("1_cnk24")
 script = ExtResource("1_mw25e")
 
 [node name="vb" type="VBoxContainer" parent="."]
