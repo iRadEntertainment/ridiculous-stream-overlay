@@ -333,7 +333,7 @@ static func unix_to_string(
 	if dz_enabled:
 		var tz_offset_usec = Time.get_time_zone_from_system().bias * 60
 		unix += tz_offset_usec
-	var dict: Dictionary = Time.get_datetime_dict_from_unix_time(unix)
+	var dict: Dictionary = Time.get_datetime_dict_from_unix_time(int(unix))
 	dict.weekday = WEEKDAYS[dict.weekday]
 	dict.month = MONTHS_SHORT[dict.month-1]
 	

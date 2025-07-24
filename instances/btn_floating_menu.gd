@@ -24,7 +24,7 @@ func start(_main_menu_button: RSSubMenuButton = null) -> void:
 	start_indicators()
 	if RS.physic_scene:
 		RS.physic_scene.count_updated.connect(update_obj_count)
-	%btn_close.visibility_changed.connect(func(): print_stack())
+
 
 func start_indicators() -> void:
 	if !RS.no_obs_ws:

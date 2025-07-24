@@ -5,18 +5,19 @@ const INFO_MSG = "[color=green]Updating... [color=orange][b]%s[/b][/color]"
 
 func _run() -> void:
 	# batch files
-	#var folder_path = "res://ui/icons/bootstrap_icons/"
-	#var file_paths = RSUtl.list_file_in_folder(folder_path, ["svg"], true)
-	#for file_path in file_paths:
-		#modify_svg_size(file_path, Vector2i.ONE * 48)
-		#modify_svg_color(file_path, "white")
-		#print_rich(INFO_MSG % file_path.get_file())
+	var bootstrap_folder = r"C:\Git\Bootstrap_icons\bootstrap-icons-1.11.3/"
+	var folder_path = "res://ui/icons/bootstrap_icons/"
+	var file_paths = RSUtl.list_file_in_folder(bootstrap_folder, ["svg"], true)
+	for file_path in file_paths:
+		modify_svg_size(file_path, Vector2i.ONE * 48)
+		modify_svg_color(file_path, "white")
+		print_rich(INFO_MSG % file_path.get_file())
 	
 	# single file
-	var file_path = "res://ui/icons/bootstrap_icons/sparkles.svg"
-	modify_svg_size(file_path, Vector2i.ONE * 48)
-	print_rich(INFO_MSG % file_path.get_file())
-	print("end")
+	#var file_path = "res://ui/icons/bootstrap_icons/sparkles.svg"
+	#modify_svg_size(file_path, Vector2i.ONE * 48)
+	#print_rich(INFO_MSG % file_path.get_file())
+	#print("end")
 
 
 static func modify_svg_size(file_path: String, svg_size: Vector2i) -> void:

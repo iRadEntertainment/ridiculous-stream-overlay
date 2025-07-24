@@ -21,6 +21,12 @@ enum WorkWith {
 # stats
 var added_on: float # UNIX time
 var global_interactions: Interactions
+var current_global_interactions: Interactions:
+	get():
+		return global_interactions.merged_with_interactions(current_interactions)
+var current_interactions: Interactions:
+	get():
+		return RS.summary_mng.get_user_current_interactions(user_id)
 
 # twitch user
 var username: String
@@ -291,6 +297,7 @@ class Interactions:
 	
 	
 	func merged_with_interactions(other_interactions: Interactions) -> Interactions:
+		if !other_interactions: return self
 		var merged: Interactions = Interactions.from_dict(to_dict())
 		merged.merge_current_interations(other_interactions)
 		return merged

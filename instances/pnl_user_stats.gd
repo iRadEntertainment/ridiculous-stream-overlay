@@ -19,14 +19,10 @@ func _ready() -> void:
 func _populate() -> void:
 	clear()
 	var interactions: RSUser.Interactions
-	var current: RSUser.Interactions = RS.summary_mng.get_user_current_interactions(user.user_id)
 	if is_global_interactions:
-		if current:
-			interactions = user.global_interactions.merged_with_interactions(current)
-		else:
-			interactions = user.global_interactions
-	elif current:
-		interactions = current
+		interactions = user.current_global_interactions
+	else:
+		interactions = user.current_interactions
 	_populate_from_interactions(interactions)
 	%ln_added_on.text = RSUtl.unix_to_string(user.added_on, false, false)
 
