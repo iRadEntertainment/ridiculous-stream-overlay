@@ -220,6 +220,25 @@ func _on_twitch_connected() -> void:
 
 func _on_tmr_refresh_live_timeout() -> void:
 	refresh_live_streamers()
+
+
+# connected from commands in RSCustom
+func _on_user_request_add(info : TwitchCommandInfo = null, _args := []) -> void:
+	var user_id: int = int(info.tags.user_id)
+	var user: RSUser
+	if is_user_id_known(user_id):
+		user = get_known_user_from_user_id(user_id)
+		RS.twitcher.chat("You are in %s! You are already in..." % user.display_name)
+		return
+	elif unknown.has(user_id):
+		user = unknown[user_id]
+	else:
+		user = await get_user_from_user_id(user_id)
+	if not user:
+		l.e("Adding user %s with user_id %d error. User not found" % [info.username, user_id])
+		return
+	RS.twitcher.chat("Welcome in %s Ridiculous Streaming!" % user.display_name)
+	save_user(user)
 #endregion
 
 

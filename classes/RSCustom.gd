@@ -20,6 +20,8 @@ func start():
 
 
 func add_commands() -> void:
+	RS.twitcher.commands.add_command("add_me", RS.user_mng._on_user_request_add)
+	
 	RS.twitcher.commands.add_command("discord", discord)
 	RS.twitcher.commands.add_command("commands", chat_commands_help)
 	RS.twitcher.commands.add_command("pandano", pandano)
