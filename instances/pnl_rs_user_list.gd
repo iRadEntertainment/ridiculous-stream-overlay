@@ -54,6 +54,9 @@ func sort_by_added_on(a: RSTwitchUserEntry, b: RSTwitchUserEntry, ascendent: boo
 	if a.user.added_on == b.user.added_on: return false
 	return a.user.added_on > b.user.added_on == ascendent
 func sort_by_points(a: RSTwitchUserEntry, b: RSTwitchUserEntry, ascendent: bool) -> bool:
+	if not a.user.current_global_interactions or \
+		not b.user.current_global_interactions:
+			return false
 	var a_points: int = a.user.current_global_interactions.global_points
 	var b_points: int = b.user.current_global_interactions.global_points
 	if a_points == b_points: return false

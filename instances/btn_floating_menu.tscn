@@ -282,6 +282,17 @@ offset_bottom = 72.0
 icon = ExtResource("5_dltuo")
 icon_alignment = 1
 
+[node name="btn_chat" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_left = -67.0
+offset_top = 3.0
+offset_right = -17.0
+offset_bottom = 53.0
+icon = ExtResource("20_yin7d")
+icon_alignment = 1
+
 [node name="btn_user_list" type="Button" parent="."]
 visible = false
 custom_minimum_size = Vector2(32, 32)
@@ -291,17 +302,6 @@ offset_top = 3.0
 offset_right = -27.0
 offset_bottom = 43.0
 icon = ExtResource("19_mqodr")
-icon_alignment = 1
-
-[node name="btn_chat" type="Button" parent="."]
-visible = false
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 0
-offset_left = -67.0
-offset_top = 3.0
-offset_right = -27.0
-offset_bottom = 43.0
-icon = ExtResource("20_yin7d")
 icon_alignment = 1
 
 [node name="btn_settings" type="Button" parent="."]
@@ -407,8 +407,8 @@ icon_alignment = 1
 [connection signal="pressed" from="btn_obs/btn_mic" to="." method="_on_btn_mic_pressed"]
 [connection signal="pressed" from="btn_obs/btn_brave_sound" to="." method="_on_btn_brave_sound_pressed"]
 [connection signal="pressed" from="btn_obs/btn_pixelate" to="." method="_on_btn_pixelate_pressed"]
-[connection signal="pressed" from="btn_user_list" to="." method="_on_btn_user_list_pressed"]
 [connection signal="pressed" from="btn_chat" to="." method="_on_btn_chat_pressed"]
+[connection signal="pressed" from="btn_user_list" to="." method="_on_btn_user_list_pressed"]
 [connection signal="pressed" from="btn_settings/btn_test" to="." method="_on_btn_test_pressed"]
 [connection signal="pressed" from="btn_settings/btn_display/btn_maximize" to="." method="_on_btn_maximize_pressed"]
 [connection signal="pressed" from="btn_settings/btn_display/btn_debug" to="." method="_on_btn_debug_pressed"]

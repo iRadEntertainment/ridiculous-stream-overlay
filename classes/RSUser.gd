@@ -23,6 +23,7 @@ var added_on: float # UNIX time
 var global_interactions: Interactions
 var current_global_interactions: Interactions:
 	get():
+		if not global_interactions: return current_interactions
 		return global_interactions.merged_with_interactions(current_interactions)
 var current_interactions: Interactions:
 	get():
@@ -63,7 +64,8 @@ var custom_beans_params: RSBeansParam
 func to_dict() -> Dictionary:
 	var d = {}
 	d["added_on"] = added_on
-	d["global_interactions"] = global_interactions.to_dict()
+	if global_interactions:
+		d["global_interactions"] = global_interactions.to_dict()
 	
 	d["username"] = username
 	d["display_name"] = display_name
