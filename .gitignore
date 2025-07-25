@@ -13,3 +13,6 @@ api_steam.key
 /addons/editorscriptmanager/
 /addons/ridiculous_coding/
 export_presets.cfg
+
+twitch_oauth_setting.tres
+twitch_oauth_token.tres

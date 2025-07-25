@@ -11,28 +11,28 @@ class_name RSPnlChat
 const commands_string_format = {
 	"ACTION": "[i]%s[/i]",
 	"!rb": "[rainbow freq=1.0 sat=0.8 val=0.8]%s[/rainbow]",
-	"!big" : "[font_size=64]%s[/font_size]",
-	"!small" : "[font_size=12]%s[/font_size]",
-	"!wave" : "[wave amp=50.0 freq=5.0 connect=1]%s[/wave]",
-	"!hl" : "[bgcolor=ff0000][color=ffffff]%s[/color][/bgcolor]",
-	"!pulse" : "[pulse freq=1.0 color=ffffff40 ease=-2.0]%s[/pulse]",
-	"!tornado" : "[tornado radius=10.0 freq=1.0 connected=1]%s[/tornado]",
-	"!shake" : "[shake rate=20.0 level=5 connected=1]%s[/shake]",
-	"!hd" : "[bgcolor=21262e][color=21262e]%s[/color][/bgcolor]",
+	"!big": "[font_size=64]%s[/font_size]",
+	"!small": "[font_size=12]%s[/font_size]",
+	"!wave": "[wave amp=50.0 freq=5.0 connect=1]%s[/wave]",
+	"!hl": "[bgcolor=ff0000][color=ffffff]%s[/color][/bgcolor]",
+	"!pulse": "[pulse freq=1.0 color=ffffff40 ease=-2.0]%s[/pulse]",
+	"!tornado": "[tornado radius=10.0 freq=1.0 connected=1]%s[/tornado]",
+	"!shake": "[shake rate=20.0 level=5 connected=1]%s[/shake]",
+	"!hd": "[bgcolor=21262e][color=21262e]%s[/color][/bgcolor]",
 }
 
 var sprite_effect : SpriteFrameEffect
 
 
 func start():
-	if !RS.settings.chatbot_channel:
-		return
+	#if !RS.settings.chatbot_channel:
+		#return
 	if !RS.twitcher.received_chat_message.is_connected(_on_chat_message):
 		RS.twitcher.received_chat_message.connect(_on_chat_message)
 	sprite_effect = SpriteFrameEffect.new()
 	lb_chat.install_effect(sprite_effect)
 	pnl_connect.start()
-	%lb_channel.text = RS.settings.chatbot_channels.front()
+	#%lb_channel.text = RS.settings.chatbot_channels.front()
 
 
 var badge_id = 0

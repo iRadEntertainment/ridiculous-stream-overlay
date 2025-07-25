@@ -3,13 +3,8 @@
 extends Node
 class_name ItchIOService
 
-@onready var l := TwitchLogger.new("ItchIOService")
+static var _log: TwitchLogger = TwitchLogger.new(&"ItchIOService")
 
-
-func _ready() -> void:
-	l.color = Color.ORANGE_RED.to_html()
-	l.enabled = true
-	l.debug = false
 
 
 func get_itch_app_data(game_url: String) -> ItchIOAppData:
@@ -21,7 +16,7 @@ func get_itch_app_data(game_url: String) -> ItchIOAppData:
 	
 	var err := http_request.request(json_url)
 	if err != OK:
-		l.e("Error requesting Itch data: %s" % error_string(err))
+		_log.e("Error requesting Itch data: %s" % error_string(err))
 		return null
 
 	var json_result: Array = await http_request.request_completed
@@ -30,18 +25,18 @@ func get_itch_app_data(game_url: String) -> ItchIOAppData:
 	var body: PackedByteArray = json_result[3]
 
 	if response_code != HTTPClient.RESPONSE_OK:
-		l.e("Failed to fetch Itch data.json. HTTP %s" % response_code)
+		_log.e("Failed to fetch Itch data.json. HTTP %s" % response_code)
 		return null
 
 	var json = JSON.parse_string(body.get_string_from_utf8())
 	if typeof(json) != TYPE_DICTIONARY:
-		l.e("Invalid JSON from Itch")
+		_log.e("Invalid JSON from Itch")
 		return null
 
 	# Second request to get the HTML
 	err = http_request.request(base_url)
 	if err != OK:
-		l.e("Error requesting Itch HTML: %s" % error_string(err))
+		_log.e("Error requesting Itch HTML: %s" % error_string(err))
 		return ItchIOAppData.from_json(json)
 
 	var html_result: Array = await http_request.request_completed
@@ -53,7 +48,7 @@ func get_itch_app_data(game_url: String) -> ItchIOAppData:
 		var extra_info: Dictionary = scrape_html(html)
 		json.merge(extra_info)
 	else:
-		l.e("Could not retrieve HTML content. Skipping description/screenshot parsing.")
+		_log.e("Could not retrieve HTML content. Skipping description/screenshot parsing.")
 	http_request.queue_free()
 	return ItchIOAppData.from_json(json)
 

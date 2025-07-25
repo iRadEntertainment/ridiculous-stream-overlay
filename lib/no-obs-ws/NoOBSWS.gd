@@ -4,7 +4,7 @@ class_name NoOBSWS
 const NoOBSAuthenticator := preload("res://lib/no-obs-ws/Authenticator.gd")
 const NoOBSEnums := preload("res://lib/no-obs-ws/Utility/Enums.gd")
 
-var l : RSLogger
+static var _log: TwitchLogger = TwitchLogger.new(&"NoOBSWS")
 
 var _ws: WebSocketPeer
 # {request_id: NoOBSRequestResponse}
@@ -46,8 +46,7 @@ var is_pixelate_on := false:
 
 
 func start():
-	l = RSLogger.new(RSSettings.LOGGER_NAME_NOOBSWS)
-	l.i("Module Started. Not connected to WS.")
+	_log.i("Module Started. Not connected to WS.")
 	event_received.connect(_on_event_received)
 	
 	var has_all := true
@@ -55,14 +54,14 @@ func start():
 	elif !RS.settings.obs_websocket_port: has_all = false
 	
 	if !has_all:
-		l.w("Missing settings for OBS Autoconnect")
+		_log.w("Missing settings for OBS Autoconnect")
 		return
 	if RS.settings.obs_autoconnect:
 		start_connection()
 
 
 func start_connection() -> void:
-	l.i("Connecting to %s:%s" % [RS.settings.obs_websocket_url, RS.settings.obs_websocket_port])
+	_log.i("Connecting to %s:%s" % [RS.settings.obs_websocket_url, RS.settings.obs_websocket_port])
 	connect_to_obsws(RS.settings.obs_websocket_port, RS.settings.obs_websocket_password)
 	if !is_state_open:
 		await connection_ready
@@ -200,7 +199,7 @@ func restart_media(media_name) -> void:
 # ============================ TheYagich OG code ============================
 func connect_to_obsws(port: int, password: String = "") -> void:
 	if password.is_empty():
-		l.e("Websocket password missing.")
+		_log.e("Websocket password missing.")
 		return
 	_ws = WebSocketPeer.new()
 	var err := _ws.connect_to_url("%s:%s" % [RS.settings.obs_websocket_url, port])
@@ -208,7 +207,7 @@ func connect_to_obsws(port: int, password: String = "") -> void:
 		if not _auth_required.is_connected(_authenticate):
 			_auth_required.connect(_authenticate.bind(password))
 	else:
-		l.e("Couldn't connect. Error: %s" % err)
+		_log.e("Couldn't connect. Error: %s" % err)
 
 
 func make_generic_request(
@@ -289,7 +288,7 @@ func _poll_socket() -> void:
 				connection_failed.emit()
 			else:
 				connection_closed_clean.emit(_ws.get_close_code(), _ws.get_close_reason())
-			l.i("Connection closing. Code {}")
+			_log.i("Connection closing. Code {}")
 			_ws = null
 
 
@@ -303,7 +302,7 @@ func _handle_message(message: NoOBSMessage) -> void:
 		NoOBSEnums.WebSocketOpCode.HELLO:
 			if message.get("authentication") != null:
 				_auth_required.emit(message)
-				l.w("Auth required.")
+				_log.w("Auth required.")
 			else:
 				var m = NoOBSMessage.new()
 				m.op_code = NoOBSEnums.WebSocketOpCode.IDENTIFY
@@ -311,7 +310,7 @@ func _handle_message(message: NoOBSMessage) -> void:
 
 		NoOBSEnums.WebSocketOpCode.IDENTIFIED:
 			connection_ready.emit()
-			l.i("Connected.")
+			_log.i("Connected.")
 
 		NoOBSEnums.WebSocketOpCode.EVENT:
 			event_received.emit(message)
@@ -319,13 +318,13 @@ func _handle_message(message: NoOBSMessage) -> void:
 		NoOBSEnums.WebSocketOpCode.REQUEST_RESPONSE:
 			var id = message.get_data().get("request_id")
 			if id == null:
-				l.e("Received request response, but there was no request id field.")
+				_log.e("Received request response, but there was no request id field.")
 				error.emit("Received request response, but there was no request id field.")
 				return
 
 			var response = _requests.get(id) as NoOBSRequestResponse
 			if response == null:
-				l.e("Received request response, but there was no request made with that id.")
+				_log.e("Received request response, but there was no request made with that id.")
 				error.emit("Received request response, but there was no request made with that id.")
 				return
 
@@ -353,12 +352,12 @@ func _handle_message(message: NoOBSMessage) -> void:
 
 func _send_message(message: NoOBSMessage) -> void:
 	if not _ws:
-		l.e("WebSocket not initialized")
-		l.w("Cannot send message with code: %s" % message.op_code)
+		_log.e("WebSocket not initialized")
+		_log.w("Cannot send message with code: %s" % message.op_code)
 		return
 	if _ws.get_ready_state() != WebSocketPeer.STATE_OPEN:
-		l.e("WebSocket not open")
-		l.w("Cannot send message with code: %s" % message.op_code)
+		_log.e("WebSocket not open")
+		_log.w("Cannot send message with code: %s" % message.op_code)
 		return
 	_ws.send_text(message.to_obsws_json())
 
@@ -373,8 +372,8 @@ func _authenticate(message: NoOBSMessage, password: String) -> void:
 	var m = NoOBSMessage.new()
 	m.op_code = NoOBSEnums.WebSocketOpCode.IDENTIFY
 	m._d["authentication"] = auth_string
-	l.i("Authentication...")
-	l.i(m._to_string())
+	_log.i("Authentication...")
+	_log.i(m._to_string())
 	_send_message(m)
 
 

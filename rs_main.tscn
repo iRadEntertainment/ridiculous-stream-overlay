@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://d345j5een73bf"]
+[gd_scene load_steps=68 format=3 uid="uid://d345j5een73bf"]
 
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_1q0ot"]
 [ext_resource type="Script" uid="uid://brw4mp8qnlxxh" path="res://RSMain.gd" id="1_y2jdm"]
@@ -10,22 +10,208 @@
 [ext_resource type="Script" uid="uid://ivai1wov0xyp" path="res://classes/RSTwitcher.gd" id="5_wye2t"]
 [ext_resource type="PackedScene" uid="uid://cdgelqh5th1pl" path="res://instances/btn_floating_menu.tscn" id="5_xf57p"]
 [ext_resource type="Script" uid="uid://dpswjmhhvf4na" path="res://lib/no-obs-ws/NoOBSWS.gd" id="6_8c5hc"]
+[ext_resource type="Script" uid="uid://cw30cwveway65" path="res://addons/twitcher/generated/twitch_api.gd" id="7_rmq2k"]
+[ext_resource type="Resource" uid="uid://c4scwuk8q0r40" path="res://addons/twitcher/lib/oOuch/default_key_provider.tres" id="8_4dc0s"]
 [ext_resource type="Script" uid="uid://ccysx7mq6mwoc" path="res://classes/RSShoutoutMng.gd" id="8_ex7ik"]
 [ext_resource type="Script" uid="uid://yenw20vcio8i" path="res://classes/RSLoader.gd" id="8_fol3s"]
 [ext_resource type="Script" uid="uid://yq73vhe7mr0d" path="res://classes/RSCustom.gd" id="9_by474"]
+[ext_resource type="Script" uid="uid://b52xp7c23ucfk" path="res://addons/twitcher/lib/oOuch/oauth_token.gd" id="9_wkncm"]
+[ext_resource type="Script" uid="uid://00xbijwpi8xa" path="res://addons/twitcher/lib/oOuch/oauth_setting.gd" id="10_1ry14"]
+[ext_resource type="Script" uid="uid://b7i5j62lmuh71" path="res://addons/twitcher/lib/http/buffered_http_client.gd" id="11_4dc0s"]
+[ext_resource type="Script" uid="uid://b3n3et8mebjcc" path="res://addons/twitcher/auth/twitch_oauth_scopes.gd" id="11_6jnqg"]
 [ext_resource type="Script" uid="uid://d3ad1n45m8dmo" path="res://classes/RSUserMng.gd" id="12_oh8ps"]
 [ext_resource type="Script" uid="uid://c4aq5xbpuof7c" path="res://classes/RSDisplay.gd" id="12_qc4sr"]
+[ext_resource type="Script" uid="uid://i8st3lv0lidh" path="res://addons/twitcher/twitch_service.gd" id="13_xqkml"]
 [ext_resource type="AudioStream" uid="uid://bmqpfhn6b600q" path="res://local_res/sfx_notification_discord.ogg" id="14_38gvb"]
+[ext_resource type="Script" uid="uid://iv0mgv0lu8b0" path="res://addons/twitcher/auth/twitch_auth.gd" id="14_isld6"]
+[ext_resource type="Script" uid="uid://bf0wi70haua35" path="res://addons/twitcher/lib/oOuch/oauth.gd" id="14_jmoph"]
 [ext_resource type="PackedScene" uid="uid://dseoyhiylvwnu" path="res://instances/pnl_settings.tscn" id="15_8wfva"]
+[ext_resource type="Script" uid="uid://wkh0l2xsyapj" path="res://addons/twitcher/irc/twitch_irc.gd" id="15_jmoph"]
+[ext_resource type="Script" uid="uid://blnbogtrshw4r" path="res://addons/twitcher/auth/twitch_token_handler.gd" id="15_xfrgx"]
 [ext_resource type="PackedScene" uid="uid://jchfk7d78ss5" path="res://instances/pnl_chat.tscn" id="16_ege2h"]
+[ext_resource type="Script" uid="uid://c8mv0lq0a2l8f" path="res://addons/twitcher/irc/twitch_irc_setting.gd" id="16_xfrgx"]
 [ext_resource type="PackedScene" uid="uid://bhjtpi0nfv415" path="res://instances/pnl_notifications.tscn" id="17_sodyi"]
+[ext_resource type="Script" uid="uid://blmhj3j00yk45" path="res://addons/twitcher/eventsub/twitch_eventsub.gd" id="17_stwwt"]
+[ext_resource type="Script" uid="uid://cjug64e3433g0" path="res://addons/twitcher/eventsub/twitch_eventsub_config.gd" id="18_t7nc8"]
 [ext_resource type="PackedScene" uid="uid://cokv6nhefofwl" path="res://instances/pnl_welcome.tscn" id="19_3rcuc"]
 [ext_resource type="PackedScene" uid="uid://dregwshpiqg8j" path="res://instances/alert_overlay.tscn" id="19_gj13v"]
+[ext_resource type="Script" uid="uid://d4lyup0vy1wtu" path="res://addons/twitcher/media/twitch_media_loader.gd" id="19_vn8cx"]
+[ext_resource type="Texture2D" uid="uid://g1dbcjksbotw" path="res://addons/twitcher/assets/fallback_texture.tres" id="20_q2h71"]
 [ext_resource type="AudioStream" uid="uid://cidanglkg6lrp" path="res://local_res/sfx_quack_01.ogg" id="21_637v1"]
+[ext_resource type="Script" uid="uid://6v8jnfjwbnhm" path="res://addons/twitcher/media/twitch_image_transformer.gd" id="21_f7hi4"]
 [ext_resource type="Shader" uid="uid://fpir2i2pnixe" path="res://shaders/snow_shader.gdshader" id="22_38gvb"]
+[ext_resource type="Script" uid="uid://bmluckfvgm1c2" path="res://addons/twitcher/chat/twitch_command.gd" id="22_dt5lr"]
 [ext_resource type="Texture2D" uid="uid://buikegrssuuph" path="res://local_res/snowflake-2.svg" id="23_mhtf1"]
 [ext_resource type="Script" uid="uid://du1vhw4tu6yv5" path="res://classes/RSSummaryMng.gd" id="24_rr657"]
 [ext_resource type="PackedScene" uid="uid://dduocy5paeeuu" path="res://classes/pnl_summary.tscn" id="25_ht5xl"]
+
+[sub_resource type="Resource" id="Resource_7gvem"]
+script = ExtResource("10_1ry14")
+redirect_url = "http://localhost:18297"
+well_known_url = ""
+token_url = "https://id.twitch.tv/oauth2/token"
+authorization_url = "https://id.twitch.tv/oauth2/authorize"
+device_authorization_url = ""
+cache_file = "res://auth.key"
+client_id = "t0nkdk4ssr5mhvyj2939da8y4gngrp"
+authorization_flow = 0
+_encryption_key_provider = ExtResource("8_4dc0s")
+client_secret = "bZ6s4EjBYiJFaGFsJRLwQ6GZWCtJnXUow9TyQ/N6ZwM="
+metadata/_custom_type_script = "uid://00xbijwpi8xa"
+
+[sub_resource type="Resource" id="Resource_dvryf"]
+script = ExtResource("11_6jnqg")
+used_scopes = Array[StringName]([&"bits:read", &"channel:bot", &"moderator:manage:automod", &"moderator:read:followers", &"channel:read:ads", &"channel:manage:ads", &"channel:manage:broadcast", &"channel:edit:commercial", &"channel:manage:extensions", &"channel:read:goals", &"channel:read:guest_star", &"channel:manage:guest_star", &"channel:read:hype_train", &"channel:manage:moderators", &"channel:read:polls", &"channel:manage:polls", &"channel:read:predictions", &"channel:manage:predictions", &"channel:manage:raids", &"channel:read:redemptions", &"channel:manage:redemptions", &"channel:manage:schedule", &"channel:read:subscriptions", &"channel:read:vips", &"channel:manage:vips", &"clips:edit", &"moderation:read", &"moderator:manage:announcements", &"moderator:read:banned_users", &"moderator:manage:banned_users", &"moderator:read:chat_messages", &"moderator:manage:blocked_terms", &"moderator:manage:chat_messages", &"moderator:read:chat_settings", &"moderator:manage:chat_settings", &"moderator:read:chatters", &"moderator:read:guest_star", &"moderator:manage:guest_star", &"moderator:read:moderators", &"moderator:read:shield_mode", &"moderator:manage:shield_mode", &"moderator:read:shoutouts", &"moderator:manage:shoutouts", &"moderator:read:unban_requests", &"moderator:manage:unban_requests", &"moderator:read:vips", &"moderator:read:warnings", &"moderator:manage:warnings", &"user:bot", &"user:edit:broadcast", &"user:read:blocked_users", &"user:manage:blocked_users", &"user:read:broadcast", &"user:read:chat", &"user:read:emotes", &"user:read:follows", &"user:read:moderated_channels", &"user:read:subscriptions", &"user:read:whispers", &"user:manage:whispers", &"user:write:chat", &"chat:edit", &"chat:read", &"channel:read:charity", &"channel:read:editors", &"channel:read:stream_key", &"channel:manage:videos", &"moderator:read:automod_settings", &"moderator:manage:automod_settings", &"moderator:read:blocked_terms", &"moderator:read:suspicious_users", &"user:edit", &"channel:moderate"])
+metadata/_custom_type_script = "uid://b3n3et8mebjcc"
+
+[sub_resource type="Resource" id="Resource_rbl80"]
+script = ExtResource("9_wkncm")
+_crypto_key_provider = ExtResource("8_4dc0s")
+_identifier = "Auth-4293"
+_cache_path = "user://auth.conf"
+metadata/_custom_type_script = "uid://b52xp7c23ucfk"
+
+[sub_resource type="Resource" id="Resource_ahdki"]
+script = ExtResource("16_xfrgx")
+username = ""
+auto_join_channels = Array[StringName]([])
+server = "wss://irc-ws.chat.twitch.tv:443"
+send_message_delay_ms = 320
+capabilities = 0
+
+[sub_resource type="Resource" id="Resource_frd2u"]
+script = ExtResource("18_t7nc8")
+type = 4
+condition = {}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_ud7fj"]
+script = ExtResource("18_t7nc8")
+type = 5
+condition = {}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_cp302"]
+script = ExtResource("18_t7nc8")
+type = 6
+condition = {}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_jmoph"]
+script = ExtResource("18_t7nc8")
+type = 15
+condition = {}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_xfrgx"]
+script = ExtResource("18_t7nc8")
+type = 18
+condition = {
+&"broadcaster_user_id": "443367221"
+}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_stwwt"]
+script = ExtResource("18_t7nc8")
+type = 19
+condition = {
+&"broadcaster_user_id": "443367221"
+}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_t7nc8"]
+script = ExtResource("18_t7nc8")
+type = 20
+condition = {
+&"to_broadcaster_user_id": ""
+}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_vn8cx"]
+script = ExtResource("18_t7nc8")
+type = 21
+condition = {
+&"broadcaster_user_id": "443367221"
+}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_q2h71"]
+script = ExtResource("18_t7nc8")
+type = 33
+condition = {
+&"broadcaster_user_id": "443367221"
+}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_f7hi4"]
+script = ExtResource("18_t7nc8")
+type = 37
+condition = {
+&"broadcaster_user_id": "443367221",
+&"reward_id": ""
+}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_dt5lr"]
+script = ExtResource("18_t7nc8")
+type = 39
+condition = {
+&"broadcaster_user_id": "443367221"
+}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_ky1pa"]
+script = ExtResource("18_t7nc8")
+type = 40
+condition = {
+&"broadcaster_user_id": "443367221"
+}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_fjdrr"]
+script = ExtResource("18_t7nc8")
+type = 41
+condition = {
+&"broadcaster_user_id": "443367221"
+}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_po7a7"]
+script = ExtResource("18_t7nc8")
+type = 52
+condition = {
+&"broadcaster_user_id": "443367221"
+}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_hpbui"]
+script = ExtResource("18_t7nc8")
+type = 53
+condition = {
+&"broadcaster_user_id": "443367221"
+}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_8xmxy"]
+script = ExtResource("18_t7nc8")
+type = 54
+condition = {
+&"broadcaster_user_id": "443367221"
+}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_5tays"]
+script = ExtResource("18_t7nc8")
+type = 0
+condition = {
+&"broadcaster_user_id": "443367221",
+&"moderator_user_id": ""
+}
+metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_tsaix"]
+script = ExtResource("21_f7hi4")
+fallback_texture = ExtResource("20_q2h71")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mhtf1"]
 shader = ExtResource("22_38gvb")
@@ -58,6 +244,11 @@ metadata/_edit_lock_ = true
 
 [node name="Modules" type="Node" parent="."]
 
+[node name="BufferedHTTPClient" type="Node" parent="Modules"]
+unique_name_in_owner = true
+script = ExtResource("11_4dc0s")
+metadata/_custom_type_script = "uid://b7i5j62lmuh71"
+
 [node name="RSMouseTracker" type="Node" parent="Modules"]
 unique_name_in_owner = true
 script = ExtResource("2_xjlao")
@@ -73,6 +264,66 @@ script = ExtResource("8_fol3s")
 [node name="RSTwitcher" type="Node" parent="Modules"]
 unique_name_in_owner = true
 script = ExtResource("5_wye2t")
+
+[node name="TwitchService" type="Node" parent="Modules/RSTwitcher"]
+unique_name_in_owner = true
+script = ExtResource("13_xqkml")
+oauth_setting = SubResource("Resource_7gvem")
+scopes = SubResource("Resource_dvryf")
+token = SubResource("Resource_rbl80")
+metadata/_custom_type_script = "uid://i8st3lv0lidh"
+
+[node name="TwitchAPI" type="Node" parent="Modules/RSTwitcher/TwitchService"]
+unique_name_in_owner = true
+script = ExtResource("7_rmq2k")
+token = SubResource("Resource_rbl80")
+oauth_setting = SubResource("Resource_7gvem")
+metadata/_custom_type_script = "uid://cw30cwveway65"
+
+[node name="TwitchAuth" type="Node" parent="Modules/RSTwitcher/TwitchService"]
+unique_name_in_owner = true
+script = ExtResource("14_isld6")
+oauth_setting = SubResource("Resource_7gvem")
+token = SubResource("Resource_rbl80")
+scopes = SubResource("Resource_dvryf")
+metadata/_custom_type_script = "uid://iv0mgv0lu8b0"
+
+[node name="OAuth" type="Node" parent="Modules/RSTwitcher/TwitchService/TwitchAuth" node_paths=PackedStringArray("token_handler")]
+script = ExtResource("14_jmoph")
+oauth_setting = SubResource("Resource_7gvem")
+scopes = SubResource("Resource_dvryf")
+token_handler = NodePath("../TokenHandler")
+
+[node name="TokenHandler" type="Node" parent="Modules/RSTwitcher/TwitchService/TwitchAuth"]
+script = ExtResource("15_xfrgx")
+oauth_setting = SubResource("Resource_7gvem")
+token = SubResource("Resource_rbl80")
+
+[node name="TwitchIRC" type="Node" parent="Modules/RSTwitcher/TwitchService"]
+unique_name_in_owner = true
+script = ExtResource("15_jmoph")
+setting = SubResource("Resource_ahdki")
+token = SubResource("Resource_rbl80")
+metadata/_custom_type_script = "uid://wkh0l2xsyapj"
+
+[node name="TwitchEventsub" type="Node" parent="Modules/RSTwitcher/TwitchService" node_paths=PackedStringArray("api")]
+unique_name_in_owner = true
+script = ExtResource("17_stwwt")
+api = NodePath("../TwitchAPI")
+_subscriptions = Array[ExtResource("18_t7nc8")]([SubResource("Resource_frd2u"), SubResource("Resource_ud7fj"), SubResource("Resource_cp302"), SubResource("Resource_jmoph"), SubResource("Resource_xfrgx"), SubResource("Resource_stwwt"), SubResource("Resource_t7nc8"), SubResource("Resource_vn8cx"), SubResource("Resource_q2h71"), SubResource("Resource_f7hi4"), SubResource("Resource_dt5lr"), SubResource("Resource_ky1pa"), SubResource("Resource_fjdrr"), SubResource("Resource_po7a7"), SubResource("Resource_hpbui"), SubResource("Resource_8xmxy"), SubResource("Resource_5tays")])
+scopes = SubResource("Resource_dvryf")
+metadata/_custom_type_script = "uid://blmhj3j00yk45"
+
+[node name="TwitchMediaLoader" type="Node" parent="Modules/RSTwitcher/TwitchService" node_paths=PackedStringArray("api")]
+unique_name_in_owner = true
+script = ExtResource("19_vn8cx")
+api = NodePath("../TwitchAPI")
+image_transformer = SubResource("Resource_tsaix")
+metadata/_custom_type_script = "uid://d4lyup0vy1wtu"
+
+[node name="TwitchCommand" type="Node" parent="Modules/RSTwitcher"]
+script = ExtResource("22_dt5lr")
+metadata/_custom_type_script = "uid://bmluckfvgm1c2"
 
 [node name="RSUserMng" type="Node" parent="Modules"]
 unique_name_in_owner = true

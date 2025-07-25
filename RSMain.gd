@@ -10,7 +10,7 @@ class_name RSMain
 
 var globals := RSGlobals.new()
 var settings := RSSettings.new()
-var l: RSLogger
+static var _log: TwitchLogger = TwitchLogger.new(&"RSMain")
 
 # Modules
 @onready var mouse_tracker: RSMouseTracker = %RSMouseTracker
@@ -18,6 +18,7 @@ var l: RSLogger
 @onready var loader: RSLoader = %RSLoader
 @onready var user_mng: RSUserMng = %RSUserMng
 @onready var twitcher: RSTwitcher = %RSTwitcher
+@onready var buffered_http_client: BufferedHTTPClient = %BufferedHTTPClient
 @onready var no_obs_ws: NoOBSWS = %NoOBSWS
 @onready var shoutout_mng: RSShoutoutMng = %RSShoutoutMng
 @onready var custom: RSCustom = %RSCustom
@@ -52,10 +53,9 @@ signal all_started
 
 # ================================ INIT ========================================
 func _ready() -> void:
-	print("=================================== RIDICULOS STREAM STARTED ===================================")
-	l = RSLogger.new(RSSettings.LOGGER_NAME_MAIN)
+	print_rich("[color=]=================================== RIDICULOS STREAM STARTED ===================================")
 	load_settings()
-	await welcome_panel_check()
+	#await welcome_panel_check()
 	
 	setup_mouse_passthrough()
 	start_everything()
@@ -135,34 +135,33 @@ func load_settings():
 		var error := RSSettings._config.load(RSSettings._CONFIG_PATH)
 		if OK == error:
 			RSSettings.data_dir = RSSettings._config.get_value("RSSettings", "data_dir", OS.get_user_data_dir())
-			l.i("Data folder: %s" %RSSettings.data_dir)
+			_log.i("Data folder: %s" %RSSettings.data_dir)
 		else:
-			l.e("Failed to load global configuration from %s: %d" % [RSSettings._CONFIG_PATH, error])
+			_log.e("Failed to load global configuration from %s: %d" % [RSSettings._CONFIG_PATH, error])
 	else:
 		var error := RSSettings._config.save(RSSettings._CONFIG_PATH)
 		if OK != RSSettings._config.save(RSSettings._CONFIG_PATH):
-			l.e("Failed to save global configuration from %s: %d" % [RSSettings._CONFIG_PATH, error])
+			_log.e("Failed to save global configuration from %s: %d" % [RSSettings._CONFIG_PATH, error])
 
-	l.i("Loading settings from %s..." % RSSettings.data_dir)
+	_log.i("Loading settings from %s..." % RSSettings.data_dir)
 	settings = loader.load_settings(settings)
-	HttpClientManager.client_max = settings.http_client_max
-	HttpClientManager.client_min = settings.http_client_min
+
 
 func save_settings():
-	l.i("Saving data dir in settings.ini...")
+	_log.i("Saving data dir in settings.ini...")
 	RSSettings._config.set_value("RSSettings", "data_dir", RSSettings.data_dir)
 	RSSettings._config.save(RSSettings._CONFIG_PATH)
-	l.i("Saving settings...")
+	_log.i("Saving settings...")
 	loader.save_settings()
 
 func quit():
-	l.i("Exiting...")
+	_log.i("Exiting...")
 
 	# Don't save anything if we haven't finished configuring, the settings may be in a bad state
-	if !pnl_welcome.should_show():
-		save_settings()
-		user_mng.save_all()
-		summary_mng.save_summary()
+	#if !pnl_welcome.should_show():
+	save_settings()
+	user_mng.save_all()
+	summary_mng.save_summary()
 	
 	get_tree().quit()
 

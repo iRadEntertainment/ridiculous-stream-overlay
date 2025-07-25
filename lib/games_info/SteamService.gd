@@ -8,13 +8,11 @@ class_name SteamService
 const STEAM_SERVICE_STORE_API_URL = "https://store.steampowered.com/api/"
 const ENDPOINT_STORE_GET_APP_INFO = "appdetails?appids={appid}"
 
-@onready var l: TwitchLogger = TwitchLogger.new("SteamService")
+static var _log: TwitchLogger = TwitchLogger.new(&"SteamService")
 
 
 func _ready() -> void:
-	l.color = Color.CORNFLOWER_BLUE.to_html()
-	l.enabled = true
-	l.debug = false
+	pass
 
 
 func get_steam_app_data(app_id: int) -> SteamAppData:
@@ -28,7 +26,7 @@ func get_steam_app_data(app_id: int) -> SteamAppData:
 	request_url = request_url.format(store_request_query)
 	var _err = http_request.request(request_url)
 	if _err != OK:
-		l.e("Error: %s" % error_string(_err))
+		_log.e("Error: %s" % error_string(_err))
 		return
 	
 	var http_result: Array = await http_request.request_completed
@@ -36,10 +34,10 @@ func get_steam_app_data(app_id: int) -> SteamAppData:
 	var response_code: int = http_result[1]
 	var _headers: PackedStringArray = http_result[2]
 	var body: PackedByteArray = http_result[3]
-	l.d("result: " + str(result) )
-	l.d("response_code: " + str(response_code) )
+	_log.d("result: " + str(result) )
+	_log.d("response_code: " + str(response_code) )
 	if response_code != HTTPClient.RESPONSE_OK:
-		l.e("Request failed. Response code %s" % response_code)
+		_log.e("Request failed. Response code %s" % response_code)
 		return
 	var response_json: Dictionary = JSON.parse_string(body.get_string_from_utf8())
 	if not response_json.has(str(app_id)):

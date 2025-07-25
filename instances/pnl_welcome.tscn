@@ -129,14 +129,12 @@ metadata/_tab_index = 2
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-title = "API Features"
 metadata/_tab_index = 3
 
 [node name="pnl_twitch_features_eventsub" parent="vb/hb/mrg_right/vb/tabs_welcome" instance=ExtResource("10_u1usa")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-title = "EventSub Features"
 metadata/_tab_index = 4
 
 [node name="pnl_twitch_auth_irc" parent="vb/hb/mrg_right/vb/tabs_welcome" instance=ExtResource("11_omwxy")]

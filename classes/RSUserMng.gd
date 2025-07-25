@@ -1,7 +1,7 @@
 extends Node
 class_name RSUserMng
 
-static var l: RSLogger
+static var _log: TwitchLogger = TwitchLogger.new(&"RSUserMng")
 
 ## FILENAMES json
 ## file tamplate -> {user_id}_{username}.json
@@ -26,9 +26,7 @@ signal live_streamers_updated
 
 #region INIT
 func start():
-	RSUserMng.l = RSLogger.new(RSSettings.LOGGER_NAME_USER_MNG)
-	l.i("Started")
-	l.i("Loading all users")
+	_log.i("Started")
 	known = load_all_users_from_folder(folder)
 	username_to_user_id = {}
 	for user_id: int in known:
@@ -46,7 +44,7 @@ func connect_signals() -> void:
 #region LOAD/SAVE/DELETE
 func save_user(user: RSUser) -> void:
 	if not user:
-		push_warning("RSUserMng: Trying to save user null")
+		_log.e("RSUserMng: Trying to save user null")
 		return
 	save_user_to_json(user, folder)
 	
@@ -59,7 +57,7 @@ func save_user(user: RSUser) -> void:
 
 
 func save_all() -> void:
-	l.i("Saving all users")
+	_log.i("Saving all users")
 	save_all_users_to_folder(known, folder)
 
 
@@ -235,7 +233,7 @@ func _on_user_request_add(info : TwitchCommandInfo = null, _args := []) -> void:
 	else:
 		user = await get_user_from_user_id(user_id)
 	if not user:
-		l.e("Adding user %s with user_id %d error. User not found" % [info.username, user_id])
+		_log.e("Adding user %s with user_id %d error. User not found" % [info.username, user_id])
 		return
 	RS.twitcher.chat("Welcome in %s Ridiculous Streaming!" % user.display_name)
 	save_user(user)
@@ -260,21 +258,21 @@ static func save_all_users_to_folder(users_dic: Dictionary, user_folder: String)
 
 static func load_user_from_json(path: String) -> RSUser:
 	if !FileAccess.file_exists(path):
-		l.e("Cannot find file: %s" % path)
+		_log.e("Cannot find file: %s" % path)
 		return null
 	var user_dic: Dictionary = RSUtl.load_json(path)
 	var user := RSUser.from_json(user_dic)
 	return user
 static func save_user_to_json(user: RSUser, user_folder: String) -> void:
 	if user.username == "":
-		print_verbose("cannot save an user without a username")
+		_log.e("Save user to json: cannot save an user without a username")
 		return
 	var abs_path = user_folder + user_filename_json_from_user(user)
 	var dict = user.to_dict()
 	if not dict.is_empty():
 		RSUtl.save_to_json(abs_path, dict)
 	else:
-		l.e("Failed to save user. Missing data.")
+		_log.e("Failed to save user. Missing data.")
 static func get_filename_from_user_id(user_id: int, user_folder: String = "") -> String:
 	var dir := DirAccess.open(user_folder)
 	for filename in dir.get_files():

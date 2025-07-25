@@ -23,12 +23,12 @@ func start():
 	ck_is_active.button_pressed = reward.is_enabled
 
 
-func _on_ck_is_active_toggled(toggled_on):
-	if toggled_on == reward.is_enabled: return
-	reward.is_enabled = toggled_on
-	var body := TwitchUpdateCustomRewardBody.from_json(reward.to_dict())
-	body.is_enabled = reward.is_enabled
-	RS.twitcher.api.update_custom_reward(reward.id, body)
+#func _on_ck_is_active_toggled(toggled_on):
+	#if toggled_on == reward.is_enabled: return
+	#reward.is_enabled = toggled_on
+	#var body := TwitchUpdateCustomRewardBody.from_json(reward.to_dict())
+	#body.is_enabled = reward.is_enabled
+	#RS.twitcher.api.update_custom_reward(reward.id, body)
 
 func _on_btn_icon_pressed():
 	pass

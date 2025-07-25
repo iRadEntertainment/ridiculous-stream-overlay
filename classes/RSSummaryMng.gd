@@ -5,7 +5,8 @@ var summary_file_path: String:
 	get(): return RS.settings.data_dir + "/stream_summary.json"
 var summary: RSSummary
 
-var l: TwitchLogger = TwitchLogger.new("RSSummaryMng")
+static var _log: TwitchLogger = TwitchLogger.new(&"RSSummaryMng")
+
 var real_commands_list: Array[String]
 
 signal user_interactions_updated(user_id: int)
@@ -13,15 +14,13 @@ signal user_interactions_updated(user_id: int)
 
 #region Init
 func _ready() -> void:
-	l.enabled = true
-	l.debug = true
-	l.color = Color.HOT_PINK.to_html(false)
+	pass
 
 
 func start() -> void:
 	load_summary()
 	connect_twitcher_events()
-	l.i("Started")
+	_log.i("Started")
 
 
 func connect_twitcher_events() -> void:
@@ -107,13 +106,13 @@ func _on_subscribed(event_data: RSTwitchEventData) -> void:
 
 #region Save/Load
 func start_new_summary() -> void:
-	l.i("Starting new summary")
+	_log.i("Starting new summary")
 	summary = RSSummary.new()
 
 
 func load_summary() -> void:
 	if FileAccess.file_exists(summary_file_path):
-		l.i("Loading summary from %s" % summary_file_path)
+		_log.i("Loading summary from %s" % summary_file_path)
 		var summary_data: Dictionary = RSUtl.load_json(summary_file_path)
 		summary = RSSummary.from_json(summary_data)
 	else:
@@ -121,12 +120,13 @@ func load_summary() -> void:
 
 
 func save_summary() -> void:
-	l.i("Saving summary file to %s" % summary_file_path)
-	RSUtl.save_to_json(summary_file_path, summary.to_dict())
+	if summary:
+		_log.i("Saving summary file to %s" % summary_file_path)
+		RSUtl.save_to_json(summary_file_path, summary.to_dict())
 
 
 func delete_summary() -> void:
-	l.i("Deleting summary")
+	_log.i("Deleting summary")
 	if FileAccess.file_exists(summary_file_path):
 		OS.move_to_trash(summary_file_path)
 	summary = null
@@ -136,10 +136,10 @@ func delete_summary() -> void:
 #region Utilities
 func update_user_interactions(delete_file: bool = true) -> void:
 	if not summary:
-		l.e("Updating user interactions: Summary is null!")
+		_log.e("Updating user interactions: Summary is null!")
 		return
 	
-	l.i("Updating users with summary interactions")
+	_log.i("Updating users with summary interactions")
 	for user_id: int in summary.user_interactions:
 		var user: RSUser = RS.user_mng.get_known_user_from_user_id(user_id)
 		if not user.global_interactions:

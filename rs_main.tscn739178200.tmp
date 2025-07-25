@@ -1,0 +1,251 @@
+[gd_scene load_steps=35 format=3 uid="uid://d345j5een73bf"]
+
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_1q0ot"]
+[ext_resource type="Script" uid="uid://brw4mp8qnlxxh" path="res://RSMain.gd" id="1_y2jdm"]
+[ext_resource type="Script" uid="uid://copo7pkldfbov" path="res://classes/RSMousePass.cs" id="2_4s2fq"]
+[ext_resource type="Script" uid="uid://doxabl7ha832k" path="res://classes/RSMouseTracker.gd" id="2_xjlao"]
+[ext_resource type="PackedScene" uid="uid://gxr8ww6jok8i" path="res://instances/physics_scene.tscn" id="3_d3yde"]
+[ext_resource type="PackedScene" uid="uid://che3syvs71fq3" path="res://instances/debug_view.tscn" id="5_j4imi"]
+[ext_resource type="Script" uid="uid://mhheuev0h0yt" path="res://classes/RSVetting.gd" id="5_joslx"]
+[ext_resource type="Script" uid="uid://ivai1wov0xyp" path="res://classes/RSTwitcher.gd" id="5_wye2t"]
+[ext_resource type="PackedScene" uid="uid://cdgelqh5th1pl" path="res://instances/btn_floating_menu.tscn" id="5_xf57p"]
+[ext_resource type="Script" uid="uid://dpswjmhhvf4na" path="res://lib/no-obs-ws/NoOBSWS.gd" id="6_8c5hc"]
+[ext_resource type="Script" uid="uid://cw30cwveway65" path="res://addons/twitcher/generated/twitch_api.gd" id="7_rmq2k"]
+[ext_resource type="Resource" uid="uid://c4scwuk8q0r40" path="res://addons/twitcher/lib/oOuch/default_key_provider.tres" id="8_4dc0s"]
+[ext_resource type="Script" uid="uid://ccysx7mq6mwoc" path="res://classes/RSShoutoutMng.gd" id="8_ex7ik"]
+[ext_resource type="Script" uid="uid://yenw20vcio8i" path="res://classes/RSLoader.gd" id="8_fol3s"]
+[ext_resource type="Script" uid="uid://yq73vhe7mr0d" path="res://classes/RSCustom.gd" id="9_by474"]
+[ext_resource type="Script" uid="uid://b52xp7c23ucfk" path="res://addons/twitcher/lib/oOuch/oauth_token.gd" id="9_wkncm"]
+[ext_resource type="Script" uid="uid://00xbijwpi8xa" path="res://addons/twitcher/lib/oOuch/oauth_setting.gd" id="10_1ry14"]
+[ext_resource type="Script" uid="uid://b7i5j62lmuh71" path="res://addons/twitcher/lib/http/buffered_http_client.gd" id="11_4dc0s"]
+[ext_resource type="Script" uid="uid://d3ad1n45m8dmo" path="res://classes/RSUserMng.gd" id="12_oh8ps"]
+[ext_resource type="Script" uid="uid://c4aq5xbpuof7c" path="res://classes/RSDisplay.gd" id="12_qc4sr"]
+[ext_resource type="AudioStream" uid="uid://bmqpfhn6b600q" path="res://local_res/sfx_notification_discord.ogg" id="14_38gvb"]
+[ext_resource type="PackedScene" uid="uid://dseoyhiylvwnu" path="res://instances/pnl_settings.tscn" id="15_8wfva"]
+[ext_resource type="PackedScene" uid="uid://jchfk7d78ss5" path="res://instances/pnl_chat.tscn" id="16_ege2h"]
+[ext_resource type="PackedScene" uid="uid://bhjtpi0nfv415" path="res://instances/pnl_notifications.tscn" id="17_sodyi"]
+[ext_resource type="PackedScene" uid="uid://cokv6nhefofwl" path="res://instances/pnl_welcome.tscn" id="19_3rcuc"]
+[ext_resource type="PackedScene" uid="uid://dregwshpiqg8j" path="res://instances/alert_overlay.tscn" id="19_gj13v"]
+[ext_resource type="AudioStream" uid="uid://cidanglkg6lrp" path="res://local_res/sfx_quack_01.ogg" id="21_637v1"]
+[ext_resource type="Shader" uid="uid://fpir2i2pnixe" path="res://shaders/snow_shader.gdshader" id="22_38gvb"]
+[ext_resource type="Texture2D" uid="uid://buikegrssuuph" path="res://local_res/snowflake-2.svg" id="23_mhtf1"]
+[ext_resource type="Script" uid="uid://du1vhw4tu6yv5" path="res://classes/RSSummaryMng.gd" id="24_rr657"]
+[ext_resource type="PackedScene" uid="uid://dduocy5paeeuu" path="res://classes/pnl_summary.tscn" id="25_ht5xl"]
+
+[sub_resource type="Resource" id="Resource_xqkml"]
+script = ExtResource("9_wkncm")
+_crypto_key_provider = ExtResource("8_4dc0s")
+_identifier = "Auth-7670"
+_cache_path = "user://auth.conf"
+metadata/_custom_type_script = "uid://b52xp7c23ucfk"
+
+[sub_resource type="Resource" id="Resource_sbc66"]
+script = ExtResource("10_1ry14")
+redirect_url = "http://localhost:7170"
+well_known_url = ""
+token_url = ""
+authorization_url = ""
+device_authorization_url = ""
+cache_file = "res://auth.key"
+client_id = ""
+authorization_flow = 0
+_encryption_key_provider = ExtResource("8_4dc0s")
+client_secret = ""
+metadata/_custom_type_script = "uid://00xbijwpi8xa"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mhtf1"]
+shader = ExtResource("22_38gvb")
+shader_parameter/dimensions = Vector2(1152, 652.125)
+shader_parameter/rows = 20.0
+shader_parameter/columns = 5.0
+shader_parameter/vertical_scroll = 0.2
+shader_parameter/horizontal_scroll = 0.03
+shader_parameter/size_min = 0.3
+shader_parameter/size_max = 0.7
+shader_parameter/wave_min = 0.1
+shader_parameter/wave_max = 1.0
+shader_parameter/wave_speed = 0.5
+shader_parameter/wave_rotation = 1.0
+shader_parameter/far_color = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/near_color = Color(1, 1, 1, 1)
+shader_parameter/particle_texture = ExtResource("23_mhtf1")
+
+[node name="rs_main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_1q0ot")
+script = ExtResource("1_y2jdm")
+metadata/_edit_lock_ = true
+
+[node name="Modules" type="Node" parent="."]
+
+[node name="RSMouseTracker" type="Node" parent="Modules"]
+unique_name_in_owner = true
+script = ExtResource("2_xjlao")
+
+[node name="RSMousePass" type="Node" parent="Modules"]
+unique_name_in_owner = true
+script = ExtResource("2_4s2fq")
+
+[node name="RSLoader" type="Node" parent="Modules"]
+unique_name_in_owner = true
+script = ExtResource("8_fol3s")
+
+[node name="RSTwitcher" type="Node" parent="Modules"]
+unique_name_in_owner = true
+script = ExtResource("5_wye2t")
+
+[node name="TwitchAPI" type="Node" parent="Modules/RSTwitcher"]
+script = ExtResource("7_rmq2k")
+token = SubResource("Resource_xqkml")
+oauth_setting = SubResource("Resource_sbc66")
+metadata/_custom_type_script = "uid://cw30cwveway65"
+
+[node name="BufferedHTTPClient" type="Node" parent="Modules/RSTwitcher"]
+script = ExtResource("11_4dc0s")
+metadata/_custom_type_script = "uid://b7i5j62lmuh71"
+
+[node name="RSUserMng" type="Node" parent="Modules"]
+unique_name_in_owner = true
+script = ExtResource("12_oh8ps")
+
+[node name="NoOBSWS" type="Node" parent="Modules"]
+unique_name_in_owner = true
+script = ExtResource("6_8c5hc")
+
+[node name="RSShoutoutMng" type="Node" parent="Modules"]
+unique_name_in_owner = true
+script = ExtResource("8_ex7ik")
+
+[node name="RSCustom" type="Node" parent="Modules"]
+unique_name_in_owner = true
+script = ExtResource("9_by474")
+
+[node name="sfx_custom" type="AudioStreamPlayer" parent="Modules/RSCustom"]
+
+[node name="RSVetting" type="Node" parent="Modules"]
+unique_name_in_owner = true
+script = ExtResource("5_joslx")
+
+[node name="RSDisplay" type="Node" parent="Modules"]
+unique_name_in_owner = true
+script = ExtResource("12_qc4sr")
+
+[node name="RSSummaryMng" type="Node" parent="Modules"]
+unique_name_in_owner = true
+script = ExtResource("24_rr657")
+metadata/_custom_type_script = "uid://du1vhw4tu6yv5"
+
+[node name="sfx" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="quack" type="AudioStreamPlayer" parent="sfx"]
+stream = ExtResource("21_637v1")
+
+[node name="discord" type="AudioStreamPlayer" parent="sfx"]
+stream = ExtResource("14_38gvb")
+
+[node name="split_chat" type="HSplitContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+metadata/_edit_lock_ = true
+
+[node name="empty" type="Control" parent="split_chat"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+mouse_filter = 2
+metadata/_edit_lock_ = true
+
+[node name="pnl_settings" parent="split_chat/empty" instance=ExtResource("15_8wfva")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[node name="pnl_chat" parent="split_chat" instance=ExtResource("16_ege2h")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
+theme = null
+
+[node name="debug_view" parent="." instance=ExtResource("5_j4imi")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="alert_scene" parent="." instance=ExtResource("19_gj13v")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1152.0
+offset_bottom = 648.0
+theme = null
+
+[node name="pnl_notifications" parent="." instance=ExtResource("17_sodyi")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+anchors_preset = 0
+anchor_left = 1.0
+offset_left = -337.0
+grow_horizontal = 0
+
+[node name="physics_scene" parent="." instance=ExtResource("3_d3yde")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[node name="pnl_welcome" parent="." instance=ExtResource("19_3rcuc")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+theme = null
+metadata/_edit_lock_ = true
+
+[node name="pnl_summary" parent="." instance=ExtResource("25_ht5xl")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="manadono_snow" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_mhtf1")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="btn_floating_menu" parent="." instance=ExtResource("5_xf57p")]
+unique_name_in_owner = true
+z_index = 100
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -32.0
+offset_top = 0.0
+offset_right = 32.0
+offset_bottom = 64.0
+grow_horizontal = 2

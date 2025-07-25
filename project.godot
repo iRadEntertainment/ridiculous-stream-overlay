@@ -22,7 +22,6 @@ general/text_to_speech=true
 
 [autoload]
 
-HttpClientManager="*res://lib/twitcher/communication/http_client_manager.gd"
 RS="*res://rs_main.tscn"
 
 [debug]
@@ -43,7 +42,7 @@ project/assembly_name="Ridiculous Stream"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/editorscriptmanager/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg", "res://addons/ridiculous_coding/plugin.cfg", "res://addons/ridiculous_stream_project_settings/plugin.cfg", "res://addons/script-ide/plugin.cfg")
+enabled=PackedStringArray("res://addons/editorscriptmanager/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg", "res://addons/ridiculous_coding/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/twitcher/plugin.cfg")
 
 [physics]
 
@@ -56,3 +55,18 @@ enabled=PackedStringArray("res://addons/editorscriptmanager/plugin.cfg", "res://
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 viewport/transparent_background=true
+
+[threading]
+
+worker_pool/max_threads=50
+
+[twitcher]
+
+editor/show_setup_on_startup=false
+editor/project_preset=&"Overlay"
+editor/load_current_twitch_user=false
+logs/TwitchAPI="info"
+logs/TwitchAuth="info"
+logs/TwitchEventsubConfig="info"
+logs/TwitchEventsub="debug"
+logs/RSTwitcher="debug"

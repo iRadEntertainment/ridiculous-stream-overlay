@@ -100,7 +100,7 @@ const STEAM_APP_IDS: Dictionary[SteamGames, int] = {
 #endregion
 
 
-var l: TwitchLogger = TwitchLogger.new("PnlSteamAppInfo")
+static var _log: TwitchLogger = TwitchLogger.new(&"PnlSteamAppInfo")
 var data: SteamAppData:
 	set(val):
 		data = val
@@ -111,8 +111,6 @@ var data: SteamAppData:
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	l.color = Color.LIGHT_GREEN.to_html()
-	l.enabled = enable_logger
 	clear()
 
 
@@ -188,7 +186,7 @@ func load_texture_from_url(url: String) -> ImageTexture:
 	var _err = http_request.request(url)
 	if _err != OK:
 		print("_err != OK")
-		#l.e("Error request: %s" % error_string(_err))
+		#_log.e("Error request: %s" % error_string(_err))
 		return
 	
 	var http_result: Array = await http_request.request_completed
@@ -208,7 +206,7 @@ func load_texture_from_url(url: String) -> ImageTexture:
 		"webp": tex_image.load_webp_from_buffer(image_buffer)
 		"svg": tex_image.load_svg_from_buffer(image_buffer)
 		_:
-			l.e("%s format not recognised."%file_type)
+			_log.e("%s format not recognised."%file_type)
 			return
 	
 	var tex = ImageTexture.create_from_image(tex_image)

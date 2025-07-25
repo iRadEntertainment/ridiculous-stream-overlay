@@ -1,8 +1,8 @@
 @warning_ignore("missing_tool")
 extends PanelFormContainer
-class_name PanelAppSettings
+class_name PnlAppSettings
 
-var l := RSLogger.new(RSSettings.LOGGER_NAME_MAIN)
+static var _log: TwitchLogger = TwitchLogger.new(&"PnlAppSettings")
 
 var settings: RSSettings:
 	set(value):
@@ -38,7 +38,7 @@ func _on_file_dialog_folder_selected(status: bool, selected_paths: PackedStringA
 	RSSettings.data_dir = data_dir
 	RSSettings._config.set_value("Ridiculous Stream", "data_dir", RSSettings.data_dir)
 	RSSettings._config.save(RSSettings._CONFIG_PATH)
-	l.i("Data folder set: %s | Saving to %s" % [RSSettings.data_dir, RSSettings._CONFIG_PATH])
+	_log.i("Data folder set: %s | Saving to %s" % [RSSettings.data_dir, RSSettings._CONFIG_PATH])
 	%ln_data_folder.text = data_dir
 
 

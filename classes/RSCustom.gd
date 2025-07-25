@@ -1,14 +1,14 @@
 extends Node
 class_name RSCustom
 
-var l : RSLogger
+static var _log: TwitchLogger = TwitchLogger.new(&"RSCustom")
 
 const STREAM_OVERLAY_SCENE = "Overlay Stream"
 # const STREAM_OVERLAY_VIDEOS = "Overlay Videos"
 
+
 func start():
-	l = RSLogger.new(RSSettings.LOGGER_NAME_CUSTOM)
-	l.i("Started")
+	_log.i("Started")
 	RS.twitcher.received_chat_message.connect(on_chat)
 	RS.twitcher.channel_points_redeemed.connect(on_channel_points_redeemed)
 	RS.twitcher.followed.connect(on_followed)
@@ -20,45 +20,45 @@ func start():
 
 
 func add_commands() -> void:
-	RS.twitcher.commands.add_command("add_me", RS.user_mng._on_user_request_add)
+	RS.twitcher.add_command("add_me", RS.user_mng._on_user_request_add)
 	
-	RS.twitcher.commands.add_command("discord", discord)
-	RS.twitcher.commands.add_command("commands", chat_commands_help)
-	RS.twitcher.commands.add_command("pandano", pandano)
-	RS.twitcher.commands.add_command("whostream", whostream)
+	RS.twitcher.add_command("discord", discord)
+	RS.twitcher.add_command("commands", chat_commands_help)
+	RS.twitcher.add_command("pandano", pandano)
+	RS.twitcher.add_command("whostream", whostream)
 	
-	RS.twitcher.commands.add_command("b", spawn_fake_beans, 0, 1)
-	RS.twitcher.commands.add_command("d", play_discord_notification)
-	RS.twitcher.commands.add_command("n", add_name_to_scene)
-	RS.twitcher.commands.add_command("toggle_music", toggle_music)
-	RS.twitcher.commands.add_command("mika", play_mika_system_of_a_down)
-	RS.twitcher.commands.add_command("snow", let_it_snow)
+	RS.twitcher.add_command("b", spawn_fake_beans, 0, 1)
+	RS.twitcher.add_command("d", play_discord_notification)
+	RS.twitcher.add_command("n", add_name_to_scene)
+	RS.twitcher.add_command("toggle_music", toggle_music)
+	RS.twitcher.add_command("mika", play_mika_system_of_a_down)
+	RS.twitcher.add_command("snow", let_it_snow)
 	
-	RS.twitcher.commands.add_command("laser", laser, 0, 1)
-	RS.twitcher.commands.add_command("nuke", nuke)
-	RS.twitcher.commands.add_command("g", spawn_grenade, 0, 1)
-	RS.twitcher.commands.add_alias("g", "grenade")
-	RS.twitcher.commands.add_alias("grenade", "granade")
-	RS.twitcher.commands.add_alias("grenade", "grandma")
-	RS.twitcher.commands.add_alias("grenade", "grenades")
+	RS.twitcher.add_command("laser", laser, 0, 1)
+	RS.twitcher.add_command("nuke", nuke)
+	RS.twitcher.add_command("g", spawn_grenade, 0, 1)
+	#RS.twitcher.add_alias("g", "grenade")
+	#RS.twitcher.add_alias("grenade", "granade")
+	#RS.twitcher.add_alias("grenade", "grandma")
+	#RS.twitcher.add_alias("grenade", "grenades")
 	
-	RS.twitcher.commands.add_command("shake", shake_bodies)
+	RS.twitcher.add_command("shake", shake_bodies)
 	
-	RS.twitcher.commands.add_command("zeroG", zero_g)
-	RS.twitcher.commands.add_alias("zeroG", "zerog")
-	RS.twitcher.commands.add_alias("zeroG", "0g")
-	RS.twitcher.commands.add_alias("zeroG", "0G")
+	RS.twitcher.add_command("zeroG", zero_g)
+	#RS.twitcher.add_alias("zeroG", "zerog")
+	#RS.twitcher.add_alias("zeroG", "0g")
+	#RS.twitcher.add_alias("zeroG", "0G")
 	
-	#RS.twitcher.commands.add_command("tts", parse_tts_command, 1, 256)
-	#RS.twitcher.commands.add_command("tts_gb", parse_tts_command.bind("en_GB"), 1, 256)
-	#RS.twitcher.commands.add_command("tts_us", parse_tts_command.bind("en_US"), 1, 256)
-	#RS.twitcher.commands.add_command("tts_it", parse_tts_command.bind("it_IT"), 1, 256)
-	#RS.twitcher.commands.add_command("tts_es", parse_tts_command.bind("es_ES"), 1, 256)
-	#RS.twitcher.commands.add_command("tts_fr", parse_tts_command.bind("fr_FR"), 1, 256)
-	#RS.twitcher.commands.add_command("tts_de", parse_tts_command.bind("de_DE"), 1, 256)
-	#RS.twitcher.commands.add_command("tts_pl", parse_tts_command.bind("pl_PL"), 1, 256)
-	#RS.twitcher.commands.add_command("tts_ru", parse_tts_command.bind("ru_RU"), 1, 256)
-	l.i("Command added to the handler.")
+	#RS.twitcher.add_command("tts", parse_tts_command, 1, 256)
+	#RS.twitcher.add_command("tts_gb", parse_tts_command.bind("en_GB"), 1, 256)
+	#RS.twitcher.add_command("tts_us", parse_tts_command.bind("en_US"), 1, 256)
+	#RS.twitcher.add_command("tts_it", parse_tts_command.bind("it_IT"), 1, 256)
+	#RS.twitcher.add_command("tts_es", parse_tts_command.bind("es_ES"), 1, 256)
+	#RS.twitcher.add_command("tts_fr", parse_tts_command.bind("fr_FR"), 1, 256)
+	#RS.twitcher.add_command("tts_de", parse_tts_command.bind("de_DE"), 1, 256)
+	#RS.twitcher.add_command("tts_pl", parse_tts_command.bind("pl_PL"), 1, 256)
+	#RS.twitcher.add_command("tts_ru", parse_tts_command.bind("ru_RU"), 1, 256)
+	_log.i("Command added to the handler.")
 
 func on_chat(_channel_name: String, username: String, message: String, _tags: TwitchTags.PrivMsg):
 	if not message.begins_with("!"):
@@ -86,7 +86,7 @@ func on_first_session_message(username: String, _message: String, _tags: TwitchT
 
 
 func on_channel_points_redeemed(data : RSTwitchEventData):
-	l.i("Channel points redeemed. %s -> %s" % [data.username, data.reward_title] )
+	_log.i("Channel points redeemed. %s -> %s" % [data.username, data.reward_title] )
 	var user: RSUser = await RS.user_mng.get_user_from_username(data.username)
 	#if await !RS.no_obs_ws.is_stream_on: chat_on_stream_off(data.username); return
 	match data.reward_title:
@@ -134,7 +134,7 @@ func play_doit():
 
 func change_streamer_colour(user_input: String) -> void:
 	if not user_input.is_valid_html_color():
-		l.w("Change streamer colour didn't work. Colour: #%s" % user_input)
+		_log.w("Change streamer colour didn't work. Colour: #%s" % user_input)
 		return
 	
 	var col: Color = Color.html(user_input)
@@ -178,12 +178,12 @@ func check_if_advice_file_exists(advice_file : String):
 	if not FileAccess.file_exists(advice_file):
 		var advice_list = [
 				{
-					"adviser" : "iRadDev",
-					"advice" : "We don't have enough beans! MORE BEANS!"
+					"adviser": "iRadDev",
+					"advice": "We don't have enough beans! MORE BEANS!"
 				},
 				{
-					"adviser" : "robmblind",
-					"advice" : "If you want to go fast, go alone. If you want to go far, go together."
+					"adviser": "robmblind",
+					"advice": "If you want to go fast, go alone. If you want to go far, go together."
 				},
 			]
 		RSUtl.save_to_json(advice_file, advice_list)
