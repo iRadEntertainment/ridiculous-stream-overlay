@@ -92,7 +92,7 @@ func _on_fl_auto_promotion_toggled(toggled_on: bool) -> void:
 	if user: user.auto_promotion = toggled_on
 
 func _on_opt_work_with_item_selected(index: int) -> void:
-	if user: user.work_with = RSUser.WorkWith.values()[index]
+	if user: user.work_with = index as RSUser.WorkWith
 
 func _on_btn_yt_promo_pressed() -> void:
 	var msg: String = "Check out {user}'s YouTube channel: {link}"

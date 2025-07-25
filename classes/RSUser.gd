@@ -367,6 +367,6 @@ class Interactions:
 		new_interactions.raids_out_count = d.get("raids_out_count", 0)
 		new_interactions.subscriptions = {}
 		for key: int in d.get("subscriptions", {}):
-			var tier_key: SubTier = SubTier.values()[key]
+			var tier_key: SubTier = key as SubTier
 			new_interactions.subscriptions[tier_key] = int(d["subscriptions"][key])
 		return new_interactions

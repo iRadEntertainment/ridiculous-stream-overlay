@@ -20,8 +20,8 @@ func _run() -> void:
 	orig_user.is_streamer = true
 	orig_user.auto_shoutout = false
 	orig_user.auto_promotion = false
-	orig_user.steam_app_ids = [123, 456]
-	orig_user.work_with = 5
+	orig_user.steam_app_ids = {}
+	orig_user.work_with = 5 as RSUser.WorkWith
 	orig_user.youtube_handle = "@b3agz"
 	orig_user.website = "www.test.com"
 	orig_user.shoutout_description = "g1ngercat is !b giganzo"
@@ -37,8 +37,8 @@ func _run() -> void:
 	updated_user.is_streamer = false
 	updated_user.auto_shoutout = false
 	updated_user.auto_promotion = false
-	updated_user.steam_app_ids = []
-	updated_user.work_with = 0
+	updated_user.steam_app_ids = {}
+	updated_user.work_with = 0 as RSUser.WorkWith
 	updated_user.youtube_handle = ""
 	updated_user.website = ""
 	updated_user.shoutout_description = ""
