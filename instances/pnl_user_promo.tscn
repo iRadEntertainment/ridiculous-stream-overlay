@@ -1,0 +1,163 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7ncd0t37xkj5"]
+
+[ext_resource type="Script" uid="uid://cxpljk3dcobgc" path="res://instances/pnl_user_promo.gd" id="1_w0u2r"]
+[ext_resource type="Texture2D" uid="uid://1ndihbuunqkm" path="res://ui/icons/bootstrap_icons/megaphone-fill.svg" id="1_wwhei"]
+
+[node name="pnl_user_promo" type="PanelContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_w0u2r")
+
+[node name="vb_promo" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="flags" type="HBoxContainer" parent="vb_promo"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="fl_is_streamer" type="CheckButton" parent="vb_promo/flags"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Streamer"
+alignment = 2
+
+[node name="fl_auto_shoutout" type="CheckButton" parent="vb_promo/flags"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Auto-shoutout"
+alignment = 2
+
+[node name="fl_auto_promotion" type="CheckButton" parent="vb_promo/flags"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Auto-promotion"
+alignment = 2
+
+[node name="flow" type="HFlowContainer" parent="vb_promo"]
+layout_mode = 2
+
+[node name="hb1" type="HBoxContainer" parent="vb_promo/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb" type="Label" parent="vb_promo/flow/hb1"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Works with"
+
+[node name="opt_work_with" type="OptionButton" parent="vb_promo/flow/hb1"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="hb2" type="HBoxContainer" parent="vb_promo/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb" type="Label" parent="vb_promo/flow/hb2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Youtube"
+
+[node name="btn_yt_promo" type="Button" parent="vb_promo/flow/hb2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+icon = ExtResource("1_wwhei")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ln_youtube_handle" type="LineEdit" parent="vb_promo/flow/hb2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "YouTube @handle"
+
+[node name="hb4" type="HBoxContainer" parent="vb_promo/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb" type="Label" parent="vb_promo/flow/hb4"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Bluesky"
+
+[node name="btn_bsky_promo" type="Button" parent="vb_promo/flow/hb4"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+icon = ExtResource("1_wwhei")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ln_bluesky_handle" type="LineEdit" parent="vb_promo/flow/hb4"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "b.sky @handle"
+
+[node name="hb3" type="HBoxContainer" parent="vb_promo/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb" type="Label" parent="vb_promo/flow/hb3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Website"
+
+[node name="btn_web_promo" type="Button" parent="vb_promo/flow/hb3"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+icon = ExtResource("1_wwhei")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ln_website" type="LineEdit" parent="vb_promo/flow/hb3"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "https://"
+
+[node name="te_so" type="TextEdit" parent="vb_promo"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "shoutout message"
+wrap_mode = 1
+scroll_fit_content_height = true
+caret_blink = true
+
+[node name="te_promote" type="TextEdit" parent="vb_promo"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "promotion message"
+wrap_mode = 1
+scroll_fit_content_height = true
+caret_blink = true
+
+[connection signal="toggled" from="vb_promo/flags/fl_is_streamer" to="." method="_on_fl_is_streamer_toggled"]
+[connection signal="toggled" from="vb_promo/flags/fl_auto_shoutout" to="." method="_on_fl_auto_shoutout_toggled"]
+[connection signal="toggled" from="vb_promo/flags/fl_auto_promotion" to="." method="_on_fl_auto_promotion_toggled"]
+[connection signal="item_selected" from="vb_promo/flow/hb1/opt_work_with" to="." method="_on_opt_work_with_item_selected"]
+[connection signal="pressed" from="vb_promo/flow/hb2/btn_yt_promo" to="." method="_on_btn_yt_promo_pressed"]
+[connection signal="focus_exited" from="vb_promo/flow/hb2/ln_youtube_handle" to="." method="_on_ln_youtube_handle_focus_exited"]
+[connection signal="text_submitted" from="vb_promo/flow/hb2/ln_youtube_handle" to="." method="_on_ln_youtube_handle_text_submitted"]
+[connection signal="pressed" from="vb_promo/flow/hb4/btn_bsky_promo" to="." method="_on_btn_bsky_promo_pressed"]
+[connection signal="focus_exited" from="vb_promo/flow/hb4/ln_bluesky_handle" to="." method="_on_ln_bluesky_handle_focus_exited"]
+[connection signal="text_submitted" from="vb_promo/flow/hb4/ln_bluesky_handle" to="." method="_on_ln_bluesky_handle_text_submitted"]
+[connection signal="pressed" from="vb_promo/flow/hb3/btn_web_promo" to="." method="_on_btn_web_promo_pressed"]
+[connection signal="focus_exited" from="vb_promo/flow/hb3/ln_website" to="." method="_on_ln_website_focus_exited"]
+[connection signal="text_submitted" from="vb_promo/flow/hb3/ln_website" to="." method="_on_ln_website_text_submitted"]
+[connection signal="focus_exited" from="vb_promo/te_so" to="." method="_on_te_so_focus_exited"]
+[connection signal="focus_exited" from="vb_promo/te_promote" to="." method="_on_te_promote_focus_exited"]

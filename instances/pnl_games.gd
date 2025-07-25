@@ -1,9 +1,9 @@
 extends PanelContainer
 class_name PnlUserGames
 
+@onready var pnl_steam_app_info: PnlSteamAppInfo = %pnl_steam_app_info
+@onready var pnl_itchio_app_info: PnlItchIOAppInfo = %pnl_itchio_app_info
 
-var pnl_steam_app_info: PnlSteamAppInfo
-var pnl_itchio_app_info: PnlItchIOAppInfo
 
 var steam_data: SteamAppData
 var itchio_data: ItchIOAppData
@@ -24,16 +24,25 @@ var user: RSUser: set = set_user
 
 
 func _ready() -> void:
-	clear()
+	_toggle_btns(false)
 
 
-func populate_from_user() -> void:
+func _populate() -> void:
 	for steam_app_id: int in steam_app_ids:
 		var data: SteamAppData = steam_app_ids[steam_app_id]
 		add_steam_entry(steam_app_id, false, data)
 	for itchio_app_url: String in itchio_app_urls:
 		var data: ItchIOAppData = itchio_app_urls[itchio_app_url]
 		add_itchio_entry(itchio_app_url, false, data)
+
+
+func _toggle_btns(val: bool) -> void:
+	%ln_add_steam_app_id.editable = val
+	%btn_steam_get_info.disabled = !val
+	%btn_steam_add_game.disabled = !val
+	%ln_add_itch_io_link.editable = val
+	%btn_itchio_get_info.disabled = !val
+	%btn_itchio_add_game.disabled = !val
 
 
 func get_steam_app_ids() -> Array[int]:
@@ -54,19 +63,18 @@ func get_itchio_app_urls() -> Array[String]:
 
 func set_user(_user: RSUser) -> void:
 	user = _user
+	_toggle_btns(user != null)
 	clear()
-	populate_from_user()
+	_populate()
 
 
 func clear() -> void:
+	%tab_game_info.hide()
 	for entry: EntryGameList in %vb_steam_app_list.get_children() + %vb_itch_app_list.get_children():
 		entry.queue_free()
 
 
 func check_steam_app(steam_app_id: int) -> void:
-	if not pnl_steam_app_info:
-		push_error("pnl_steam_app_info is null")
-		return
 	steam_data = await pnl_steam_app_info.get_app_info(steam_app_id)
 	if steam_data:
 		pnl_steam_app_info.display_app_info(steam_data)
@@ -80,9 +88,6 @@ func add_steam_entry(
 		) -> void:
 	if not user:
 		push_warning("Panel Games: No user")
-		return
-	if not pnl_steam_app_info:
-		push_error("pnl_steam_app_info is null")
 		return
 	
 	if _steam_app_data:
@@ -113,9 +118,6 @@ func add_steam_entry(
 
 
 func check_itchio_app(itchio_app_url: String) -> void:
-	if not pnl_itchio_app_info:
-		push_error("pnl_itchio_app_info is null")
-		return
 	itchio_data = await pnl_itchio_app_info.get_app_info(itchio_app_url)
 	if itchio_data:
 		pnl_itchio_app_info.display_app_info(itchio_data)
@@ -130,10 +132,6 @@ func add_itchio_entry(
 	
 	if not user:
 		push_warning("Panel Games: No user")
-		return
-	
-	if not pnl_itchio_app_info:
-		push_error("pnl_itchio_app_info is null")
 		return
 	
 	if _itchio_app_data:
@@ -196,7 +194,9 @@ func _delete_entry(entry: EntryGameList) -> void:
 			delete_itchio_entry(entry.itchio_app_url)
 
 
+#region Entries signals
 func _on_entry_game_info_pressed(_data: Variant) -> void:
+	%tab_game_info.show()
 	if _data is SteamAppData:
 		pnl_steam_app_info.display_app_info(_data)
 		pnl_steam_app_info.show()
@@ -207,7 +207,10 @@ func _on_entry_game_info_pressed(_data: Variant) -> void:
 
 func _on_entry_deleted(entry: EntryGameList) -> void:
 	_delete_entry(entry)
+#endregion
 
+
+#region Inspector signals
 func _on_ln_add_steam_app_id_text_submitted(_new_text: String) -> void:
 	_on_btn_steam_add_game_pressed()
 func _on_btn_steam_get_info_pressed() -> void:
@@ -232,3 +235,4 @@ func _on_btn_itchio_add_game_pressed() -> void:
 		return
 	add_itchio_entry( %ln_add_itch_io_link.text, true )
 	%ln_add_itch_io_link.text = ""
+#endregion

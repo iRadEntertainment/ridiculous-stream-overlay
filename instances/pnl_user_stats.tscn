@@ -44,7 +44,9 @@ text = "Added on"
 
 [node name="ln_added_on" type="LineEdit" parent="vb/hb1"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
+placeholder_text = "-"
 editable = false
 expand_to_text_length = true
 
@@ -58,6 +60,7 @@ text = "Points"
 
 [node name="ln_points" type="LineEdit" parent="vb/hb1"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 placeholder_text = "-"
 alignment = 2
@@ -80,6 +83,7 @@ size_flags_horizontal = 3
 
 [node name="ln_messages_count" type="LineEdit" parent="vb/Counter/flow/hb_msg"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 placeholder_text = "-"
 alignment = 2
@@ -98,6 +102,7 @@ size_flags_horizontal = 3
 
 [node name="ln_commands_count" type="LineEdit" parent="vb/Counter/flow/hb_commands"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 placeholder_text = "-"
 alignment = 2
@@ -116,6 +121,7 @@ size_flags_horizontal = 3
 
 [node name="ln_fake_commands_count" type="LineEdit" parent="vb/Counter/flow/hb_fake_commands"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 placeholder_text = "-"
 alignment = 2
@@ -134,6 +140,7 @@ size_flags_horizontal = 3
 
 [node name="ln_channel_points_spent_count" type="LineEdit" parent="vb/Counter/flow/hb_channel_points_spent_count"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 placeholder_text = "-"
 alignment = 2
@@ -155,6 +162,7 @@ size_flags_horizontal = 3
 
 [node name="ln_redeems_count" type="LineEdit" parent="vb/Counter/flow/vb_redeems_count/hb"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 placeholder_text = "-"
 alignment = 2
@@ -188,6 +196,7 @@ size_flags_horizontal = 3
 
 [node name="ln_gigantify_count" type="LineEdit" parent="vb/Counter/flow/hb_gigantify_count"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 placeholder_text = "-"
 alignment = 2
@@ -206,6 +215,7 @@ size_flags_horizontal = 3
 
 [node name="ln_bits_count" type="LineEdit" parent="vb/Counter/flow/hb_bits_count"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 placeholder_text = "-"
 alignment = 2
@@ -216,7 +226,7 @@ expand_to_text_length = true
 custom_minimum_size = Vector2(130, 0)
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Raids in"
+text = "Bits"
 
 [node name="hb_raids_in_count" type="HBoxContainer" parent="vb/Counter/flow"]
 layout_mode = 2
@@ -224,6 +234,7 @@ size_flags_horizontal = 3
 
 [node name="ln_raids_in_count" type="LineEdit" parent="vb/Counter/flow/hb_raids_in_count"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 placeholder_text = "-"
 alignment = 2
@@ -242,6 +253,7 @@ size_flags_horizontal = 3
 
 [node name="ln_raids_out_count" type="LineEdit" parent="vb/Counter/flow/hb_raids_out_count2"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 placeholder_text = "-"
 alignment = 2
@@ -263,6 +275,7 @@ size_flags_horizontal = 3
 
 [node name="ln_subscriptions_count" type="LineEdit" parent="vb/Counter/flow/vb_subscriptions_count/hb"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 placeholder_text = "-"
 alignment = 2

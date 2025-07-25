@@ -18,13 +18,14 @@ func _ready() -> void:
 
 func _populate() -> void:
 	clear()
+	%ln_added_on.text = RSUtl.unix_to_string(user.added_on, false, false)
+	
 	var interactions: RSUser.Interactions
 	if is_global_interactions:
 		interactions = user.current_global_interactions
 	else:
 		interactions = user.current_interactions
 	_populate_from_interactions(interactions)
-	%ln_added_on.text = RSUtl.unix_to_string(user.added_on, false, false)
 
 
 func _populate_from_interactions(interactions: RSUser.Interactions) -> void:
