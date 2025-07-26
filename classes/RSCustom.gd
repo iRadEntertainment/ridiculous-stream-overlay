@@ -36,19 +36,20 @@ func add_commands() -> void:
 	
 	RS.twitcher.add_command("laser", laser, 0, 1)
 	RS.twitcher.add_command("nuke", nuke)
-	RS.twitcher.add_command("g", spawn_grenade, 0, 1)
-	#RS.twitcher.add_alias("g", "grenade")
-	#RS.twitcher.add_alias("grenade", "granade")
-	#RS.twitcher.add_alias("grenade", "grandma")
-	#RS.twitcher.add_alias("grenade", "grenades")
+	var command_g := RS.twitcher.add_command("g", spawn_grenade, 0, 1)
+	command_g.add_alias("grenade")
+	command_g.add_alias("granade")
+	command_g.add_alias("grandma")
+	command_g.add_alias("grenades")
 	
 	RS.twitcher.add_command("shake", shake_bodies)
 	
-	RS.twitcher.add_command("zeroG", zero_g)
-	#RS.twitcher.add_alias("zeroG", "zerog")
-	#RS.twitcher.add_alias("zeroG", "0g")
-	#RS.twitcher.add_alias("zeroG", "0G")
+	var command_zero_g := RS.twitcher.add_command("zeroG", zero_g)
+	command_zero_g.add_alias("zerog")
+	command_zero_g.add_alias("0g")
+	command_zero_g.add_alias("0G")
 	
+	RS.twitcher.add_command("quack", RS.play_sfx.bind("quack"))
 	#RS.twitcher.add_command("tts", parse_tts_command, 1, 256)
 	#RS.twitcher.add_command("tts_gb", parse_tts_command.bind("en_GB"), 1, 256)
 	#RS.twitcher.add_command("tts_us", parse_tts_command.bind("en_US"), 1, 256)
@@ -70,7 +71,6 @@ func on_chat(t_message: TwitchChatMessage) -> void:
 	if "kiwi" in message.to_lower(): OS.shell_open("https://cdn.discordapp.com/attachments/1221896398706835527/1296143099478933566/IMG_2351.jpg?ex=671136d4&is=670fe554&hm=a909489ef95bd303ec49c2c559d869fc1da209e9ae3eb9a25ed085e055cdb183&")
 	if t_message.chatter_user_name == "theyagich" and message == "wb!": yag_welcome_back()
 	if "dawdle" in message: destructibles_names("dawdle")
-	if message.begins_with("!quack"): RS.play_sfx("quack")
 
 
 func chat_on_stream_off(username: String) -> void:
