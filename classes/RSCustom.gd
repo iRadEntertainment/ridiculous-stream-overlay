@@ -60,11 +60,12 @@ func add_commands() -> void:
 	#RS.twitcher.add_command("tts_ru", parse_tts_command.bind("ru_RU"), 1, 256)
 	_log.i("Command added to the handler.")
 
-func on_chat(_channel_name: String, username: String, message: String, _tags: TwitchTags.PrivMsg):
+func on_chat(t_message: TwitchChatMessage) -> void:
+	var message: String = t_message.message.text
 	if not message.begins_with("!"):
-		add_notification_scene(username)
+		add_notification_scene(t_message.chatter_user_name)
 	if "kiwi" in message.to_lower(): OS.shell_open("https://cdn.discordapp.com/attachments/1221896398706835527/1296143099478933566/IMG_2351.jpg?ex=671136d4&is=670fe554&hm=a909489ef95bd303ec49c2c559d869fc1da209e9ae3eb9a25ed085e055cdb183&")
-	if username == "theyagich" and message == "wb!": yag_welcome_back()
+	if t_message.chatter_user_name == "theyagich" and message == "wb!": yag_welcome_back()
 	if "dawdle" in message: destructibles_names("dawdle")
 	if message.begins_with("!quack"): RS.play_sfx("quack")
 
@@ -400,9 +401,8 @@ func whostream(_info : TwitchCommandInfo = null, _args := []) -> void:
 	var streamers_live_data = await RS.twitcher.get_live_streamers_data()
 	var msg: String = "Currently streaming:"
 	for key in streamers_live_data.keys():
-		msg += " %s" % key
+		msg += " %s" % (RS.user_mng.get_known_user_from_user_id(key).display_name)
 	RS.twitcher.chat(msg)
-
 #endregion
 
 
@@ -417,11 +417,11 @@ func suggest_no_ads(on_cig_break_activation := true) -> void:
 		var item_id = await RS.no_obs_ws.get_scene_item_id(STREAM_OVERLAY_SCENE, "BRB_text")
 		var scene_item_enabled = await RS.no_obs_ws.get_item_enabled(STREAM_OVERLAY_SCENE, item_id)
 		if scene_item_enabled: return
-	var streamers_live_data: Dictionary = await RS.twitcher.get_live_streamers_data()
+	var streamers_live_data: Dictionary[int, TwitchStream] = await RS.twitcher.get_live_streamers_data()
 	if streamers_live_data.is_empty():
 		return
 	var suggested_streamer_id: int = streamers_live_data.keys().pick_random()
-	var streamer: RSUser = await RS.user_mng.get_user_from_user_id(suggested_streamer_id)
+	var streamer: RSUser = RS.user_mng.get_known_user_from_user_id(suggested_streamer_id)
 	var msg := """Do not watch the ADS.
 	 Excessive ad exposure manipulates behavior, fuels anxiety, and undermines mental well-being by promoting
 	unrealistic standards and decision fatigue. Watch twitch.tv/%s instead, they are live NOW!""" % streamer.username

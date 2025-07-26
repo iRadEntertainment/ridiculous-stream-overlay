@@ -9,11 +9,11 @@ static var _log: TwitchLogger = TwitchLogger.new(&"RSUserMng")
 var folder: String:
 	get(): return RSSettings.get_users_path()
 
-var known: Dictionary = {} # {user_id (int): user_object (RSUser)}
+var known: Dictionary[int, RSUser] = {} # {user_id (int): user_object (RSUser)}
 # TODO: populate unknown users
-var unknown: Dictionary = {} # {user_id (int): user_object (RSUser)} CACHE
-var username_to_user_id: Dictionary = {} # -> {username (String): user_id (int)} # used for known and cached unknown
-var live_streamers_data: Dictionary = {} #user-ids
+var unknown: Dictionary[int, RSUser] = {} # {user_id (int): user_object (RSUser)} CACHE
+var username_to_user_id: Dictionary[String, int] = {} # -> {username (String): user_id (int)} # used for known and cached unknown
+var live_streamers_data: Dictionary[int, TwitchStream] = {} #user-ids
 var tmr_refresh_live: Timer
 
 signal user_added(user: RSUser)
@@ -158,6 +158,14 @@ func user_from_twitch_api(username: String = "", user_id: int = 0) -> RSUser:
 	return user
 
 
+func get_known_streamers() -> Dictionary[int, RSUser]:
+	var results: Dictionary[int, RSUser] = {}
+	for user_id: int in known.keys():
+		if known[user_id].is_streamer:
+			results[user_id] = known[user_id]
+	return results
+
+
 func is_user_known(user: RSUser) -> bool:
 	return known.has(user.user_id)
 
@@ -241,8 +249,8 @@ func _on_user_request_add(info : TwitchCommandInfo = null, _args := []) -> void:
 
 
 #region STATIC METHODS
-static func load_all_users_from_folder(user_folder: String) -> Dictionary:
-	var dic: Dictionary = {}
+static func load_all_users_from_folder(user_folder: String) -> Dictionary[int, RSUser]:
+	var dic: Dictionary[int, RSUser] = {}
 	var user_files = RSUtl.list_file_in_folder(user_folder, ["json"])
 	for user_file in user_files:
 		var abs_path = user_folder + user_file

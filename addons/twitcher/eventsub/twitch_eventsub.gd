@@ -83,7 +83,7 @@ signal message_received(message: Variant)
 @export var ignore_message_eventsub_in_seconds: int = 600
 
 var _client: WebsocketClient = WebsocketClient.new()
-var _test_client : WebsocketClient = WebsocketClient.new()
+var _test_client: WebsocketClient = WebsocketClient.new()
 ## Swap over client in case Twitch sends us the message for a new server.
 ## See: https://dev.twitch.tv/docs/eventsub/handling-websocket-events/#reconnect-message
 var _swap_over_client : WebsocketClient
@@ -260,7 +260,7 @@ func _subscribe(subscription: TwitchEventsubConfig) -> String:
 	transport.method = "websocket"
 	transport.session_id = session.id
 
-	_log.d("Do subscribe: %s" % event_name)
+	_log.d("Do subscribe: %s | Conditions: %s" % [event_name, conditions])
 
 	var eventsub_response = await api.create_eventsub_subscription(data)
 

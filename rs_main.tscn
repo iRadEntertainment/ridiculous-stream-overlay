@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://d345j5een73bf"]
+[gd_scene load_steps=82 format=3 uid="uid://d345j5een73bf"]
 
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_1q0ot"]
 [ext_resource type="Script" uid="uid://brw4mp8qnlxxh" path="res://RSMain.gd" id="1_y2jdm"]
@@ -39,11 +39,13 @@
 [ext_resource type="Texture2D" uid="uid://g1dbcjksbotw" path="res://addons/twitcher/assets/fallback_texture.tres" id="20_q2h71"]
 [ext_resource type="AudioStream" uid="uid://cidanglkg6lrp" path="res://local_res/sfx_quack_01.ogg" id="21_637v1"]
 [ext_resource type="Script" uid="uid://6v8jnfjwbnhm" path="res://addons/twitcher/media/twitch_image_transformer.gd" id="21_f7hi4"]
+[ext_resource type="Script" uid="uid://cnmohrdxqihr0" path="res://addons/twitcher/generated/twitch_user.gd" id="21_xfrgx"]
 [ext_resource type="Shader" uid="uid://fpir2i2pnixe" path="res://shaders/snow_shader.gdshader" id="22_38gvb"]
-[ext_resource type="Script" uid="uid://bmluckfvgm1c2" path="res://addons/twitcher/chat/twitch_command.gd" id="22_dt5lr"]
 [ext_resource type="Texture2D" uid="uid://buikegrssuuph" path="res://local_res/snowflake-2.svg" id="23_mhtf1"]
 [ext_resource type="Script" uid="uid://du1vhw4tu6yv5" path="res://classes/RSSummaryMng.gd" id="24_rr657"]
 [ext_resource type="PackedScene" uid="uid://dduocy5paeeuu" path="res://classes/pnl_summary.tscn" id="25_ht5xl"]
+[ext_resource type="Script" uid="uid://dcq1bvfrqimqq" path="res://addons/twitcher/chat/twitch_chat.gd" id="25_stwwt"]
+[ext_resource type="Script" uid="uid://ch0rxi1ogjx3q" path="res://addons/twitcher/chat/twitch_command_help.gd" id="26_t7nc8"]
 
 [sub_resource type="Resource" id="Resource_7gvem"]
 script = ExtResource("10_1ry14")
@@ -79,29 +81,97 @@ server = "wss://irc-ws.chat.twitch.tv:443"
 send_message_delay_ms = 320
 capabilities = 0
 
+[sub_resource type="Resource" id="Resource_itq8v"]
+script = ExtResource("21_xfrgx")
+id = "443367221"
+login = "iraddev"
+display_name = "iRadDev"
+type = ""
+broadcaster_type = "affiliate"
+description = "My name is Dario, I am an architect and I code and game dev. I'm working on a Tower Defence game with some RTS elements blended into it. You will see map generations, programmer's art in Krita and development in Godot 4. Enjoy!"
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/cceb39b3-01c2-41b2-9309-a9c9697372cb-profile_image-300x300.png"
+offline_image_url = ""
+view_count = 0
+email = ""
+created_at = "2019-06-22T15:18:14Z"
+
 [sub_resource type="Resource" id="Resource_frd2u"]
 script = ExtResource("18_t7nc8")
 type = 4
-condition = {}
+condition = {
+&"broadcaster_user_id": "443367221"
+}
 metadata/_custom_type_script = "uid://cjug64e3433g0"
+metadata/broadcaster_user_id_user = SubResource("Resource_itq8v")
+
+[sub_resource type="Resource" id="Resource_nw1if"]
+script = ExtResource("21_xfrgx")
+id = "443367221"
+login = "iraddev"
+display_name = "iRadDev"
+type = ""
+broadcaster_type = "affiliate"
+description = "My name is Dario, I am an architect and I code and game dev. I'm working on a Tower Defence game with some RTS elements blended into it. You will see map generations, programmer's art in Krita and development in Godot 4. Enjoy!"
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/cceb39b3-01c2-41b2-9309-a9c9697372cb-profile_image-300x300.png"
+offline_image_url = ""
+view_count = 0
+email = ""
+created_at = "2019-06-22T15:18:14Z"
 
 [sub_resource type="Resource" id="Resource_ud7fj"]
 script = ExtResource("18_t7nc8")
 type = 5
-condition = {}
+condition = {
+&"broadcaster_user_id": "443367221",
+&"moderator_user_id": ""
+}
 metadata/_custom_type_script = "uid://cjug64e3433g0"
+metadata/broadcaster_user_id_user = SubResource("Resource_nw1if")
 
 [sub_resource type="Resource" id="Resource_cp302"]
 script = ExtResource("18_t7nc8")
 type = 6
-condition = {}
+condition = {
+&"broadcaster_user_id": ""
+}
 metadata/_custom_type_script = "uid://cjug64e3433g0"
+
+[sub_resource type="Resource" id="Resource_8n8rr"]
+script = ExtResource("21_xfrgx")
+id = "443367221"
+login = "iraddev"
+display_name = "iRadDev"
+type = ""
+broadcaster_type = "affiliate"
+description = "My name is Dario, I am an architect and I code and game dev. I'm working on a Tower Defence game with some RTS elements blended into it. You will see map generations, programmer's art in Krita and development in Godot 4. Enjoy!"
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/cceb39b3-01c2-41b2-9309-a9c9697372cb-profile_image-300x300.png"
+offline_image_url = ""
+view_count = 0
+email = ""
+created_at = "2019-06-22T15:18:14Z"
 
 [sub_resource type="Resource" id="Resource_jmoph"]
 script = ExtResource("18_t7nc8")
 type = 15
-condition = {}
+condition = {
+&"broadcaster_user_id": "443367221"
+}
 metadata/_custom_type_script = "uid://cjug64e3433g0"
+metadata/broadcaster_user_id_user = SubResource("Resource_8n8rr")
+
+[sub_resource type="Resource" id="Resource_3k771"]
+script = ExtResource("21_xfrgx")
+id = "443367221"
+login = "iraddev"
+display_name = "iRadDev"
+type = ""
+broadcaster_type = "affiliate"
+description = "My name is Dario, I am an architect and I code and game dev. I'm working on a Tower Defence game with some RTS elements blended into it. You will see map generations, programmer's art in Krita and development in Godot 4. Enjoy!"
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/cceb39b3-01c2-41b2-9309-a9c9697372cb-profile_image-300x300.png"
+offline_image_url = ""
+view_count = 0
+email = ""
+created_at = "2019-06-22T15:18:14Z"
 
 [sub_resource type="Resource" id="Resource_xfrgx"]
 script = ExtResource("18_t7nc8")
@@ -110,6 +180,21 @@ condition = {
 &"broadcaster_user_id": "443367221"
 }
 metadata/_custom_type_script = "uid://cjug64e3433g0"
+metadata/broadcaster_user_id_user = SubResource("Resource_3k771")
+
+[sub_resource type="Resource" id="Resource_moin3"]
+script = ExtResource("21_xfrgx")
+id = "443367221"
+login = "iraddev"
+display_name = "iRadDev"
+type = ""
+broadcaster_type = "affiliate"
+description = "My name is Dario, I am an architect and I code and game dev. I'm working on a Tower Defence game with some RTS elements blended into it. You will see map generations, programmer's art in Krita and development in Godot 4. Enjoy!"
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/cceb39b3-01c2-41b2-9309-a9c9697372cb-profile_image-300x300.png"
+offline_image_url = ""
+view_count = 0
+email = ""
+created_at = "2019-06-22T15:18:14Z"
 
 [sub_resource type="Resource" id="Resource_stwwt"]
 script = ExtResource("18_t7nc8")
@@ -118,6 +203,7 @@ condition = {
 &"broadcaster_user_id": "443367221"
 }
 metadata/_custom_type_script = "uid://cjug64e3433g0"
+metadata/broadcaster_user_id_user = SubResource("Resource_moin3")
 
 [sub_resource type="Resource" id="Resource_t7nc8"]
 script = ExtResource("18_t7nc8")
@@ -168,6 +254,20 @@ condition = {
 }
 metadata/_custom_type_script = "uid://cjug64e3433g0"
 
+[sub_resource type="Resource" id="Resource_fdvcj"]
+script = ExtResource("21_xfrgx")
+id = "443367221"
+login = "iraddev"
+display_name = "iRadDev"
+type = ""
+broadcaster_type = "affiliate"
+description = "My name is Dario, I am an architect and I code and game dev. I'm working on a Tower Defence game with some RTS elements blended into it. You will see map generations, programmer's art in Krita and development in Godot 4. Enjoy!"
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/cceb39b3-01c2-41b2-9309-a9c9697372cb-profile_image-300x300.png"
+offline_image_url = ""
+view_count = 0
+email = ""
+created_at = "2019-06-22T15:18:14Z"
+
 [sub_resource type="Resource" id="Resource_fjdrr"]
 script = ExtResource("18_t7nc8")
 type = 41
@@ -175,6 +275,21 @@ condition = {
 &"broadcaster_user_id": "443367221"
 }
 metadata/_custom_type_script = "uid://cjug64e3433g0"
+metadata/broadcaster_user_id_user = SubResource("Resource_fdvcj")
+
+[sub_resource type="Resource" id="Resource_jp5st"]
+script = ExtResource("21_xfrgx")
+id = "443367221"
+login = "iraddev"
+display_name = "iRadDev"
+type = ""
+broadcaster_type = "affiliate"
+description = "My name is Dario, I am an architect and I code and game dev. I'm working on a Tower Defence game with some RTS elements blended into it. You will see map generations, programmer's art in Krita and development in Godot 4. Enjoy!"
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/cceb39b3-01c2-41b2-9309-a9c9697372cb-profile_image-300x300.png"
+offline_image_url = ""
+view_count = 0
+email = ""
+created_at = "2019-06-22T15:18:14Z"
 
 [sub_resource type="Resource" id="Resource_po7a7"]
 script = ExtResource("18_t7nc8")
@@ -183,6 +298,21 @@ condition = {
 &"broadcaster_user_id": "443367221"
 }
 metadata/_custom_type_script = "uid://cjug64e3433g0"
+metadata/broadcaster_user_id_user = SubResource("Resource_jp5st")
+
+[sub_resource type="Resource" id="Resource_7fa7n"]
+script = ExtResource("21_xfrgx")
+id = "443367221"
+login = "iraddev"
+display_name = "iRadDev"
+type = ""
+broadcaster_type = "affiliate"
+description = "My name is Dario, I am an architect and I code and game dev. I'm working on a Tower Defence game with some RTS elements blended into it. You will see map generations, programmer's art in Krita and development in Godot 4. Enjoy!"
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/cceb39b3-01c2-41b2-9309-a9c9697372cb-profile_image-300x300.png"
+offline_image_url = ""
+view_count = 0
+email = ""
+created_at = "2019-06-22T15:18:14Z"
 
 [sub_resource type="Resource" id="Resource_hpbui"]
 script = ExtResource("18_t7nc8")
@@ -191,6 +321,21 @@ condition = {
 &"broadcaster_user_id": "443367221"
 }
 metadata/_custom_type_script = "uid://cjug64e3433g0"
+metadata/broadcaster_user_id_user = SubResource("Resource_7fa7n")
+
+[sub_resource type="Resource" id="Resource_gtail"]
+script = ExtResource("21_xfrgx")
+id = "443367221"
+login = "iraddev"
+display_name = "iRadDev"
+type = ""
+broadcaster_type = "affiliate"
+description = "My name is Dario, I am an architect and I code and game dev. I'm working on a Tower Defence game with some RTS elements blended into it. You will see map generations, programmer's art in Krita and development in Godot 4. Enjoy!"
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/cceb39b3-01c2-41b2-9309-a9c9697372cb-profile_image-300x300.png"
+offline_image_url = ""
+view_count = 0
+email = ""
+created_at = "2019-06-22T15:18:14Z"
 
 [sub_resource type="Resource" id="Resource_8xmxy"]
 script = ExtResource("18_t7nc8")
@@ -199,6 +344,21 @@ condition = {
 &"broadcaster_user_id": "443367221"
 }
 metadata/_custom_type_script = "uid://cjug64e3433g0"
+metadata/broadcaster_user_id_user = SubResource("Resource_gtail")
+
+[sub_resource type="Resource" id="Resource_k5s5h"]
+script = ExtResource("21_xfrgx")
+id = "443367221"
+login = "iraddev"
+display_name = "iRadDev"
+type = ""
+broadcaster_type = "affiliate"
+description = "My name is Dario, I am an architect and I code and game dev. I'm working on a Tower Defence game with some RTS elements blended into it. You will see map generations, programmer's art in Krita and development in Godot 4. Enjoy!"
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/cceb39b3-01c2-41b2-9309-a9c9697372cb-profile_image-300x300.png"
+offline_image_url = ""
+view_count = 0
+email = ""
+created_at = "2019-06-22T15:18:14Z"
 
 [sub_resource type="Resource" id="Resource_5tays"]
 script = ExtResource("18_t7nc8")
@@ -208,10 +368,39 @@ condition = {
 &"moderator_user_id": ""
 }
 metadata/_custom_type_script = "uid://cjug64e3433g0"
+metadata/broadcaster_user_id_user = SubResource("Resource_k5s5h")
 
 [sub_resource type="Resource" id="Resource_tsaix"]
 script = ExtResource("21_f7hi4")
 fallback_texture = ExtResource("20_q2h71")
+
+[sub_resource type="Resource" id="Resource_kuyc8"]
+script = ExtResource("21_xfrgx")
+id = "443367221"
+login = "iraddev"
+display_name = "iRadDev"
+type = ""
+broadcaster_type = "affiliate"
+description = "My name is Dario, I am an architect and I code and game dev. I'm working on a Tower Defence game with some RTS elements blended into it. You will see map generations, programmer's art in Krita and development in Godot 4. Enjoy!"
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/cceb39b3-01c2-41b2-9309-a9c9697372cb-profile_image-300x300.png"
+offline_image_url = ""
+view_count = 0
+email = ""
+created_at = "2019-06-22T15:18:14Z"
+
+[sub_resource type="Resource" id="Resource_xmcdg"]
+script = ExtResource("21_xfrgx")
+id = "443367221"
+login = "iraddev"
+display_name = "iRadDev"
+type = ""
+broadcaster_type = "affiliate"
+description = "My name is Dario, I am an architect and I code and game dev. I'm working on a Tower Defence game with some RTS elements blended into it. You will see map generations, programmer's art in Krita and development in Godot 4. Enjoy!"
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/cceb39b3-01c2-41b2-9309-a9c9697372cb-profile_image-300x300.png"
+offline_image_url = ""
+view_count = 0
+email = ""
+created_at = "2019-06-22T15:18:14Z"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mhtf1"]
 shader = ExtResource("22_38gvb")
@@ -264,6 +453,7 @@ script = ExtResource("8_fol3s")
 [node name="RSTwitcher" type="Node" parent="Modules"]
 unique_name_in_owner = true
 script = ExtResource("5_wye2t")
+metadata/_custom_type_script = "uid://ivai1wov0xyp"
 
 [node name="TwitchService" type="Node" parent="Modules/RSTwitcher"]
 unique_name_in_owner = true
@@ -321,9 +511,20 @@ api = NodePath("../TwitchAPI")
 image_transformer = SubResource("Resource_tsaix")
 metadata/_custom_type_script = "uid://d4lyup0vy1wtu"
 
-[node name="TwitchCommand" type="Node" parent="Modules/RSTwitcher"]
-script = ExtResource("22_dt5lr")
-metadata/_custom_type_script = "uid://bmluckfvgm1c2"
+[node name="TwitchChat" type="Node" parent="Modules/RSTwitcher" node_paths=PackedStringArray("media_loader", "eventsub", "api")]
+unique_name_in_owner = true
+script = ExtResource("25_stwwt")
+broadcaster_user = SubResource("Resource_kuyc8")
+media_loader = NodePath("../TwitchService/TwitchMediaLoader")
+eventsub = NodePath("../TwitchService/TwitchEventsub")
+api = NodePath("../TwitchService/TwitchAPI")
+metadata/_custom_type_script = "uid://dcq1bvfrqimqq"
+
+[node name="TwitchCommandHelp" type="Node" parent="Modules/RSTwitcher" node_paths=PackedStringArray("twitch_api")]
+script = ExtResource("26_t7nc8")
+twitch_api = NodePath("../TwitchService/TwitchAPI")
+sender_user = SubResource("Resource_xmcdg")
+metadata/_custom_type_script = "uid://ch0rxi1ogjx3q"
 
 [node name="RSUserMng" type="Node" parent="Modules"]
 unique_name_in_owner = true

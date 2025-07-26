@@ -1388,7 +1388,12 @@ func update_extension_bits_product(body: TwitchUpdateExtensionBitsProduct.Body) 
 func create_eventsub_subscription(body: TwitchCreateEventSubSubscription.Body) -> TwitchCreateEventSubSubscription.Response:
 	var path = "/eventsub/subscriptions?"
 	
-	var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_POST, body, "application/json")
+	var response: BufferedHTTPClient.ResponseData
+	var tries: int = 0
+	while tries < 5:
+		response = await request(path, HTTPClient.METHOD_POST, body, "application/json")
+		if !response.error:
+			break
 	
 	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
 	var parsed_result: TwitchCreateEventSubSubscription.Response = TwitchCreateEventSubSubscription.Response.from_json(result)

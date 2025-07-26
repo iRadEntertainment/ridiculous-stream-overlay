@@ -34,16 +34,11 @@ func connect_twitcher_events() -> void:
 
 
 #region Events
-func _on_received_chat_message(
-			_channel_name: String,
-			_username: String,
-			message: String,
-			tags: TwitchTags.PrivMsg
-		) -> void:
-	var user_id: int = int(tags.user_id)
+func _on_received_chat_message(t_message: TwitchChatMessage) -> void:
+	var user_id: int = int(t_message.chatter_user_id)
 	if !RS.user_mng.is_user_id_known(user_id):
 		return
-	_add_interaction_from_chat(user_id, message)
+	_add_interaction_from_chat(user_id, t_message.message.text)
 
 
 func _on_channel_points_redeemed(event_data: RSTwitchEventData) -> void:

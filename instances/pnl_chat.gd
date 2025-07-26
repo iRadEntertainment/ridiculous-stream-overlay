@@ -39,29 +39,30 @@ var badge_id = 0
 var emote_start : int = 0
 var fl_first_chat_message := true
 
-func _on_chat_message(_channel: String, from_user: String, message: String, tags: TwitchTags.PrivMsg):
+func _on_chat_message(t_message: TwitchChatMessage) -> void:
+	var message: String = t_message.message.text
 	if message.begins_with("!"):
 		if message.begins_with("!tts"):
 			pass
 		else:
 			return
-	var username = from_user.to_lower()
-	put_chat(username, message, tags)
+	put_chat(t_message)
 
 
-func put_chat(username: String, message: String, _tags: TwitchTags.PrivMsg):
-	var tags := TwitchTags.Message.from_priv_msg(_tags)
+func put_chat(t_message: TwitchChatMessage) -> void:
+	var username: String = t_message.chatter_user_name
+	var message: String = t_message.message.text
 	# var badges = await tags.get_badges() as Array[SpriteFrames];
 	# var emotes = await tags.get_emotes() as Array[TwitchIRC.EmoteLocation];
-	var color = tags.get_color();
+	var color = t_message.color
 	if color.is_empty():
 		color = RSGlobals.DEFAULT_RIGID_LABEL_COLOR
 	
-	if _tags.display_name == "IAmAMerlin":
+	if t_message.chatter_user_name == "IAmAMerlin":
 		color = Color.BROWN.to_html()
-	var user : RSUser = await RS.user_mng.get_user_from_username(username)
+	var user: RSUser = await RS.user_mng.get_user_from_username(username)
 	if user:
-		if user.custom_chat_color != Color.BLACK:
+		if not user.custom_chat_color in [Color.TRANSPARENT, Color.BLACK]:
 			color = user.custom_chat_color.to_html()
 	
 	if !fl_first_chat_message:
@@ -80,7 +81,7 @@ func put_chat(username: String, message: String, _tags: TwitchTags.PrivMsg):
 		#result_message += "[sprite id='b-%s']%s[/sprite]" % [badge_id, badge.resource_path];
 		#badge_id += 1;
 	
-	result_message += "[b][color=%s]%s[/color][/b]: " % [color, _tags.display_name];
+	result_message += "[b][color=%s]%s[/color][/b]: " % [color, t_message.chatter_user_name]
 
 	# Replace all the emoji names with the appropriate emojis
 	# Tracks the start where to replace next
@@ -119,16 +120,17 @@ func change_font_size(font_size : int):
 	theme.set("RichTextLabel/font_sizes/italics_font_size", font_size)
 	theme.set("RichTextLabel/font_sizes/mono_font_size", font_size)
 	theme.set("RichTextLabel/font_sizes/normal_font_size", font_size)
-func _on_ln_msg_text_submitted(new_text):
+func _on_ln_msg_text_submitted(new_text: String) -> void:
 	RS.twitcher.chat(new_text)
 	ln_msg.clear()
-func _on_ln_announce_text_submitted(new_text):
-	var color : String = opt_announce_color.get_item_text( opt_announce_color.get_selected_id() )
+func _on_ln_announce_text_submitted(new_text: String) -> void:
+	var key: String = opt_announce_color.get_item_text(opt_announce_color.selected)
+	var color: TwitchAnnouncementColor = TwitchAnnouncementColor.new(key)
 	RS.twitcher.announcement(new_text, color)
 	ln_announce.clear()
 
 
-func _on_sl_font_size_value_changed(value):
+func _on_sl_font_size_value_changed(value: float) -> void:
 	change_font_size(value as int)
 	%lb_font_size.text = str(value)
 
