@@ -16,20 +16,26 @@
 			"uuid": "c20e68d3-38c2-4086-85d1-193c4b85e02b",
 			"title": "Todo",
 			"tasks": [
-				"677a644d-9a64-4c1c-a5d9-ecc5b0d974b5",
-				"4d87e856-19fd-4e75-9c69-475943bc0d7e",
-				"ac31b291-15f7-4fce-a9c5-357fee217279",
-				"7fdf5bf8-4b57-4301-a0d4-82b9f43b4432",
-				"9c35058b-eb04-4ac4-8e07-98b80f329050",
-				"66f8d938-df58-4dbe-9873-814ce00f462c",
 				"251f9bdd-93ca-4cc9-b8dc-1f509e17a0e9",
-				"7aa983ff-60b0-4a35-a1e9-4d5cb367d8b5"
+				"7aa983ff-60b0-4a35-a1e9-4d5cb367d8b5",
+				"fa3554de-7d7b-41af-bae3-6507f4820535",
+				"92665a0d-24ea-41b2-b102-29978ec59d6c",
+				"677a644d-9a64-4c1c-a5d9-ecc5b0d974b5",
+				"a8451136-d02c-4d8f-8664-da43ed9d19fe",
+				"dfb7b16f-4d85-4f1c-b5c7-1c841cab7875",
+				"65524419-1536-4e36-93fa-a96773b51a3f",
+				"0e10746d-590c-4a9a-805e-0167ad58fd19",
+				"44f7d599-4ee8-48c7-a958-e0becbef56d1"
 			]
 		},
 		{
 			"uuid": "3fe624ce-48d2-4324-b6ea-2d2777a8a52f",
 			"title": "Doing",
-			"tasks": []
+			"tasks": [
+				"7fdf5bf8-4b57-4301-a0d4-82b9f43b4432",
+				"abd279f6-070f-498b-b140-da196cd18614",
+				"760d3fa6-dc0d-4500-8251-50ddaff640b6"
+			]
 		},
 		{
 			"uuid": "3056a553-9c8d-4864-8288-fac01ba7416d",
@@ -37,7 +43,12 @@
 			"tasks": [
 				"59803251-6342-4695-99dd-b5ce863992f2",
 				"109f3c37-86e2-4742-ad8c-05340dccede4",
-				"a73a100d-0c67-42db-8cfa-af65ac9a3d87"
+				"a73a100d-0c67-42db-8cfa-af65ac9a3d87",
+				"ac31b291-15f7-4fce-a9c5-357fee217279",
+				"4d87e856-19fd-4e75-9c69-475943bc0d7e",
+				"9c35058b-eb04-4ac4-8e07-98b80f329050",
+				"66f8d938-df58-4dbe-9873-814ce00f462c",
+				"4d7dd275-377c-4fd7-8577-1d13ec064189"
 			]
 		}
 	],
@@ -116,6 +127,76 @@
 			"uuid": "a73a100d-0c67-42db-8cfa-af65ac9a3d87",
 			"title": "itchio app url promote card",
 			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "fa3554de-7d7b-41af-bae3-6507f4820535",
+			"title": "Chats on live streams in Live tab",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "92665a0d-24ea-41b2-b102-29978ec59d6c",
+			"title": "Stats Leaderboard",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "4d7dd275-377c-4fd7-8577-1d13ec064189",
+			"title": "Summary statistics",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "abd279f6-070f-498b-b140-da196cd18614",
+			"title": "Summary scroll panel",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "a8451136-d02c-4d8f-8664-da43ed9d19fe",
+			"title": "Beans editor",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "dfb7b16f-4d85-4f1c-b5c7-1c841cab7875",
+			"title": "Assign custom beans to users",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "65524419-1536-4e36-93fa-a96773b51a3f",
+			"title": "mods contextual menu from main chat",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "0e10746d-590c-4a9a-805e-0167ad58fd19",
+			"title": "Promo live notification",
+			"description": "Promo check button for notification when they go live",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "44f7d599-4ee8-48c7-a958-e0becbef56d1",
+			"title": "Hook bits and gigantify to user stats",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "760d3fa6-dc0d-4500-8251-50ddaff640b6",
+			"title": "Summary start",
+			"description": "Store previous stats for all users and start new summary stats",
 			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
 			"steps": []
 		}
