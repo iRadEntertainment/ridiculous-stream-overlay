@@ -229,7 +229,11 @@ func _on_tmr_refresh_live_timeout() -> void:
 
 
 # connected from commands in RSCustom
-func _on_user_request_add(info : TwitchCommandInfo = null, _args := []) -> void:
+func _on_user_request_add(
+			_from_username: String = "",
+			info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
 	var user_id: int = int(info.tags.user_id)
 	var user: RSUser
 	if is_user_id_known(user_id):

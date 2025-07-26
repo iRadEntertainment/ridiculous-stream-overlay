@@ -60,6 +60,7 @@ func add_commands() -> void:
 	#RS.twitcher.add_command("tts_ru", parse_tts_command.bind("ru_RU"), 1, 256)
 	_log.i("Command added to the handler.")
 
+
 func on_chat(t_message: TwitchChatMessage) -> void:
 	var message: String = t_message.message.text
 	var user_id: int = int(t_message.chatter_user_id)
@@ -71,9 +72,11 @@ func on_chat(t_message: TwitchChatMessage) -> void:
 	if "dawdle" in message: destructibles_names("dawdle")
 	if message.begins_with("!quack"): RS.play_sfx("quack")
 
+
 func chat_on_stream_off(username: String) -> void:
 	var message := "%s thank you for trying. The stream is off, but yeah, the plugin is still on..."%username
 	RS.twitcher.chat(message)
+
 
 func on_first_session_message(t_message: TwitchChatMessage) -> void:
 	if !RS.no_obs_ws.is_stream_on: return
@@ -89,7 +92,7 @@ func on_first_session_message(t_message: TwitchChatMessage) -> void:
 	# let the physic name appear in the editor
 
 
-func on_channel_points_redeemed(data : RSTwitchEventData):
+func on_channel_points_redeemed(data: RSTwitchEventData):
 	_log.i("Channel points redeemed. %s -> %s" % [data.username, data.reward_title] )
 	var user: RSUser = await RS.user_mng.get_user_from_username(data.username)
 	#if await !RS.no_obs_ws.is_stream_on: chat_on_stream_off(data.username); return
@@ -109,14 +112,14 @@ func on_channel_points_redeemed(data : RSTwitchEventData):
 		"Toggle mute mic on stream": RS.no_obs_ws.toggle_mic_mute()
 		"Granades!": RS.physic_scene.spawn_grenade()
 		"Change streamer colour": change_streamer_colour(data.user_input)
-func on_followed(data : RSTwitchEventData):
+func on_followed(data: RSTwitchEventData):
 	destructibles_names(data.username)
-func on_raided(data : RSTwitchEventData):
+func on_raided(data: RSTwitchEventData):
 	var raider_username = data.from_broadcaster_username
 	destructibles_names(raider_username, data.viewers)
-func on_subscribed(_data : RSTwitchEventData):
+func on_subscribed(_data: RSTwitchEventData):
 	pass
-func on_cheered(_data : RSTwitchEventData):
+func on_cheered(_data: RSTwitchEventData):
 	pass
 
 
@@ -126,7 +129,7 @@ func add_notification_scene(user: RSUser) -> void:
 	new_notif_inst.start(user)
 
 
-func parse_tts_command(_info : TwitchCommandInfo = null, args := [], localizazion := "") -> void:
+func parse_tts_command(_info: TwitchCommandInfo = null, args := [], localizazion := "") -> void:
 	var text = " ".join(args)
 	if localizazion.is_empty():
 		localizazion = ["en_GB","en_US","it_IT","es_ES","fr_FR","de_DE","pl_PL","ru_RU"].pick_random()
@@ -138,7 +141,7 @@ func play_doit():
 
 func change_streamer_colour(user_input: String) -> void:
 	if not user_input.is_valid_html_color():
-		_log.w("Change streamer colour didn't work. Colour: #%s" % user_input)
+		_log.w("Change streamer colour didn't work. Colour: %s" % user_input)
 		return
 	
 	var col: Color = Color.html(user_input)
@@ -155,30 +158,29 @@ func change_streamer_colour(user_input: String) -> void:
 	RS.no_obs_ws.set_item_filter_setting("Cam-composite", "Colour Correction", settings_composite)
 
 
-func impersonate_iRad(data : RSTwitchEventData):
+func impersonate_iRad(data: RSTwitchEventData):
 	var broadcaster_login = data.user_input.split(" ", false, 1)[0]
 	broadcaster_login = broadcaster_login.strip_edges()
 	broadcaster_login = broadcaster_login.lstrip("@")
 	broadcaster_login = broadcaster_login.to_lower()
-	#var msg = data.username + " wants me to tell you: "
-	#msg += data.user_input.split(" ", false, 1)[1]
 	var msg = data.user_input.split(" ", false, 1)[1]
-	RS.twitcher.irc.chat(msg, broadcaster_login)
+	RS.twitcher.send_chat_message_to_channel(msg, broadcaster_login)
 
-func give_advice(data : RSTwitchEventData) -> void:
+
+func give_advice(data: RSTwitchEventData) -> void:
 	var folder_path := RSSettings.data_dir
 	var advice_file = folder_path + "/advice_collection.json"
-	var advice_list : Array = []
+	var advice_list: Array = []
 	check_if_advice_file_exists(advice_file)
 	advice_list = RSUtl.load_json(advice_file)
 	var new_advice = {
-		"adviser" : data.display_name,
-		"advice" : data.user_input,
+		"adviser": data.display_name,
+		"advice": data.user_input,
 	}
 	advice_list.append(new_advice)
 	RSUtl.save_to_json(advice_file, advice_list)
 
-func check_if_advice_file_exists(advice_file : String):
+func check_if_advice_file_exists(advice_file: String):
 	if not FileAccess.file_exists(advice_file):
 		var advice_list = [
 				{
@@ -192,21 +194,21 @@ func check_if_advice_file_exists(advice_file : String):
 			]
 		RSUtl.save_to_json(advice_file, advice_list)
 
-func get_advice(data : RSTwitchEventData) -> void:
+func get_advice(data: RSTwitchEventData) -> void:
 	var folder_path := RSSettings.data_dir
 	var advice_file = folder_path + "/advice_collection.json"
-	var advice_list : Array
+	var advice_list: Array
 	check_if_advice_file_exists(advice_file)
 	advice_list = RSUtl.load_json(advice_file)
 	
 	var advice = advice_list.pick_random()
 	
 	var advice_dic = {
-		"user" : data.display_name,
-		"adviser" : advice.adviser,
-		"advice" : advice.advice,
+		"user": data.display_name,
+		"adviser": advice.adviser,
+		"advice": advice.advice,
 	}
-	var format_string : String = [
+	var format_string: String = [
 		'{user} you know what {adviser} said once? "{advice}"',
 		'{user} you should listen to {adviser}: "{advice}"',
 		'What {adviser} said to {user} resonated with him/her/they: "{advice}"',
@@ -217,18 +219,26 @@ func get_advice(data : RSTwitchEventData) -> void:
 	RS.twitcher.chat(format_string.format(advice_dic) )
 
 
-func discord(_info : TwitchCommandInfo = null, _args := []):
+func discord(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
 	RS.play_sfx("discord")
 	var msg = "Join Discord: https://discord.gg/4YhKaHkcMb"
 	RS.twitcher.chat(msg)
 
 
-func chat_commands_help(_info : TwitchCommandInfo = null, _args := []):
+func chat_commands_help(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
 	var msg = "Use a combination of ![command] for chat: hl (highlight), hd(hidden), rb(rainbow), big, small, wave, pulse, tornado, shake"
 	RS.twitcher.chat(msg)
 
 
-func beans(username : String):
+func beans(username: String) -> void:
 	#if RS.physic_scene.is_closing: return
 	var user: RSUser
 	if username.is_empty() and !RS.user_mng.known.is_empty():
@@ -243,7 +253,12 @@ func beans(username : String):
 	RS.physic_scene.add_image_bodies(beans_param)
 
 
-func zero_g(_info : TwitchCommandInfo = null, _args := [], duration := 20.0):
+func zero_g(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = [],
+			duration := 20.0
+		) -> void:
 	if not RS.physic_scene:
 		RS.twitcher.chat("Wait for the physic scene to be in first!")
 		return
@@ -251,18 +266,32 @@ func zero_g(_info : TwitchCommandInfo = null, _args := [], duration := 20.0):
 	RS.physic_scene.zero_g()
 
 
-func shake_bodies(_info : TwitchCommandInfo = null, _args := []) -> void:
-	RS.physic_scene.shake_bodies()
+func shake_bodies(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
+	for i: int in 10:
+		RS.physic_scene.shake_bodies()
+		await get_tree().create_timer(0.05).timeout
 
 
-func laser(_info : TwitchCommandInfo = null, args := []):
+func laser(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			args: PackedStringArray = []
+		) -> void:
 	if RS.physic_scene.is_closing: return
 	const ANGLE_DEFAULT = PI/2.85
-	var angle: float = float(args[0] if args.size() >= 1 else ANGLE_DEFAULT)
+	var angle: float = float(args[0]) if args.size() >= 1 else ANGLE_DEFAULT
 	RS.physic_scene.add_laser(angle)
 
 
-func spawn_fake_beans(_info : TwitchCommandInfo = null, args := []) -> void:
+func spawn_fake_beans(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			args: PackedStringArray = []
+		) -> void:
 	var fake_beans := RSBeansParam.new()
 	fake_beans.img_paths = ["can.png"]
 	fake_beans.sfx_paths = ["sfx_notification_discord.ogg"]
@@ -339,7 +368,11 @@ func spawn_fake_beans(_info : TwitchCommandInfo = null, args := []) -> void:
 		await get_tree().create_timer(0.03).timeout
 
 
-func spawn_grenade(_info : TwitchCommandInfo = null, args := []) -> void:
+func spawn_grenade(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			args: PackedStringArray = []
+		) -> void:
 	var count: int = 1
 	if !args.is_empty():
 		count = ceili( float(args[0]) )
@@ -353,30 +386,50 @@ func spawn_grenade(_info : TwitchCommandInfo = null, args := []) -> void:
 		await get_tree().create_timer(0.03).timeout
 
 
-func play_discord_notification(_info : TwitchCommandInfo = null, _args := []) -> void:
+func play_discord_notification(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
 	RS.play_sfx("discord")
 
 
-func add_name_to_scene(info : TwitchCommandInfo = null, _args := []) -> void:
+func add_name_to_scene(
+			_from_username: String = "",
+			info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
 	destructibles_names(info.username, 1, 48)
 
 
-func toggle_music(_info : TwitchCommandInfo = null, _args := []) -> void:
+func toggle_music(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
 	var is_mozilla_input_mute: bool = await RS.no_obs_ws.get_input_mute("Mozilla")
 	RS.no_obs_ws.set_input_mute("Mozilla", !is_mozilla_input_mute)
 
 
-func play_mika_system_of_a_down(_info : TwitchCommandInfo = null, _args := []) -> void:
+func play_mika_system_of_a_down(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
 	$sfx_custom.stop()
 	$sfx_custom.stream = RS.loader.load_sfx_from_sfx_folder("sfx_chop_suey_by_Mika.ogg")
 	$sfx_custom.play()
 
 
-func nuke(_info : TwitchCommandInfo = null, _args := []):
+func nuke(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
 	RS.physic_scene.nuke()
 
 
-func destructibles_names(username := "", quantity : int = 1, font_size := 96):
+func destructibles_names(username := "", quantity: int = 1, font_size := 96):
 	var user: RSUser
 	if username.is_empty() and !RS.user_mng.known.is_empty():
 		user = RS.user_mng.known.values().pick_random()
@@ -397,10 +450,18 @@ func destructibles_names(username := "", quantity : int = 1, font_size := 96):
 		await get_tree().process_frame
 		RS.physic_scene.generate_text_rigidbody(user.display_name, col, font_size)
 
-func pandano(_info : TwitchCommandInfo = null, _args := []):
+func pandano(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
 	RS.no_obs_ws.restart_media("Panda_no")
 
-func whostream(_info : TwitchCommandInfo = null, _args := []) -> void:
+func whostream(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
 	var streamers_live_data = await RS.twitcher.get_live_streamers_data()
 	var msg: String = "Currently streaming:"
 	for key in streamers_live_data.keys():
@@ -465,14 +526,14 @@ func play_kerker():
 	OS.execute("C:\\Users\\Dario\\Desktop\\Kerker.exe", [])
 
 
-func change_stream_title(data : RSTwitchEventData):
+func change_stream_title(data: RSTwitchEventData) -> void:
 	var title = "%s - %s"%[data.user_input, data.username]
-	var path = "/helix/channels?"
-	path += "broadcaster_id=" + str(RS.settings.broadcaster_id) + "&"
-	await RS.twitcher.api.request(path, HTTPClient.METHOD_PATCH, {"title":title}, "application/json")
+	var body := TwitchModifyChannelInformation.Body.new()
+	body.title = title
+	RS.twitcher.api.modify_channel_information(body, str(RS.settings.broadcaster_id))
 
 
-func iRad_follow_somebody(_data : RSTwitchEventData):
+func iRad_follow_somebody(_data: RSTwitchEventData):
 	pass
 	# RS.twitcher.api.get_followed_channels(
 
@@ -531,7 +592,11 @@ func yag_welcome_back():
 	tts("The Yagich welcomes the streamer back!")
 
 
-func let_it_snow(_info: TwitchCommandInfo = null, _args := []) -> void:
+func let_it_snow(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
 	if RS.manadono_snow.visible:
 		return
 	RS.manadono_snow.show()

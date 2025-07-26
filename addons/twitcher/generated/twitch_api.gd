@@ -876,6 +876,8 @@ func get_user_chat_color(user_id: Array[String]) -> TwitchGetUserChatColor.Respo
 		path += "user_id=" + str(param) + "&" 
 	
 	var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_GET, "", "")
+	if response.response_data.is_empty():
+		return null
 	
 	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
 	var parsed_result: TwitchGetUserChatColor.Response = TwitchGetUserChatColor.Response.from_json(result)

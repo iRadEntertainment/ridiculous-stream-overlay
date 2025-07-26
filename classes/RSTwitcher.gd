@@ -99,11 +99,11 @@ func get_user(username: String) -> TwitchUser: return await service.get_user(use
 
 func get_user_color(user_id: int) -> Color:
 	var res_col := await api.get_user_chat_color([str(user_id)])
-	if res_col.data.is_empty():
-		return Color.TRANSPARENT
+	if not res_col: return Color.TRANSPARENT
+	if res_col.data.is_empty(): return Color.TRANSPARENT
+	
 	var data_col: TwitchUserChatColor = res_col.data.front()
-	if !data_col.color.is_valid_html_color():
-		return Color.TRANSPARENT
+	if !data_col.color.is_valid_html_color(): return Color.TRANSPARENT
 	return Color(data_col.color)
 
 
@@ -255,6 +255,12 @@ func raid(to_broadcaster_id: String) -> void:
 	opt.from_broadcaster_id = RS.settings.broadcaster_id
 	opt.to_broadcaster_id = to_broadcaster_id
 	await api.start_a_raid(opt)
+
+
+func send_chat_message_to_channel(msg: String, broadcaster_username: String) -> void:
+	var new_twitch_chat := TwitchChat.new()
+	new_twitch_chat.broadcaster_user = await get_user(broadcaster_username)
+	
 
 
 func get_follower_count() -> int:
