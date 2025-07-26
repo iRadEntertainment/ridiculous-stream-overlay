@@ -56,10 +56,6 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 viewport/transparent_background=true
 
-[threading]
-
-worker_pool/max_threads=50
-
 [twitcher]
 
 editor/show_setup_on_startup=false

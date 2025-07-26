@@ -151,7 +151,12 @@ func _on_chat_message_received(t_message: TwitchChatMessage) -> void:
 
 
 func chat(msg: String) -> void:
-	twitch_chat.send_message(msg)
+	service.chat(msg)
+
+
+func chat_message_to_t_user(msg: String, t_user: TwitchUser) -> void:
+	if not t_user: return
+	service.chat(msg, t_user)
 
 
 func whisper(_message: String, _username: String) -> void:
@@ -195,7 +200,11 @@ func gather_user_info_from_user_id(user_id: int) -> RSUser:
 	return RSUser.from_twitcher_user(response.data.front())
 
 
+var is_get_live_stream_data_processing := false
 func get_live_streamers_data(user_ids: Array = []) -> Dictionary[int, TwitchStream]:
+	if is_get_live_stream_data_processing:
+		return {}
+	is_get_live_stream_data_processing = true
 	if user_ids.is_empty():
 		user_ids = RS.user_mng.get_known_streamers().keys()
 	
@@ -207,13 +216,24 @@ func get_live_streamers_data(user_ids: Array = []) -> Dictionary[int, TwitchStre
 	var streams_data: Dictionary[int, TwitchStream] = {}
 	var opt := TwitchGetStreams.Opt.new()
 	opt.type = "live"
-	opt.user_id = user_ids_string
-	var streams_iterator := await api.get_streams(opt)
-	for stream_promise in streams_iterator:
-		var stream_data: TwitchStream = await stream_promise
-		if stream_data:
-			streams_data[int(stream_data.user_id)] = stream_data
 	
+	var iter: int = 0
+	const MAX_ITER = 100
+	while not user_ids_string.is_empty():
+		iter += 1
+		if iter > MAX_ITER:
+			_log.e("Reached max iterations while getting live stream data.")
+			break
+		
+		var new_batch: Array[String] = user_ids_string.slice(0, 99)
+		user_ids_string = user_ids_string.slice(99)
+		opt.user_id = new_batch
+		var streams_iterator := await api.get_streams(opt)
+		for stream_promise in streams_iterator:
+			var stream_data: TwitchStream = await stream_promise
+			if stream_data:
+				streams_data[int(stream_data.user_id)] = stream_data
+	is_get_live_stream_data_processing = false
 	return streams_data
 
 
@@ -255,12 +275,6 @@ func raid(to_broadcaster_id: String) -> void:
 	opt.from_broadcaster_id = RS.settings.broadcaster_id
 	opt.to_broadcaster_id = to_broadcaster_id
 	await api.start_a_raid(opt)
-
-
-func send_chat_message_to_channel(msg: String, broadcaster_username: String) -> void:
-	var new_twitch_chat := TwitchChat.new()
-	new_twitch_chat.broadcaster_user = await get_user(broadcaster_username)
-	
 
 
 func get_follower_count() -> int:

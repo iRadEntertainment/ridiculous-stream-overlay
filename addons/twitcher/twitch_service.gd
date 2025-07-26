@@ -186,6 +186,8 @@ func get_user(username: String) -> TwitchUser:
 	var opt = TwitchGetUsers.Opt.new()
 	opt.login = [username] as Array[String]
 	var user_data : TwitchGetUsers.Response = await api.get_users(opt)
+	if not user_data:
+		return null
 	if user_data.data.is_empty():
 		_log.e("Username was not found: %s" % username)
 		return null

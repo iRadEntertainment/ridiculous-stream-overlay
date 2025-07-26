@@ -129,6 +129,10 @@ func to_json() -> String:
 	return JSON.stringify(to_dict())
 
 
+func to_twitch_user() -> TwitchUser:
+	return TwitchUser.from_json(to_dict())
+
+
 func update_from_twitch_user(t_user: TwitchUser) -> void:
 	if int(t_user.id) != user_id:
 		push_warning("update_with_user: user ids are different")

@@ -234,7 +234,8 @@ func _on_user_request_add(
 			info: TwitchCommandInfo = null,
 			_args: PackedStringArray = []
 		) -> void:
-	var user_id: int = int(info.tags.user_id)
+	var msg: TwitchChatMessage = info.original_message
+	var user_id: int = int(msg.chatter_user_id)
 	var user: RSUser
 	if is_user_id_known(user_id):
 		user = get_known_user_from_user_id(user_id)

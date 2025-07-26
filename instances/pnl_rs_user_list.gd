@@ -155,7 +155,7 @@ func add_user_btn_entry_from_user_id(user_id: int) -> void:
 
 
 func toggle_live_users(toggled_on: bool) -> void:
-	for user_button in %user_list.get_children():
+	for user_button: RSTwitchUserEntry in %user_list.get_children():
 		user_button.visible = !toggled_on or \
 				user_button.user.user_id in RS.user_mng.live_streamers_data.keys()
 

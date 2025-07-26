@@ -448,6 +448,8 @@ func destructibles_names(username := "", quantity: int = 1, font_size := 96):
 		user = RS.user_mng.known.values().pick_random()
 	else:
 		user = await RS.user_mng.get_user_from_username(username)
+	if not user:
+		return
 	
 	var col :=  Color("00ec4f")
 	if user.twitch_chat_color != Color.BLACK:

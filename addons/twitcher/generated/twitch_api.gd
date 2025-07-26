@@ -418,6 +418,8 @@ func get_channel_followers(opt: TwitchGetChannelFollowers.Opt, broadcaster_id: S
 	path += "broadcaster_id=" + str(broadcaster_id) + "&"
 	
 	var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_GET, "", "")
+	if response.response_data.is_empty():
+		return
 	
 	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
 	var parsed_result: TwitchGetChannelFollowers.Response = TwitchGetChannelFollowers.Response.from_json(result)
@@ -2935,6 +2937,8 @@ func get_users(opt: TwitchGetUsers.Opt) -> TwitchGetUsers.Response:
 			path += "login=" + str(param) + "&" 
 	
 	var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_GET, "", "")
+	if response.response_data.is_empty():
+		return null
 	
 	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
 	var parsed_result: TwitchGetUsers.Response = TwitchGetUsers.Response.from_json(result)
