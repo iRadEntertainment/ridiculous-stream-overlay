@@ -20,36 +20,49 @@ func start():
 
 
 func add_commands() -> void:
-	RS.twitcher.add_command("add_me", RS.user_mng._on_user_request_add)
+	var cmd_add_me: TwitchCommand = RS.twitcher.add_command("add_me", RS.user_mng._on_user_request_add)
+	cmd_add_me.description = "Adds you to the known users of the Ridiculous Stream."
+	var cmd_discord: TwitchCommand = RS.twitcher.add_command("discord", discord)
+	cmd_discord.description = "Get an invite to the best discord server ever, with so many channels!"
+	var cmd_commands: TwitchCommand = RS.twitcher.add_command("commands", chat_commands_help)
+	cmd_commands.description = "This need to be updated, it's not correct. Don't trust it!"
+	var cmd_pandano: TwitchCommand = RS.twitcher.add_command("pandano", pandano)
+	cmd_pandano.description = "Complain about pandacoder with our tryly Jern!"
+	var cmd_whostream: TwitchCommand = RS.twitcher.add_command("whostream", whostream)
+	cmd_whostream.description = "Shows who, in the known users, is streaming at the moment."
+	var cmd_b: TwitchCommand = RS.twitcher.add_command("b", spawn_fake_beans, 0, 1)
+	cmd_b.description = "Those beans are fake!"
+	var cmd_d: TwitchCommand = RS.twitcher.add_command("d", play_discord_notification)
+	cmd_d.description = "Plays a discord notification."
+	var cmd_n: TwitchCommand = RS.twitcher.add_command("n", add_name_to_scene)
+	cmd_n.description = "Add your smol name to the stream."
+	var cmd_shake: TwitchCommand = RS.twitcher.add_command("shake", shake_bodies)
+	cmd_shake.description = "These beans on stream need shaking!"
+	var cmd_quack: TwitchCommand = RS.twitcher.add_command("quack", RS.play_sfx.bind("quack"))
+	cmd_quack.description = "Quack!"
+	var cmd_toggle_music: TwitchCommand = RS.twitcher.add_command("toggle_music", toggle_music)
+	cmd_toggle_music.description = "Vex667 can toggle the music on stream. You too!"
+	var cmd_mika: TwitchCommand = RS.twitcher.add_command("mika", play_mika_system_of_a_down)
+	cmd_mika.description = "System of a down is like... by Mika_Shiyu"
+	var cmd_snow: TwitchCommand = RS.twitcher.add_command("snow", let_it_snow)
+	cmd_snow.description = "Manadono has snow on stream, we have our snow at home!"
+	var cmd_laser: TwitchCommand = RS.twitcher.add_command("laser", laser, 0, 1)
+	cmd_laser.description = "Laseeeeeeerrsss!"
+	var cmd_nuke: TwitchCommand = RS.twitcher.add_command("nuke", nuke)
+	cmd_nuke.description = "Too many beans, too many..."
+	var cmd_zero_g: TwitchCommand = RS.twitcher.add_command("zeroG", zero_g)
+	cmd_zero_g.description = "Beans in space!"
+	var cmd_g: TwitchCommand = RS.twitcher.add_command("g", spawn_grenade, 0, 1)
+	cmd_g.description = "Spawn grenades on stream"
 	
-	RS.twitcher.add_command("discord", discord)
-	RS.twitcher.add_command("commands", chat_commands_help)
-	RS.twitcher.add_command("pandano", pandano)
-	RS.twitcher.add_command("whostream", whostream)
+	cmd_g.add_alias("grenade")
+	cmd_g.add_alias("granade")
+	cmd_g.add_alias("grandma")
+	cmd_g.add_alias("grenades")
+	cmd_zero_g.add_alias("zerog")
+	cmd_zero_g.add_alias("0g")
+	cmd_zero_g.add_alias("0G")
 	
-	RS.twitcher.add_command("b", spawn_fake_beans, 0, 1)
-	RS.twitcher.add_command("d", play_discord_notification)
-	RS.twitcher.add_command("n", add_name_to_scene)
-	RS.twitcher.add_command("toggle_music", toggle_music)
-	RS.twitcher.add_command("mika", play_mika_system_of_a_down)
-	RS.twitcher.add_command("snow", let_it_snow)
-	
-	RS.twitcher.add_command("laser", laser, 0, 1)
-	RS.twitcher.add_command("nuke", nuke)
-	var command_g := RS.twitcher.add_command("g", spawn_grenade, 0, 1)
-	command_g.add_alias("grenade")
-	command_g.add_alias("granade")
-	command_g.add_alias("grandma")
-	command_g.add_alias("grenades")
-	
-	RS.twitcher.add_command("shake", shake_bodies)
-	
-	var command_zero_g := RS.twitcher.add_command("zeroG", zero_g)
-	command_zero_g.add_alias("zerog")
-	command_zero_g.add_alias("0g")
-	command_zero_g.add_alias("0G")
-	
-	RS.twitcher.add_command("quack", RS.play_sfx.bind("quack"))
 	#RS.twitcher.add_command("tts", parse_tts_command, 1, 256)
 	#RS.twitcher.add_command("tts_gb", parse_tts_command.bind("en_GB"), 1, 256)
 	#RS.twitcher.add_command("tts_us", parse_tts_command.bind("en_US"), 1, 256)
