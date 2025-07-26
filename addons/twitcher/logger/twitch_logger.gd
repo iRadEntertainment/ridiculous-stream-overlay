@@ -48,6 +48,10 @@ func d(text: String):
 	if is_enabled() && debug: print_rich("%s D[i][color=%s][%s%s] %s[/color][/i]" % [Time.get_ticks_msec(), color, context_name, suffix, text])
 
 
+func w(text: String):
+	if is_enabled(): print_rich("%s W[i][color=%s][%s%s] %s[/color][/i]" % [Time.get_ticks_msec(), color, context_name, suffix, text])
+
+
 func string_to_hex_color(text: String) -> String:
 	# Hash the text to generate a unique integer
 	var hash_value = text.hash()
