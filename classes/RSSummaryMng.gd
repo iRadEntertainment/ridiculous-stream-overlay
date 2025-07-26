@@ -169,7 +169,7 @@ func _add_interaction_from_chat(user_id: int, message: String) -> void:
 	var inter: RSUser.Interactions = summary.user_interactions[user_id]
 	if message.begins_with("!"):
 		message = message.lstrip("!")
-		if message in RS.twitcher.commands.commands.keys():
+		if message in RS.twitcher.service._commands.keys():
 			inter.commands_count += 1
 		else:
 			inter.fake_commands_count += 1

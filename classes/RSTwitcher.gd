@@ -200,14 +200,14 @@ func get_live_streamers_data(user_ids: Array = []) -> Dictionary[int, TwitchStre
 		user_ids = RS.user_mng.get_known_streamers().keys()
 	
 	# cast int to String
-	for i: int in user_ids.size():
-		var user_id: String = str(user_ids[i])
-		user_ids[i] = user_id
+	var user_ids_string: Array[String] = []
+	for user_id: int in user_ids:
+		user_ids_string.append(str(user_id))
 	
 	var streams_data: Dictionary[int, TwitchStream] = {}
 	var opt := TwitchGetStreams.Opt.new()
 	opt.type = "live"
-	opt.user_id = user_ids
+	opt.user_id = user_ids_string
 	var streams_iterator := await api.get_streams(opt)
 	for stream_promise in streams_iterator:
 		var stream_data: TwitchStream = await stream_promise

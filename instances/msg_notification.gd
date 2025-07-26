@@ -11,8 +11,8 @@ extends Control
 var duration = 1.5
 var username : String = ""
 
-func start(_username: String) -> void:
-	username = _username
+func start(user: RSUser) -> void:
+	username = user.display_name
 	part_2.position.x = size.x
 	part_3.position = size
 	part_4.position.y = size.y
@@ -20,10 +20,9 @@ func start(_username: String) -> void:
 	var hashed = hash(username)
 	var assigned_num := (hashed % 11) as int
 	var sound_path = "sfx_notification_%02d.ogg"%[assigned_num]
-	if username in RS.user_mng.known.keys():
-		var user := RS.user_mng.known[username] as RSUser
-		if !user.custom_notification_sfx.is_empty():
-			sound_path = user.custom_notification_sfx
+	
+	if !user.custom_notification_sfx.is_empty():
+		sound_path = user.custom_notification_sfx
 	
 	$sfx.stream = RS.loader.load_sfx_from_sfx_folder(sound_path)
 	$sfx.play()

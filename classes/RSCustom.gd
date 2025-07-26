@@ -62,8 +62,10 @@ func add_commands() -> void:
 
 func on_chat(t_message: TwitchChatMessage) -> void:
 	var message: String = t_message.message.text
+	var user_id: int = int(t_message.chatter_user_id)
+	var user: RSUser = await RS.user_mng.get_user_from_user_id(user_id)
 	if not message.begins_with("!"):
-		add_notification_scene(t_message.chatter_user_name)
+		add_notification_scene(user)
 	if "kiwi" in message.to_lower(): OS.shell_open("https://cdn.discordapp.com/attachments/1221896398706835527/1296143099478933566/IMG_2351.jpg?ex=671136d4&is=670fe554&hm=a909489ef95bd303ec49c2c559d869fc1da209e9ae3eb9a25ed085e055cdb183&")
 	if t_message.chatter_user_name == "theyagich" and message == "wb!": yag_welcome_back()
 	if "dawdle" in message: destructibles_names("dawdle")
@@ -73,14 +75,15 @@ func chat_on_stream_off(username: String) -> void:
 	var message := "%s thank you for trying. The stream is off, but yeah, the plugin is still on..."%username
 	RS.twitcher.chat(message)
 
-func on_first_session_message(username: String, _message: String, _tags: TwitchTags.PrivMsg) -> void:
+func on_first_session_message(t_message: TwitchChatMessage) -> void:
 	if !RS.no_obs_ws.is_stream_on: return
-	var user: RSUser = await RS.user_mng.get_user_from_username(username)
-	if RS.user_mng.is_username_known(username):
+	var user_id: int = int(t_message.chatter_user_id)
+	var user: RSUser = await RS.user_mng.get_user_from_user_id(user_id)
+	if RS.user_mng.is_user_id_known(user_id):
 		user.twitch_chat_color = await RS.twitcher.get_user_color(user.user_id)
 		# TODO: move this to user manager
 		RS.user_mng.save_user(user)
-	destructibles_names(username)
+	destructibles_names(t_message.chatter_user_name)
 	if user.auto_shoutout:
 		RS.shoutout_mng.add_shoutout(user)
 	# let the physic name appear in the editor
@@ -117,10 +120,10 @@ func on_cheered(_data : RSTwitchEventData):
 	pass
 
 
-func add_notification_scene(username: String) -> void:
+func add_notification_scene(user: RSUser) -> void:
 	var new_notif_inst = RSGlobals.msg_notif_pack.instantiate()
 	RS.add_child(new_notif_inst)
-	new_notif_inst.start(username)
+	new_notif_inst.start(user)
 
 
 func parse_tts_command(_info : TwitchCommandInfo = null, args := [], localizazion := "") -> void:
