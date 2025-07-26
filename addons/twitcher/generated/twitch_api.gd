@@ -1392,7 +1392,7 @@ func create_eventsub_subscription(body: TwitchCreateEventSubSubscription.Body) -
 	var tries: int = 0
 	while tries < 5:
 		response = await request(path, HTTPClient.METHOD_POST, body, "application/json")
-		if !response.error:
+		if !response.error and not response.response_data.is_empty():
 			break
 	
 	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
