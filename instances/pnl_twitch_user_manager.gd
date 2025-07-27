@@ -86,21 +86,20 @@ func _process(_d):
 	process_stream_time_elapsed()
 
 
-func check_param_and_add_inspector(params: RSBeansParam):
-	clear_param_inspector()
-	%btn_add_custom_beans.button_pressed = false
-	if params == null: return
-	
-	var param_inspector = RSGlobals.param_inspector_pack.instantiate()
-	%sub_res.add_child(param_inspector)
-	param_inspector.owner = owner
-	param_inspector.params = params
-	btn_custom_beans_is_gui_input = false
-	%btn_add_custom_beans.button_pressed = true
-func clear_param_inspector():
+#func check_param_and_add_inspector(params: RSBeansParam):
+	#clear_param_inspector()
 	#%btn_add_custom_beans.button_pressed = false
-	for child in %sub_res.get_children():
-		child.queue_free()
+	#if params == null: return
+	#
+	#var param_inspector = RSGlobals.param_inspector_pack.instantiate()
+	#%sub_res.add_child(param_inspector)
+	#param_inspector.owner = owner
+	#param_inspector.params = params
+	#btn_custom_beans_is_gui_input = false
+	#%btn_add_custom_beans.button_pressed = true
+#func clear_param_inspector():
+	#for child in %sub_res.get_children():
+		#child.queue_free()
 
 
 #func user_from_fields() -> RSUser:
@@ -194,27 +193,27 @@ func _on_btn_raid_current_pressed():
 	#EditorInterface.edit_resource(resource)
 	##EditorInspector.edited_object()
 
-func add_param_inspector():
-	if %sub_res.get_child_count() > 0: return
-	if user.custom_beans_params != null:
-		check_param_and_add_inspector(user.custom_beans_params)
-	else:
-		check_param_and_add_inspector(RSBeansParam.from_json(RSGlobals.PARAMS_CANS))
+#func add_param_inspector():
+	#if %sub_res.get_child_count() > 0: return
+	#if user.custom_beans_params != null:
+		#check_param_and_add_inspector(user.custom_beans_params)
+	#else:
+		#check_param_and_add_inspector(RSBeansParam.from_json(RSGlobals.PARAMS_CANS))
 	#var param_inspector: RSParamInspector = RSGlobals.param_inspector_pack.instantiate()
 	#%sub_res.add_child(param_inspector)
 	#param_inspector.owner = owner
 	#param_inspector.params = RSGlobals.params_can
 
-var btn_custom_beans_is_gui_input := true
-func _on_btn_add_custom_beans_toggled(toggled_on):
-	%sub_res.visible = toggled_on
-	if not btn_custom_beans_is_gui_input:
-		btn_custom_beans_is_gui_input = true
-		return
-	if toggled_on:
-		add_param_inspector()
-	else:
-		clear_param_inspector()
+#var btn_custom_beans_is_gui_input := true
+#func _on_btn_add_custom_beans_toggled(toggled_on):
+	#%sub_res.visible = toggled_on
+	#if not btn_custom_beans_is_gui_input:
+		#btn_custom_beans_is_gui_input = true
+		#return
+	#if toggled_on:
+		#add_param_inspector()
+	#else:
+		#clear_param_inspector()
 
 
 #func _on_btn_test_beans_pressed():

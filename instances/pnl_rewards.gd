@@ -1,7 +1,7 @@
 
 extends PanelContainer
 
-const reward_entry_pack = preload("res://instances/reward_entry.tscn")
+const reward_entry_pack = preload("res://instances/entries/entry_reward.tscn")
 @onready var list = %list
 
 

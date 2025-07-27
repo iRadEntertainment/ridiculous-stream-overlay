@@ -2,13 +2,18 @@
 	"categories": [
 		{
 			"uuid": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
-			"title": "Task",
+			"title": "Features",
 			"color": "70bafa"
 		},
 		{
 			"uuid": "5cb6e5bd-6da9-452f-9c5b-285aabd09166",
 			"title": "Bug fix",
 			"color": "b822ec"
+		},
+		{
+			"uuid": "0d482861-341c-4163-91cf-b5933f641f0f",
+			"title": "Qol",
+			"color": "94d18a"
 		}
 	],
 	"stages": [
@@ -24,7 +29,7 @@
 				"dfb7b16f-4d85-4f1c-b5c7-1c841cab7875",
 				"65524419-1536-4e36-93fa-a96773b51a3f",
 				"0e10746d-590c-4a9a-805e-0167ad58fd19",
-				"44f7d599-4ee8-48c7-a958-e0becbef56d1"
+				"5da99675-0799-4897-b570-0302e87b58d2"
 			]
 		},
 		{
@@ -33,7 +38,8 @@
 			"tasks": [
 				"7fdf5bf8-4b57-4301-a0d4-82b9f43b4432",
 				"abd279f6-070f-498b-b140-da196cd18614",
-				"760d3fa6-dc0d-4500-8251-50ddaff640b6"
+				"760d3fa6-dc0d-4500-8251-50ddaff640b6",
+				"44f7d599-4ee8-48c7-a958-e0becbef56d1"
 			]
 		},
 		{
@@ -64,7 +70,7 @@
 			"uuid": "677a644d-9a64-4c1c-a5d9-ecc5b0d974b5",
 			"title": "individual chat messages",
 			"description": "",
-			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"category": "0d482861-341c-4163-91cf-b5933f641f0f",
 			"steps": []
 		},
 		{
@@ -120,7 +126,7 @@
 			"uuid": "7aa983ff-60b0-4a35-a1e9-4d5cb367d8b5",
 			"title": "detatch the list of known user from the user panel",
 			"description": "Have it floating and eventually open the edit user panel when clicked",
-			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"category": "0d482861-341c-4163-91cf-b5933f641f0f",
 			"steps": []
 		},
 		{
@@ -163,7 +169,12 @@
 			"title": "Beans editor",
 			"description": "",
 			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
-			"steps": []
+			"steps": [
+				{
+					"details": "BeanProperties Resource",
+					"done": false
+				}
+			]
 		},
 		{
 			"uuid": "dfb7b16f-4d85-4f1c-b5c7-1c841cab7875",
@@ -198,6 +209,13 @@
 			"title": "Summary start",
 			"description": "Store previous stats for all users and start new summary stats",
 			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "5da99675-0799-4897-b570-0302e87b58d2",
+			"title": "SteamService and ItchioService use bufferedHTTP",
+			"description": "",
+			"category": "0d482861-341c-4163-91cf-b5933f641f0f",
 			"steps": []
 		}
 	],

@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://dpphttpdklsl0"]
+
+[ext_resource type="Texture2D" uid="uid://bgmhs06tfpyw7" path="res://local_res/granade_color.png" id="1_4gay7"]
+[ext_resource type="Script" uid="uid://df0urlihveou4" path="res://instances/objects/granade.gd" id="1_66jpr"]
+[ext_resource type="AudioStream" uid="uid://bke7iiw8llqt6" path="res://local_res/sfx_boom.wav" id="3_7x8lf"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m10o4"]
+radius = 32.0
+height = 128.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lvpkm"]
+radius = 280.087
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0dla5"]
+radius = 943.076
+
+[node name="granade" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 31
+script = ExtResource("1_66jpr")
+
+[node name="sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_4gay7")
+
+[node name="coll" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_m10o4")
+
+[node name="area_destruct" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4094
+
+[node name="coll" type="CollisionShape2D" parent="area_destruct"]
+shape = SubResource("CircleShape2D_lvpkm")
+
+[node name="area_push" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4094
+
+[node name="coll2" type="CollisionShape2D" parent="area_push"]
+shape = SubResource("CircleShape2D_0dla5")
+
+[node name="sfx_boom" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_7x8lf")
+volume_db = -18.0
+
+[node name="white_circle" type="Polygon2D" parent="."]
+visible = false
+color = Color(1, 1, 1, 0.929412)

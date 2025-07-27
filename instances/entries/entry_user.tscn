@@ -1,0 +1,223 @@
+[gd_scene load_steps=16 format=3 uid="uid://c10luse40ekhw"]
+
+[ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_slouc"]
+[ext_resource type="Script" uid="uid://8jh4xihpue7w" path="res://instances/entries/entry_user.gd" id="2_brw8v"]
+[ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://ui/sprites/twitch_user_profile_pic.png" id="3_1ennu"]
+[ext_resource type="Texture2D" uid="uid://1ndihbuunqkm" path="res://ui/icons/bootstrap_icons/megaphone-fill.svg" id="4_kitly"]
+[ext_resource type="Texture2D" uid="uid://eowifokyak3b" path="res://ui/icons/bootstrap_icons/megaphone.svg" id="5_a5qrl"]
+[ext_resource type="Texture2D" uid="uid://hqibc1sfinhq" path="res://ui/icons/bootstrap_icons/stars.svg" id="6_kbpjk"]
+[ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://ui/icons/bootstrap_icons/arrow-repeat.svg" id="7_0qgdf"]
+[ext_resource type="Texture2D" uid="uid://dbpv7xe18l2r6" path="res://ui/sprites/raid_icon.png" id="8_htwh4"]
+[ext_resource type="Texture2D" uid="uid://dkms4psqrsyxy" path="res://ui/icons/bootstrap_icons/trash.png" id="9_0lyol"]
+[ext_resource type="Texture2D" uid="uid://bg38yaygfklda" path="res://ui/icons/bootstrap_icons/three-dots.png" id="10_hy24v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f1m1r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1lnvw"]
+bg_color = Color(0.109804, 0.109804, 0.109804, 0.45098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.878431, 0.878431, 0.878431, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g2py5"]
+bg_color = Color(0.109804, 0.109804, 0.109804, 0.45098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.129412, 0.14902, 0.180392, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qd0h3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_51clj"]
+
+[node name="entry_user" type="PanelContainer"]
+offset_right = 496.0
+offset_bottom = 48.0
+theme = ExtResource("1_slouc")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_f1m1r")
+script = ExtResource("2_brw8v")
+
+[node name="hb" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="user_pic" type="TextureRect" parent="hb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("3_1ennu")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="btn_open_streamer_page" type="Button" parent="hb/user_pic"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1lnvw")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_g2py5")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_qd0h3")
+
+[node name="btn_user" type="Button" parent="hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Seano4D"
+
+[node name="user_live_rect" type="ColorRect" parent="hb/btn_user"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.509804, 0.0196078, 0.705882, 0.254902)
+
+[node name="hb_games_count" type="HBoxContainer" parent="hb/btn_user"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_bottom = -8.0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="col1" type="ColorRect" parent="hb/btn_user/hb_games_count"]
+custom_minimum_size = Vector2(4, 4)
+layout_mode = 2
+color = Color(0.244144, 0.488732, 0.768396, 1)
+
+[node name="col2" type="ColorRect" parent="hb/btn_user/hb_games_count"]
+custom_minimum_size = Vector2(4, 4)
+layout_mode = 2
+
+[node name="col3" type="ColorRect" parent="hb/btn_user/hb_games_count"]
+custom_minimum_size = Vector2(4, 4)
+layout_mode = 2
+
+[node name="col4" type="ColorRect" parent="hb/btn_user/hb_games_count"]
+custom_minimum_size = Vector2(4, 4)
+layout_mode = 2
+
+[node name="btn_shoutout" type="Button" parent="hb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("4_kitly")
+icon_alignment = 1
+expand_icon = true
+
+[node name="pnl_toggle" type="PanelContainer" parent="hb"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_51clj")
+
+[node name="hb_menu" type="HBoxContainer" parent="hb/pnl_toggle"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="btn_promote" type="Button" parent="hb/pnl_toggle/hb_menu"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("5_a5qrl")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_special" type="Button" parent="hb/pnl_toggle/hb_menu"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("6_kbpjk")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_reload" type="Button" parent="hb/pnl_toggle/hb_menu"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("7_0qgdf")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_raid" type="Button" parent="hb/pnl_toggle/hb_menu"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("8_htwh4")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_delete" type="Button" parent="hb/pnl_toggle/hb_menu"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("9_0lyol")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_menu" type="Button" parent="hb/pnl_toggle"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("10_hy24v")
+icon_alignment = 1
+expand_icon = true
+
+[node name="pnl_delete" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="pnl_delete"]
+layout_mode = 2
+
+[node name="btn_delete_confirm" type="Button" parent="pnl_delete/hb"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "yes"
+
+[node name="lb_delete" type="Label" parent="pnl_delete/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Delete user?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="btn_delete_cancel" type="Button" parent="pnl_delete/hb"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "no"
+
+[connection signal="pressed" from="hb/user_pic/btn_open_streamer_page" to="." method="_on_btn_open_streamer_page_pressed"]
+[connection signal="pressed" from="hb/btn_user" to="." method="_on_btn_user_pressed"]
+[connection signal="pressed" from="hb/btn_shoutout" to="." method="_on_btn_shoutout_pressed"]
+[connection signal="pressed" from="hb/pnl_toggle/hb_menu/btn_promote" to="." method="_on_btn_promote_pressed"]
+[connection signal="pressed" from="hb/pnl_toggle/hb_menu/btn_special" to="." method="_on_btn_special_pressed"]
+[connection signal="pressed" from="hb/pnl_toggle/hb_menu/btn_reload" to="." method="_on_btn_reload_pressed"]
+[connection signal="pressed" from="hb/pnl_toggle/hb_menu/btn_raid" to="." method="_on_btn_raid_pressed"]
+[connection signal="pressed" from="hb/pnl_toggle/hb_menu/btn_delete" to="." method="_on_btn_delete_pressed"]
+[connection signal="mouse_entered" from="hb/pnl_toggle/btn_menu" to="." method="_on_btn_menu_mouse_entered"]
+[connection signal="pressed" from="pnl_delete/hb/btn_delete_confirm" to="." method="_on_btn_delete_confirm_pressed"]
+[connection signal="pressed" from="pnl_delete/hb/btn_delete_cancel" to="." method="_on_btn_delete_cancel_pressed"]

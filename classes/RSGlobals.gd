@@ -2,16 +2,16 @@ extends RefCounted
 class_name RSGlobals
 
 
-const pnl_settings_pack = preload ("res://instances/pnl_settings.tscn")
-const param_inspector_pack = preload ("res://instances/param_inspector.tscn")
+const pnl_settings_pack = preload ("res://instances/settings/pnl_settings.tscn")
+#const param_inspector_pack = preload ("res://instances/param_inspector.tscn")
 
 const msg_notif_pack = preload ("res://instances/msg_notification.tscn")
-const btn_user_pack = preload ("res://instances/btn_user.tscn")
+const btn_user_pack = preload ("res://instances/entries/entry_user.tscn")
 const notif_vetting_reward_pack = preload ("res://instances/notification_vetting_reward.tscn")
 
-const lb_body_pack = preload ("res://instances/lb_rigidbody.tscn")
-const laser_scene_pack = preload ("res://instances/laser_emitter.tscn")
-const granade_pack = preload ("res://instances/granade.tscn")
+const lb_body_pack = preload ("res://instances/objects/lb_rigidbody.tscn")
+const laser_scene_pack = preload ("res://instances/objects/laser_emitter.tscn")
+const granade_pack = preload ("res://instances/objects/granade.tscn")
 
 const DEFAULT_RIGID_LABEL_COLOR = "#29c3a6"
 

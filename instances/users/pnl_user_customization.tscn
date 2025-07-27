@@ -1,0 +1,85 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2aoepdqbkr13"]
+
+[ext_resource type="Script" uid="uid://b8tsfnqu8o3sd" path="res://instances/users/pnl_user_customization.gd" id="1_6p7es"]
+
+[node name="pnl_user_customization" type="PanelContainer"]
+offset_right = 719.0
+offset_bottom = 90.0
+size_flags_horizontal = 3
+script = ExtResource("1_6p7es")
+
+[node name="hb" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="grid" type="GridContainer" parent="hb"]
+layout_mode = 2
+columns = 2
+
+[node name="lb4" type="Label" parent="hb/grid"]
+layout_mode = 2
+text = "Godot chat colour"
+
+[node name="btn_custom_color" type="ColorPickerButton" parent="hb/grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb5" type="Label" parent="hb/grid"]
+layout_mode = 2
+text = "Notification sfx"
+
+[node name="opt_custom_sfx" type="OptionButton" parent="hb/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb7" type="Label" parent="hb/grid"]
+layout_mode = 2
+text = "Custom actions"
+
+[node name="opt_custom_actions" type="OptionButton" parent="hb/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="pnl_user_beans" type="PanelContainer" parent="hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="vb" type="VBoxContainer" parent="hb/pnl_user_beans"]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="hb/pnl_user_beans/vb"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="vb_tools" type="VBoxContainer" parent="hb/pnl_user_beans/vb/hb"]
+layout_mode = 2
+
+[node name="opt_available_beans" type="OptionButton" parent="hb/pnl_user_beans/vb/hb/vb_tools"]
+layout_mode = 2
+
+[node name="btn_add_beans" type="Button" parent="hb/pnl_user_beans/vb/hb/vb_tools"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Add beans"
+
+[node name="btn_open_bean_editor" type="Button" parent="hb/pnl_user_beans/vb/hb/vb_tools"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Open beans editor"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="hb/pnl_user_beans/vb/hb"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="flow" type="HFlowContainer" parent="hb/pnl_user_beans/vb/hb/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[connection signal="color_changed" from="hb/grid/btn_custom_color" to="." method="_on_btn_custom_color_color_changed"]
+[connection signal="item_selected" from="hb/grid/opt_custom_sfx" to="." method="_on_opt_custom_sfx_item_selected"]
+[connection signal="item_selected" from="hb/grid/opt_custom_actions" to="." method="_on_opt_custom_actions_item_selected"]

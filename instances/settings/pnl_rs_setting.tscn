@@ -1,0 +1,210 @@
+[gd_scene load_steps=7 format=3 uid="uid://d3jcvhnykltfd"]
+
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_cnk24"]
+[ext_resource type="Script" uid="uid://o1hn40gc1uac" path="res://instances/settings/pnl_rs_setting.gd" id="1_mw25e"]
+[ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://ui/icons/bootstrap_icons/folder2-open.svg" id="2_5jph2"]
+[ext_resource type="Texture2D" uid="uid://03d7hycvt6ym" path="res://ui/sprites/led.png" id="3_kgjpx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q70dn"]
+bg_color = Color(0.211765, 0.239216, 0.290196, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tqhrp"]
+bg_color = Color(0.219608, 0.239216, 0.266667, 1)
+
+[node name="pnl_rs_settings" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_cnk24")
+script = ExtResource("1_mw25e")
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="top" type="PanelContainer" parent="vb"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_q70dn")
+
+[node name="lb" type="Label" parent="vb/top"]
+layout_mode = 2
+text = "General Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="scr" type="ScrollContainer" parent="vb"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="vb" type="VBoxContainer" parent="vb/scr"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="sect2" type="PanelContainer" parent="vb/scr/vb"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tqhrp")
+
+[node name="lb" type="Label" parent="vb/scr/vb/sect2"]
+layout_mode = 2
+text = "Screen"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="hb" type="HBoxContainer" parent="vb/scr/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="vb/scr/vb/hb"]
+layout_mode = 2
+text = "Window scale"
+
+[node name="sl_window_scale" type="HSlider" parent="vb/scr/vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.8
+max_value = 2.2
+step = 0.2
+value = 1.0
+
+[node name="lb_window_scale" type="Label" parent="vb/scr/vb/hb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+text = "x1"
+horizontal_alignment = 2
+
+[node name="sect4" type="PanelContainer" parent="vb/scr/vb"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tqhrp")
+
+[node name="lb" type="Label" parent="vb/scr/vb/sect4"]
+layout_mode = 2
+text = "Data"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="btn_open_data_dir" type="Button" parent="vb/scr/vb"]
+layout_mode = 2
+text = "Data Dir"
+icon = ExtResource("2_5jph2")
+expand_icon = true
+
+[node name="btn_open_user_dir" type="Button" parent="vb/scr/vb"]
+layout_mode = 2
+text = "User Dir"
+icon = ExtResource("2_5jph2")
+expand_icon = true
+
+[node name="sect1" type="PanelContainer" parent="vb/scr/vb"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tqhrp")
+
+[node name="lb" type="Label" parent="vb/scr/vb/sect1"]
+layout_mode = 2
+text = "Twitcher"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="btn_reload_twitcher" type="Button" parent="vb/scr/vb"]
+layout_mode = 2
+text = "Reload Twitcher"
+
+[node name="btn_reload_commands" type="Button" parent="vb/scr/vb"]
+layout_mode = 2
+text = "Reload command handling"
+
+[node name="btn_open_cache_badges_dir" type="Button" parent="vb/scr/vb"]
+layout_mode = 2
+text = "Cache Badges Dir"
+icon = ExtResource("2_5jph2")
+expand_icon = true
+
+[node name="btn_open_cache_emotes_dir" type="Button" parent="vb/scr/vb"]
+layout_mode = 2
+text = "Cache Profile Pic Dir"
+icon = ExtResource("2_5jph2")
+expand_icon = true
+
+[node name="btn_open_cache_cheer_emotes_dir" type="Button" parent="vb/scr/vb"]
+layout_mode = 2
+text = "Cache Profile Pic Dir"
+icon = ExtResource("2_5jph2")
+expand_icon = true
+
+[node name="sect3" type="PanelContainer" parent="vb/scr/vb"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tqhrp")
+
+[node name="lb" type="Label" parent="vb/scr/vb/sect3"]
+layout_mode = 2
+text = "OBS Websocket"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="hb2" type="HBoxContainer" parent="vb/scr/vb"]
+layout_mode = 2
+
+[node name="lb1" type="Label" parent="vb/scr/vb/hb2"]
+layout_mode = 2
+text = "OBS url"
+
+[node name="ln_obs_url" type="LineEdit" parent="vb/scr/vb/hb2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb2" type="Label" parent="vb/scr/vb/hb2"]
+layout_mode = 2
+text = "port"
+
+[node name="ln_obs_port" type="LineEdit" parent="vb/scr/vb/hb2"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="lb3" type="Label" parent="vb/scr/vb/hb2"]
+layout_mode = 2
+text = "password"
+
+[node name="ln_obs_pass" type="LineEdit" parent="vb/scr/vb/hb2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+secret = true
+
+[node name="btn_obs_secret" type="Button" parent="vb/scr/vb/hb2"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+icon = ExtResource("3_kgjpx")
+expand_icon = true
+
+[node name="btn_obs_connect" type="Button" parent="vb/scr/vb"]
+layout_mode = 2
+text = "Connect OBS"
+
+[node name="btn_obs_req_api" type="Button" parent="vb/scr/vb"]
+layout_mode = 2
+text = "Open OBS WS request docs"
+
+[connection signal="drag_ended" from="vb/scr/vb/hb/sl_window_scale" to="." method="_on_sl_window_scale_drag_ended"]
+[connection signal="value_changed" from="vb/scr/vb/hb/sl_window_scale" to="." method="_on_sl_window_scale_value_changed"]
+[connection signal="pressed" from="vb/scr/vb/btn_open_data_dir" to="." method="_on_data_dir_pressed"]
+[connection signal="pressed" from="vb/scr/vb/btn_open_user_dir" to="." method="_on_btn_open_user_dir_pressed"]
+[connection signal="pressed" from="vb/scr/vb/btn_reload_twitcher" to="." method="_on_btn_reload_twitcher_pressed"]
+[connection signal="pressed" from="vb/scr/vb/btn_reload_commands" to="." method="_on_btn_reload_commands_pressed"]
+[connection signal="pressed" from="vb/scr/vb/btn_open_cache_badges_dir" to="." method="_on_btn_open_cache_badges_dir_pressed"]
+[connection signal="pressed" from="vb/scr/vb/btn_open_cache_emotes_dir" to="." method="_on_btn_open_cache_emotes_dir_pressed"]
+[connection signal="pressed" from="vb/scr/vb/btn_open_cache_cheer_emotes_dir" to="." method="_on_btn_open_cache_cheer_emotes_dir_pressed"]
+[connection signal="text_changed" from="vb/scr/vb/hb2/ln_obs_url" to="." method="_on_ln_obs_url_text_changed"]
+[connection signal="text_changed" from="vb/scr/vb/hb2/ln_obs_port" to="." method="_on_ln_obs_port_text_changed"]
+[connection signal="text_changed" from="vb/scr/vb/hb2/ln_obs_pass" to="." method="_on_ln_obs_pass_text_changed"]
+[connection signal="pressed" from="vb/scr/vb/hb2/btn_obs_secret" to="." method="_on_btn_obs_secret_pressed"]
+[connection signal="pressed" from="vb/scr/vb/btn_obs_connect" to="." method="_on_btn_obs_connect_pressed"]
+[connection signal="pressed" from="vb/scr/vb/btn_obs_req_api" to="." method="_on_btn_obs_req_api_pressed"]

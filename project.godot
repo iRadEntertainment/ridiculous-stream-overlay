@@ -44,6 +44,12 @@ project/assembly_name="Ridiculous Stream"
 
 enabled=PackedStringArray("res://addons/editorscriptmanager/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg", "res://addons/ridiculous_coding/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/twitcher/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://instances/": "teal"
+}
+
 [network]
 
 tls/enable_tls_v1.3=false

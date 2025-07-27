@@ -31,7 +31,7 @@ static var _log: TwitchLogger = TwitchLogger.new(&"RSMain")
 @onready var manadono_snow: ColorRect = %manadono_snow
 
 # Panels
-@onready var pnl_welcome: PanelWelcome = %pnl_welcome
+#@onready var pnl_welcome: PanelWelcome = %pnl_welcome
 @onready var pnl_notifications: PanelContainer = %pnl_notifications
 @onready var pnl_chat: RSPnlChat = %pnl_chat
 @onready var pnl_settings: RSPnlSettings = %pnl_settings
@@ -61,17 +61,17 @@ func _ready() -> void:
 	start_everything()
 
 
-func welcome_panel_check() -> void:
-	if pnl_welcome.should_show():
-		get_window().always_on_top = false
-		RSUtl.fit_and_center_window_to_display(get_window())
-		btn_floating_menu.hide()
-		pnl_welcome.start()
-		await pnl_welcome.completed
-		settings.welcome_version = ProjectSettings.get_setting("application/config/version")
-		save_settings()
-	
-	pnl_welcome.hide()
+#func welcome_panel_check() -> void:
+	#if pnl_welcome.should_show():
+		#get_window().always_on_top = false
+		#RSUtl.fit_and_center_window_to_display(get_window())
+		#btn_floating_menu.hide()
+		#pnl_welcome.start()
+		#await pnl_welcome.completed
+		#settings.welcome_version = ProjectSettings.get_setting("application/config/version")
+		#save_settings()
+	#
+	#pnl_welcome.hide()
 
 
 func setup_mouse_passthrough():

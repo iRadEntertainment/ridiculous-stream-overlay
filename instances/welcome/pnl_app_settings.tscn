@@ -1,0 +1,124 @@
+[gd_scene load_steps=8 format=3 uid="uid://beogu47vm8jbh"]
+
+[ext_resource type="Script" uid="uid://bpkhfvx6m6pm4" path="res://instances/welcome/pnl_app_settings.gd" id="1_y37x5"]
+[ext_resource type="StyleBox" uid="uid://dp1gxe3ir730n" path="res://ui/panel_flat_dark.tres" id="2_u8yv0"]
+[ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://ui/icons/bootstrap_icons/folder2-open.svg" id="3_6qw3p"]
+[ext_resource type="PackedScene" uid="uid://b12coyg6xjohk" path="res://instances/utils/btn_toggle_secret.tscn" id="4_g5qpk"]
+[ext_resource type="Texture2D" uid="uid://cqhmkfttlxen5" path="res://ui/icons/bootstrap_icons/eye-slash.png" id="5_lj04j"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_t6s67"]
+shadow_size = 10
+shadow_color = Color(0, 0, 0, 0.313726)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gchyt"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.145098, 0.168627, 0.203922, 1)
+
+[node name="pnl_app_settings" type="PanelContainer"]
+offset_right = 668.0
+offset_bottom = 259.0
+script = ExtResource("1_y37x5")
+metadata/_tab_index = 0
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="lb_title" type="Label" parent="vb"]
+layout_mode = 2
+theme_override_styles/normal = ExtResource("2_u8yv0")
+text = "RS Settings"
+label_settings = SubResource("LabelSettings_t6s67")
+horizontal_alignment = 1
+
+[node name="description" type="RichTextLabel" parent="vb"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_gchyt")
+text = "Let's start setting up a folder that will contain all your asset
+
+The setup folder will be stored in a file user:// settings.ini and it will be the only thing stored in the user folder. All the other data (users, custom images, custom scripts, etc.) will be stored in the data folder that you define in the next field"
+fit_content = true
+
+[node name="sep_group" type="HSeparator" parent="vb"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="hb2" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="vb/hb2"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Data folder"
+horizontal_alignment = 2
+
+[node name="ln_data_folder" type="LineEdit" parent="vb/hb2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "C:\\RidiculousStream"
+placeholder_text = "data folder"
+
+[node name="btn_select_data_folder" type="Button" parent="vb/hb2"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+icon = ExtResource("3_6qw3p")
+expand_icon = true
+
+[node name="btn_toggle_secret" parent="vb/hb2" node_paths=PackedStringArray("secret_fields") instance=ExtResource("4_g5qpk")]
+layout_mode = 2
+icon = ExtResource("5_lj04j")
+secret_fields = [NodePath("../ln_data_folder")]
+is_secret = false
+
+[node name="hb" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="vb/hb"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Window scale"
+horizontal_alignment = 2
+
+[node name="sl_window_scale" type="HSlider" parent="vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = 0.8
+max_value = 2.2
+step = 0.05
+value = 1.0
+
+[node name="lb_window_scale" type="Label" parent="vb/hb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "x1"
+horizontal_alignment = 2
+
+[node name="grid" type="GridContainer" parent="vb"]
+layout_mode = 2
+columns = 2
+
+[node name="ck_always_open_welcome_pnl" type="CheckBox" parent="vb/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Always launch welcome panel"
+
+[node name="ck_debug_mode" type="CheckBox" parent="vb/grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Debug mode"
+
+[connection signal="pressed" from="vb/hb2/btn_select_data_folder" to="." method="_on_btn_select_data_folder_pressed"]
+[connection signal="drag_ended" from="vb/hb/sl_window_scale" to="." method="_on_sl_window_scale_drag_ended"]
+[connection signal="value_changed" from="vb/hb/sl_window_scale" to="." method="_on_sl_window_scale_value_changed"]
+[connection signal="toggled" from="vb/grid/ck_always_open_welcome_pnl" to="." method="_on_ck_always_open_welcome_pnl_toggled"]
+[connection signal="toggled" from="vb/grid/ck_debug_mode" to="." method="_on_ck_debug_mode_toggled"]

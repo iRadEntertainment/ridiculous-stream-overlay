@@ -1,5 +1,4 @@
-# notification wave
-
+# msg_notification.gd
 extends Control
 
 @onready var part_1: GPUParticles2D = $part_1

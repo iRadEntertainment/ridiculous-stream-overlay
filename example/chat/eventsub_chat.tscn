@@ -1,10 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://5lyf04rwo1mf"]
+[gd_scene load_steps=22 format=3 uid="uid://5lyf04rwo1mf"]
 
 [ext_resource type="Script" uid="uid://ypwkjkx2pncv" path="res://example/chat/eventsub_chat.gd" id="1_pvhqt"]
 [ext_resource type="Script" uid="uid://i8st3lv0lidh" path="res://addons/twitcher/twitch_service.gd" id="2_vxv1r"]
-[ext_resource type="Resource" uid="uid://ry64ckbckh6m" path="res://addons/twitcher/twitch_oauth_setting.tres" id="3_jftlh"]
+[ext_resource type="Resource" uid="uid://dackvig4lpl6b" path="res://twitch_oauth_setting.tres" id="3_vxv1r"]
 [ext_resource type="Resource" uid="uid://hqh5x62qipk8" path="res://example/chat/chat_scopes.tres" id="4_wpyv0"]
-[ext_resource type="Resource" uid="uid://m7epy882axmp" path="res://addons/twitcher/default_oauth_token.tres" id="5_jftlh"]
+[ext_resource type="Resource" uid="uid://dknlk8rtlrg86" path="res://twitch_oauth_token.tres" id="5_rohya"]
 [ext_resource type="Script" uid="uid://iv0mgv0lu8b0" path="res://addons/twitcher/auth/twitch_auth.gd" id="6_2pnhe"]
 [ext_resource type="Script" uid="uid://bmluckfvgm1c2" path="res://addons/twitcher/chat/twitch_command.gd" id="7_blt2c"]
 [ext_resource type="Script" uid="uid://bf0wi70haua35" path="res://addons/twitcher/lib/oOuch/oauth.gd" id="7_y0pkj"]
@@ -16,12 +16,41 @@
 [ext_resource type="Script" uid="uid://d4lyup0vy1wtu" path="res://addons/twitcher/media/twitch_media_loader.gd" id="11_aprrr"]
 [ext_resource type="Script" uid="uid://ddwa0dm0qhc3s" path="res://addons/twitcher/media/native_image_transformer.gd" id="14_jftlh"]
 [ext_resource type="Script" uid="uid://dcq1bvfrqimqq" path="res://addons/twitcher/chat/twitch_chat.gd" id="15_jftlh"]
+[ext_resource type="Script" uid="uid://cnmohrdxqihr0" path="res://addons/twitcher/generated/twitch_user.gd" id="16_blt2c"]
 [ext_resource type="Script" uid="uid://ch0rxi1ogjx3q" path="res://addons/twitcher/chat/twitch_command_help.gd" id="18_vxv1r"]
 
 [sub_resource type="Resource" id="Resource_rohya"]
 script = ExtResource("14_jftlh")
 fallback_texture = ExtResource("10_1iusd")
 metadata/_custom_type_script = "uid://ddwa0dm0qhc3s"
+
+[sub_resource type="Resource" id="Resource_qwuyn"]
+script = ExtResource("16_blt2c")
+id = "443367221"
+login = "iraddev"
+display_name = "iRadDev"
+type = ""
+broadcaster_type = "affiliate"
+description = "My name is Dario, I am an architect and I code and game dev. I'm working on a Tower Defence game with some RTS elements blended into it. You will see map generations, programmer's art in Krita and development in Godot 4. Enjoy!"
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/cceb39b3-01c2-41b2-9309-a9c9697372cb-profile_image-300x300.png"
+offline_image_url = ""
+view_count = 0
+email = ""
+created_at = "2019-06-22T15:18:14Z"
+
+[sub_resource type="Resource" id="Resource_36sed"]
+script = ExtResource("16_blt2c")
+id = "443367221"
+login = "iraddev"
+display_name = "iRadDev"
+type = ""
+broadcaster_type = "affiliate"
+description = "My name is Dario, I am an architect and I code and game dev. I'm working on a Tower Defence game with some RTS elements blended into it. You will see map generations, programmer's art in Krita and development in Godot 4. Enjoy!"
+profile_image_url = "https://static-cdn.jtvnw.net/jtv_user_pictures/cceb39b3-01c2-41b2-9309-a9c9697372cb-profile_image-300x300.png"
+offline_image_url = ""
+view_count = 0
+email = ""
+created_at = "2019-06-22T15:18:14Z"
 
 [node name="Chat" type="Control"]
 layout_mode = 3
@@ -35,26 +64,26 @@ script = ExtResource("1_pvhqt")
 [node name="TwitchService" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("2_vxv1r")
-oauth_setting = ExtResource("3_jftlh")
+oauth_setting = ExtResource("3_vxv1r")
 scopes = ExtResource("4_wpyv0")
-token = ExtResource("5_jftlh")
+token = ExtResource("5_rohya")
 
 [node name="Auth" type="Node" parent="TwitchService"]
 script = ExtResource("6_2pnhe")
-oauth_setting = ExtResource("3_jftlh")
-token = ExtResource("5_jftlh")
+oauth_setting = ExtResource("3_vxv1r")
+token = ExtResource("5_rohya")
 scopes = ExtResource("4_wpyv0")
 
 [node name="OAuth" type="Node" parent="TwitchService/Auth" node_paths=PackedStringArray("token_handler")]
 script = ExtResource("7_y0pkj")
-oauth_setting = ExtResource("3_jftlh")
+oauth_setting = ExtResource("3_vxv1r")
 scopes = ExtResource("4_wpyv0")
 token_handler = NodePath("../TokenHandler")
 
 [node name="TokenHandler" type="Node" parent="TwitchService/Auth"]
 script = ExtResource("8_tvr5c")
-oauth_setting = ExtResource("3_jftlh")
-token = ExtResource("5_jftlh")
+oauth_setting = ExtResource("3_vxv1r")
+token = ExtResource("5_rohya")
 
 [node name="EventSub" type="Node" parent="TwitchService" node_paths=PackedStringArray("api")]
 script = ExtResource("9_rohya")
@@ -63,8 +92,8 @@ scopes = ExtResource("4_wpyv0")
 
 [node name="API" type="Node" parent="TwitchService"]
 script = ExtResource("9_otx6d")
-token = ExtResource("5_jftlh")
-oauth_setting = ExtResource("3_jftlh")
+token = ExtResource("5_rohya")
+oauth_setting = ExtResource("3_vxv1r")
 
 [node name="MediaLoader" type="Node" parent="TwitchService" node_paths=PackedStringArray("api")]
 unique_name_in_owner = true
@@ -83,6 +112,8 @@ metadata/_custom_type_script = "uid://bmluckfvgm1c2"
 [node name="TwitchChat" type="Node" parent="." node_paths=PackedStringArray("media_loader", "eventsub", "api")]
 unique_name_in_owner = true
 script = ExtResource("15_jftlh")
+broadcaster_user = SubResource("Resource_qwuyn")
+sender_user = SubResource("Resource_36sed")
 media_loader = NodePath("../TwitchService/MediaLoader")
 eventsub = NodePath("../TwitchService/EventSub")
 api = NodePath("../TwitchService/API")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://ep2joxuxeqvu"]
 
 [ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_qeffq"]
-[ext_resource type="PackedScene" uid="uid://cwg72p5gy7ib3" path="res://instances/btn_collapse.tscn" id="2_kao4t"]
+[ext_resource type="PackedScene" uid="uid://cwg72p5gy7ib3" path="res://instances/utils/btn_collapse.tscn" id="2_kao4t"]
 [ext_resource type="Script" uid="uid://eunohwicvi4u" path="res://addons/ridiculous_stream_project_settings/settings/pnl_ridiculous_stream_project_settings.gd" id="2_tqp8l"]
 [ext_resource type="StyleBox" uid="uid://dp1gxe3ir730n" path="res://ui/panel_flat_dark.tres" id="3_e72pp"]
 [ext_resource type="StyleBox" uid="uid://bbm13ghfao7l3" path="res://ui/editor_panel_light_borderless.tres" id="5_t7dku"]

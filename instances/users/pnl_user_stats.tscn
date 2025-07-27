@@ -1,0 +1,308 @@
+[gd_scene load_steps=4 format=3 uid="uid://bs6ykrldkscgn"]
+
+[ext_resource type="Script" uid="uid://747kj3rfu08g" path="res://instances/users/pnl_user_stats.gd" id="1_bobt0"]
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_wt0sn"]
+[ext_resource type="Texture2D" uid="uid://deuf2rqcfddbn" path="res://ui/icons/bootstrap_icons/caret-right-fill.png" id="2_b28c7"]
+
+[node name="pnl_user_stats" type="PanelContainer"]
+offset_right = 505.0
+offset_bottom = 457.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_wt0sn")
+script = ExtResource("1_bobt0")
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="vb"]
+layout_mode = 2
+text = "Stats"
+
+[node name="ck_global" type="CheckButton" parent="vb/lb"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -44.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "global"
+
+[node name="sep" type="HSeparator" parent="vb"]
+layout_mode = 2
+
+[node name="hb1" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb" type="Label" parent="vb/hb1"]
+layout_mode = 2
+text = "Added on"
+
+[node name="ln_added_on" type="LineEdit" parent="vb/hb1"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+placeholder_text = "-"
+editable = false
+expand_to_text_length = true
+
+[node name="sep" type="HSeparator" parent="vb/hb1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb2" type="Label" parent="vb/hb1"]
+layout_mode = 2
+text = "Points"
+
+[node name="ln_points" type="LineEdit" parent="vb/hb1"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+placeholder_text = "-"
+alignment = 2
+editable = false
+expand_to_text_length = true
+
+[node name="Counter" type="ScrollContainer" parent="vb"]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="flow" type="VFlowContainer" parent="vb/Counter"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="hb_msg" type="HBoxContainer" parent="vb/Counter/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ln_messages_count" type="LineEdit" parent="vb/Counter/flow/hb_msg"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+placeholder_text = "-"
+alignment = 2
+editable = false
+expand_to_text_length = true
+
+[node name="lb" type="Label" parent="vb/Counter/flow/hb_msg"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Messages"
+
+[node name="hb_commands" type="HBoxContainer" parent="vb/Counter/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ln_commands_count" type="LineEdit" parent="vb/Counter/flow/hb_commands"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+placeholder_text = "-"
+alignment = 2
+editable = false
+expand_to_text_length = true
+
+[node name="lb" type="Label" parent="vb/Counter/flow/hb_commands"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Commands"
+
+[node name="hb_fake_commands" type="HBoxContainer" parent="vb/Counter/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ln_fake_commands_count" type="LineEdit" parent="vb/Counter/flow/hb_fake_commands"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+placeholder_text = "-"
+alignment = 2
+editable = false
+expand_to_text_length = true
+
+[node name="lb" type="Label" parent="vb/Counter/flow/hb_fake_commands"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Fake commands"
+
+[node name="hb_channel_points_spent_count" type="HBoxContainer" parent="vb/Counter/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ln_channel_points_spent_count" type="LineEdit" parent="vb/Counter/flow/hb_channel_points_spent_count"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+placeholder_text = "-"
+alignment = 2
+editable = false
+expand_to_text_length = true
+
+[node name="lb" type="Label" parent="vb/Counter/flow/hb_channel_points_spent_count"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Beans spent"
+
+[node name="vb_redeems_count" type="VBoxContainer" parent="vb/Counter/flow"]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="vb/Counter/flow/vb_redeems_count"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ln_redeems_count" type="LineEdit" parent="vb/Counter/flow/vb_redeems_count/hb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+placeholder_text = "-"
+alignment = 2
+editable = false
+expand_to_text_length = true
+
+[node name="btn_expand_redeems" type="Button" parent="vb/Counter/flow/vb_redeems_count/hb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+toggle_mode = true
+icon = ExtResource("2_b28c7")
+icon_alignment = 1
+expand_icon = true
+
+[node name="lb" type="Label" parent="vb/Counter/flow/vb_redeems_count/hb"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Redeems"
+
+[node name="vb_redeems" type="VBoxContainer" parent="vb/Counter/flow/vb_redeems_count"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="hb_gigantify_count" type="HBoxContainer" parent="vb/Counter/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ln_gigantify_count" type="LineEdit" parent="vb/Counter/flow/hb_gigantify_count"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+placeholder_text = "-"
+alignment = 2
+editable = false
+expand_to_text_length = true
+
+[node name="lb" type="Label" parent="vb/Counter/flow/hb_gigantify_count"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Gigantified"
+
+[node name="hb_bits_count" type="HBoxContainer" parent="vb/Counter/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ln_bits_count" type="LineEdit" parent="vb/Counter/flow/hb_bits_count"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+placeholder_text = "-"
+alignment = 2
+editable = false
+expand_to_text_length = true
+
+[node name="lb" type="Label" parent="vb/Counter/flow/hb_bits_count"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Bits"
+
+[node name="hb_raids_in_count" type="HBoxContainer" parent="vb/Counter/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ln_raids_in_count" type="LineEdit" parent="vb/Counter/flow/hb_raids_in_count"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+placeholder_text = "-"
+alignment = 2
+editable = false
+expand_to_text_length = true
+
+[node name="lb" type="Label" parent="vb/Counter/flow/hb_raids_in_count"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Raids in"
+
+[node name="hb_raids_out_count2" type="HBoxContainer" parent="vb/Counter/flow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ln_raids_out_count" type="LineEdit" parent="vb/Counter/flow/hb_raids_out_count2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+placeholder_text = "-"
+alignment = 2
+editable = false
+expand_to_text_length = true
+
+[node name="lb" type="Label" parent="vb/Counter/flow/hb_raids_out_count2"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Raided out"
+
+[node name="vb_subscriptions_count" type="VBoxContainer" parent="vb/Counter/flow"]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="vb/Counter/flow/vb_subscriptions_count"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ln_subscriptions_count" type="LineEdit" parent="vb/Counter/flow/vb_subscriptions_count/hb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+placeholder_text = "-"
+alignment = 2
+editable = false
+expand_to_text_length = true
+
+[node name="btn_expand_subscriptions" type="Button" parent="vb/Counter/flow/vb_subscriptions_count/hb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+toggle_mode = true
+icon = ExtResource("2_b28c7")
+icon_alignment = 1
+expand_icon = true
+
+[node name="lb" type="Label" parent="vb/Counter/flow/vb_subscriptions_count/hb"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Subscriptions"
+
+[node name="vb_subscriptions" type="VBoxContainer" parent="vb/Counter/flow/vb_subscriptions_count"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[connection signal="toggled" from="vb/lb/ck_global" to="." method="_on_ck_global_toggled"]
+[connection signal="toggled" from="vb/Counter/flow/vb_redeems_count/hb/btn_expand_redeems" to="." method="_on_btn_expand_redeems_toggled"]
+[connection signal="toggled" from="vb/Counter/flow/vb_subscriptions_count/hb/btn_expand_subscriptions" to="." method="_on_btn_expand_subscriptions_toggled"]
