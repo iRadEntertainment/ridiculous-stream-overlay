@@ -29,7 +29,9 @@
 				"dfb7b16f-4d85-4f1c-b5c7-1c841cab7875",
 				"65524419-1536-4e36-93fa-a96773b51a3f",
 				"0e10746d-590c-4a9a-805e-0167ad58fd19",
-				"5da99675-0799-4897-b570-0302e87b58d2"
+				"5da99675-0799-4897-b570-0302e87b58d2",
+				"0556aa06-cc4f-41fc-bcb8-6c864bed1e11",
+				"72085a5e-88ca-45cb-b27d-a78b58ab1b98"
 			]
 		},
 		{
@@ -214,6 +216,20 @@
 		{
 			"uuid": "5da99675-0799-4897-b570-0302e87b58d2",
 			"title": "SteamService and ItchioService use bufferedHTTP",
+			"description": "",
+			"category": "0d482861-341c-4163-91cf-b5933f641f0f",
+			"steps": []
+		},
+		{
+			"uuid": "0556aa06-cc4f-41fc-bcb8-6c864bed1e11",
+			"title": "Subscriptions history from Twitch for each user",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "72085a5e-88ca-45cb-b27d-a78b58ab1b98",
+			"title": "RS as Singleton via code",
 			"description": "",
 			"category": "0d482861-341c-4163-91cf-b5933f641f0f",
 			"steps": []

@@ -7,8 +7,8 @@ extends PanelContainer
 @onready var ln_input = %ln_input
 @onready var cost = %cost
 
-var reward : TwitchCustomReward
-var icon_img : Texture2D
+var reward: TwitchCustomReward
+var icon_img: Texture2D
 
 
 func start():

@@ -1,3 +1,4 @@
+@tool
 extends PanelContainer
 
 @export var rotation_speed: float = 1.0

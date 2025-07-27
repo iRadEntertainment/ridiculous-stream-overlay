@@ -5,6 +5,8 @@ extends Twitcher
 ## Http client that bufferes the requests and sends them sequentialy
 class_name BufferedHTTPClient
 
+static var instance: BufferedHTTPClient
+
 
 ## Will be send when a new request was added to queue
 signal request_added(request: RequestData)
@@ -111,6 +113,11 @@ var processing: bool:
 	get: return not requests.is_empty() || current_request != null
 var is_queue_available: bool:
 	get: return responses.size() < max_clients
+
+
+func _enter_tree() -> void:
+	if not instance: instance = self
+
 
 ## Starts a request that will be handled as soon as the client gets free.
 ## Use HTTPClient.METHOD_* for the method.
