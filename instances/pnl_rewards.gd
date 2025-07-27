@@ -11,8 +11,9 @@ func start():
 func update_list():
 	for child in list.get_children():
 		child.queue_free()
-	
-	var res: TwitchCustomReward = await RS.twitcher.api.get_custom_reward([], false, str(RS.settings.broadcaster_id))
+	var opt := TwitchGetCustomReward.Opt.new()
+	opt.only_manageable_rewards = false
+	var res: TwitchGetCustomReward.Response = await RS.twitcher.api.get_custom_reward(opt, str(RS.settings.broadcaster_id))
 	for reward: TwitchCustomReward in res.data:
 		var entry = reward_entry_pack.instantiate()
 		entry.reward = reward

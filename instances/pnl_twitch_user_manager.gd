@@ -228,4 +228,4 @@ func _on_stream_title_pressed():
 func _on_ln_chat_live_streamer_text_submitted(new_text):
 	ln_chat_live_streamer.clear()
 	if !live_data: return
-	RS.twitcher.chat(new_text, live_data.user_login)
+	RS.twitcher.chat(new_text)
