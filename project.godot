@@ -44,6 +44,10 @@ project/assembly_name="Ridiculous Stream"
 
 enabled=PackedStringArray("res://addons/editorscriptmanager/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg", "res://addons/ridiculous_coding/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/twitcher/plugin.cfg")
 
+[network]
+
+tls/enable_tls_v1.3=false
+
 [physics]
 
 2d/run_on_separate_thread=true
@@ -62,7 +66,4 @@ editor/show_setup_on_startup=false
 editor/project_preset=&"Overlay"
 editor/load_current_twitch_user=false
 logs/TwitchAPI="info"
-logs/TwitchAuth="info"
-logs/TwitchEventsubConfig="info"
-logs/TwitchEventsub="debug"
 logs/RSTwitcher="debug"

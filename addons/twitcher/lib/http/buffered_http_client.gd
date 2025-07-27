@@ -12,6 +12,8 @@ signal request_added(request: RequestData)
 ## Will be send when a request is done.
 signal request_done(response: ResponseData)
 
+## Will be send when the request queue is updated
+signal request_erased
 
 ## Contains the request data to be send
 class RequestData extends RefCounted:
@@ -29,7 +31,44 @@ class RequestData extends RefCounted:
 	var body: String = ""
 	## Amount of retries
 	var retry: int
-
+	## Request error
+	var err: Error
+	
+	func _init(
+				_client: BufferedHTTPClient,
+				_http_request: HTTPRequest,
+				_path: String,
+				_method: int,
+				_headers: Dictionary,
+				_body: String = "",
+			) -> void:
+		client = _client
+		http_request = _http_request
+		path = _path
+		method = _method
+		headers = _headers
+		body = _body
+		
+		http_request.request_completed.connect(client._on_request_completed.bind(self))
+		request()
+	
+	func request() -> void:
+		if !client.is_queue_available:
+			await client.request_erased
+			request()
+			return
+		
+		client.logDebug("[%s] request started " % [ path ])
+		err = http_request.request(path, _pack_headers(headers), method, body)
+		if err != OK: client.logError("Problems with request to %s cause of %s" % [path, error_string(err)])
+	
+	func _pack_headers(headers: Dictionary) -> PackedStringArray:
+		var result: PackedStringArray = []
+		for header_key in headers:
+			var header_value = headers[header_key]
+			result.append("%s: %s" % [header_key, header_value])
+		return result
+	
 	## When you are done free the request
 	func queue_free() -> void:
 		http_request.queue_free()
@@ -49,7 +88,7 @@ class ResponseData extends RefCounted:
 	var response_header: Dictionary
 	## Had the response an error
 	var error: bool
-
+	
 	## When you are done free the request
 	func queue_free() -> void:
 		request_data.queue_free()
@@ -57,6 +96,7 @@ class ResponseData extends RefCounted:
 ## When a request fails max_error_count then cancel that request -1 for endless amount of tries.
 @export var max_error_count : int = -1
 @export var custom_header : Dictionary[String, String] = { "Accept": "*/*" }
+@export_range(1, 200) var max_clients: int = 50
 
 var requests : Array[RequestData] = []
 var current_request : RequestData
@@ -69,7 +109,8 @@ var error_count : int
 var polling: bool
 var processing: bool:
 	get: return not requests.is_empty() || current_request != null
-
+var is_queue_available: bool:
+	get: return responses.size() < max_clients
 
 ## Starts a request that will be handled as soon as the client gets free.
 ## Use HTTPClient.METHOD_* for the method.
@@ -77,22 +118,20 @@ func request(path: String, method: int, headers: Dictionary, body: String) -> Re
 	logInfo("[%s] start request " % [ path ])
 	headers = headers.duplicate()
 	headers.merge(custom_header)
-	var req = RequestData.new()
-	req.path = path
-	req.method = method
-	req.body = body
-	req.headers = headers
-	req.client = self
-	req.http_request = HTTPRequest.new()
-	req.http_request.use_threads = true
-	req.http_request.timeout = 30
-	req.http_request.request_completed.connect(_on_request_completed.bind(req))
-	add_child(req.http_request)
-	var err : Error = req.http_request.request(req.path, _pack_headers(req.headers), req.method, req.body)
-	if err != OK: logError("Problems with request to %s cause of %s" % [path, error_string(err)])
+	var http_request = HTTPRequest.new()
+	http_request.use_threads = true
+	http_request.timeout = 30
+	add_child(http_request)
+	var req = RequestData.new(
+		self,
+		http_request,
+		path,
+		method,
+		headers,
+		body,
+	)
 	requests.append(req)
 	request_added.emit(req)
-	logDebug("[%s] request started " % [ path ])
 	return req
 
 
@@ -101,6 +140,7 @@ func wait_for_request(request_data: RequestData) -> ResponseData:
 	if responses.has(request_data):
 		var response = responses[request_data]
 		requests.erase(request_data)
+		request_erased.emit()
 		responses.erase(request_data)
 		request_data.queue_free()
 		logDebug("response cached return directly from wait")
@@ -111,6 +151,7 @@ func wait_for_request(request_data: RequestData) -> ResponseData:
 		latest_response = await request_done
 	logDebug("response received return from wait")
 	requests.erase(request_data)
+	request_erased.emit()
 	responses.erase(request_data)
 	request_data.queue_free()
 	return latest_response
