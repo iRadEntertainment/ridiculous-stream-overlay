@@ -7,6 +7,7 @@ class_name TextureRectLoad
 @export var use_own_client: bool:
 	set(val):
 		use_own_client = val
+		if not is_node_ready(): await ready
 		if val and not _own_client: _own_client = _create_client_node()
 		if _own_client and not val: _own_client.queue_free()
 @warning_ignore("unused_private_class_variable")
@@ -68,6 +69,9 @@ func load_from_url() -> void:
 
 
 func _create_client_node() -> HTTPRequest:
+	for child in get_children():
+		if child is HTTPRequest:
+			return child
 	var _new_own_client = HTTPRequest.new()
 	_new_own_client.name = "TextureHTTPRequest"
 	add_child(_new_own_client)
