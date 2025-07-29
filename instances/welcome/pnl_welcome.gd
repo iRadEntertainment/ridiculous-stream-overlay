@@ -10,11 +10,11 @@ static var _log: TwitchLogger = TwitchLogger.new(&"PnlWelcome")
 var settings: RSSettings
 #var scope_aggregator := ScopeAggregator.new()
 
-var _form_containers: Array[PanelFormContainer] = []
+#var _form_containers: Array[PanelFormContainer] = []
 var _completed_form_containers := {}
 
-var _all_forms_completed: bool:
-	get: return _completed_form_containers.size() >= _form_containers.size()
+#var _all_forms_completed: bool:
+	#get: return _completed_form_containers.size() >= _form_containers.size()
 
 
 func _ready() -> void:

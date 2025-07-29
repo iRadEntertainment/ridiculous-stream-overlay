@@ -130,7 +130,9 @@ func to_json() -> String:
 
 
 func to_twitch_user() -> TwitchUser:
-	return TwitchUser.from_json(to_dict())
+	var t_user = TwitchUser.from_json(to_dict())
+	t_user.id = str(user_id)
+	return 
 
 
 func update_from_twitch_user(t_user: TwitchUser) -> void:

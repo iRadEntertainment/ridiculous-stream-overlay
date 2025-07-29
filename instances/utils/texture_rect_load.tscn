@@ -57,5 +57,7 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 1
 
+[node name="TextureHTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="mouse_entered" from="btn_reload" to="." method="_on_btn_reload_mouse_entered"]
 [connection signal="mouse_exited" from="btn_reload" to="." method="_on_btn_reload_mouse_exited"]
