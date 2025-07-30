@@ -82,10 +82,10 @@ func check_steam_app(steam_app_id: int) -> void:
 
 
 func add_steam_entry(
-			steam_app_id: int,
-			save_user: bool,
-			_steam_app_data: SteamAppData = null
-		) -> void:
+	steam_app_id: int,
+	save_user: bool,
+	_steam_app_data: SteamAppData = null
+) -> void:
 	if not user:
 		push_warning("Panel Games: No user")
 		return
@@ -125,10 +125,10 @@ func check_itchio_app(itchio_app_url: String) -> void:
 
 
 func add_itchio_entry(
-			itchio_app_url: String,
-			save_user: bool,
-			_itchio_app_data: ItchIOAppData = null,
-		) -> void:
+	itchio_app_url: String,
+	save_user: bool,
+	_itchio_app_data: ItchIOAppData = null,
+) -> void:
 	
 	if not user:
 		push_warning("Panel Games: No user")
@@ -194,6 +194,26 @@ func _delete_entry(entry: EntryGameList) -> void:
 			delete_itchio_entry(entry.itchio_app_url)
 
 
+#region Utilities
+# Special thanks: Siekwie (https://www.twitch.tv/siekwie)
+func is_link(text: String) -> bool:
+	var url_regex = RegEx.new()
+	# This pattern matches http, https, and www. links
+	url_regex.compile(r"(https?://[^\s]+)|(www.[^\s]+)")
+	return url_regex.search(text) != null
+
+
+func extract_steam_app_id(url: String) -> int:
+	var regex = RegEx.new()
+	# This pattern captures the number after /app/
+	regex.compile(r"store.steampowered.com/app/(\d+)")
+	var result = regex.search(url)
+	if result:
+		return result.get_string(1).to_int() # Group 1 is the app ID
+	return 0
+#endregion
+
+
 #region Entries signals
 func _on_entry_game_info_pressed(_data: Variant) -> void:
 	%tab_game_info.show()
@@ -214,9 +234,16 @@ func _on_entry_deleted(entry: EntryGameList) -> void:
 func _on_ln_add_steam_app_id_text_submitted(_new_text: String) -> void:
 	_on_btn_steam_add_game_pressed()
 func _on_btn_steam_get_info_pressed() -> void:
-	if %ln_add_steam_app_id.text.is_empty():
+	var text: String = %ln_add_steam_app_id.text
+	var app_id: int
+	if text.is_empty():
 		return
-	check_steam_app( int(%ln_add_steam_app_id.text) )
+	if is_link(text):
+		app_id = extract_steam_app_id(text)
+	else:
+		app_id = int(text)
+	if app_id != 0:
+		check_steam_app(app_id)
 func _on_btn_steam_add_game_pressed() -> void:
 	if %ln_add_steam_app_id.text.is_empty():
 		return

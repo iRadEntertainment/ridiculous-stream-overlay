@@ -45,7 +45,7 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "steam app id"
+placeholder_text = "steam app id or url"
 
 [node name="btn_steam_get_info" type="Button" parent="split/vb_games/hb/vb_steam/hb_search"]
 unique_name_in_owner = true
