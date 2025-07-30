@@ -21,6 +21,9 @@ func start():
 	title.text = reward.title
 	cost.text = str(reward.cost)
 	ck_is_active.button_pressed = reward.is_enabled
+	#reward.image.url_1x
+	#reward.image.url_2x
+	#reward.image.url_4x
 
 
 #func _on_ck_is_active_toggled(toggled_on):

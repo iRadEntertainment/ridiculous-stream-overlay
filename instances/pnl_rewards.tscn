@@ -14,37 +14,44 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3d7eq")
 
-[node name="vb" type="VBoxContainer" parent="."]
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
 layout_mode = 2
 
-[node name="top" type="HBoxContainer" parent="vb"]
+[node name="hb_lists" type="HBoxContainer" parent="HSplitContainer"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/top"]
+[node name="vb" type="VBoxContainer" parent="HSplitContainer/hb_lists"]
+layout_mode = 2
+
+[node name="top" type="HBoxContainer" parent="HSplitContainer/hb_lists/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="HSplitContainer/hb_lists/vb/top"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_maxpk")
-text = "Channel Redeems"
+text = "From Twitch"
 horizontal_alignment = 1
 
-[node name="btn_update" type="Button" parent="vb/top"]
+[node name="btn_reload_from_twitch" type="Button" parent="HSplitContainer/hb_lists/vb/top"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 icon = ExtResource("3_ssecm")
 icon_alignment = 1
 expand_icon = true
 
-[node name="scroll" type="ScrollContainer" parent="vb"]
+[node name="scroll" type="ScrollContainer" parent="HSplitContainer/hb_lists/vb"]
 layout_mode = 2
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
 
-[node name="list" type="VBoxContainer" parent="vb/scroll"]
+[node name="vb_twitch_list" type="VBoxContainer" parent="HSplitContainer/hb_lists/vb/scroll"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="reward_entry" parent="vb/scroll/list" instance=ExtResource("3_nmi06")]
+[node name="reward_entry" parent="HSplitContainer/hb_lists/vb/scroll/vb_twitch_list" instance=ExtResource("3_nmi06")]
 layout_mode = 2
 
-[connection signal="pressed" from="vb/top/btn_update" to="." method="_on_btn_update_pressed"]
+[connection signal="pressed" from="HSplitContainer/hb_lists/vb/top/btn_reload_from_twitch" to="." method="_on_btn_reload_from_twitch_pressed"]

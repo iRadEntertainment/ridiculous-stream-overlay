@@ -10,10 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://bext4in78rfy6" path="res://instances/users/pnl_rs_user_list.tscn" id="4_j0n41"]
 [ext_resource type="Texture2D" uid="uid://ctpfh3qqwicqq" path="res://ui/sprites/btn_settings.png" id="5_574cn"]
 [ext_resource type="Texture2D" uid="uid://bykc5hku6ubu8" path="res://ui/icons/icon_irad.png" id="5_pus7l"]
-[ext_resource type="PackedScene" uid="uid://rvb1iyen7vu3" path="res://instances/pnl_rewards.tscn" id="6_d22ns"]
 [ext_resource type="Texture2D" uid="uid://b4gxd48s477ky" path="res://ui/icons/icon-github.png" id="6_e1vcs"]
 [ext_resource type="PackedScene" uid="uid://cwbekbjfcqjml" path="res://instances/settings/pnl_vetting.tscn" id="7_0wmw7"]
 [ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://ui/icons/bootstrap_icons/arrow-repeat.svg" id="7_a5jks"]
+[ext_resource type="PackedScene" uid="uid://bi3uhtp733dln" path="res://instances/pnl_twitch_utilities.tscn" id="10_jyhka"]
 [ext_resource type="Texture2D" uid="uid://b2mtooi658yq0" path="res://ui/sprites/loading.png" id="12_yksnf"]
 
 [node name="pnl_settings" type="PanelContainer"]
@@ -144,20 +144,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="pnl_twitch_utilities" type="PanelContainer" parent="vb/hb/tabs"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 2
-
-[node name="hb" type="HSplitContainer" parent="vb/hb/tabs/pnl_twitch_utilities"]
-layout_mode = 2
-
-[node name="pnl_rewards" parent="vb/hb/tabs/pnl_twitch_utilities/hb" instance=ExtResource("6_d22ns")]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(400, 0)
-layout_mode = 2
-
-[node name="Control" type="Control" parent="vb/hb/tabs/pnl_twitch_utilities/hb"]
+[node name="pnl_twitch_utilities" parent="vb/hb/tabs" instance=ExtResource("10_jyhka")]
 layout_mode = 2
 
 [node name="bot" type="PanelContainer" parent="vb"]

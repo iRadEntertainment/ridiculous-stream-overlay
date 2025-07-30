@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://bi3uhtp733dln"]
+
+[ext_resource type="PackedScene" uid="uid://rvb1iyen7vu3" path="res://instances/pnl_rewards.tscn" id="1_1pm1n"]
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_oxvom"]
+
+[node name="pnl_twitch_utilities" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_oxvom")
+metadata/_tab_index = 2
+
+[node name="hb" type="TabContainer" parent="."]
+layout_mode = 2
+current_tab = 0
+
+[node name="pnl_rewards" parent="hb" instance=ExtResource("1_1pm1n")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Control" type="Control" parent="hb"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1

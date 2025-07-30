@@ -1,5 +1,6 @@
 @tool
 extends PanelContainer
+class_name BtnCollapse
 
 const CARET_RIGHT = preload("res://ui/icons/bootstrap_icons/caret-right-fill.png")
 const CARET_DOWN = preload("res://ui/icons/bootstrap_icons/caret-down-fill.png")

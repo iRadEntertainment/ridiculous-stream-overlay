@@ -29,6 +29,7 @@ static var data_dir: String = OS.get_user_data_dir():
 # UTILITIES
 static func get_settings_filepath() -> String: return data_dir.path_join(RS_SETTINGS_FILE_NAME)
 static func get_users_path() -> String: return data_dir.path_join(RS_USER_FOLDER)
+static func get_redeems_path() -> String: return data_dir.path_join(RS_REDEEMS_FOLDER)
 static func get_obj_path() -> String: return data_dir.path_join(RS_OBJ_FOLDER)
 static func get_sfx_path() -> String: return data_dir.path_join(RS_SFX_FOLDER)
 static func get_logs_path() -> String: return data_dir.path_join(RS_LOG_FOLDER)
@@ -65,6 +66,7 @@ const RS_SETTINGS_FILE_NAME = "settings.tres"
 const RS_VETTING_FILE_NAME = "user_vetting_list.json"
 const RS_LOG_FOLDER = "logs/"
 const RS_USER_FOLDER = "users/"
+const RS_REDEEMS_FOLDER = "redeems/"
 const RS_OBJ_FOLDER = "obj/"
 const RS_SFX_FOLDER = "sfx/"
 
