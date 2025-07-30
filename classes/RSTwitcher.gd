@@ -44,9 +44,9 @@ func start():
 	received_chat_message.connect(check_first_msg)
 	first_session_message.connect(check_user_twitch_color)
 	is_ready = true
-	#if RS.settings.auto_connect:
-		#
-		#await connect_to_twitch()
+	if RS.settings.auto_connect:
+		await get_tree().create_timer(2.0).timeout
+		await connect_to_twitch()
 
 
 func connect_to_twitch():
