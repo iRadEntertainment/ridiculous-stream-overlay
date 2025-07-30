@@ -30,6 +30,28 @@ horizontal_alignment = 1
 [node name="sep" type="HSeparator" parent="vb"]
 layout_mode = 2
 
+[node name="pnl" type="PanelContainer" parent="vb"]
+layout_mode = 2
+
+[node name="vb_entry" type="VBoxContainer" parent="vb/pnl"]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="vb/pnl/vb_entry"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="vb/pnl/vb_entry/hb"]
+layout_mode = 2
+text = "Filepath"
+
+[node name="btn_file_path" type="Button" parent="vb/pnl/vb_entry/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "C:\\Something\\something.json"
+
+[node name="sep2" type="HSeparator" parent="vb"]
+layout_mode = 2
+
 [node name="scroll" type="ScrollContainer" parent="vb"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -315,18 +337,33 @@ layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "cooldown_expires_at"
 
-[node name="sep2" type="HSeparator" parent="vb"]
+[node name="sep3" type="HSeparator" parent="vb"]
 layout_mode = 2
 
 [node name="hb" type="HBoxContainer" parent="vb"]
 layout_mode = 2
 
 [node name="btn_save_to_disk" type="Button" parent="vb/hb"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Save To Disk"
 
 [node name="btn_delete" type="Button" parent="vb/hb"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Delete"
+
+[node name="btn_update_twitch" type="Button" parent="vb/hb"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Update reward on Twitch"
+
+[connection signal="pressed" from="vb/pnl/vb_entry/hb/btn_file_path" to="." method="_on_btn_file_path_pressed"]
+[connection signal="pressed" from="vb/hb/btn_save_to_disk" to="." method="_on_btn_save_to_disk_pressed"]
+[connection signal="pressed" from="vb/hb/btn_delete" to="." method="_on_btn_delete_pressed"]
+[connection signal="pressed" from="vb/hb/btn_update_twitch" to="." method="_on_btn_update_twitch_pressed"]

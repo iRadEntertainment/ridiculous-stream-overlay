@@ -11,21 +11,34 @@ var reward: TwitchCustomReward:
 			return
 		reward = val
 		_populate()
-var type: EntryReward.Type = EntryReward.Type.TWITCH
-var local_path: String
+var type: EntryReward.Type = EntryReward.Type.TWITCH:
+	set(val):
+		type = val
+		if not is_node_ready(): await ready
+		%btn_save_to_disk.visible = type in [EntryReward.Type.LOCAL, EntryReward.Type.TWITCH]
+		%btn_delete.visible = type == EntryReward.Type.LOCAL
+		%btn_update_twitch.visible = type == EntryReward.Type.TWITCH
+var local_filepath: String
 var entry: EntryReward:
 	set(val):
 		if entry == val:
 			return
 		entry = val
 		type = entry.type
+		local_filepath = entry.local_filepath
 		reward = entry.reward
 
+signal entry_saved(entry: EntryReward)
+signal entry_deleted(entry: EntryReward)
 
+
+#region Update
 func _populate() -> void:
 	if not reward:
 		clear()
 		return
+	%btn_file_path.text = entry.local_filepath
+	
 	%ln_broadcaster_id.text = reward.broadcaster_id
 	%ln_broadcaster_login.text = reward.broadcaster_login
 	%ln_broadcaster_name.text = reward.broadcaster_name
@@ -61,6 +74,9 @@ func _populate() -> void:
 
 
 func clear() -> void:
+	entry = null
+	local_filepath = ""
+	
 	%ln_broadcaster_id.text = ""
 	%ln_broadcaster_login.text = ""
 	%ln_broadcaster_name.text = ""
@@ -76,8 +92,31 @@ func clear() -> void:
 	%ck_should_redemptions_skip_request_queue.button_pressed = false
 	%ln_redemptions_redeemed_current_stream.text = ""
 	%ln_cooldown_expires_at.text = ""
+#endregion
 
 
+#region Utilities
+func save_to_disk() -> void:
+	var filepath: String = %btn_file_path.text
+	if filepath.is_empty():
+		filepath = RSSettings.get_redeems_path().path_join(filename_from_reward(reward))
+	if not filepath.get_file().is_valid_filename():
+		return
+	RSUtl.save_to_json(filepath, reward.to_dict())
+	if entry:
+		entry_saved.emit(entry)
+func delete() -> void:
+	if entry:
+		entry.queue_free()
+	if FileAccess.file_exists(local_filepath):
+		OS.move_to_trash(local_filepath)
+	clear()
+func update_twitch() -> void:
+	pass
+#endregion
+
+
+#region Getters
 func get_reward_from_fields() -> TwitchCustomReward:
 	var new_reward := TwitchCustomReward.create(
 		%ln_broadcaster_id.text,
@@ -119,6 +158,7 @@ func get_reward_from_fields() -> TwitchCustomReward:
 		%ln_cooldown_expires_at.text,
 	)
 	return new_reward
+#endregion
 
 
 #region Tool to populate properties
@@ -201,4 +241,61 @@ static func create_entries_from_properties(
 	print("==")
 	for string: String in to_print:
 		print(string)
+#endregion
+
+
+#region Utilities
+func popup_filepath_selection() -> void:
+	#file_dialog_show(title: String, current_directory: String, filename: String, show_hidden: bool, mode: FileDialogMode, filters: PackedStringArray, callback: Callable)
+	var title: String = "Select save location for Reward to json"
+	var current_directory: String = RSSettings.get_redeems_path()
+	var filename: String
+	if local_filepath:
+		filename = local_filepath.get_file()
+	else:
+		filename = filename_from_reward(reward)
+	var show_hidden: bool = false
+	var mode := DisplayServer.FileDialogMode.FILE_DIALOG_MODE_SAVE_FILE
+	var filters := PackedStringArray(["*.json"])
+	
+	DisplayServer.file_dialog_show(
+		title,
+		current_directory,
+		filename,
+		show_hidden,
+		mode,
+		filters,
+		_on_file_dialog_selected
+	)
+	
+	RS.pnl_settings.hide()
+
+
+func _on_file_dialog_selected(
+			status: bool,
+			selected_paths: PackedStringArray,
+			_selected_filter_index: int
+		) -> void:
+	if !status: return
+	var path: String = selected_paths[0]
+	%btn_file_path.text = path
+	%btn_save_to_disk.disabled = not path.get_file().is_valid_filename() or path.is_empty()
+	RS.pnl_settings.show()
+
+
+static func filename_from_reward(_reward: TwitchCustomReward) -> String:
+	var filename: String = "%s_%s.json" % [_reward.id, _reward.title.validate_filename()]
+	return filename
+#endregion
+
+
+#region Inspector Signals
+func _on_btn_save_to_disk_pressed() -> void:
+	save_to_disk()
+func _on_btn_delete_pressed() -> void:
+	delete()
+func _on_btn_update_twitch_pressed() -> void:
+	update_twitch()
+func _on_btn_file_path_pressed() -> void:
+	popup_filepath_selection()
 #endregion

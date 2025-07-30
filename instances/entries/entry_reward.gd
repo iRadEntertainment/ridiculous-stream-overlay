@@ -6,6 +6,7 @@ enum Type {TWITCH, LOCAL, NEW}
 
 var reward: TwitchCustomReward
 var type: Type
+var local_filepath: String
 var local_icon_filepath: String
 
 signal pressed(entry: EntryReward)
@@ -19,8 +20,7 @@ func _ready() -> void:
 	set("theme_override_styles/panel", style_box)
 	%lb_title.text = reward.title
 	%lb_cost.text = str(reward.cost)
-	%ck_is_active.visible = type == Type.TWITCH
-	%ck_is_active.visible = type == Type.TWITCH
+	#%ck_is_active.visible = type == Type.TWITCH # TODO
 	if type == Type.TWITCH:
 		%ck_is_active.button_pressed = reward.is_enabled
 		if reward.image:

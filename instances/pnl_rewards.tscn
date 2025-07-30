@@ -99,11 +99,7 @@ size_flags_vertical = 3
 [node name="reward_entry" parent="HSplitContainer/hb_lists/pnl_list_local/vb/scroll/vb_local_list" instance=ExtResource("3_nmi06")]
 layout_mode = 2
 
-[node name="scroll" type="ScrollContainer" parent="HSplitContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="pnl_reward_inspector" parent="HSplitContainer/scroll" instance=ExtResource("6_iqkps")]
+[node name="pnl_reward_inspector" parent="HSplitContainer" instance=ExtResource("6_iqkps")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
