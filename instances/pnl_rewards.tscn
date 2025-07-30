@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://rvb1iyen7vu3"]
+[gd_scene load_steps=7 format=3 uid="uid://rvb1iyen7vu3"]
 
 [ext_resource type="Script" uid="uid://cxadxwcgodae4" path="res://instances/pnl_rewards.gd" id="1_3d7eq"]
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_ff2s5"]
 [ext_resource type="Theme" uid="uid://0k8rsjlg003m" path="res://ui/chat_message.tres" id="2_maxpk"]
 [ext_resource type="PackedScene" uid="uid://wl1340ejrqt0" path="res://instances/entries/entry_reward.tscn" id="3_nmi06"]
 [ext_resource type="Texture2D" uid="uid://b2mtooi658yq0" path="res://ui/sprites/loading.png" id="3_ssecm"]
+[ext_resource type="PackedScene" uid="uid://n8ba15xjyjo8" path="res://instances/pnl_reward_inspector.tscn" id="6_iqkps"]
 
 [node name="pnl_rewards" type="PanelContainer"]
 custom_minimum_size = Vector2(350, 0)
@@ -12,6 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_ff2s5")
 script = ExtResource("1_3d7eq")
 
 [node name="HSplitContainer" type="HSplitContainer" parent="."]
@@ -20,38 +23,91 @@ layout_mode = 2
 [node name="hb_lists" type="HBoxContainer" parent="HSplitContainer"]
 layout_mode = 2
 
-[node name="vb" type="VBoxContainer" parent="HSplitContainer/hb_lists"]
+[node name="pnl_list_twitch" type="PanelContainer" parent="HSplitContainer/hb_lists"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="vb" type="VBoxContainer" parent="HSplitContainer/hb_lists/pnl_list_twitch"]
 layout_mode = 2
 
-[node name="top" type="HBoxContainer" parent="HSplitContainer/hb_lists/vb"]
+[node name="top" type="HBoxContainer" parent="HSplitContainer/hb_lists/pnl_list_twitch/vb"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="HSplitContainer/hb_lists/vb/top"]
+[node name="lb" type="Label" parent="HSplitContainer/hb_lists/pnl_list_twitch/vb/top"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_maxpk")
 text = "From Twitch"
 horizontal_alignment = 1
 
-[node name="btn_reload_from_twitch" type="Button" parent="HSplitContainer/hb_lists/vb/top"]
+[node name="btn_reload_from_twitch" type="Button" parent="HSplitContainer/hb_lists/pnl_list_twitch/vb/top"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 icon = ExtResource("3_ssecm")
 icon_alignment = 1
 expand_icon = true
 
-[node name="scroll" type="ScrollContainer" parent="HSplitContainer/hb_lists/vb"]
+[node name="scroll" type="ScrollContainer" parent="HSplitContainer/hb_lists/pnl_list_twitch/vb"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="vb_twitch_list" type="VBoxContainer" parent="HSplitContainer/hb_lists/vb/scroll"]
+[node name="vb_twitch_list" type="VBoxContainer" parent="HSplitContainer/hb_lists/pnl_list_twitch/vb/scroll"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="reward_entry" parent="HSplitContainer/hb_lists/vb/scroll/vb_twitch_list" instance=ExtResource("3_nmi06")]
+[node name="reward_entry" parent="HSplitContainer/hb_lists/pnl_list_twitch/vb/scroll/vb_twitch_list" instance=ExtResource("3_nmi06")]
 layout_mode = 2
 
-[connection signal="pressed" from="HSplitContainer/hb_lists/vb/top/btn_reload_from_twitch" to="." method="_on_btn_reload_from_twitch_pressed"]
+[node name="pnl_list_local" type="PanelContainer" parent="HSplitContainer/hb_lists"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="vb" type="VBoxContainer" parent="HSplitContainer/hb_lists/pnl_list_local"]
+layout_mode = 2
+
+[node name="top" type="HBoxContainer" parent="HSplitContainer/hb_lists/pnl_list_local/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="HSplitContainer/hb_lists/pnl_list_local/vb/top"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_maxpk")
+text = "Local"
+horizontal_alignment = 1
+
+[node name="btn_reload_local" type="Button" parent="HSplitContainer/hb_lists/pnl_list_local/vb/top"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("3_ssecm")
+icon_alignment = 1
+expand_icon = true
+
+[node name="scroll" type="ScrollContainer" parent="HSplitContainer/hb_lists/pnl_list_local/vb"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="vb_local_list" type="VBoxContainer" parent="HSplitContainer/hb_lists/pnl_list_local/vb/scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="reward_entry" parent="HSplitContainer/hb_lists/pnl_list_local/vb/scroll/vb_local_list" instance=ExtResource("3_nmi06")]
+layout_mode = 2
+
+[node name="scroll" type="ScrollContainer" parent="HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="pnl_reward_inspector" parent="HSplitContainer/scroll" instance=ExtResource("6_iqkps")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[connection signal="pressed" from="HSplitContainer/hb_lists/pnl_list_twitch/vb/top/btn_reload_from_twitch" to="." method="_on_btn_reload_from_twitch_pressed"]
+[connection signal="pressed" from="HSplitContainer/hb_lists/pnl_list_local/vb/top/btn_reload_local" to="." method="_on_btn_reload_local_pressed"]

@@ -167,7 +167,12 @@ func quit():
 
 
 # =============================== UTILS =======================================
-func play_sfx(which: String) -> void:
+func play_sfx(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = [],
+			which: String = "",
+		) -> void:
 	if which == "quack":
 		$sfx/quack.stream = load("res://local_res/sfx_quack_0%s.ogg"%randi_range(1, 2))
 		$sfx/quack.play()

@@ -5,6 +5,7 @@ extends PanelContainer
 
 func start():
 	%sl_window_scale.value = RS.settings.app_scale
+	%lb_window_scale.text = "x%.2f" % RS.settings.app_scale
 	%ln_obs_url.text = RS.settings.obs_websocket_url
 	%ln_obs_port.text = str(RS.settings.obs_websocket_port)
 	%ln_obs_pass.text = RS.settings.obs_websocket_password
@@ -36,7 +37,7 @@ func _on_btn_obs_req_api_pressed() -> void:
 
 
 func _on_sl_window_scale_value_changed(value: float) -> void:
-	%lb_window_scale.text = "x%s" % value
+	%lb_window_scale.text = "x%.2f" % value
 
 
 func _on_sl_window_scale_drag_ended(_value_changed: bool) -> void:

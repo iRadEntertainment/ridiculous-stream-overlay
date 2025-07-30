@@ -47,7 +47,9 @@ enabled=PackedStringArray("res://addons/editorscriptmanager/plugin.cfg", "res://
 [file_customization]
 
 folder_colors={
-"res://instances/": "teal"
+"res://addons/": "purple",
+"res://instances/": "red",
+"res://ui/": "teal"
 }
 
 [network]

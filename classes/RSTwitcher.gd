@@ -55,6 +55,9 @@ func connect_to_twitch():
 	is_connected_to_twitch = await service.setup()
 	if is_connected_to_twitch:
 		connected_to_twitch.emit()
+		_log.i("Connected to Twitch!")
+	else:
+		_log.e("Not Connected to Twitch!")
 
 
 func apply_broadcaster_id(broadcaster_id: String) -> void:

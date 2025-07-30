@@ -2,49 +2,80 @@
 extends PanelContainer
 class_name PnlReward
 
+@warning_ignore("unused_private_class_variable")
 @export_tool_button("pop") var _pop: Callable = _run_editor_populate
 
 var reward: TwitchCustomReward:
 	set(val):
 		if reward == val:
 			return
+		reward = val
 		_populate()
-
+var type: EntryReward.Type = EntryReward.Type.TWITCH
+var local_path: String
+var entry: EntryReward:
+	set(val):
+		if entry == val:
+			return
+		entry = val
+		type = entry.type
+		reward = entry.reward
 
 
 func _populate() -> void:
+	if not reward:
+		clear()
+		return
 	%ln_broadcaster_id.text = reward.broadcaster_id
 	%ln_broadcaster_login.text = reward.broadcaster_login
 	%ln_broadcaster_name.text = reward.broadcaster_name
 	%ln_id.text = reward.id
 	%ln_title.text = reward.title
 	%ln_prompt.text = reward.prompt
-	%ln_cost.text = reward.cost
+	%ln_cost.text = str(reward.cost)
 	# TwitchCustomReward.TwitchImage
-	reward.image.url_1x
-	reward.image.url_2x
-	reward.image.url_4x
+	#reward.image.url_1x
+	#reward.image.url_2x
+	#reward.image.url_4x
 	# TwitchCustomReward.DefaultImage
-	reward.default_image.url_1x
-	reward.default_image.url_2x
-	reward.default_image.url_4x
+	#reward.default_image.url_1x
+	#reward.default_image.url_2x
+	#reward.default_image.url_4x
 	%cl_background_color.color = Color(reward.background_color)
-	%ck_is_enabled.value = reward.is_enabled
-	%ck_is_user_input_required.value = reward.is_user_input_required
+	%ck_is_enabled.button_pressed = reward.is_enabled
+	%ck_is_user_input_required.button_pressed = reward.is_user_input_required
 	# TwitchCustomReward.MaxPerStreamSetting
-	reward.max_per_stream_setting.is_enabled
-	reward.max_per_stream_setting.max_per_stream
+	#reward.max_per_stream_setting.is_enabled
+	#reward.max_per_stream_setting.max_per_stream
 	# TwitchCustomReward.MaxPerUserPerStreamSetting
-	reward.max_per_user_per_stream_setting.is_enabled
-	reward.max_per_user_per_stream_setting.max_per_user_per_stream
+	#reward.max_per_user_per_stream_setting.is_enabled
+	#reward.max_per_user_per_stream_setting.max_per_user_per_stream
 	# TwitchCustomReward.GlobalCooldownSetting
-	reward.global_cooldown_setting.is_enabled
-	reward.global_cooldown_setting.global_cooldown_seconds
-	%ck_is_paused.value = reward.is_paused
-	%ck_is_in_stock.value = reward.is_in_stock
-	%ck_should_redemptions_skip_request_queue.value = reward.should_redemptions_skip_request_queue
-	%ln_redemptions_redeemed_current_stream.text = reward.redemptions_redeemed_current_stream
+	#reward.global_cooldown_setting.is_enabled
+	#reward.global_cooldown_setting.global_cooldown_seconds
+	%ck_is_paused.button_pressed = reward.is_paused
+	%ck_is_in_stock.button_pressed = reward.is_in_stock
+	%ck_should_redemptions_skip_request_queue.button_pressed = reward.should_redemptions_skip_request_queue
+	%ln_redemptions_redeemed_current_stream.text = str(reward.redemptions_redeemed_current_stream)
 	%ln_cooldown_expires_at.text = reward.cooldown_expires_at
+
+
+func clear() -> void:
+	%ln_broadcaster_id.text = ""
+	%ln_broadcaster_login.text = ""
+	%ln_broadcaster_name.text = ""
+	%ln_id.text = ""
+	%ln_title.text = ""
+	%ln_prompt.text = ""
+	%ln_cost.text = ""
+	%cl_background_color.color = Color.TRANSPARENT
+	%ck_is_enabled.button_pressed = false
+	%ck_is_user_input_required.button_pressed = false
+	%ck_is_paused.button_pressed = false
+	%ck_is_in_stock.button_pressed = false
+	%ck_should_redemptions_skip_request_queue.button_pressed = false
+	%ln_redemptions_redeemed_current_stream.text = ""
+	%ln_cooldown_expires_at.text = ""
 
 
 func get_reward_from_fields() -> TwitchCustomReward:
@@ -67,8 +98,8 @@ func get_reward_from_fields() -> TwitchCustomReward:
 			reward.default_image.url_4x,
 		),
 		%cl_background_color.color.to_html(),
-		%ck_is_enabled.value,
-		%ck_is_user_input_required.value,
+		%ck_is_enabled.button_pressed,
+		%ck_is_user_input_required.button_pressed,
 		TwitchCustomReward.MaxPerStreamSetting.create(
 			reward.max_per_stream_setting.is_enabled,
 			reward.max_per_stream_setting.max_per_stream,
@@ -81,15 +112,16 @@ func get_reward_from_fields() -> TwitchCustomReward:
 			reward.global_cooldown_setting.is_enabled,
 			reward.global_cooldown_setting.global_cooldown_seconds,
 		),
-		%ck_is_paused.value,
-		%ck_is_in_stock.value,
-		%ck_should_redemptions_skip_request_queue.value,
+		%ck_is_paused.button_pressed,
+		%ck_is_in_stock.button_pressed,
+		%ck_should_redemptions_skip_request_queue.button_pressed,
 		int(%ln_redemptions_redeemed_current_stream.text),
 		%ln_cooldown_expires_at.text,
 	)
 	return new_reward
 
 
+#region Tool to populate properties
 func _run_editor_populate() -> void:
 	create_entries_from_properties(%vb, properties, 200, "reward")
 var properties := {
@@ -124,8 +156,8 @@ static func create_entries_from_properties(
 		child.free()
 	var to_print: Array[String] = []
 	for key: String in _properties:
-		var type: String = _properties[key]
-		if type in ["String", "int"]:
+		var _type: String = _properties[key]
+		if _type in ["String", "int"]:
 			var hb := HBoxContainer.new()
 			hb.name = "hb_%s" % key
 			var lb := Label.new()
@@ -146,7 +178,7 @@ static func create_entries_from_properties(
 				ln.owner = container_node.owner
 				ln.unique_name_in_owner = true
 				to_print.append("%%%s.text = %s.%s" % [ln.name, _print_key, key])
-		elif type == "bool":
+		elif _type == "bool":
 			var ck := CheckBox.new()
 			ck.name = "ck_%s" % key
 			ck.text = key.capitalize()
@@ -164,8 +196,9 @@ static func create_entries_from_properties(
 			container_node.add_child(btn_collapse)
 			if Engine.is_editor_hint():
 				btn_collapse.owner = container_node.owner
-				to_print.append("# %s.%s: %s" % [_print_key, key, type])
+				to_print.append("# %s.%s: %s" % [_print_key, key, _type])
 	
 	print("==")
 	for string: String in to_print:
 		print(string)
+#endregion

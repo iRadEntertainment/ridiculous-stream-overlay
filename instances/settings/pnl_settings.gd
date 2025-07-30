@@ -12,6 +12,7 @@ func start():
 	connect_tab_buttons_to_tab_container()
 	visibility_changed.connect(update_sidebar_pos)
 	resized.connect(update_sidebar_pos)
+	#draw.connect(update_sidebar_pos)
 	%pnl_twitch_user_list.user_selected.connect(%pnl_twitch_user_fields.populate_fields)
 
 
@@ -46,15 +47,23 @@ func open_tab(index : int) -> void:
 	update_sidebar_pos.call_deferred()
 
 
+var tw_sidebar: Tween
 func update_sidebar_pos() -> void:
 	var btn_num = side_vb.get_child_count()
 	var idx = tabs.current_tab
+	await get_tree().process_frame
 	var rect : Rect2 = side_vb.get_rect()
 	rect.size.x = 4
 	rect.size.y /= btn_num
-	side_bar.position.x = -4
-	side_bar.position.y = rect.size.y * idx
-	side_bar.size = rect.size
+	rect.position.x = -4
+	rect.position.y = rect.size.y * idx
+	
+	if tw_sidebar:
+		tw_sidebar.kill()
+	tw_sidebar = create_tween()
+	tw_sidebar.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	tw_sidebar.tween_property(side_bar, ^"position", rect.position, 0.15)
+	tw_sidebar.parallel().tween_property(side_bar, ^"size", rect.size, 0.15)
 
 
 func _on_btn_hot_reload_plugin_pressed():

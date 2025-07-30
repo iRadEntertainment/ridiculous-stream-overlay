@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://n8ba15xjyjo8"]
+[gd_scene load_steps=6 format=3 uid="uid://n8ba15xjyjo8"]
 
 [ext_resource type="Script" uid="uid://bcy85jjngf5no" path="res://instances/pnl_reward_inspector.gd" id="1_dr8f6"]
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_ne24p"]
 [ext_resource type="PackedScene" uid="uid://cwg72p5gy7ib3" path="res://instances/utils/btn_collapse.tscn" id="2_bbv65"]
+[ext_resource type="FontFile" uid="uid://dixsuinpjvkf1" path="res://ui/fonts/source-code-pro/SourceCodePro-Black.otf" id="3_ne24p"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bx0p7"]
+font = ExtResource("3_ne24p")
+font_size = 28
 
 [node name="pnl_reward_inspector" type="PanelContainer"]
 anchors_preset = 15
@@ -9,282 +15,318 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_ne24p")
 script = ExtResource("1_dr8f6")
 
 [node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="vb"]
+layout_mode = 2
+text = "Reward Inspector"
+label_settings = SubResource("LabelSettings_bx0p7")
+horizontal_alignment = 1
+
+[node name="sep" type="HSeparator" parent="vb"]
+layout_mode = 2
+
+[node name="scroll" type="ScrollContainer" parent="vb"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="vb_properties" type="VBoxContainer" parent="vb/scroll"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="hb_broadcaster_id" type="HBoxContainer" parent="vb"]
+[node name="hb_broadcaster_id" type="HBoxContainer" parent="vb/scroll/vb_properties"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/hb_broadcaster_id"]
+[node name="lb" type="Label" parent="vb/scroll/vb_properties/hb_broadcaster_id"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Broadcaster Id"
 
-[node name="ln_broadcaster_id" type="LineEdit" parent="vb/hb_broadcaster_id"]
+[node name="ln_broadcaster_id" type="LineEdit" parent="vb/scroll/vb_properties/hb_broadcaster_id"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "broadcaster_id"
 
-[node name="hb_broadcaster_login" type="HBoxContainer" parent="vb"]
+[node name="hb_broadcaster_login" type="HBoxContainer" parent="vb/scroll/vb_properties"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/hb_broadcaster_login"]
+[node name="lb" type="Label" parent="vb/scroll/vb_properties/hb_broadcaster_login"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Broadcaster Login"
 
-[node name="ln_broadcaster_login" type="LineEdit" parent="vb/hb_broadcaster_login"]
+[node name="ln_broadcaster_login" type="LineEdit" parent="vb/scroll/vb_properties/hb_broadcaster_login"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "broadcaster_login"
 
-[node name="hb_broadcaster_name" type="HBoxContainer" parent="vb"]
+[node name="hb_broadcaster_name" type="HBoxContainer" parent="vb/scroll/vb_properties"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/hb_broadcaster_name"]
+[node name="lb" type="Label" parent="vb/scroll/vb_properties/hb_broadcaster_name"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Broadcaster Name"
 
-[node name="ln_broadcaster_name" type="LineEdit" parent="vb/hb_broadcaster_name"]
+[node name="ln_broadcaster_name" type="LineEdit" parent="vb/scroll/vb_properties/hb_broadcaster_name"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "broadcaster_name"
 
-[node name="hb_id" type="HBoxContainer" parent="vb"]
+[node name="hb_id" type="HBoxContainer" parent="vb/scroll/vb_properties"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/hb_id"]
+[node name="lb" type="Label" parent="vb/scroll/vb_properties/hb_id"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Id"
 
-[node name="ln_id" type="LineEdit" parent="vb/hb_id"]
+[node name="ln_id" type="LineEdit" parent="vb/scroll/vb_properties/hb_id"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "id"
 
-[node name="hb_title" type="HBoxContainer" parent="vb"]
+[node name="hb_title" type="HBoxContainer" parent="vb/scroll/vb_properties"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/hb_title"]
+[node name="lb" type="Label" parent="vb/scroll/vb_properties/hb_title"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Title"
 
-[node name="ln_title" type="LineEdit" parent="vb/hb_title"]
+[node name="ln_title" type="LineEdit" parent="vb/scroll/vb_properties/hb_title"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "title"
 
-[node name="hb_prompt" type="HBoxContainer" parent="vb"]
+[node name="hb_prompt" type="HBoxContainer" parent="vb/scroll/vb_properties"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/hb_prompt"]
+[node name="lb" type="Label" parent="vb/scroll/vb_properties/hb_prompt"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Prompt"
 
-[node name="ln_prompt" type="LineEdit" parent="vb/hb_prompt"]
+[node name="ln_prompt" type="LineEdit" parent="vb/scroll/vb_properties/hb_prompt"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "prompt"
 
-[node name="hb_cost" type="HBoxContainer" parent="vb"]
+[node name="hb_cost" type="HBoxContainer" parent="vb/scroll/vb_properties"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/hb_cost"]
+[node name="lb" type="Label" parent="vb/scroll/vb_properties/hb_cost"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Cost"
 
-[node name="ln_cost" type="LineEdit" parent="vb/hb_cost"]
+[node name="ln_cost" type="LineEdit" parent="vb/scroll/vb_properties/hb_cost"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "cost"
 
-[node name="btn_collapse_image" parent="vb" instance=ExtResource("2_bbv65")]
+[node name="btn_collapse_image" parent="vb/scroll/vb_properties" instance=ExtResource("2_bbv65")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Image"
 
-[node name="vb_collapse_image" type="VBoxContainer" parent="vb"]
+[node name="vb_collapse_image" type="VBoxContainer" parent="vb/scroll/vb_properties"]
 layout_mode = 2
 
-[node name="hb_prompt2" type="HBoxContainer" parent="vb/vb_collapse_image"]
+[node name="hb_prompt2" type="HBoxContainer" parent="vb/scroll/vb_properties/vb_collapse_image"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/vb_collapse_image/hb_prompt2"]
+[node name="lb" type="Label" parent="vb/scroll/vb_properties/vb_collapse_image/hb_prompt2"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Prompt"
 
-[node name="ln_prompt" type="LineEdit" parent="vb/vb_collapse_image/hb_prompt2"]
+[node name="ln_prompt" type="LineEdit" parent="vb/scroll/vb_properties/vb_collapse_image/hb_prompt2"]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "prompt"
 
-[node name="btn_collapse_default_image" parent="vb" instance=ExtResource("2_bbv65")]
+[node name="btn_collapse_default_image" parent="vb/scroll/vb_properties" instance=ExtResource("2_bbv65")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Default Image"
 
-[node name="vb_collapse_image2" type="VBoxContainer" parent="vb"]
+[node name="vb_collapse_image2" type="VBoxContainer" parent="vb/scroll/vb_properties"]
 layout_mode = 2
 
-[node name="hb_prompt2" type="HBoxContainer" parent="vb/vb_collapse_image2"]
+[node name="hb_prompt2" type="HBoxContainer" parent="vb/scroll/vb_properties/vb_collapse_image2"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/vb_collapse_image2/hb_prompt2"]
+[node name="lb" type="Label" parent="vb/scroll/vb_properties/vb_collapse_image2/hb_prompt2"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Prompt"
 
-[node name="ln_prompt" type="LineEdit" parent="vb/vb_collapse_image2/hb_prompt2"]
+[node name="ln_prompt" type="LineEdit" parent="vb/scroll/vb_properties/vb_collapse_image2/hb_prompt2"]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "prompt"
 
-[node name="hb_background_color" type="HBoxContainer" parent="vb"]
+[node name="hb_background_color" type="HBoxContainer" parent="vb/scroll/vb_properties"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/hb_background_color"]
+[node name="lb" type="Label" parent="vb/scroll/vb_properties/hb_background_color"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Background Color"
 
-[node name="cl_background_color" type="ColorPickerButton" parent="vb/hb_background_color"]
+[node name="cl_background_color" type="ColorPickerButton" parent="vb/scroll/vb_properties/hb_background_color"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ck_is_enabled" type="CheckBox" parent="vb"]
+[node name="ck_is_enabled" type="CheckBox" parent="vb/scroll/vb_properties"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Is Enabled"
 
-[node name="ck_is_user_input_required" type="CheckBox" parent="vb"]
+[node name="ck_is_user_input_required" type="CheckBox" parent="vb/scroll/vb_properties"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Is User Input Required"
 
-[node name="btn_collapse_max_per_stream_setting" parent="vb" instance=ExtResource("2_bbv65")]
+[node name="btn_collapse_max_per_stream_setting" parent="vb/scroll/vb_properties" instance=ExtResource("2_bbv65")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Max Per Stream Setting"
 
-[node name="vb_collapse_image3" type="VBoxContainer" parent="vb"]
+[node name="vb_collapse_image3" type="VBoxContainer" parent="vb/scroll/vb_properties"]
 layout_mode = 2
 
-[node name="hb_prompt2" type="HBoxContainer" parent="vb/vb_collapse_image3"]
+[node name="hb_prompt2" type="HBoxContainer" parent="vb/scroll/vb_properties/vb_collapse_image3"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/vb_collapse_image3/hb_prompt2"]
+[node name="lb" type="Label" parent="vb/scroll/vb_properties/vb_collapse_image3/hb_prompt2"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Prompt"
 
-[node name="ln_prompt" type="LineEdit" parent="vb/vb_collapse_image3/hb_prompt2"]
+[node name="ln_prompt" type="LineEdit" parent="vb/scroll/vb_properties/vb_collapse_image3/hb_prompt2"]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "prompt"
 
-[node name="btn_collapse_max_per_user_per_stream_setting" parent="vb" instance=ExtResource("2_bbv65")]
+[node name="btn_collapse_max_per_user_per_stream_setting" parent="vb/scroll/vb_properties" instance=ExtResource("2_bbv65")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Max Per User Per Stream Setting"
 
-[node name="vb_collapse_image4" type="VBoxContainer" parent="vb"]
+[node name="vb_collapse_image4" type="VBoxContainer" parent="vb/scroll/vb_properties"]
 layout_mode = 2
 
-[node name="hb_prompt2" type="HBoxContainer" parent="vb/vb_collapse_image4"]
+[node name="hb_prompt2" type="HBoxContainer" parent="vb/scroll/vb_properties/vb_collapse_image4"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/vb_collapse_image4/hb_prompt2"]
+[node name="lb" type="Label" parent="vb/scroll/vb_properties/vb_collapse_image4/hb_prompt2"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Prompt"
 
-[node name="ln_prompt" type="LineEdit" parent="vb/vb_collapse_image4/hb_prompt2"]
+[node name="ln_prompt" type="LineEdit" parent="vb/scroll/vb_properties/vb_collapse_image4/hb_prompt2"]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "prompt"
 
-[node name="btn_collapse_global_cooldown_setting" parent="vb" instance=ExtResource("2_bbv65")]
+[node name="btn_collapse_global_cooldown_setting" parent="vb/scroll/vb_properties" instance=ExtResource("2_bbv65")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Global Cooldown Setting"
 
-[node name="vb_collapse_image5" type="VBoxContainer" parent="vb"]
+[node name="vb_collapse_image5" type="VBoxContainer" parent="vb/scroll/vb_properties"]
 layout_mode = 2
 
-[node name="hb_prompt2" type="HBoxContainer" parent="vb/vb_collapse_image5"]
+[node name="hb_prompt2" type="HBoxContainer" parent="vb/scroll/vb_properties/vb_collapse_image5"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/vb_collapse_image5/hb_prompt2"]
+[node name="lb" type="Label" parent="vb/scroll/vb_properties/vb_collapse_image5/hb_prompt2"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Prompt"
 
-[node name="ln_prompt" type="LineEdit" parent="vb/vb_collapse_image5/hb_prompt2"]
+[node name="ln_prompt" type="LineEdit" parent="vb/scroll/vb_properties/vb_collapse_image5/hb_prompt2"]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "prompt"
 
-[node name="ck_is_paused" type="CheckBox" parent="vb"]
+[node name="ck_is_paused" type="CheckBox" parent="vb/scroll/vb_properties"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Is Paused"
 
-[node name="ck_is_in_stock" type="CheckBox" parent="vb"]
+[node name="ck_is_in_stock" type="CheckBox" parent="vb/scroll/vb_properties"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Is In Stock"
 
-[node name="ck_should_redemptions_skip_request_queue" type="CheckBox" parent="vb"]
+[node name="ck_should_redemptions_skip_request_queue" type="CheckBox" parent="vb/scroll/vb_properties"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Should Redemptions Skip Request Queue"
 
-[node name="hb_redemptions_redeemed_current_stream" type="HBoxContainer" parent="vb"]
+[node name="hb_redemptions_redeemed_current_stream" type="HBoxContainer" parent="vb/scroll/vb_properties"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/hb_redemptions_redeemed_current_stream"]
+[node name="lb" type="Label" parent="vb/scroll/vb_properties/hb_redemptions_redeemed_current_stream"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Redemptions Redeemed Current Stream"
 
-[node name="ln_redemptions_redeemed_current_stream" type="LineEdit" parent="vb/hb_redemptions_redeemed_current_stream"]
+[node name="ln_redemptions_redeemed_current_stream" type="LineEdit" parent="vb/scroll/vb_properties/hb_redemptions_redeemed_current_stream"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "redemptions_redeemed_current_stream"
 
-[node name="hb_cooldown_expires_at" type="HBoxContainer" parent="vb"]
+[node name="hb_cooldown_expires_at" type="HBoxContainer" parent="vb/scroll/vb_properties"]
 layout_mode = 2
 
-[node name="lb" type="Label" parent="vb/hb_cooldown_expires_at"]
+[node name="lb" type="Label" parent="vb/scroll/vb_properties/hb_cooldown_expires_at"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Cooldown Expires At"
 
-[node name="ln_cooldown_expires_at" type="LineEdit" parent="vb/hb_cooldown_expires_at"]
+[node name="ln_cooldown_expires_at" type="LineEdit" parent="vb/scroll/vb_properties/hb_cooldown_expires_at"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "cooldown_expires_at"
+
+[node name="sep2" type="HSeparator" parent="vb"]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+
+[node name="btn_save_to_disk" type="Button" parent="vb/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save To Disk"
+
+[node name="btn_delete" type="Button" parent="vb/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Delete"

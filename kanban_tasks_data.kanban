@@ -25,23 +25,25 @@
 				"fa3554de-7d7b-41af-bae3-6507f4820535",
 				"92665a0d-24ea-41b2-b102-29978ec59d6c",
 				"677a644d-9a64-4c1c-a5d9-ecc5b0d974b5",
-				"a8451136-d02c-4d8f-8664-da43ed9d19fe",
-				"dfb7b16f-4d85-4f1c-b5c7-1c841cab7875",
 				"65524419-1536-4e36-93fa-a96773b51a3f",
 				"0e10746d-590c-4a9a-805e-0167ad58fd19",
 				"5da99675-0799-4897-b570-0302e87b58d2",
 				"0556aa06-cc4f-41fc-bcb8-6c864bed1e11",
-				"72085a5e-88ca-45cb-b27d-a78b58ab1b98"
+				"72085a5e-88ca-45cb-b27d-a78b58ab1b98",
+				"7fdf5bf8-4b57-4301-a0d4-82b9f43b4432"
 			]
 		},
 		{
 			"uuid": "3fe624ce-48d2-4324-b6ea-2d2777a8a52f",
 			"title": "Doing",
 			"tasks": [
-				"7fdf5bf8-4b57-4301-a0d4-82b9f43b4432",
+				"3d2c7dab-1c45-4f3e-8baf-e295893292b6",
+				"44f7d599-4ee8-48c7-a958-e0becbef56d1",
 				"abd279f6-070f-498b-b140-da196cd18614",
 				"760d3fa6-dc0d-4500-8251-50ddaff640b6",
-				"44f7d599-4ee8-48c7-a958-e0becbef56d1"
+				"d7686947-6372-4495-96e7-babfd415c893",
+				"a8451136-d02c-4d8f-8664-da43ed9d19fe",
+				"dfb7b16f-4d85-4f1c-b5c7-1c841cab7875"
 			]
 		},
 		{
@@ -230,6 +232,20 @@
 		{
 			"uuid": "72085a5e-88ca-45cb-b27d-a78b58ab1b98",
 			"title": "RS as Singleton via code",
+			"description": "",
+			"category": "0d482861-341c-4163-91cf-b5933f641f0f",
+			"steps": []
+		},
+		{
+			"uuid": "3d2c7dab-1c45-4f3e-8baf-e295893292b6",
+			"title": "Save Load Redeems on disk",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "d7686947-6372-4495-96e7-babfd415c893",
+			"title": "Better looking theme",
 			"description": "",
 			"category": "0d482861-341c-4163-91cf-b5933f641f0f",
 			"steps": []

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dseoyhiylvwnu"]
+[gd_scene load_steps=15 format=3 uid="uid://dseoyhiylvwnu"]
 
 [ext_resource type="Script" uid="uid://bwjko8dn4nyiw" path="res://instances/settings/pnl_settings.gd" id="1_5rbjj"]
 [ext_resource type="PackedScene" uid="uid://d3jcvhnykltfd" path="res://instances/settings/pnl_rs_setting.tscn" id="1_7lr6v"]
@@ -11,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://ctpfh3qqwicqq" path="res://ui/sprites/btn_settings.png" id="5_574cn"]
 [ext_resource type="Texture2D" uid="uid://bykc5hku6ubu8" path="res://ui/icons/icon_irad.png" id="5_pus7l"]
 [ext_resource type="Texture2D" uid="uid://b4gxd48s477ky" path="res://ui/icons/icon-github.png" id="6_e1vcs"]
-[ext_resource type="PackedScene" uid="uid://cwbekbjfcqjml" path="res://instances/settings/pnl_vetting.tscn" id="7_0wmw7"]
 [ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://ui/icons/bootstrap_icons/arrow-repeat.svg" id="7_a5jks"]
 [ext_resource type="PackedScene" uid="uid://bi3uhtp733dln" path="res://instances/pnl_twitch_utilities.tscn" id="10_jyhka"]
 [ext_resource type="Texture2D" uid="uid://b2mtooi658yq0" path="res://ui/sprites/loading.png" id="12_yksnf"]
@@ -97,38 +96,17 @@ clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-current_tab = 1
+current_tab = 0
 tabs_visible = false
 
-[node name="pnl_settings" type="PanelContainer" parent="vb/hb/tabs"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 0
-
-[node name="hb" type="HBoxContainer" parent="vb/hb/tabs/pnl_settings"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="split" type="HSplitContainer" parent="vb/hb/tabs/pnl_settings/hb"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.4
-
-[node name="pnl_rs_settings" parent="vb/hb/tabs/pnl_settings/hb/split" instance=ExtResource("1_7lr6v")]
+[node name="pnl_rs_settings" parent="vb/hb/tabs" instance=ExtResource("1_7lr6v")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
-
-[node name="VSplitContainer" type="VSplitContainer" parent="vb/hb/tabs/pnl_settings/hb/split"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="pnl_vetting" parent="vb/hb/tabs/pnl_settings/hb/split/VSplitContainer" instance=ExtResource("7_0wmw7")]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
+metadata/_tab_index = 0
 
 [node name="users" type="HSplitContainer" parent="vb/hb/tabs"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.5
@@ -145,6 +123,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="pnl_twitch_utilities" parent="vb/hb/tabs" instance=ExtResource("10_jyhka")]
+visible = false
 layout_mode = 2
 
 [node name="bot" type="PanelContainer" parent="vb"]

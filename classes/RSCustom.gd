@@ -176,7 +176,7 @@ func impersonate_iRad(data: RSTwitchEventData):
 	broadcaster_login = broadcaster_login.strip_edges()
 	broadcaster_login = broadcaster_login.lstrip("@")
 	broadcaster_login = broadcaster_login.to_lower()
-	var user: RSUser = await RS.user_mng.get_known_user_from_username(broadcaster_login)
+	var user: RSUser = RS.user_mng.get_known_user_from_username(broadcaster_login)
 	var t_user: TwitchUser = user.to_twitch_user()
 	var msg = data.user_input.split(" ", false, 1)[1]
 	RS.twitcher.chat_message_to_t_user(msg, t_user)

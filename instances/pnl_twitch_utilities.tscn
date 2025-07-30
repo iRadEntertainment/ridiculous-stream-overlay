@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bi3uhtp733dln"]
+[gd_scene load_steps=5 format=3 uid="uid://bi3uhtp733dln"]
 
 [ext_resource type="PackedScene" uid="uid://rvb1iyen7vu3" path="res://instances/pnl_rewards.tscn" id="1_1pm1n"]
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_oxvom"]
+[ext_resource type="Script" uid="uid://dw8gbw4r3h2rc" path="res://instances/pnl_twitch_utilities.gd" id="2_st1l4"]
+[ext_resource type="PackedScene" uid="uid://cwbekbjfcqjml" path="res://instances/settings/pnl_vetting.tscn" id="4_kbtnx"]
 
 [node name="pnl_twitch_utilities" type="PanelContainer"]
 anchors_preset = 15
@@ -10,19 +12,44 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_oxvom")
+script = ExtResource("2_st1l4")
 metadata/_tab_index = 2
 
-[node name="hb" type="TabContainer" parent="."]
+[node name="vb" type="VBoxContainer" parent="."]
 layout_mode = 2
-current_tab = 0
 
-[node name="pnl_rewards" parent="hb" instance=ExtResource("1_1pm1n")]
+[node name="hb_btns_tab" type="HBoxContainer" parent="vb"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="btn_tab_rewards" type="Button" parent="vb/hb_btns_tab"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Rewards"
+
+[node name="btn_tab_vetting" type="Button" parent="vb/hb_btns_tab"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Vetting"
+
+[node name="tabs" type="TabContainer" parent="vb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+tabs_visible = false
+
+[node name="pnl_rewards" parent="vb/tabs" instance=ExtResource("1_1pm1n")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="Control" type="Control" parent="hb"]
+[node name="pnl_vetting" parent="vb/tabs" instance=ExtResource("4_kbtnx")]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
+size_flags_vertical = 3
 metadata/_tab_index = 1
