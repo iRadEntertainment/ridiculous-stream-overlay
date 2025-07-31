@@ -154,6 +154,7 @@ func save_settings():
 	_log.i("Saving settings...")
 	loader.save_settings()
 
+
 func quit():
 	_log.i("Exiting...")
 
@@ -161,7 +162,7 @@ func quit():
 	#if !pnl_welcome.should_show():
 	save_settings()
 	user_mng.save_all()
-	summary_mng.save_summary()
+	summary_mng.save_current_summary()
 	
 	get_tree().quit()
 
