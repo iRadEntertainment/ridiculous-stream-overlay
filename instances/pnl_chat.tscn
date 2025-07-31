@@ -1,9 +1,9 @@
 [gd_scene load_steps=15 format=3 uid="uid://jchfk7d78ss5"]
 
-[ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_i388d"]
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_t6rhf"]
 [ext_resource type="Script" uid="uid://o423163rrbby" path="res://instances/pnl_chat.gd" id="1_x2vuy"]
 [ext_resource type="PackedScene" uid="uid://csqa2q3atku2i" path="res://instances/pnl_connect.tscn" id="3_e1ino"]
-[ext_resource type="Texture2D" uid="uid://ca6xdmc1afmql" path="res://ui/icons/bootstrap_icons/x.svg" id="3_i32xj"]
+[ext_resource type="Texture2D" uid="uid://dpyn121ra1pa" path="res://ui/sprites/close.png" id="3_t6rhf"]
 [ext_resource type="PackedScene" uid="uid://d4lkycruly2ye" path="res://instances/pnl_mods.tscn" id="4_v34se"]
 
 [sub_resource type="Gradient" id="Gradient_t6rhf"]
@@ -59,7 +59,7 @@ anchor_bottom = 1.0
 offset_left = 847.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_i388d")
+theme = ExtResource("1_t6rhf")
 script = ExtResource("1_x2vuy")
 
 [node name="vb" type="VBoxContainer" parent="."]
@@ -76,27 +76,22 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "Channel name"
+text = "TheYagich"
 vertical_alignment = 1
 
 [node name="btn_close" type="Button" parent="vb/top/hb"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-icon = ExtResource("3_i32xj")
+icon = ExtResource("3_t6rhf")
+expand_icon = true
 
 [node name="pnl_mods" parent="vb" instance=ExtResource("4_v34se")]
 layout_mode = 2
 
-[node name="lb_chat" type="RichTextLabel" parent="vb"]
+[node name="pnl_msg" type="PanelContainer" parent="vb"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-focus_mode = 2
-bbcode_enabled = true
-text = "TheYagich
-"
-scroll_following = true
-threaded = true
-selection_enabled = true
 
 [node name="ln_msg" type="LineEdit" parent="vb"]
 unique_name_in_owner = true

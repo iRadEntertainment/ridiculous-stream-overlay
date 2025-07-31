@@ -1,13 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://pr2cr6wubeyt"]
+[gd_scene load_steps=6 format=3 uid="uid://pr2cr6wubeyt"]
 
-[ext_resource type="Theme" uid="uid://ya1vefj2nbhc" path="res://ui/alert_overlay.tres" id="1_imutm"]
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_sf8wy"]
 [ext_resource type="Script" uid="uid://be770tk2q6kqw" path="res://instances/alert_bar.gd" id="2_2k78h"]
 [ext_resource type="Texture2D" uid="uid://dpyn121ra1pa" path="res://ui/sprites/close.png" id="2_n20qi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sf8wy"]
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+border_color = Color(0.270588, 0.435294, 0.580392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8p57m"]
+bg_color = Color(0.858824, 0.215686, 0.737255, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.270588, 0.435294, 0.580392, 1)
 
 [node name="bar" type="PanelContainer"]
 offset_right = 604.0
 offset_bottom = 110.0
-theme = ExtResource("1_imutm")
+theme = ExtResource("1_sf8wy")
 script = ExtResource("2_2k78h")
 
 [node name="vb" type="VBoxContainer" parent="."]
@@ -27,6 +39,8 @@ custom_minimum_size = Vector2(0, 12)
 layout_mode = 2
 size_flags_horizontal = 5
 size_flags_vertical = 6
+theme_override_styles/background = SubResource("StyleBoxFlat_sf8wy")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8p57m")
 value = 37.4
 show_percentage = false
 

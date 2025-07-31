@@ -267,4 +267,8 @@ sadsadsa
 dsadsa"
 horizontal_alignment = 1
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 2
+color = Color(0.890196, 0.858824, 0.823529, 1)
+
 [connection signal="pressed" from="vb/title/btn_close" to="." method="_on_btn_close_pressed"]

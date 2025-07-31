@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://csqa2q3atku2i"]
 
-[ext_resource type="Theme" uid="uid://0k8rsjlg003m" path="res://ui/chat_message.tres" id="1_o4qlp"]
-[ext_resource type="StyleBox" uid="uid://bc1bxky84vqw4" path="res://ui/editor_overlay_panel.stylebox" id="2_esq8s"]
+[ext_resource type="Theme" uid="uid://0k8rsjlg003m" path="res://ui/styles/chat_message.tres" id="1_o4qlp"]
+[ext_resource type="StyleBox" uid="uid://bc1bxky84vqw4" path="res://ui/styles/editor_overlay_panel.stylebox" id="2_esq8s"]
 [ext_resource type="Script" uid="uid://crfqw7jyvrht7" path="res://instances/pnl_connect.gd" id="3_mawjj"]
 [ext_resource type="Texture2D" uid="uid://boa5ns6c4c07k" path="res://ui/icons/bootstrap_icons/twitch.svg" id="4_fgo4w"]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://c10luse40ekhw"]
 
-[ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_slouc"]
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_8bj5e"]
 [ext_resource type="Script" uid="uid://8jh4xihpue7w" path="res://instances/entries/entry_user.gd" id="2_brw8v"]
 [ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://ui/sprites/twitch_user_profile_pic.png" id="3_1ennu"]
 [ext_resource type="Texture2D" uid="uid://1ndihbuunqkm" path="res://ui/icons/bootstrap_icons/megaphone-fill.svg" id="4_kitly"]
@@ -44,7 +44,7 @@ corner_radius_bottom_left = 8
 [node name="entry_user" type="PanelContainer"]
 offset_right = 496.0
 offset_bottom = 48.0
-theme = ExtResource("1_slouc")
+theme = ExtResource("1_8bj5e")
 theme_override_styles/panel = SubResource("StyleBoxEmpty_f1m1r")
 script = ExtResource("2_brw8v")
 
@@ -183,7 +183,6 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 icon = ExtResource("10_hy24v")
 icon_alignment = 1
-expand_icon = true
 
 [node name="pnl_delete" type="PanelContainer" parent="."]
 unique_name_in_owner = true

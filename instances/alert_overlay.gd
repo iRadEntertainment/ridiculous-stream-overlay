@@ -33,6 +33,7 @@ func initialize_stop_streaming(user: RSUser, message: String) -> void:
 	var callable : Callable = RS.custom.stop_streaming
 	instantiate_new_bar(bbcode, callable)
 
+
 func initialize_raid(user: RSUser, to_user : RSUser, message: String = "") -> void:
 	var bbcode := "{user} is starting a raid to {to_user}\nbecause {message}."
 	bbcode = RSAlertOverlay.decorate_all_tags(bbcode, PRE, SUF)
@@ -43,6 +44,7 @@ func initialize_raid(user: RSUser, to_user : RSUser, message: String = "") -> vo
 		})
 	var callable : Callable = RS.twitcher.raid.bind(str(to_user.user_id))
 	instantiate_new_bar(bbcode, callable)
+
 
 func wheel_of_random_raid(launched_by: RSUser, message: String = "") -> void:
 	await RS.user_mng.refresh_live_streamers()

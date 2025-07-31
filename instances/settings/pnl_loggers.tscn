@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://7xdrxsskqnfr"]
 
 [ext_resource type="Script" uid="uid://gfis6q78ghsr" path="res://instances/settings/pnl_loggers.gd" id="1_20kxr"]
-[ext_resource type="StyleBox" uid="uid://dp1gxe3ir730n" path="res://ui/panel_flat_dark.tres" id="2_3gvxm"]
+[ext_resource type="StyleBox" uid="uid://dp1gxe3ir730n" path="res://ui/styles/panel_flat_dark.tres" id="2_3gvxm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7025a"]
 shadow_size = 10

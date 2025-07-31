@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://dfgxxcmb66hy2"]
 
-[ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_a2om0"]
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_4i5w2"]
 [ext_resource type="Script" uid="uid://bi3qkl6lbny3v" path="res://instances/settings/pnl_obs_ws.gd" id="2_e5g46"]
-[ext_resource type="StyleBox" uid="uid://dp1gxe3ir730n" path="res://ui/panel_flat_dark.tres" id="3_36jw1"]
+[ext_resource type="StyleBox" uid="uid://dp1gxe3ir730n" path="res://ui/styles/panel_flat_dark.tres" id="3_36jw1"]
 [ext_resource type="PackedScene" uid="uid://cwg72p5gy7ib3" path="res://instances/utils/btn_collapse.tscn" id="4_fokuy"]
-[ext_resource type="StyleBox" uid="uid://be1r1ht3qo0ct" path="res://ui/panel_flat_dark_semitransparent.tres" id="5_abak2"]
-[ext_resource type="StyleBox" uid="uid://bbm13ghfao7l3" path="res://ui/editor_panel_light_borderless.tres" id="6_jdkvv"]
+[ext_resource type="StyleBox" uid="uid://be1r1ht3qo0ct" path="res://ui/styles/panel_flat_dark_semitransparent.tres" id="5_abak2"]
+[ext_resource type="StyleBox" uid="uid://bbm13ghfao7l3" path="res://ui/styles/editor_panel_light_borderless.tres" id="6_jdkvv"]
 [ext_resource type="Texture2D" uid="uid://gvhb68vjfckm" path="res://ui/icons/bootstrap_icons/arrow-counterclockwise.png" id="7_2hw6a"]
 [ext_resource type="PackedScene" uid="uid://b12coyg6xjohk" path="res://instances/utils/btn_toggle_secret.tscn" id="8_w5dnt"]
 
@@ -29,7 +29,7 @@ offset_right = -1242.0
 offset_bottom = -782.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_a2om0")
+theme = ExtResource("1_4i5w2")
 script = ExtResource("2_e5g46")
 metadata/_tab_index = 4
 

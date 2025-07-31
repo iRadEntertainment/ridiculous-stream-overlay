@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dregwshpiqg8j"]
+[gd_scene load_steps=4 format=3 uid="uid://dregwshpiqg8j"]
 
-[ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_h56r3"]
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_aawb6"]
 [ext_resource type="Script" uid="uid://q04igtjjoyn3" path="res://instances/alert_overlay.gd" id="2_2r8d2"]
 [ext_resource type="AudioStream" uid="uid://d06co3aldqpok" path="res://local_res/sfx_alert_digital_clock_bip.wav" id="3_t6sdp"]
-[ext_resource type="Theme" uid="uid://ya1vefj2nbhc" path="res://ui/alert_overlay.tres" id="4_ecgls"]
 
 [node name="AlertOverlay" type="Control"]
 layout_mode = 3
@@ -13,7 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme = ExtResource("1_h56r3")
+theme = ExtResource("1_aawb6")
 script = ExtResource("2_2r8d2")
 
 [node name="sfx_alert" type="AudioStreamPlayer" parent="."]
@@ -34,7 +33,6 @@ offset_right = 358.0
 offset_bottom = 41.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("4_ecgls")
 
 [node name="vb_cnt" type="VBoxContainer" parent="pnl_mid"]
 unique_name_in_owner = true

@@ -1,18 +1,18 @@
 [gd_scene load_steps=4 format=3 uid="uid://biy3s0e3yb44c"]
 
 [ext_resource type="Script" uid="uid://pqagqlmw0rgb" path="res://instances/utils/pnl_loading_simple.gd" id="1_e280l"]
+[ext_resource type="StyleBox" uid="uid://cweacbwncjisg" path="res://ui/styles/pnl_loading_simple.stylebox" id="1_gebs2"]
 [ext_resource type="Texture2D" uid="uid://b2mtooi658yq0" path="res://ui/sprites/loading.png" id="1_jebw5"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4cep7"]
-bg_color = Color(0, 0, 0, 0.427451)
 
 [node name="pnl_loading_simple" type="PanelContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -1479.0
+offset_bottom = -934.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_4cep7")
+theme_override_styles/panel = ExtResource("1_gebs2")
 script = ExtResource("1_e280l")
 
 [node name="center" type="CenterContainer" parent="."]
@@ -23,5 +23,7 @@ layout_mode = 2
 
 [node name="loading_ico" type="Sprite2D" parent="center/pin"]
 unique_name_in_owner = true
+modulate = Color(0.972549, 0.929412, 0.803922, 1)
+rotation = 0.390076
 scale = Vector2(0.3125, 0.3125)
 texture = ExtResource("1_jebw5")

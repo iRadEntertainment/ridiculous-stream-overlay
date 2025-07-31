@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bqcdkkhl2dasr"]
 
 [ext_resource type="Script" uid="uid://cir7jqann015e" path="res://instances/welcome/pnl_debug_mode.gd" id="1_a0oh2"]
-[ext_resource type="StyleBox" uid="uid://dp1gxe3ir730n" path="res://ui/panel_flat_dark.tres" id="1_ysfk8"]
+[ext_resource type="StyleBox" uid="uid://dp1gxe3ir730n" path="res://ui/styles/panel_flat_dark.tres" id="1_ysfk8"]
 [ext_resource type="PackedScene" uid="uid://7xdrxsskqnfr" path="res://instances/settings/pnl_loggers.tscn" id="2_mnb4r"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_6vnha"]

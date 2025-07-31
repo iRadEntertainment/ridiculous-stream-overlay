@@ -1,7 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://cokv6nhefofwl"]
+[gd_scene load_steps=17 format=3 uid="uid://cokv6nhefofwl"]
 
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_d1x68"]
 [ext_resource type="Script" uid="uid://06haj4fgbnt3" path="res://instances/welcome/pnl_welcome.gd" id="1_m3h8h"]
-[ext_resource type="Theme" uid="uid://c4kl4glet7drb" path="res://ui/ridiculous_stream_main.tres" id="1_ommbr"]
 [ext_resource type="FontFile" uid="uid://dnbncxup3m18f" path="res://ui/fonts/jetbrains_mono_ttf/JetBrainsMono-ExtraBold.ttf" id="3_do1hy"]
 [ext_resource type="Texture2D" uid="uid://ceh17coxgqqnr" path="res://icon.png" id="3_dsk3q"]
 [ext_resource type="FontFile" uid="uid://g2j5qk6fw4ih" path="res://ui/fonts/jetbrains_mono_ttf/JetBrainsMono-Light.ttf" id="3_oj2c7"]
@@ -13,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://42kaw8tk5mxo" path="res://instances/welcome/pnl_twitch_developer.tscn" id="9_xnjuj"]
 [ext_resource type="Texture2D" uid="uid://cybbfwulysr0r" path="res://ui/icons/bootstrap_icons/arrow-left.png" id="9_y631q"]
 [ext_resource type="Texture2D" uid="uid://40umxxmmps88" path="res://ui/icons/bootstrap_icons/arrow-right.png" id="10_n4pa4"]
-[ext_resource type="PackedScene" path="res://instances/welcome/twitch/pnl_twitch_features.tscn" id="10_u1usa"]
 [ext_resource type="PackedScene" uid="uid://deyd0k38tajk3" path="res://instances/settings/pnl_twitch_auth_irc.tscn" id="11_omwxy"]
 [ext_resource type="PackedScene" uid="uid://bqcdkkhl2dasr" path="res://instances/welcome/pnl_debug_mode.tscn" id="16_w8j4y"]
 
@@ -29,7 +28,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_ommbr")
+theme = ExtResource("1_d1x68")
 script = ExtResource("1_m3h8h")
 
 [node name="vb" type="VBoxContainer" parent="."]
@@ -125,23 +124,40 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="pnl_twitch_features_api" parent="vb/hb/mrg_right/vb/tabs_welcome" instance=ExtResource("10_u1usa")]
+[node name="pnl_twitch_features_api" parent="vb/hb/mrg_right/vb/tabs_welcome"]
+_import_path = NodePath("")
 unique_name_in_owner = true
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
 visible = false
 layout_mode = 2
+script = null
 metadata/_tab_index = 3
 
-[node name="pnl_twitch_features_eventsub" parent="vb/hb/mrg_right/vb/tabs_welcome" instance=ExtResource("10_u1usa")]
+[node name="pnl_twitch_features_eventsub" parent="vb/hb/mrg_right/vb/tabs_welcome"]
+_import_path = NodePath("")
 unique_name_in_owner = true
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
 visible = false
 layout_mode = 2
+script = null
 metadata/_tab_index = 4
 
 [node name="pnl_twitch_auth_irc" parent="vb/hb/mrg_right/vb/tabs_welcome" instance=ExtResource("11_omwxy")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-metadata/_tab_index = 5
 
 [node name="hb" type="HBoxContainer" parent="vb/hb/mrg_right/vb"]
 custom_minimum_size = Vector2(0, 32)

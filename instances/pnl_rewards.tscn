@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cxadxwcgodae4" path="res://instances/pnl_rewards.gd" id="1_3d7eq"]
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_ff2s5"]
-[ext_resource type="Theme" uid="uid://0k8rsjlg003m" path="res://ui/chat_message.tres" id="2_maxpk"]
+[ext_resource type="Theme" uid="uid://0k8rsjlg003m" path="res://ui/styles/chat_message.tres" id="2_maxpk"]
 [ext_resource type="PackedScene" uid="uid://wl1340ejrqt0" path="res://instances/entries/entry_reward.tscn" id="3_nmi06"]
 [ext_resource type="Texture2D" uid="uid://b2mtooi658yq0" path="res://ui/sprites/loading.png" id="3_ssecm"]
 [ext_resource type="PackedScene" uid="uid://n8ba15xjyjo8" path="res://instances/pnl_reward_inspector.tscn" id="6_iqkps"]
