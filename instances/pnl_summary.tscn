@@ -1,8 +1,40 @@
-[gd_scene load_steps=4 format=3 uid="uid://dduocy5paeeuu"]
+[gd_scene load_steps=14 format=3 uid="uid://dduocy5paeeuu"]
 
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_5jbkt"]
 [ext_resource type="Script" uid="uid://cd84uduiddaag" path="res://instances/pnl_summary.gd" id="1_g3rp7"]
 [ext_resource type="Material" uid="uid://b41sge3ds6wql" path="res://shaders/scroll_fade_in_out.material" id="2_8f8wr"]
+[ext_resource type="Texture2D" uid="uid://ca6xdmc1afmql" path="res://ui/icons/bootstrap_icons/x.svg" id="3_a5ph2"]
+[ext_resource type="FontFile" uid="uid://dixsuinpjvkf1" path="res://ui/fonts/source-code-pro/SourceCodePro-Black.otf" id="3_wvb8h"]
+
+[sub_resource type="Gradient" id="Gradient_a5ph2"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_j6aqn"]
+gradient = SubResource("Gradient_a5ph2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d6v8l"]
+texture = SubResource("GradientTexture1D_j6aqn")
+texture_margin_top = 1.0
+texture_margin_bottom = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_42qfw"]
+font = ExtResource("3_wvb8h")
+font_size = 38
+
+[sub_resource type="Gradient" id="Gradient_nm143"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rtqad"]
+gradient = SubResource("Gradient_nm143")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q2kl7"]
+texture = SubResource("GradientTexture1D_rtqad")
+texture_margin_top = 1.0
+texture_margin_bottom = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_5mh5a"]
+font = ExtResource("3_wvb8h")
+font_size = 28
 
 [node name="pnl_summary" type="PanelContainer"]
 anchors_preset = 15
@@ -10,7 +42,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 theme = ExtResource("1_5jbkt")
 script = ExtResource("1_g3rp7")
 
@@ -20,37 +51,157 @@ layout_mode = 2
 [node name="title" type="Label" parent="vb"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 58
-text = "Stream Summary"
+text = "Stream Ending..."
 horizontal_alignment = 1
+
+[node name="btn_close" type="Button" parent="vb/title"]
+custom_minimum_size = Vector2(78, 78)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+grow_horizontal = 0
+grow_vertical = 2
+flat = true
+
+[node name="ico" type="TextureRect" parent="vb/title/btn_close"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_a5ph2")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="sel" type="HSeparator" parent="vb"]
 layout_mode = 2
 
-[node name="subc" type="SubViewportContainer" parent="vb"]
+[node name="hb" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="vb_left" type="VBoxContainer" parent="vb/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="hb_subtitle" type="HBoxContainer" parent="vb/hb/vb_left"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="sep" type="HSeparator" parent="vb/hb/vb_left/hb_subtitle"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxTexture_d6v8l")
+
+[node name="lb" type="Label" parent="vb/hb/vb_left/hb_subtitle"]
+layout_mode = 2
+text = "Raids"
+label_settings = SubResource("LabelSettings_42qfw")
+horizontal_alignment = 1
+
+[node name="sep2" type="HSeparator" parent="vb/hb/vb_left/hb_subtitle"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxTexture_q2kl7")
+
+[node name="vb_raids" type="VBoxContainer" parent="vb/hb/vb_left"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="vb/hb/vb_left/vb_raids"]
+layout_mode = 2
+text = "SorceryStory"
+label_settings = SubResource("LabelSettings_5mh5a")
+horizontal_alignment = 1
+
+[node name="hb_subtitle2" type="HBoxContainer" parent="vb/hb/vb_left"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="sep" type="HSeparator" parent="vb/hb/vb_left/hb_subtitle2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxTexture_d6v8l")
+
+[node name="lb" type="Label" parent="vb/hb/vb_left/hb_subtitle2"]
+layout_mode = 2
+text = "Cheers"
+label_settings = SubResource("LabelSettings_42qfw")
+horizontal_alignment = 1
+
+[node name="sep2" type="HSeparator" parent="vb/hb/vb_left/hb_subtitle2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxTexture_q2kl7")
+
+[node name="vb_cheers" type="VBoxContainer" parent="vb/hb/vb_left"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="vb/hb/vb_left/vb_cheers"]
+layout_mode = 2
+text = "SorceryStory"
+label_settings = SubResource("LabelSettings_5mh5a")
+horizontal_alignment = 1
+
+[node name="hb_subtitle3" type="HBoxContainer" parent="vb/hb/vb_left"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="sep" type="HSeparator" parent="vb/hb/vb_left/hb_subtitle3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxTexture_d6v8l")
+
+[node name="lb" type="Label" parent="vb/hb/vb_left/hb_subtitle3"]
+layout_mode = 2
+text = "Subscriptions"
+label_settings = SubResource("LabelSettings_42qfw")
+horizontal_alignment = 1
+
+[node name="sep2" type="HSeparator" parent="vb/hb/vb_left/hb_subtitle3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxTexture_q2kl7")
+
+[node name="vb_subs" type="VBoxContainer" parent="vb/hb/vb_left"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="vb/hb/vb_left/vb_subs"]
+layout_mode = 2
+text = "SorceryStory"
+label_settings = SubResource("LabelSettings_5mh5a")
+horizontal_alignment = 1
+
+[node name="subc" type="SubViewportContainer" parent="vb/hb"]
 material = ExtResource("2_8f8wr")
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 stretch = true
 
-[node name="sub" type="SubViewport" parent="vb/subc"]
+[node name="sub" type="SubViewport" parent="vb/hb/subc"]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(1904, 975)
+size = Vector2i(1267, 975)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
-[node name="bg" type="ColorRect" parent="vb/subc/sub"]
-visible = false
-use_parent_material = true
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0.647085, 0, 0.24251, 1)
-
-[node name="mrg" type="MarginContainer" parent="vb/subc/sub"]
+[node name="mrg" type="MarginContainer" parent="vb/hb/subc/sub"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -64,7 +215,7 @@ theme_override_constants/margin_top = 64
 theme_override_constants/margin_right = 64
 theme_override_constants/margin_bottom = 64
 
-[node name="main_text" type="RichTextLabel" parent="vb/subc/sub/mrg"]
+[node name="main_text" type="RichTextLabel" parent="vb/hb/subc/sub/mrg"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -115,3 +266,5 @@ sadsadsa
 
 dsadsa"
 horizontal_alignment = 1
+
+[connection signal="pressed" from="vb/title/btn_close" to="." method="_on_btn_close_pressed"]

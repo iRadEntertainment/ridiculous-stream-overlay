@@ -24,6 +24,7 @@ var entry: EntryReward:
 		if entry == val:
 			return
 		entry = val
+		if not entry: return
 		type = entry.type
 		local_filepath = entry.local_filepath
 		reward = entry.reward

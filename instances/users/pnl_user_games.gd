@@ -99,7 +99,8 @@ func add_steam_entry(
 		await check_steam_app(steam_app_id)
 	
 	if !steam_data:
-		push_error("Panel Games: Steam entry already in the list")
+		push_error("Panel Games: Steam data invalid!")
+		print("App ID: %s" % steam_app_id)
 		return
 	
 	if save_user:

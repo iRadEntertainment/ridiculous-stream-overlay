@@ -20,6 +20,7 @@ func _ready() -> void:
 func start() -> void:
 	load_summary()
 	connect_twitcher_events()
+	_log.enabled = true
 	_log.i("Started")
 
 
@@ -38,7 +39,7 @@ func _on_received_chat_message(t_message: TwitchChatMessage) -> void:
 	var user_id: int = int(t_message.chatter_user_id)
 	if !RS.user_mng.is_user_id_known(user_id):
 		return
-	_add_interaction_from_chat(user_id, t_message.message.text)
+	_add_interaction_from_chat(t_message)
 
 
 func _on_channel_points_redeemed(event_data: RSTwitchEventData) -> void:
@@ -103,6 +104,7 @@ func _on_subscribed(event_data: RSTwitchEventData) -> void:
 func start_new_summary() -> void:
 	_log.i("Starting new summary")
 	summary = RSSummary.new()
+	summary.stream_start = Time.get_unix_time_from_system()
 
 
 func load_summary() -> void:
@@ -164,9 +166,15 @@ func _init_interaction(user_id: int) -> void:
 		summary.user_interactions[user_id].is_global = false
 
 
-func _add_interaction_from_chat(user_id: int, message: String) -> void:
+func _add_interaction_from_chat(t_message: TwitchChatMessage) -> void:
+	var user_id: int = int(t_message.chatter_user_id)
+	var message: String = t_message.message.text
+	var cheer: TwitchChatMessage.Cheer = t_message.cheer
+	var message_type: TwitchChatMessage.MessageType = t_message.message_type
+	
 	_init_interaction(user_id)
 	var inter: RSUser.Interactions = summary.user_interactions[user_id]
+	
 	if message.begins_with("!"):
 		message = message.lstrip("!")
 		if message in RS.twitcher.service._commands.keys():
@@ -175,6 +183,10 @@ func _add_interaction_from_chat(user_id: int, message: String) -> void:
 			inter.fake_commands_count += 1
 	else:
 		inter.messages_count += 1
+		if cheer:
+			inter.bits_count += cheer.bits
+		if message_type == TwitchChatMessage.MessageType.power_ups_gigantified_emote:
+			inter.gigantify_count += 1
 	user_interactions_updated.emit(user_id)
 
 
@@ -199,6 +211,41 @@ class RSSummary:
 		for user_id: int in user_interactions:
 			data["user_interactions"][user_id] = user_interactions[user_id].to_dict()
 		return data
+	
+	
+	func get_chatters_user_ids() -> Array[int]:
+		var chatters_ids: Array[int] = []
+		for user_id: int in user_interactions:
+			chatters_ids.append(user_id)
+		return chatters_ids
+	
+	
+	func get_cheerers_user_ids() -> Array[int]:
+		var cheerers_ids: Array[int] = []
+		return cheerers_ids
+	
+	
+	#func get_gigantifiers_user_ids() -> Array[int]:
+		#var gigantifiers_ids: Array[int] = []
+		#return gigantifiers_ids
+	
+	
+	func get_subscribers_user_ids() -> Array[int]:
+		var chatters_ids: Array[int] = []
+		for user_id: int in user_interactions:
+			var inter: RSUser.Interactions = user_interactions[user_id]
+			if inter.subscriptions_count > 0:
+				chatters_ids.append(user_id)
+		return chatters_ids
+	
+	
+	func get_raiders_user_ids() -> Array[int]:
+		var chatters_ids: Array[int] = []
+		for user_id: int in user_interactions:
+			var inter: RSUser.Interactions = user_interactions[user_id]
+			if inter.raids_in_count > 0:
+				chatters_ids.append(user_id)
+		return chatters_ids
 	
 	
 	static func from_json(data: Dictionary) -> RSSummary:
