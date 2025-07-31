@@ -18,16 +18,15 @@ func _ready() -> void:
 
 
 func start() -> void:
+	_log.enabled = true
+	_log.i("Starting...")
 	load_summary()
 	connect_twitcher_events()
-	_log.enabled = true
-	_log.i("Started")
 
 
 func connect_twitcher_events() -> void:
 	RS.twitcher.received_chat_message.connect(_on_received_chat_message)
 	RS.twitcher.channel_points_redeemed.connect(_on_channel_points_redeemed)
-	# MISSING: gigantify_count # TODO
 	RS.twitcher.cheered.connect(_on_cheered)
 	RS.twitcher.raided.connect(_on_raided)
 	RS.twitcher.subscribed.connect(_on_subscribed)
@@ -116,10 +115,21 @@ func load_summary() -> void:
 		start_new_summary()
 
 
-func save_summary() -> void:
+func save_current_summary() -> void:
 	if summary:
 		_log.i("Saving summary file to %s" % summary_file_path)
 		RSUtl.save_to_json(summary_file_path, summary.to_dict())
+	else:
+		_log.w("Cannot save summary. Summary not present.")
+
+
+func save_stored_summary() -> void:
+	if summary:
+		var summary_file_path
+		_log.i("Saving stored summary file to %s" % summary_file_path)
+		RSUtl.save_to_json(summary_file_path, summary.to_dict())
+	else:
+		_log.w("Cannot save stored summary. Summary not present.")
 
 
 func delete_summary() -> void:
@@ -196,7 +206,7 @@ func _notification(what: int) -> void:
 		NOTIFICATION_WM_CLOSE_REQUEST,
 	]
 	if what in catch:
-		save_summary()
+		save_current_summary()
 #endregion
 
 

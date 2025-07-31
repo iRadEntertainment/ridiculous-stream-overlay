@@ -267,7 +267,7 @@ func check_user_twitch_color(t_message: TwitchChatMessage) -> void:
 	var user_id: int = int(t_message.chatter_user_id)
 	if color.is_empty(): return
 	if RS.user_mng.is_user_id_known(user_id):
-		var user: RSUser = await RS.user_mng.get_user_from_user_id(user_id)
+		var user: RSUser = await RS.user_mng.get_any_user_from_user_id(user_id)
 		if user.twitch_chat_color != Color(color):
 			user.twitch_chat_color = Color(color)
 			RSUserMng.save_user_to_json(user, RSSettings.get_users_path())

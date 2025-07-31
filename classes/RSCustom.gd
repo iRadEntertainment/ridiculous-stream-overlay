@@ -78,7 +78,7 @@ func add_commands() -> void:
 func on_chat(t_message: TwitchChatMessage) -> void:
 	var message: String = t_message.message.text
 	var user_id: int = int(t_message.chatter_user_id)
-	var user: RSUser = await RS.user_mng.get_user_from_user_id(user_id)
+	var user: RSUser = await RS.user_mng.get_any_user_from_user_id(user_id)
 	if not message.begins_with("!"):
 		add_notification_scene(user)
 	if "kiwi" in message.to_lower(): OS.shell_open("https://cdn.discordapp.com/attachments/1221896398706835527/1296143099478933566/IMG_2351.jpg?ex=671136d4&is=670fe554&hm=a909489ef95bd303ec49c2c559d869fc1da209e9ae3eb9a25ed085e055cdb183&")
@@ -94,7 +94,7 @@ func chat_on_stream_off(username: String) -> void:
 func on_first_session_message(t_message: TwitchChatMessage) -> void:
 	if !RS.no_obs_ws.is_stream_on: return
 	var user_id: int = int(t_message.chatter_user_id)
-	var user: RSUser = await RS.user_mng.get_user_from_user_id(user_id)
+	var user: RSUser = await RS.user_mng.get_any_user_from_user_id(user_id)
 	if RS.user_mng.is_user_id_known(user_id):
 		user.twitch_chat_color = await RS.twitcher.get_user_color(user.user_id)
 		# TODO: move this to user manager
@@ -107,7 +107,7 @@ func on_first_session_message(t_message: TwitchChatMessage) -> void:
 
 func on_channel_points_redeemed(data: RSTwitchEventData):
 	_log.i("Channel points redeemed. %s -> %s" % [data.username, data.reward_title] )
-	var user: RSUser = await RS.user_mng.get_user_from_username(data.username)
+	var user: RSUser = await RS.user_mng.get_any_user_from_username(data.username)
 	#if await !RS.no_obs_ws.is_stream_on: chat_on_stream_off(data.username); return
 	match data.reward_title:
 		"beans": beans(data.username)
@@ -259,7 +259,7 @@ func beans(username: String) -> void:
 	if username.is_empty() and !RS.user_mng.known.is_empty():
 		user = RS.user_mng.known.values().pick_random()
 	elif not username.is_empty():
-		user = await RS.user_mng.get_user_from_username(username.to_lower())
+		user = await RS.user_mng.get_any_user_from_username(username.to_lower())
 	
 	var beans_param := RSBeansParam.from_json(RSGlobals.PARAMS_CANS)
 	if user:
@@ -449,7 +449,7 @@ func destructibles_names(username := "", quantity: int = 1, font_size := 96):
 	if username.is_empty() and !RS.user_mng.known.is_empty():
 		user = RS.user_mng.known.values().pick_random()
 	else:
-		user = await RS.user_mng.get_user_from_username(username)
+		user = await RS.user_mng.get_any_user_from_username(username)
 	if not user:
 		return
 	
@@ -518,7 +518,7 @@ func stop_streaming():
 
 
 func raid_kani(user: RSUser, data: RSTwitchEventData):
-	var kani_rs_user: RSUser = await RS.user_mng.get_user_from_username("kani_dev")
+	var kani_rs_user: RSUser = await RS.user_mng.get_any_user_from_username("kani_dev")
 	RS.alert_scene.initialize_raid(user, kani_rs_user, data.user_input)
 
 

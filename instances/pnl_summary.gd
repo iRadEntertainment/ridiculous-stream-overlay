@@ -28,22 +28,22 @@ func populate_with_summary() -> void:
 	
 	var chatters: Array[RSUser]
 	for user_id: int in chatters_ids:
-		var user: RSUser = await RS.user_mng.get_user_from_user_id(user_id)
+		var user: RSUser = await RS.user_mng.get_any_user_from_user_id(user_id)
 		chatters.append(user)
 	
 	var cheerers: Array[RSUser]
 	for user_id: int in cheerers_ids:
-		var user: RSUser = await RS.user_mng.get_user_from_user_id(user_id)
+		var user: RSUser = await RS.user_mng.get_any_user_from_user_id(user_id)
 		cheerers.append(user)
 		add_lb_name_to_container(%vb_cheers, user.display_name, user.twitch_chat_color)
 	var subscribers: Array[RSUser]
 	for user_id: int in subscribers_ids:
-		var user: RSUser = await RS.user_mng.get_user_from_user_id(user_id)
+		var user: RSUser = await RS.user_mng.get_any_user_from_user_id(user_id)
 		subscribers.append(user)
 		add_lb_name_to_container(%vb_subs, user.display_name, user.twitch_chat_color)
 	var raiders: Array[RSUser]
 	for user_id: int in raiders_ids:
-		var user: RSUser = await RS.user_mng.get_user_from_user_id(user_id)
+		var user: RSUser = await RS.user_mng.get_any_user_from_user_id(user_id)
 		raiders.append(user)
 		add_lb_name_to_container(%vb_raids, user.display_name, user.twitch_chat_color)
 	

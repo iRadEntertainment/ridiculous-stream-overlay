@@ -110,18 +110,18 @@ func get_known_user_from_username(username: String) -> RSUser:
 	return known[user_id]
 
 
-func get_user_from_username(username: String) -> RSUser:
+func get_any_user_from_username(username: String) -> RSUser:
 	var user: RSUser
 	var user_id: int = 0
 	if username in username_to_user_id.keys():
 		user_id = username_to_user_id[username]
-		user = await get_user_from_user_id(user_id)
+		user = await get_any_user_from_user_id(user_id)
 	else:
 		user = await user_from_twitch_api(username)
 	return user
 	
 
-func get_user_from_user_id(user_id: int) -> RSUser:
+func get_any_user_from_user_id(user_id: int) -> RSUser:
 	var user: RSUser
 	if known.has(user_id):
 		user = known[user_id]
@@ -215,7 +215,7 @@ func update_known_user_from_twitch(user: RSUser) -> void:
 func _on_first_session_message(_username: String, _message: String, tags: TwitchTags.PrivMsg) -> void:
 	var user_id: int = int(tags.user_id)
 	if is_user_id_known(user_id):
-		var user: RSUser = await get_user_from_user_id(user_id)
+		var user: RSUser = await get_any_user_from_user_id(user_id)
 		await update_known_user_from_twitch(user)
 
 
@@ -244,7 +244,7 @@ func _on_user_request_add(
 	elif unknown.has(user_id):
 		user = unknown[user_id]
 	else:
-		user = await get_user_from_user_id(user_id)
+		user = await get_any_user_from_user_id(user_id)
 	if not user:
 		_log.e("Adding user %s with user_id %d error. User not found" % [info.username, user_id])
 		return

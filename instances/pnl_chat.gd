@@ -60,7 +60,7 @@ func put_chat(t_message: TwitchChatMessage) -> void:
 	
 	if t_message.chatter_user_name == "IAmAMerlin":
 		color = Color.BROWN.to_html()
-	var user: RSUser = await RS.user_mng.get_user_from_username(username)
+	var user: RSUser = await RS.user_mng.get_any_user_from_username(username)
 	if user:
 		if not user.custom_chat_color in [Color.TRANSPARENT, Color.BLACK]:
 			color = user.custom_chat_color.to_html()

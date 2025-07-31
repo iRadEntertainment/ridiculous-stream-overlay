@@ -54,7 +54,7 @@ func wheel_of_random_raid(launched_by: RSUser, message: String = "") -> void:
 	wheel.start(online)
 	wheel.winner_selected.connect(raid_selected_username.bind(launched_by, message))
 func raid_selected_username(to_username: String, from_user: RSUser, message: String = "") -> void:
-	var user_to_raid: RSUser = await RS.user_mng.get_user_from_username(to_username)
+	var user_to_raid: RSUser = await RS.user_mng.get_any_user_from_username(to_username)
 	initialize_raid(from_user, user_to_raid, message)
 
 

@@ -599,9 +599,13 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 theme = null
 
-[node name="debug_view" parent="." instance=ExtResource("5_j4imi")]
+[node name="pnl_summary" parent="." instance=ExtResource("25_ht5xl")]
 unique_name_in_owner = true
 visible = false
+layout_mode = 1
+
+[node name="physics_scene" parent="." instance=ExtResource("3_d3yde")]
+unique_name_in_owner = true
 layout_mode = 1
 
 [node name="alert_scene" parent="." instance=ExtResource("19_gj13v")]
@@ -624,15 +628,6 @@ anchor_left = 1.0
 offset_left = -337.0
 grow_horizontal = 0
 
-[node name="physics_scene" parent="." instance=ExtResource("3_d3yde")]
-unique_name_in_owner = true
-layout_mode = 1
-
-[node name="pnl_summary" parent="." instance=ExtResource("25_ht5xl")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-
 [node name="manadono_snow" type="ColorRect" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -644,6 +639,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="debug_view" parent="." instance=ExtResource("5_j4imi")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
 
 [node name="btn_floating_menu" parent="." instance=ExtResource("5_xf57p")]
 unique_name_in_owner = true

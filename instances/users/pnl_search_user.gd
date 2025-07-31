@@ -68,7 +68,7 @@ func _on_btn_save_pressed() -> void:
 func _on_btn_update_pressed() -> void:
 	if not t_user:
 		return
-	var user: RSUser = await RS.user_mng.get_user_from_user_id(int(t_user.id))
+	var user: RSUser = await RS.user_mng.get_any_user_from_user_id(int(t_user.id))
 	if user:
 		user.update_from_twitch_user(t_user)
 		RS.user_mng.save_user(user)
