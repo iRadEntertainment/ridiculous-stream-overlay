@@ -1,11 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://blvbbujltlmrb"]
+[gd_scene load_steps=10 format=3 uid="uid://blvbbujltlmrb"]
 
 [ext_resource type="Script" uid="uid://bmtdchgl2tvxe" path="res://instances/users/pnl_user_games.gd" id="1_06iyg"]
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_msnqb"]
 [ext_resource type="Texture2D" uid="uid://dqxomv5pykt6i" path="res://ui/icons/bootstrap_icons/search-heart.svg" id="2_p2674"]
 [ext_resource type="Texture2D" uid="uid://kxiiuf0d0kip" path="res://ui/icons/bootstrap_icons/plus-circle.svg" id="3_gyx6x"]
 [ext_resource type="PackedScene" uid="uid://l2xg7yj7bfhe" path="res://instances/entries/entry_game_list.tscn" id="4_0jmle"]
 [ext_resource type="PackedScene" uid="uid://d0cdydbgdy7ob" path="res://lib/games_info/pnl_steam_app_info.tscn" id="5_wqyhx"]
 [ext_resource type="PackedScene" uid="uid://dxohy88odqn5f" path="res://lib/games_info/pnl_itchio_app_info.tscn" id="6_r3jb4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hamtv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uv768"]
 
 [node name="pnl_user_games" type="PanelContainer"]
 offset_right = 1097.0
@@ -13,6 +18,7 @@ offset_bottom = 638.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
+theme = ExtResource("1_msnqb")
 script = ExtResource("1_06iyg")
 
 [node name="split" type="HSplitContainer" parent="."]
@@ -70,6 +76,7 @@ expand_icon = true
 [node name="pnl" type="PanelContainer" parent="split/vb_games/hb/vb_steam"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_hamtv")
 
 [node name="scr" type="ScrollContainer" parent="split/vb_games/hb/vb_steam/pnl"]
 layout_mode = 2
@@ -83,6 +90,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="entry_game_list" parent="split/vb_games/hb/vb_steam/pnl/scr/vb_steam_app_list" instance=ExtResource("4_0jmle")]
+layout_mode = 2
+
+[node name="sep" type="VSeparator" parent="split/vb_games/hb"]
 layout_mode = 2
 
 [node name="vb_itch" type="VBoxContainer" parent="split/vb_games/hb"]
@@ -121,6 +131,7 @@ expand_icon = true
 [node name="pnl" type="PanelContainer" parent="split/vb_games/hb/vb_itch"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_uv768")
 
 [node name="scr" type="ScrollContainer" parent="split/vb_games/hb/vb_itch/pnl"]
 layout_mode = 2

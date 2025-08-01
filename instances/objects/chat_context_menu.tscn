@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://de1glmfpbhboy"]
+
+[node name="chat_context_menu" type="PopupMenu"]
+auto_translate_mode = 1

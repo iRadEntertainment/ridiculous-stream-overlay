@@ -63,6 +63,7 @@ expand_icon = true
 [node name="scroll" type="ScrollContainer" parent="hb/vb"]
 layout_mode = 2
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
 
 [node name="user_list" type="VBoxContainer" parent="hb/vb/scroll"]
 unique_name_in_owner = true
