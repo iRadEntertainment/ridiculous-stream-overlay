@@ -5,11 +5,7 @@ extends PanelContainer
 @onready var btn_sort: MenuButton = %btn_sort
 var entries_list: Array[RSTwitchUserEntry] = []
 
-var filter_live := false
-
 signal user_selected(user, live_data)
-
-
 
 
 func _ready() -> void:
@@ -154,17 +150,15 @@ func add_user_btn_entry_from_user_id(user_id: int) -> void:
 	%user_list.add_child(btn_user_instance)
 
 
-func toggle_live_users(toggled_on: bool) -> void:
+func filter_live_users() -> void:
 	for user_button: RSTwitchUserEntry in %user_list.get_children():
-		user_button.visible = !toggled_on or \
-				user_button.user.user_id in RS.user_mng.live_streamers_data.keys()
+		user_button.visible = user_button.user.user_id in RS.user_mng.live_streamers_data.keys()
 
 
 ## Called by btn_user_instance
 func user_selected_pressed(btn_user: RSUser) -> void:
 	if not btn_user:
 		return
-	%ln_filter.text = ""
 	var user: RSUser = await RS.user_mng.known.get(btn_user.user_id)
 	var live_data: TwitchStream = RS.user_mng.live_streamers_data.get(btn_user.user_id)
 	user_selected.emit(user, live_data)
@@ -188,8 +182,7 @@ func _on_known_users_updated() -> void:
 
 func _on_btn_filter_live_pressed() -> void:
 	await RS.user_mng.refresh_live_streamers()
-	filter_live = !filter_live
-	toggle_live_users(filter_live)
+	filter_live_users()
 func _on_btn_reload_pressed() -> void:
 	populate_user_button_list()
 func _on_ln_filter_text_changed(new_text: String) -> void:

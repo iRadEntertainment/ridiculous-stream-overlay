@@ -211,7 +211,6 @@ func _add_interaction_from_chat(t_message: TwitchChatMessage) -> void:
 func _is_command(message: String) -> bool:
 	for command: TwitchCommand in TwitchCommand.ALL_COMMANDS:
 		if command.command == message.lstrip("!"):
-			print("Is command! ", command.command)
 			return true
 	return false
 
