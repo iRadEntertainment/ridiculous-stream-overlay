@@ -194,8 +194,8 @@ func _add_interaction_from_chat(t_message: TwitchChatMessage) -> void:
 	var inter: RSUser.Interactions = summary.user_interactions[user_id]
 	
 	if message.begins_with("!"):
-		message = message.lstrip("!")
-		if message in RS.twitcher.service._commands.keys():
+		var is_real_command = _is_command(message)
+		if is_real_command:
 			inter.commands_count += 1
 		else:
 			inter.fake_commands_count += 1
@@ -206,6 +206,14 @@ func _add_interaction_from_chat(t_message: TwitchChatMessage) -> void:
 		if message_type == TwitchChatMessage.MessageType.power_ups_gigantified_emote:
 			inter.gigantify_count += 1
 	user_interactions_updated.emit(user_id)
+
+
+func _is_command(message: String) -> bool:
+	for command: TwitchCommand in TwitchCommand.ALL_COMMANDS:
+		if command.command == message.lstrip("!"):
+			print("Is command! ", command.command)
+			return true
+	return false
 
 
 func _notification(what: int) -> void:
