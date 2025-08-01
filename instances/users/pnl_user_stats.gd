@@ -69,6 +69,16 @@ func _populate_from_interactions(interactions: RSUser.Interactions) -> void:
 			RSUser.Interactions.SubTier.TIER2: tier_name = "Tier 2"
 			RSUser.Interactions.SubTier.TIER3: tier_name = "Tier 3"
 		add_counter_entry_to_node(%vb_subscriptions, tier_name, val)
+	
+	# points
+	%lb_msg_pt.text = str(interactions.messages_points)
+	%lb_commands_pt.text = str(interactions.commands_points)
+	%lb_fake_commands_pt.text = str(interactions.fake_commands_points)
+	%lb_channel_points_spent_pt.text = str(interactions.channel_points_spent_points)
+	%lb_gigantify_count_pt.text = str(interactions.gigantify_points)
+	%lb_bits_pt.text = str(interactions.bits_points)
+	%lb_raids_in_pt.text = str(interactions.raids_in_points)
+	%lb_subscriptions_count_pt.text = str(interactions.subscription_points)
 
 
 func clear() -> void:
@@ -99,10 +109,22 @@ func clear() -> void:
 	%vb_subscriptions.hide()
 	for child in %vb_subscriptions.get_children():
 		child.queue_free()
+	
+	# points
+	%lb_msg_pt.text = ""
+	%lb_commands_pt.text = ""
+	%lb_fake_commands_pt.text = ""
+	%lb_channel_points_spent_pt.text = ""
+	%lb_gigantify_count_pt.text = ""
+	%lb_bits_pt.text = ""
+	%lb_raids_in_pt.text = ""
+	%lb_subscriptions_count_pt.text = ""
 
 
 func add_counter_entry_to_node(node: Control, key: String, val: int) -> void:
 	var hb: HBoxContainer = HBoxContainer.new()
+	var empty: Control = Control.new()
+	empty.custom_minimum_size.x = 32 #px
 	var ln: LineEdit = LineEdit.new()
 	ln.text = str(val)
 	ln.editable = false
@@ -111,6 +133,7 @@ func add_counter_entry_to_node(node: Control, key: String, val: int) -> void:
 	lb.clip_text = true
 	lb.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	lb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	hb.add_child(empty)
 	hb.add_child(ln)
 	hb.add_child(lb)
 	node.add_child(hb)

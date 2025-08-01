@@ -41,7 +41,6 @@
 			"uuid": "3fe624ce-48d2-4324-b6ea-2d2777a8a52f",
 			"title": "Doing",
 			"tasks": [
-				"5edc89dd-a894-4fb9-bd56-9cd88a2f01a2",
 				"a8451136-d02c-4d8f-8664-da43ed9d19fe",
 				"dfb7b16f-4d85-4f1c-b5c7-1c841cab7875"
 			]
@@ -50,6 +49,8 @@
 			"uuid": "3056a553-9c8d-4864-8288-fac01ba7416d",
 			"title": "Done",
 			"tasks": [
+				"c3d37036-c250-487c-9ab6-f2b60a21f4d9",
+				"5edc89dd-a894-4fb9-bd56-9cd88a2f01a2",
 				"65524419-1536-4e36-93fa-a96773b51a3f",
 				"c4ff8949-11e1-4a9e-b302-fc6c0043e696",
 				"3529fa2c-f350-438b-84fb-b9595c30adfe",
@@ -353,6 +354,13 @@
 			"title": "Wheel of fortune raids",
 			"description": "",
 			"category": "5cb6e5bd-6da9-452f-9c5b-285aabd09166",
+			"steps": []
+		},
+		{
+			"uuid": "c3d37036-c250-487c-9ab6-f2b60a21f4d9",
+			"title": "Show points in user stats",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
 			"steps": []
 		}
 	],
