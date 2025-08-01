@@ -110,14 +110,18 @@ func _on_lb_msg_meta_clicked(meta: Variant) -> void:
 	RS.pnl_chat.hide()
 
 
-func _on_pnl_is_read_gui_input(event: InputEvent) -> void:
+func _on_controls_combined_event_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		is_read = true
-		%pnl_is_read.hide()
+		if event.button_index != MOUSE_BUTTON_LEFT:
+			return
+		if not is_read: is_read = true
+	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		if not is_read: is_read = true
 
+
+func _on_pnl_is_read_gui_input(event: InputEvent) -> void:
+	_on_controls_combined_event_input(event)
 
 func _on_lb_msg_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		if event.is_pressed():
-			is_read = true
+	_on_controls_combined_event_input(event)
 #endregion

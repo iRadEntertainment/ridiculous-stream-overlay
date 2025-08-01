@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://jchfk7d78ss5"]
+[gd_scene load_steps=18 format=3 uid="uid://jchfk7d78ss5"]
 
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_t6rhf"]
 [ext_resource type="Script" uid="uid://o423163rrbby" path="res://instances/pnl_chat.gd" id="1_x2vuy"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dpyn121ra1pa" path="res://ui/sprites/close.png" id="3_t6rhf"]
 [ext_resource type="PackedScene" uid="uid://d4lkycruly2ye" path="res://instances/pnl_mods.tscn" id="4_v34se"]
 [ext_resource type="PackedScene" uid="uid://jife43ye2six" path="res://instances/entries/entry_chat_message.tscn" id="5_4jb8o"]
+[ext_resource type="PackedScene" uid="uid://de1glmfpbhboy" path="res://instances/objects/chat_context_menu.tscn" id="7_ei1da"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjpta"]
 content_margin_left = 8.0
@@ -166,6 +167,9 @@ popup/item_4/id = 4
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
+
+[node name="chat_context_menu" parent="." instance=ExtResource("7_ei1da")]
+unique_name_in_owner = true
 
 [connection signal="pressed" from="vb/top/hb/btn_close" to="." method="_on_btn_close_pressed"]
 [connection signal="text_submitted" from="vb/ln_msg" to="." method="_on_ln_msg_text_submitted"]
