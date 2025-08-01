@@ -15,6 +15,7 @@ const commands_string_format = {
 	"!hd": "[bgcolor=21262e][color=21262e]%s[/color][/bgcolor]",
 }
 
+@export var max_display_messages: int = 200
 var sprite_effect : SpriteFrameEffect
 
 
@@ -36,10 +37,14 @@ var emote_start : int = 0
 var fl_first_chat_message := true
 
 func _on_chat_message(t_message: TwitchChatMessage) -> void:
-	var message: String = t_message.message.text
+	#var message: String = t_message.message.text
 	var chat_entry: EntryChatMessage = preload("res://instances/entries/entry_chat_message.tscn").instantiate()
 	chat_entry.t_message = t_message
 	%vb_messages.add_child(chat_entry)
+	while %vb_messages.get_child_count() > max_display_messages:
+		%vb_messages.get_child(0).free()
+	
+	await get_tree().process_frame
 	%scroll_msg.scroll_vertical = %scroll_msg.get_v_scroll_bar().max_value
 	
 	#if message.begins_with("!"):
