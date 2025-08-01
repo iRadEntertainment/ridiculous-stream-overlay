@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://de1glmfpbhboy"]
+
+[ext_resource type="Script" uid="uid://bi1npjv005uem" path="res://instances/objects/context_menu_chat.gd" id="1_avwyu"]
+
+[node name="context_menu_chat" type="PopupMenu"]
+auto_translate_mode = 1
+visible = true
+unfocusable = true
+script = ExtResource("1_avwyu")
+
+[connection signal="id_pressed" from="." to="." method="_on_id_pressed"]

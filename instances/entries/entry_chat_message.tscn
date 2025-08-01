@@ -53,6 +53,8 @@ stretch_mode = 5
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
+mouse_filter = 0
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_4lks0")
 text = "TheYagich"
 
@@ -69,5 +71,6 @@ custom_effects = [SubResource("RichTextEffect_komlk")]
 selection_enabled = true
 
 [connection signal="gui_input" from="pnl_is_read" to="." method="_on_pnl_is_read_gui_input"]
+[connection signal="gui_input" from="hb/lb_username" to="." method="_on_lb_username_gui_input"]
 [connection signal="gui_input" from="hb/lb_msg" to="." method="_on_lb_msg_gui_input"]
 [connection signal="meta_clicked" from="hb/lb_msg" to="." method="_on_lb_msg_meta_clicked"]

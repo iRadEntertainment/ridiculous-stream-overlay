@@ -1,9 +1,14 @@
 extends PanelContainer
 class_name EntryChatMessage
 
-var pnl_chat: RSPnlChat
 var t_message: TwitchChatMessage
 var user: RSUser
+
+var t_message_id: String:
+	get: return t_message.message_id if t_message else ""
+
+signal username_pressed(parent: EntryChatMessage, t_message: TwitchChatMessage, user: RSUser)
+
 
 var is_read: bool = false:
 	set(val):
@@ -124,4 +129,8 @@ func _on_pnl_is_read_gui_input(event: InputEvent) -> void:
 
 func _on_lb_msg_gui_input(event: InputEvent) -> void:
 	_on_controls_combined_event_input(event)
+func _on_lb_username_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.is_released():
+			username_pressed.emit(self, t_message, user)
 #endregion

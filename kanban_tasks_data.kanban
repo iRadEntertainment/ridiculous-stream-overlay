@@ -32,16 +32,16 @@
 				"7fdf5bf8-4b57-4301-a0d4-82b9f43b4432",
 				"fa9ebd55-d97e-442f-8a82-ae3ee9c996ac",
 				"cf664fb3-b1c7-4d22-b266-878a44753324",
-				"24ff1b9f-af10-4658-8628-1d682ed7c6ba"
+				"24ff1b9f-af10-4658-8628-1d682ed7c6ba",
+				"abf505fe-ac5c-48dc-84ba-733cc8db45e1",
+				"77dffa41-094e-4a12-b738-b160a338fb9a"
 			]
 		},
 		{
 			"uuid": "3fe624ce-48d2-4324-b6ea-2d2777a8a52f",
 			"title": "Doing",
 			"tasks": [
-				"65524419-1536-4e36-93fa-a96773b51a3f",
 				"5edc89dd-a894-4fb9-bd56-9cd88a2f01a2",
-				"77dffa41-094e-4a12-b738-b160a338fb9a",
 				"a8451136-d02c-4d8f-8664-da43ed9d19fe",
 				"dfb7b16f-4d85-4f1c-b5c7-1c841cab7875"
 			]
@@ -50,6 +50,7 @@
 			"uuid": "3056a553-9c8d-4864-8288-fac01ba7416d",
 			"title": "Done",
 			"tasks": [
+				"65524419-1536-4e36-93fa-a96773b51a3f",
 				"c4ff8949-11e1-4a9e-b302-fc6c0043e696",
 				"3529fa2c-f350-438b-84fb-b9595c30adfe",
 				"cb89d109-1b87-455a-9e3d-1f9e1db5c41b",
@@ -273,7 +274,7 @@
 				},
 				{
 					"details": "automod",
-					"done": false
+					"done": true
 				}
 			]
 		},
@@ -343,6 +344,13 @@
 		{
 			"uuid": "cb89d109-1b87-455a-9e3d-1f9e1db5c41b",
 			"title": "fix stats commands not stored correctly (fake commands)",
+			"description": "",
+			"category": "5cb6e5bd-6da9-452f-9c5b-285aabd09166",
+			"steps": []
+		},
+		{
+			"uuid": "abf505fe-ac5c-48dc-84ba-733cc8db45e1",
+			"title": "Wheel of fortune raids",
 			"description": "",
 			"category": "5cb6e5bd-6da9-452f-9c5b-285aabd09166",
 			"steps": []
