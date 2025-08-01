@@ -158,7 +158,9 @@ func chat(msg: String) -> void:
 
 
 func chat_message_to_t_user(msg: String, t_user: TwitchUser) -> void:
-	if not t_user: return
+	if not t_user:
+		_log.w("Chat_message_to_t_user: no t_user.")
+		return
 	service.chat(msg, t_user)
 
 

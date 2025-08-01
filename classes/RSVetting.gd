@@ -14,6 +14,7 @@ signal list_updated
 
 
 func start() -> void:
+	_log.enabled = true
 	load_user_vetting_list()
 
 
@@ -59,12 +60,13 @@ func custom_rewards_vetting(callable: Callable, data: RSTwitchEventData) -> void
 
 
 func is_allowed(data: RSTwitchEventData) -> bool:
+	_log.enabled = true
 	if "Impersonate" in data.reward_title:
 		var broadcaster_login: String = data.user_input.split(" ", true, 1)[0]
 		broadcaster_login = broadcaster_login.strip_edges()
 		broadcaster_login = broadcaster_login.lstrip("@")
 		broadcaster_login = broadcaster_login.to_lower()
-		print(broadcaster_login, " --- THIS THING")
+		_log.d("%s --- THIS THING" % broadcaster_login)
 		var allowed = RS.user_mng.is_username_known(broadcaster_login)
 		if allowed:
 			_log.i("Impersonate allowed (to [color=#f00]{streamer}[/color]). {user}: {msg}".format({"streamer": broadcaster_login, "user": data.username, "msg": data.user_input}))
