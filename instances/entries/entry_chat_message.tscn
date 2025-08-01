@@ -1,0 +1,73 @@
+[gd_scene load_steps=10 format=3 uid="uid://jife43ye2six"]
+
+[ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://ui/sprites/twitch_user_profile_pic.png" id="1_1od6t"]
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_4lks0"]
+[ext_resource type="Script" uid="uid://dg1n2ufrovcjt" path="res://instances/entries/entry_chat_message.gd" id="2_aa04a"]
+[ext_resource type="StyleBox" uid="uid://cgv5fxvo4cwu8" path="res://ui/styles/panel_chat_message.stylebox" id="2_komlk"]
+[ext_resource type="Texture2D" uid="uid://dbpv7xe18l2r6" path="res://ui/sprites/raid_icon.png" id="2_qp1ot"]
+[ext_resource type="FontFile" uid="uid://v7qr66mqi7qs" path="res://ui/fonts/rubik/Rubik-Bold.ttf" id="3_4lks0"]
+[ext_resource type="StyleBox" uid="uid://cdax36bpvxr0k" path="res://ui/styles/panel_chat_message_unread.stylebox" id="4_xlwaf"]
+[ext_resource type="Script" uid="uid://bih5dayr8n246" path="res://addons/twitcher/sprite_frame_effect.gd" id="6_aa04a"]
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_komlk"]
+script = ExtResource("6_aa04a")
+metadata/_custom_type_script = "uid://bih5dayr8n246"
+
+[node name="entry_chat_message" type="PanelContainer"]
+offset_right = 386.0
+offset_bottom = 304.0
+theme = ExtResource("1_4lks0")
+theme_override_styles/panel = ExtResource("2_komlk")
+script = ExtResource("2_aa04a")
+
+[node name="pnl_is_read" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_xlwaf")
+
+[node name="hb" type="HBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="hb_badges" type="HBoxContainer" parent="hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="badge1" type="TextureRect" parent="hb/hb_badges"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("1_1od6t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="badge2" type="TextureRect" parent="hb/hb_badges"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("2_qp1ot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="lb_username" type="Label" parent="hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("3_4lks0")
+text = "TheYagich"
+
+[node name="lb_msg" type="RichTextLabel" parent="hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 2
+bbcode_enabled = true
+text = "A nice message by the yagich
+it is a very very long message that cna fosapgjèp djisoajf gasopodsjgn idjsie oifisaio djsiiaooiejg ji mds kieoj akjlkgj asji ejijjdji js i ap  jifaojaojdosa. Tjaisod mgio amnosdj, gds tpa."
+fit_content = true
+custom_effects = [SubResource("RichTextEffect_komlk")]
+selection_enabled = true
+
+[connection signal="gui_input" from="pnl_is_read" to="." method="_on_pnl_is_read_gui_input"]
+[connection signal="gui_input" from="hb/lb_msg" to="." method="_on_lb_msg_gui_input"]
+[connection signal="meta_clicked" from="hb/lb_msg" to="." method="_on_lb_msg_meta_clicked"]

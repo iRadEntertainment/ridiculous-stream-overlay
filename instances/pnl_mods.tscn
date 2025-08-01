@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://biy3s0e3yb44c" path="res://instances/utils/pnl_loading_simple.tscn" id="4_v6h6o"]
 
 [node name="pnl_mods" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 64)
 offset_right = 355.0
 offset_bottom = 39.0
 theme = ExtResource("1_rgd0n")

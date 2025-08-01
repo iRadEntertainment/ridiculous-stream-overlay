@@ -1,10 +1,22 @@
-[gd_scene load_steps=15 format=3 uid="uid://jchfk7d78ss5"]
+[gd_scene load_steps=17 format=3 uid="uid://jchfk7d78ss5"]
 
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_t6rhf"]
 [ext_resource type="Script" uid="uid://o423163rrbby" path="res://instances/pnl_chat.gd" id="1_x2vuy"]
 [ext_resource type="PackedScene" uid="uid://csqa2q3atku2i" path="res://instances/pnl_connect.tscn" id="3_e1ino"]
 [ext_resource type="Texture2D" uid="uid://dpyn121ra1pa" path="res://ui/sprites/close.png" id="3_t6rhf"]
 [ext_resource type="PackedScene" uid="uid://d4lkycruly2ye" path="res://instances/pnl_mods.tscn" id="4_v34se"]
+[ext_resource type="PackedScene" uid="uid://jife43ye2six" path="res://instances/entries/entry_chat_message.tscn" id="5_4jb8o"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjpta"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.189902, 0.189902, 0.189902, 0.388235)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [sub_resource type="Gradient" id="Gradient_t6rhf"]
 offsets = PackedFloat32Array(0.181818, 1)
@@ -56,7 +68,7 @@ fill_to = Vector2(0, 1)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 847.0
+offset_left = 1290.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_t6rhf")
@@ -92,6 +104,23 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_jjpta")
+
+[node name="scroll_msg" type="ScrollContainer" parent="vb/pnl_msg"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 4
+
+[node name="vb_messages" type="VBoxContainer" parent="vb/pnl_msg/scroll_msg"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="entry_chat_message" parent="vb/pnl_msg/scroll_msg/vb_messages" instance=ExtResource("5_4jb8o")]
+layout_mode = 2
 
 [node name="ln_msg" type="LineEdit" parent="vb"]
 unique_name_in_owner = true
@@ -131,21 +160,6 @@ popup/item_4/text = "purple"
 popup/item_4/icon = SubResource("GradientTexture2D_req1k")
 popup/item_4/id = 4
 
-[node name="hb" type="HBoxContainer" parent="vb"]
-layout_mode = 2
-
-[node name="sl_font_size" type="HSlider" parent="vb/hb"]
-layout_mode = 2
-size_flags_horizontal = 3
-min_value = 12.0
-max_value = 72.0
-value = 28.0
-
-[node name="lb_font_size" type="Label" parent="vb/hb"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "15"
-
 [node name="chat_msg" type="AudioStreamPlayer" parent="."]
 
 [node name="pnl_connect" parent="." instance=ExtResource("3_e1ino")]
@@ -156,4 +170,3 @@ layout_mode = 2
 [connection signal="pressed" from="vb/top/hb/btn_close" to="." method="_on_btn_close_pressed"]
 [connection signal="text_submitted" from="vb/ln_msg" to="." method="_on_ln_msg_text_submitted"]
 [connection signal="text_submitted" from="vb/hb_msg/ln_announce" to="." method="_on_ln_announce_text_submitted"]
-[connection signal="value_changed" from="vb/hb/sl_font_size" to="." method="_on_sl_font_size_value_changed"]

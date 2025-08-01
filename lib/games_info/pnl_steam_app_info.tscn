@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://h7rmxgkdk3dk" path="res://lib/games_info/SteamAppData.gd" id="3_8vb77"]
 [ext_resource type="Texture2D" uid="uid://hudfe6pxykni" path="res://ui/icons/bootstrap_icons/x.png" id="3_a0il5"]
 [ext_resource type="Script" uid="uid://bekexbn2gr1dv" path="res://lib/games_info/SteamService.gd" id="3_cicoc"]
-[ext_resource type="StyleBox" uid="uid://cly0o4e4fqaop" path="res://ui/styles/editor_light_panel_transp.stylebox" id="7_8vb77"]
+[ext_resource type="StyleBox" uid="uid://cly0o4e4fqaop" path="res://ui/styles/panel_default.stylebox" id="7_8vb77"]
 
 [sub_resource type="Resource" id="Resource_08ow0"]
 script = ExtResource("3_8vb77")

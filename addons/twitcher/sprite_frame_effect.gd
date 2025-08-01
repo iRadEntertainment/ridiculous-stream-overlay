@@ -20,6 +20,8 @@ var parent_label: RichTextLabel
 ## If you don't want to have spaces between images (made for Foolbox <3)
 var no_space: bool
 
+var emojis: Array = []
+
 func prepare_message(message: String, parent: RichTextLabel) -> String:
 	parent_label = parent
 	var found_matches = regex.search_all(message) as Array[RegExMatch]

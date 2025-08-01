@@ -21,17 +21,17 @@
 			"uuid": "c20e68d3-38c2-4086-85d1-193c4b85e02b",
 			"title": "Todo",
 			"tasks": [
-				"7aa983ff-60b0-4a35-a1e9-4d5cb367d8b5",
+				"5edc89dd-a894-4fb9-bd56-9cd88a2f01a2",
+				"77dffa41-094e-4a12-b738-b160a338fb9a",
+				"5276527a-e26c-4217-bcd6-7eec5c6ececd",
 				"fa3554de-7d7b-41af-bae3-6507f4820535",
 				"92665a0d-24ea-41b2-b102-29978ec59d6c",
-				"677a644d-9a64-4c1c-a5d9-ecc5b0d974b5",
-				"65524419-1536-4e36-93fa-a96773b51a3f",
+				"7aa983ff-60b0-4a35-a1e9-4d5cb367d8b5",
 				"0e10746d-590c-4a9a-805e-0167ad58fd19",
 				"5da99675-0799-4897-b570-0302e87b58d2",
-				"0556aa06-cc4f-41fc-bcb8-6c864bed1e11",
 				"72085a5e-88ca-45cb-b27d-a78b58ab1b98",
-				"7fdf5bf8-4b57-4301-a0d4-82b9f43b4432",
-				"77dffa41-094e-4a12-b738-b160a338fb9a"
+				"0556aa06-cc4f-41fc-bcb8-6c864bed1e11",
+				"7fdf5bf8-4b57-4301-a0d4-82b9f43b4432"
 			]
 		},
 		{
@@ -39,27 +39,29 @@
 			"title": "Doing",
 			"tasks": [
 				"760d3fa6-dc0d-4500-8251-50ddaff640b6",
-				"d7686947-6372-4495-96e7-babfd415c893",
 				"a8451136-d02c-4d8f-8664-da43ed9d19fe",
-				"dfb7b16f-4d85-4f1c-b5c7-1c841cab7875"
+				"dfb7b16f-4d85-4f1c-b5c7-1c841cab7875",
+				"65524419-1536-4e36-93fa-a96773b51a3f"
 			]
 		},
 		{
 			"uuid": "3056a553-9c8d-4864-8288-fac01ba7416d",
 			"title": "Done",
 			"tasks": [
-				"59803251-6342-4695-99dd-b5ce863992f2",
-				"109f3c37-86e2-4742-ad8c-05340dccede4",
-				"a73a100d-0c67-42db-8cfa-af65ac9a3d87",
-				"ac31b291-15f7-4fce-a9c5-357fee217279",
-				"4d87e856-19fd-4e75-9c69-475943bc0d7e",
-				"9c35058b-eb04-4ac4-8e07-98b80f329050",
-				"66f8d938-df58-4dbe-9873-814ce00f462c",
-				"4d7dd275-377c-4fd7-8577-1d13ec064189",
-				"251f9bdd-93ca-4cc9-b8dc-1f509e17a0e9",
-				"3d2c7dab-1c45-4f3e-8baf-e295893292b6",
+				"677a644d-9a64-4c1c-a5d9-ecc5b0d974b5",
+				"d7686947-6372-4495-96e7-babfd415c893",
+				"abd279f6-070f-498b-b140-da196cd18614",
 				"44f7d599-4ee8-48c7-a958-e0becbef56d1",
-				"abd279f6-070f-498b-b140-da196cd18614"
+				"3d2c7dab-1c45-4f3e-8baf-e295893292b6",
+				"251f9bdd-93ca-4cc9-b8dc-1f509e17a0e9",
+				"4d7dd275-377c-4fd7-8577-1d13ec064189",
+				"66f8d938-df58-4dbe-9873-814ce00f462c",
+				"ac31b291-15f7-4fce-a9c5-357fee217279",
+				"9c35058b-eb04-4ac4-8e07-98b80f329050",
+				"a73a100d-0c67-42db-8cfa-af65ac9a3d87",
+				"109f3c37-86e2-4742-ad8c-05340dccede4",
+				"4d87e856-19fd-4e75-9c69-475943bc0d7e",
+				"59803251-6342-4695-99dd-b5ce863992f2"
 			]
 		}
 	],
@@ -75,7 +77,7 @@
 			"uuid": "677a644d-9a64-4c1c-a5d9-ecc5b0d974b5",
 			"title": "individual chat messages",
 			"description": "",
-			"category": "0d482861-341c-4163-91cf-b5933f641f0f",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
 			"steps": []
 		},
 		{
@@ -253,9 +255,32 @@
 		},
 		{
 			"uuid": "77dffa41-094e-4a12-b738-b160a338fb9a",
-			"title": "Chat with individual messages and extra functionalities",
+			"title": "Chat extra functionalities",
 			"description": "",
-			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"category": "0d482861-341c-4163-91cf-b5933f641f0f",
+			"steps": [
+				{
+					"details": "filters",
+					"done": false
+				},
+				{
+					"details": "automod",
+					"done": false
+				}
+			]
+		},
+		{
+			"uuid": "5edc89dd-a894-4fb9-bd56-9cd88a2f01a2",
+			"title": "Floating menu button folding all the sub buttons and close on button pressed",
+			"description": "",
+			"category": "0d482861-341c-4163-91cf-b5933f641f0f",
+			"steps": []
+		},
+		{
+			"uuid": "5276527a-e26c-4217-bcd6-7eec5c6ececd",
+			"title": "freed node awaiting callback (check game entry)",
+			"description": "",
+			"category": "5cb6e5bd-6da9-452f-9c5b-285aabd09166",
 			"steps": []
 		}
 	],

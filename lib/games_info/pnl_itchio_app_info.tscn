@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://dc576m26xm0qe" path="res://lib/games_info/ItchIOService.gd" id="3_qmkjg"]
 [ext_resource type="Texture2D" uid="uid://bmgt2xi3i1310" path="res://lib/games_info/itchio_icon.svg" id="4_kkve7"]
 [ext_resource type="Texture2D" uid="uid://hudfe6pxykni" path="res://ui/icons/bootstrap_icons/x.png" id="6_y6jt0"]
-[ext_resource type="StyleBox" uid="uid://cly0o4e4fqaop" path="res://ui/styles/editor_light_panel_transp.stylebox" id="7_jc7hf"]
+[ext_resource type="StyleBox" uid="uid://cly0o4e4fqaop" path="res://ui/styles/panel_default.stylebox" id="7_jc7hf"]
 
 [sub_resource type="Resource" id="Resource_qmkjg"]
 script = ExtResource("3_kkve7")
