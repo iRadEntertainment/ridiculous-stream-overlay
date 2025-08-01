@@ -73,8 +73,9 @@ func start(_main_menu_button: RSSubMenuButton = null) -> void:
 		if btn is RSSubMenuButton:
 			btn.start(main_menu_button)
 			btn.btn_child_expanded.connect(_on_btn_child_expanded)
-		elif btn is Button and fold_on_child_button_pressed:
-			btn.pressed.connect(main_menu_button.expand_menu.bind(false))
+		elif btn is Button:
+			if fold_on_child_button_pressed:
+				btn.pressed.connect(main_menu_button.expand_menu.bind(false))
 		btn.focus_mode = Control.FOCUS_NONE
 		btn.custom_minimum_size = MIN_SIZE
 		RSSubMenuButton.assign_texture_to_button_from_icon(btn, 10)
