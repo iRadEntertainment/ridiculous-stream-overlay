@@ -98,7 +98,7 @@ class ResponseData extends RefCounted:
 ## When a request fails max_error_count then cancel that request -1 for endless amount of tries.
 @export var max_error_count : int = -1
 @export var custom_header : Dictionary[String, String] = { "Accept": "*/*" }
-@export_range(1, 200) var max_clients: int = 50
+@export_range(1, 200) var max_clients: int = 20
 
 var requests : Array[RequestData] = []
 var current_request : RequestData
