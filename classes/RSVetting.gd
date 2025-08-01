@@ -60,7 +60,6 @@ func custom_rewards_vetting(callable: Callable, data: RSTwitchEventData) -> void
 
 
 func is_allowed(data: RSTwitchEventData) -> bool:
-	_log.enabled = true
 	if "Impersonate" in data.reward_title:
 		var broadcaster_login: String = data.user_input.split(" ", true, 1)[0]
 		broadcaster_login = broadcaster_login.strip_edges()
