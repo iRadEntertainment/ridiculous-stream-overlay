@@ -1,4 +1,4 @@
-@icon("res://ui/btn_sub_menu.png")
+@icon("res://ui/icons/btn_sub_menu.png")
 extends Button
 class_name RSSubMenuButton
 
@@ -12,6 +12,7 @@ class_name RSSubMenuButton
 		else:
 			if mouse_entered.is_connected(expand_menu):
 				mouse_entered.disconnect(expand_menu)
+@export var fold_on_child_button_pressed := true
 @export var is_radial := false
 @export_range (0.0, 64.0, 0.5) var offset_gap: float = 8:
 	set(val):
@@ -51,6 +52,8 @@ signal properly_pressed
 
 func start(_main_menu_button: RSSubMenuButton = null) -> void:
 	main_menu_button = _main_menu_button
+	if not main_menu_button:
+		main_menu_button = self
 	
 	gui_input.connect(_on_gui_input)
 	properly_pressed.connect(toggle_menu)
@@ -70,29 +73,30 @@ func start(_main_menu_button: RSSubMenuButton = null) -> void:
 		if btn is RSSubMenuButton:
 			btn.start(main_menu_button)
 			btn.btn_child_expanded.connect(_on_btn_child_expanded)
+		elif btn is Button and fold_on_child_button_pressed:
+			btn.pressed.connect(main_menu_button.expand_menu.bind(false))
 		btn.focus_mode = Control.FOCUS_NONE
 		btn.custom_minimum_size = MIN_SIZE
 		RSSubMenuButton.assign_texture_to_button_from_icon(btn, 10)
 		btn.add_to_group("UI")
 	expand_menu(false)
 
+
 func _on_btn_child_expanded(btn_expanded: RSSubMenuButton, opened: bool) -> void:
 	for btn in all_btns:
 		if btn is RSSubMenuButton and btn != btn_expanded and opened:
 			btn.expand_menu(false)
-	#if not opened:
-		#expand_menu(false, btn)
-	#else:
-		#expand_menu(true, btn)
+
 
 func expand_menu(value: bool, except: RSSubMenuButton = null) -> void:
 	if !is_node_ready(): await ready
 	if all_btns.is_empty(): return
 	if parent:
 		if parent.tw:
-			if parent.tw.is_running():
+			if parent.tw.is_running() and parent.is_open:
 				return
 	is_open = value
+	
 	if is_sub_menu:
 		var parent_center: Vector2 = parent.size/2
 		var this_center := size/2 + position
@@ -107,15 +111,17 @@ func expand_menu(value: bool, except: RSSubMenuButton = null) -> void:
 	if tw:
 		tw.kill()
 	tw = create_tween()
-	tw.bind_node(self)
 	tw.set_ease(Tween.EASE_IN_OUT)
 	tw.set_trans(Tween.TRANS_CUBIC)
+	
 	for i in all_btns.size():
 		var btn: Button = all_btns[i]
 		if btn == except:
 			continue
 		var delay: float = i * anim_delay
 		var new_pos := size / 2.0 -(btn.size / 2.0)
+		
+		# opening
 		if is_open:
 			if btn is RSSubMenuButton and btn.custom_pos != Vector2():
 				new_pos = btn.custom_pos.rotated(main_menu_button.parent_dir.angle())
@@ -124,14 +130,18 @@ func expand_menu(value: bool, except: RSSubMenuButton = null) -> void:
 			else:
 				new_pos += parent_dir * (i+1) * (size.x + offset_gap)
 			btn.visible = true
+		
+		# closing
 		else:
-			if btn.has_method("expand_menu"):
+			if btn is RSSubMenuButton:
 				btn.expand_menu(false)
-			tw.parallel().tween_property(btn, "visible", is_open, anim_duration).set_delay(delay)
+			tw.parallel().tween_property(btn, "visible", false, anim_duration).set_delay(delay)
+		
 		tw.parallel().tween_property(btn, "position", new_pos, anim_duration).set_delay(delay)
 		tw.parallel().tween_property(btn, "modulate:a", 1 if is_open else 0, anim_duration).set_delay(delay)
 		
 		btn_child_expanded.emit(self, is_open)
+	#await tw.finished
 
 
 func toggle_menu():

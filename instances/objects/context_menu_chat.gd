@@ -10,6 +10,10 @@ const Items: Dictionary = {
 var user: RSUser
 
 
+func _ready() -> void:
+	hide()
+
+
 func populate(_user: RSUser) -> void:
 	user = _user
 	clear(true)

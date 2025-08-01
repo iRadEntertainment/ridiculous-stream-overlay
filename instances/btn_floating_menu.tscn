@@ -160,6 +160,8 @@ icon = ExtResource("4_bia5b")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("8_nsbul")
+fold_on_child_button_pressed = false
+metadata/_custom_type_script = "uid://bh0kof5lgt3u6"
 
 [node name="btn_beans" type="Button" parent="btn_physics"]
 visible = false
@@ -246,10 +248,12 @@ offset_bottom = 114.0
 icon = ExtResource("13_tyq2w")
 icon_alignment = 1
 script = ExtResource("8_nsbul")
+fold_on_child_button_pressed = false
 offset_gap = 16.0
 radial_angle = 99.0
 anim_duration = 0.08
 anim_delay = 0.047
+metadata/_custom_type_script = "uid://bh0kof5lgt3u6"
 
 [node name="btn_cig" type="Button" parent="btn_obs"]
 custom_minimum_size = Vector2(32, 32)
@@ -308,8 +312,8 @@ icon_alignment = 1
 [node name="btn_settings" type="Button" parent="."]
 visible = false
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 98.0
+offset_bottom = 98.0
 icon = ExtResource("20_edp4g")
 script = ExtResource("8_nsbul")
 is_radial = true
@@ -328,14 +332,15 @@ icon_alignment = 1
 [node name="btn_display" type="Button" parent="btn_settings"]
 visible = false
 layout_mode = 0
-offset_right = 18.0
-offset_bottom = 18.0
+offset_right = 50.0
+offset_bottom = 50.0
 icon = ExtResource("15_nr2c5")
 icon_alignment = 1
 script = ExtResource("8_nsbul")
 offset_gap = 6.0
 radial_angle = 52.0
 anim_duration = 0.08
+metadata/_custom_type_script = "uid://bh0kof5lgt3u6"
 
 [node name="btn_maximize" type="Button" parent="btn_settings/btn_display"]
 visible = false
@@ -361,12 +366,13 @@ icon_alignment = 1
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
-offset_right = 18.0
-offset_bottom = 18.0
+offset_right = 50.0
+offset_bottom = 50.0
 icon = ExtResource("7_y65x8")
 icon_alignment = 1
 script = ExtResource("8_nsbul")
 radial_angle = 104.5
+metadata/_custom_type_script = "uid://bh0kof5lgt3u6"
 
 [node name="btn_end" type="Button" parent="."]
 visible = false
