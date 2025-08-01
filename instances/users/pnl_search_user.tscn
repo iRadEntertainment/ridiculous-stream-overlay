@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://dps0a5js2rxa6"]
+[gd_scene load_steps=9 format=3 uid="uid://dps0a5js2rxa6"]
 
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_0cica"]
 [ext_resource type="Script" uid="uid://dbxy0aqwvedm1" path="res://instances/users/pnl_search_user.gd" id="1_5t2mi"]
 [ext_resource type="Texture2D" uid="uid://dqxomv5pykt6i" path="res://ui/icons/bootstrap_icons/search-heart.svg" id="1_c1yuu"]
 [ext_resource type="PackedScene" uid="uid://csqa2q3atku2i" path="res://instances/pnl_connect.tscn" id="4_h73xo"]
@@ -11,6 +12,7 @@
 [node name="pnl_search_twitch_user" type="PanelContainer"]
 offset_right = 926.0
 offset_bottom = 199.0
+theme = ExtResource("1_0cica")
 script = ExtResource("1_5t2mi")
 
 [node name="vb" type="VBoxContainer" parent="."]

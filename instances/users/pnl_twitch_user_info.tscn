@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dpc8qa00yqwrs"]
+[gd_scene load_steps=8 format=3 uid="uid://dpc8qa00yqwrs"]
 
 [ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://ui/sprites/twitch_user_profile_pic.png" id="1_kgbgf"]
 [ext_resource type="Script" uid="uid://b5r6qu61ghn1y" path="res://instances/users/pnl_twitch_user_info.gd" id="1_obwb5"]
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_rsej5"]
 [ext_resource type="Texture2D" uid="uid://deuf2rqcfddbn" path="res://ui/icons/bootstrap_icons/caret-right-fill.png" id="3_qltwk"]
 [ext_resource type="PackedScene" uid="uid://biy3s0e3yb44c" path="res://instances/utils/pnl_loading_simple.tscn" id="4_6tupd"]
 
@@ -13,6 +14,7 @@ bg_color = Color(0, 0, 0, 0.0745098)
 [node name="pnl_twitch_user_info" type="PanelContainer"]
 offset_right = 395.0
 offset_bottom = 163.0
+theme = ExtResource("1_rsej5")
 script = ExtResource("1_obwb5")
 
 [node name="hb" type="HBoxContainer" parent="."]

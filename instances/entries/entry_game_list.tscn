@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://l2xg7yj7bfhe"]
+[gd_scene load_steps=12 format=3 uid="uid://l2xg7yj7bfhe"]
 
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_eou4i"]
 [ext_resource type="Script" uid="uid://bl8vxs83kwb7a" path="res://instances/entries/entry_game_list.gd" id="2_a61ca"]
@@ -10,6 +10,17 @@
 [ext_resource type="Texture2D" uid="uid://ceh17coxgqqnr" path="res://icon.png" id="5_s6mlt"]
 [ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://ui/icons/bootstrap_icons/arrow-repeat.svg" id="6_awlx5"]
 [ext_resource type="Theme" uid="uid://dlaj2xlixnunn" path="res://ui/ridiculous_stream_semi_transparent.theme" id="6_jr7w8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6mlt"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.286915, 0.28039, 0.439596, 0.458824)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="entry_game_list" type="PanelContainer"]
 offset_right = 385.0
@@ -49,8 +60,11 @@ expand_icon = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_outline_color = Color(0.290196, 0.282353, 0.443137, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 6
+theme_override_styles/normal = SubResource("StyleBoxFlat_s6mlt")
 text = "Name of The GAME very very long name so that we check it the ellipsis work"
-flat = true
 text_overrun_behavior = 3
 
 [node name="btn_promote" type="Button" parent="hb"]
