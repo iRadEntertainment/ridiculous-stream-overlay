@@ -133,10 +133,12 @@ func _on_btn_user_list_pressed() -> void:
 
 
 #region End Stream Signals
-func _on_btn_close_pressed() -> void:
-	RS.quit()
 func _on_btn_summary_pressed() -> void:
 	RS.pnl_summary.visible = !RS.pnl_summary.visible
+func _on_btn_summary_start_pressed() -> void:
+	RS.summary_mng.start_new_summary()
+func _on_btn_close_pressed() -> void:
+	RS.quit()
 #endregion
 #func _on_btn_spam_form_pressed() -> void:
 	#RS.twitcher.chat("Person, you have been invited to join the coolest team https://www.twitch.tv/team/indiegamedevs on Twitch. Compile this form to get an invitation link. Remember that when you get the link: you need to go to Creator Dashboard > Settings > Channel > Featured Content > scroll all the way to the bottom. Here is the form link https://forms.gle/bU2WXAYfoZyVpwWW9")
@@ -160,12 +162,8 @@ func _on_btn_pixelate_pressed() -> void:
 #region Settings Signals
 func _on_btn_debug_pressed() -> void:
 	RS.debug_view.visible = !RS.debug_view.visible
-
-
 func _on_btn_maximize_pressed() -> void:
 	RS.display.set_borderless_maximized(!RS.display.is_maximized)
-
-
 func _on_btn_test_pressed() -> void:
 	var folder: String = RSSettings.get_users_path()
 	var files: PackedStringArray = RSUtl.list_file_in_folder(folder)
@@ -186,5 +184,4 @@ func _on_btn_test_pressed() -> void:
 			var creation_date_str = output[0].strip_edges()
 			var creation_float: float = float(creation_date_str)
 			prints(abs_path, creation_float)
-
 #endregion

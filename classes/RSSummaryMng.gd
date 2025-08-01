@@ -1,8 +1,11 @@
 extends Node
 class_name RSSummaryMng
 
-var summary_file_path: String:
-	get(): return RS.settings.data_dir + "/stream_summary.json"
+var current_summary_file_path: String:
+	get(): return RSSettings.get_summaries_path().path_join("stream_summary.json")
+var stored_summary_file_path: String:
+	get(): return RSSettings.get_summaries_path().path_join("stream_summary_%s.json")
+
 var summary: RSSummary
 
 static var _log: TwitchLogger = TwitchLogger.new(&"RSSummaryMng")
@@ -102,46 +105,53 @@ func _on_subscribed(event_data: RSTwitchEventData) -> void:
 #region Save/Load
 func start_new_summary() -> void:
 	_log.i("Starting new summary")
+	if summary:
+		update_user_interactions()
+		save_stored_summary()
+		delete_current_summary_file()
 	summary = RSSummary.new()
 	summary.stream_start = Time.get_unix_time_from_system()
+	_log.i("New summary started on %s" % [RSUtl.unix_to_string(summary.stream_start)])
 
 
 func load_summary() -> void:
-	if FileAccess.file_exists(summary_file_path):
-		_log.i("Loading summary from %s" % summary_file_path)
-		var summary_data: Dictionary = RSUtl.load_json(summary_file_path)
+	if FileAccess.file_exists(current_summary_file_path):
+		var summary_data: Dictionary = RSUtl.load_json(current_summary_file_path)
 		summary = RSSummary.from_json(summary_data)
+		_log.i("Loading summary started on %s from %s" % [RSUtl.unix_to_string(summary.stream_start), current_summary_file_path])
 	else:
 		start_new_summary()
 
 
 func save_current_summary() -> void:
+	if !DirAccess.dir_exists_absolute(RSSettings.get_summaries_path()):
+		RSUtl.make_path(RSSettings.get_summaries_path())
 	if summary:
-		_log.i("Saving summary file to %s" % summary_file_path)
-		RSUtl.save_to_json(summary_file_path, summary.to_dict())
+		_log.i("Saving summary file to %s" % current_summary_file_path)
+		RSUtl.save_to_json(current_summary_file_path, summary.to_dict())
 	else:
 		_log.w("Cannot save summary. Summary not present.")
 
 
 func save_stored_summary() -> void:
 	if summary:
-		var summary_file_path
-		_log.i("Saving stored summary file to %s" % summary_file_path)
-		RSUtl.save_to_json(summary_file_path, summary.to_dict())
+		var file_path: String = stored_summary_file_path % RSUtl.unix_to_string_filepath(summary.stream_start, true)
+		_log.i("Saving stored summary file to %s" % file_path)
+		RSUtl.save_to_json(file_path, summary.to_dict())
 	else:
 		_log.w("Cannot save stored summary. Summary not present.")
 
 
-func delete_summary() -> void:
+func delete_current_summary_file() -> void:
 	_log.i("Deleting summary")
-	if FileAccess.file_exists(summary_file_path):
-		OS.move_to_trash(summary_file_path)
+	if FileAccess.file_exists(current_summary_file_path):
+		OS.move_to_trash(current_summary_file_path)
 	summary = null
 #endregion
 
 
 #region Utilities
-func update_user_interactions(delete_file: bool = true) -> void:
+func update_user_interactions() -> void:
 	if not summary:
 		_log.e("Updating user interactions: Summary is null!")
 		return
@@ -154,9 +164,7 @@ func update_user_interactions(delete_file: bool = true) -> void:
 		
 		var current_interactions: RSUser.Interactions = summary.user_interactions[user_id]
 		user.global_interactions.merge_current_interations(current_interactions)
-	
-	if delete_file:
-		delete_summary()
+		RS.user_mng.save_user(user)
 
 
 func has_current_user(user_id: int) -> bool:

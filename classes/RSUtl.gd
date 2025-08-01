@@ -42,11 +42,16 @@ const TYPE_NAMES := {
 	TYPE_PACKED_VECTOR4_ARRAY: "PackedVector4Array",
 }
 
+static var _log: TwitchLogger = TwitchLogger.new(&"RSUtl")
+
+static func _static_init() -> void:
+	_log.enabled = true
+
 
 static func save_to_json(file_path: String, variant: Variant) -> void:
 	var file := FileAccess.open(file_path, FileAccess.WRITE)
 	if file == null:
-		push_warning("[RSUtl.save_to_json] Failed to open %s" % [file_path])
+		_log.e("Save_to_json: Failed to open %s" % [file_path])
 		return
 	file.store_string(JSON.stringify(variant, "\t"))
 	file.close()
@@ -55,12 +60,12 @@ static func save_to_json(file_path: String, variant: Variant) -> void:
 static func load_json(file_path: String) -> Variant:
 	var file := FileAccess.open(file_path, FileAccess.READ)
 	if file == null:
-		push_warning("[RSUtl.load_json] Failed to open %s" % [file_path])
+		_log.e("Load_json: Failed to open %s" % [file_path])
 		return null
 	var content := file.get_as_text()
 	var parsed = JSON.parse_string(content)
 	if parsed == null:
-		push_warning("[RSUtl.load_json] Failed to parse JSON in %s" % [file_path])
+		_log.e("Load_json: Failed to parse JSON in %s" % [file_path])
 		return null
 	return parsed
 
@@ -88,14 +93,14 @@ static func get_type_string(p_value: Variant) -> String:
 	]
 
 
-static func make_path(path):
+static func make_path(path) -> void:
 	if !DirAccess.dir_exists_absolute(path):
 		DirAccess.make_dir_recursive_absolute(path)
 
 
 static func fix_external_res(file_path: String, from: String, to: String):
 	if !FileAccess.file_exists(file_path):
-		push_error("%s is not a valid file_path"%file_path)
+		_log.e("%s is not a valid file_path"%file_path)
 		return
 	var file := FileAccess.open(file_path, FileAccess.READ_WRITE)
 	file.store_string(file.get_as_text().replace(from, to))
@@ -122,10 +127,10 @@ static func list_file_in_folder(folder_path: String, types: Array = [], full_pat
 						found_files.append(file_name)
 					else:
 						found_files.append(folder_path + file_name)
-					#print("Found file: " + file_name)
+					_log.d("Found file: " + file_name)
 			file_name = dir.get_next()
 	else:
-		print("An error occurred when trying to access the directory: %s" % folder_path)
+		_log.e("An error occurred when trying to access the directory: %s" % folder_path)
 	return found_files
 
 
@@ -144,7 +149,7 @@ static func get_file_creation_unix(abs_path: String) -> float:
 		var creation_date_str: String = output[0].strip_edges()
 		return float(creation_date_str)
 	
-	push_warning("Failed to get creation date for: %s" % abs_path)
+	_log.e("Failed to get creation date for: %s" % abs_path)
 	return -1.0
 
 
@@ -317,6 +322,8 @@ const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 const MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Set", "Oct", "Nov", "Dec"]
 const FORMAT_STRING_TIME = "%d:%02d:%02d"
 const FORMAT_STRING_DATE = "{day} {month} {year}"
+const FORMAT_STRING_DATE_FILE = "{year}_{month}_{day}"
+const FORMAT_STRING_TIME_FILE = "%d_%02d_%02d"
 
 
 static func get_unix_time_utc_from_system() -> int:
@@ -344,4 +351,22 @@ static func unix_to_string(
 		var time_string: String = (FORMAT_STRING_TIME % [dict.hour, dict.minute, dict.second])
 		format_string = format_string + " - " + time_string
 	return format_string.format(dict)
+
+
+static func unix_to_string_filepath(unix: float, include_time := false) -> String:
+	if !unix: return "Never"
+	
+	var tz_offset_usec = Time.get_time_zone_from_system().bias * 60
+	unix += tz_offset_usec
+	var dict: Dictionary = Time.get_datetime_dict_from_unix_time(int(unix))
+	dict.weekday = WEEKDAYS[dict.weekday]
+	dict.month = MONTHS_SHORT[dict.month-1]
+	
+	var format_string: String = FORMAT_STRING_DATE_FILE.format(dict)
+	
+	if include_time:
+		var time_string: String = (FORMAT_STRING_TIME_FILE % [dict.hour, dict.minute, dict.second])
+		format_string += "_" + time_string
+	
+	return format_string
 #endregion

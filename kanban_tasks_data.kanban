@@ -21,7 +21,6 @@
 			"uuid": "c20e68d3-38c2-4086-85d1-193c4b85e02b",
 			"title": "Todo",
 			"tasks": [
-				"5edc89dd-a894-4fb9-bd56-9cd88a2f01a2",
 				"77dffa41-094e-4a12-b738-b160a338fb9a",
 				"5276527a-e26c-4217-bcd6-7eec5c6ececd",
 				"fa3554de-7d7b-41af-bae3-6507f4820535",
@@ -31,7 +30,9 @@
 				"5da99675-0799-4897-b570-0302e87b58d2",
 				"72085a5e-88ca-45cb-b27d-a78b58ab1b98",
 				"0556aa06-cc4f-41fc-bcb8-6c864bed1e11",
-				"7fdf5bf8-4b57-4301-a0d4-82b9f43b4432"
+				"7fdf5bf8-4b57-4301-a0d4-82b9f43b4432",
+				"fa9ebd55-d97e-442f-8a82-ae3ee9c996ac",
+				"cf664fb3-b1c7-4d22-b266-878a44753324"
 			]
 		},
 		{
@@ -39,9 +40,11 @@
 			"title": "Doing",
 			"tasks": [
 				"760d3fa6-dc0d-4500-8251-50ddaff640b6",
+				"609f1b23-534c-43f5-9b32-42c201c94764",
+				"5edc89dd-a894-4fb9-bd56-9cd88a2f01a2",
+				"65524419-1536-4e36-93fa-a96773b51a3f",
 				"a8451136-d02c-4d8f-8664-da43ed9d19fe",
-				"dfb7b16f-4d85-4f1c-b5c7-1c841cab7875",
-				"65524419-1536-4e36-93fa-a96773b51a3f"
+				"dfb7b16f-4d85-4f1c-b5c7-1c841cab7875"
 			]
 		},
 		{
@@ -281,6 +284,27 @@
 			"title": "freed node awaiting callback (check game entry)",
 			"description": "",
 			"category": "5cb6e5bd-6da9-452f-9c5b-285aabd09166",
+			"steps": []
+		},
+		{
+			"uuid": "609f1b23-534c-43f5-9b32-42c201c94764",
+			"title": "Delete chat messages when there are too many",
+			"description": "",
+			"category": "0d482861-341c-4163-91cf-b5933f641f0f",
+			"steps": []
+		},
+		{
+			"uuid": "fa9ebd55-d97e-442f-8a82-ae3ee9c996ac",
+			"title": "Make !help command show aliases",
+			"description": "",
+			"category": "0d482861-341c-4163-91cf-b5933f641f0f",
+			"steps": []
+		},
+		{
+			"uuid": "cf664fb3-b1c7-4d22-b266-878a44753324",
+			"title": "Make the bbcode injections in chat make the emotes bigger",
+			"description": "",
+			"category": "0d482861-341c-4163-91cf-b5933f641f0f",
 			"steps": []
 		}
 	],

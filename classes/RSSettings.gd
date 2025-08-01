@@ -33,6 +33,7 @@ static func get_redeems_path() -> String: return data_dir.path_join(RS_REDEEMS_F
 static func get_obj_path() -> String: return data_dir.path_join(RS_OBJ_FOLDER)
 static func get_sfx_path() -> String: return data_dir.path_join(RS_SFX_FOLDER)
 static func get_logs_path() -> String: return data_dir.path_join(RS_LOG_FOLDER)
+static func get_summaries_path() -> String: return data_dir.path_join(RS_SUMMARIES)
 
 static var project_settings_twitch_publish: bool:
 	get: return ProjectSettings.get_setting("ridiculous_stream/twitch/publish", false)
@@ -65,6 +66,7 @@ const LOCAL_RES_FOLDER = "res://local_res/"
 const RS_SETTINGS_FILE_NAME = "settings.tres"
 const RS_VETTING_FILE_NAME = "user_vetting_list.json"
 const RS_LOG_FOLDER = "logs/"
+const RS_SUMMARIES = "summaries/"
 const RS_USER_FOLDER = "users/"
 const RS_REDEEMS_FOLDER = "redeems/"
 const RS_OBJ_FOLDER = "obj/"

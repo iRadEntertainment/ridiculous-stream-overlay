@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cdgelqh5th1pl"]
+[gd_scene load_steps=35 format=3 uid="uid://cdgelqh5th1pl"]
 
 [ext_resource type="Script" uid="uid://do408jnt2icgr" path="res://instances/btn_floating_menu.gd" id="1_osqlv"]
 [ext_resource type="Theme" uid="uid://ce52ib0ugeqlb" path="res://ui/floating_menu.tres" id="1_rrnku"]
@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://cg4butekaabq0" path="res://ui/icons/bootstrap_icons/chat-fill.svg" id="20_yin7d"]
 [ext_resource type="Texture2D" uid="uid://dkwjjit1g51x" path="res://ui/sprites/scroll-quill.svg" id="24_waudl"]
 [ext_resource type="Texture2D" uid="uid://br65d5wxxjoca" path="res://ui/icons/bootstrap_icons/stop-circle.svg" id="26_yin7d"]
+[ext_resource type="Texture2D" uid="uid://bd2hjbrstb28k" path="res://ui/sprites/scroll-unfurled.svg" id="29_yin7d"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8cnys"]
 bg_color = Color(0.14902, 0.054902, 0.0745098, 0.913725)
@@ -385,6 +386,15 @@ offset_bottom = 514.0
 icon = ExtResource("24_waudl")
 icon_alignment = 1
 
+[node name="btn_summary_start" type="Button" parent="btn_end"]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_right = 514.0
+offset_bottom = 514.0
+icon = ExtResource("29_yin7d")
+icon_alignment = 1
+
 [node name="btn_close" type="Button" parent="btn_end"]
 unique_name_in_owner = true
 visible = false
@@ -413,4 +423,5 @@ icon_alignment = 1
 [connection signal="pressed" from="btn_settings/btn_display/btn_maximize" to="." method="_on_btn_maximize_pressed"]
 [connection signal="pressed" from="btn_settings/btn_display/btn_debug" to="." method="_on_btn_debug_pressed"]
 [connection signal="pressed" from="btn_end/btn_summary" to="." method="_on_btn_summary_pressed"]
+[connection signal="pressed" from="btn_end/btn_summary_start" to="." method="_on_btn_summary_start_pressed"]
 [connection signal="pressed" from="btn_end/btn_close" to="." method="_on_btn_close_pressed"]
