@@ -128,6 +128,7 @@ func save_current_summary() -> void:
 		RSUtl.make_path(RSSettings.get_summaries_path())
 	if summary:
 		_log.i("Saving summary file to %s" % current_summary_file_path)
+		summary.stream_stopped = Time.get_unix_time_from_system()
 		RSUtl.save_to_json(current_summary_file_path, summary.to_dict())
 	else:
 		_log.w("Cannot save summary. Summary not present.")
@@ -227,11 +228,13 @@ func _notification(what: int) -> void:
 
 class RSSummary:
 	var stream_start: int # UNIX time
+	var stream_stopped: int # UNIX time
 	var user_interactions: Dictionary[int, RSUser.Interactions] = {} # {user_id, count}
 	
 	func to_dict() -> Dictionary:
 		var data: Dictionary = {}
 		data["stream_start"] = stream_start
+		data["stream_stopped"] = stream_stopped
 		data["user_interactions"] = {}
 		for user_id: int in user_interactions:
 			data["user_interactions"][user_id] = user_interactions[user_id].to_dict()
@@ -276,6 +279,7 @@ class RSSummary:
 	static func from_json(data: Dictionary) -> RSSummary:
 		var new_summary: RSSummary = RSSummary.new()
 		new_summary.stream_start = data.get("stream_start", Time.get_unix_time_from_system())
+		new_summary.stream_stopped = data.get("stream_stopped", Time.get_unix_time_from_system())
 		new_summary.user_interactions = {}
 		for user_id_s: String in data.get("user_interactions", {}):
 			var user_id: int = int(user_id_s)
