@@ -1,9 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://ca0xs5357oq1u"]
+[gd_scene load_steps=4 format=3 uid="uid://ca0xs5357oq1u"]
 
 [ext_resource type="Script" uid="uid://d2sg73c4hstmj" path="res://instances/users/pnl_user_beans.gd" id="1_cflnw"]
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_chwgi"]
+[ext_resource type="Texture2D" uid="uid://ca6xdmc1afmql" path="res://ui/icons/bootstrap_icons/x.svg" id="3_bjs2q"]
 
 [node name="pnl_user_beans" type="PanelContainer"]
+offset_right = 524.0
+offset_bottom = 117.0
 size_flags_horizontal = 3
+theme = ExtResource("1_chwgi")
 script = ExtResource("1_cflnw")
 
 [node name="vb" type="VBoxContainer" parent="."]
@@ -32,8 +37,29 @@ text = "Open beans editor"
 [node name="ScrollContainer" type="ScrollContainer" parent="vb/hb"]
 layout_mode = 2
 size_flags_horizontal = 3
+horizontal_scroll_mode = 0
 
 [node name="flow" type="HFlowContainer" parent="vb/hb/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="entry_beans" type="PanelContainer" parent="vb/hb/ScrollContainer/flow"]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="vb/hb/ScrollContainer/flow/entry_beans"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="vb/hb/ScrollContainer/flow/entry_beans/hb"]
+layout_mode = 2
+text = "name of the beans"
+
+[node name="sp_custom_scale" type="SpinBox" parent="vb/hb/ScrollContainer/flow/entry_beans/hb"]
+layout_mode = 2
+
+[node name="btn_delete" type="Button" parent="vb/hb/ScrollContainer/flow/entry_beans/hb"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+icon = ExtResource("3_bjs2q")
+icon_alignment = 1
+expand_icon = true

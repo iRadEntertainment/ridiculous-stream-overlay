@@ -1,22 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://dhwexcg4happa"]
+[gd_scene load_steps=8 format=3 uid="uid://dhwexcg4happa"]
 
 [ext_resource type="StyleBox" uid="uid://c0aj4762xvg73" path="res://ui/styles/editor_light_panel.stylebox" id="1_104ra"]
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_c82vs"]
 [ext_resource type="Script" uid="uid://0gr4nw1r0v6f" path="res://instances/pnl_twitch_user_manager.gd" id="2_c82vs"]
 [ext_resource type="PackedScene" uid="uid://dps0a5js2rxa6" path="res://instances/users/pnl_search_user.tscn" id="3_xl0mj"]
 [ext_resource type="PackedScene" uid="uid://b0w820dulgunt" path="res://instances/users/pnl_rs_user.tscn" id="4_uvcps"]
-[ext_resource type="Theme" uid="uid://0k8rsjlg003m" path="res://ui/styles/chat_message.tres" id="5_2p74v"]
-[ext_resource type="Texture2D" uid="uid://dbpv7xe18l2r6" path="res://ui/sprites/raid_icon.png" id="6_u5abe"]
-[ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://ui/sprites/twitch_user_profile_pic.png" id="7_ug52l"]
+[ext_resource type="PackedScene" uid="uid://diw3w4nhkav5m" path="res://instances/pnl_user_live.tscn" id="6_ofk08"]
 [ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://ui/icons/bootstrap_icons/folder2-open.svg" id="8_0tp1s"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nb1op"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dft32"]
-bg_color = Color(0.129412, 0.14902, 0.180392, 1)
 
 [node name="pnl_twitch_user_manager" type="PanelContainer"]
 anchors_preset = 15
@@ -24,6 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_c82vs")
 theme_override_styles/panel = ExtResource("1_104ra")
 script = ExtResource("2_c82vs")
 
@@ -80,84 +71,9 @@ alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="pnl_live" type="PanelContainer" parent="vb/tabs"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
-theme = ExtResource("5_2p74v")
-metadata/_tab_index = 2
-
-[node name="vb" type="VBoxContainer" parent="vb/tabs/pnl_live"]
-layout_mode = 2
-
-[node name="stream_title" type="Label" parent="vb/tabs/pnl_live/vb"]
+[node name="pnl_user_live" parent="vb/tabs" instance=ExtResource("6_ofk08")]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_nb1op")
-text = "Want to try animating in Krita? This video covers all the basic functions you will need to know to get started in animation! Instructor Josh covers frames, onions skins, exporting, and other important details."
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-
-[node name="btn_stream_title" type="Button" parent="vb/tabs/pnl_live/vb/stream_title"]
-unique_name_in_owner = true
-show_behind_parent = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 20
-
-[node name="stream_thumbnail" type="TextureRect" parent="vb/tabs/pnl_live/vb"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
-expand_mode = 1
-stretch_mode = 5
-
-[node name="bot" type="PanelContainer" parent="vb/tabs/pnl_live/vb"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_dft32")
-
-[node name="hb" type="HBoxContainer" parent="vb/tabs/pnl_live/vb/bot"]
-layout_mode = 2
-
-[node name="btn_raid_current" type="Button" parent="vb/tabs/pnl_live/vb/bot/hb"]
-custom_minimum_size = Vector2(250, 0)
-layout_mode = 2
-text = "Raid!"
-icon = ExtResource("6_u5abe")
-expand_icon = true
-
-[node name="ln_chat_live_streamer" type="LineEdit" parent="vb/tabs/pnl_live/vb/bot/hb"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "send chat message"
-
-[node name="stream_time" type="Label" parent="vb/tabs/pnl_live/vb/bot/hb"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "00:15:32"
-
-[node name="icon" type="TextureRect" parent="vb/tabs/pnl_live/vb/bot/hb"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-texture = ExtResource("7_ug52l")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="stream_viewer_count" type="Label" parent="vb/tabs/pnl_live/vb/bot/hb"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "15"
 
 [node name="btn_open_folder" type="Button" parent="vb"]
 layout_mode = 2
@@ -171,7 +87,4 @@ unique_name_in_owner = true
 
 [connection signal="pressed" from="vb/tabs/pnl_beans/scroll/vb/hb/btn_test_beans" to="." method="_on_btn_test_beans_pressed"]
 [connection signal="toggled" from="vb/tabs/pnl_beans/scroll/vb/hb/btn_add_custom_beans" to="." method="_on_btn_add_custom_beans_toggled"]
-[connection signal="pressed" from="vb/tabs/pnl_live/vb/stream_title/btn_stream_title" to="." method="_on_stream_title_pressed"]
-[connection signal="pressed" from="vb/tabs/pnl_live/vb/bot/hb/btn_raid_current" to="." method="_on_btn_raid_current_pressed"]
-[connection signal="text_submitted" from="vb/tabs/pnl_live/vb/bot/hb/ln_chat_live_streamer" to="." method="_on_ln_chat_live_streamer_text_submitted"]
 [connection signal="pressed" from="vb/btn_open_folder" to="." method="_on_btn_open_folder_pressed"]

@@ -1,0 +1,127 @@
+[gd_scene load_steps=7 format=3 uid="uid://diw3w4nhkav5m"]
+
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_shu15"]
+[ext_resource type="Texture2D" uid="uid://dbpv7xe18l2r6" path="res://ui/sprites/raid_icon.png" id="2_e4i56"]
+[ext_resource type="Script" uid="uid://di4k0eeivjc67" path="res://instances/pnl_user_live.gd" id="2_xdaow"]
+[ext_resource type="Texture2D" uid="uid://cjynl50yogngs" path="res://local_res/can.png" id="3_dyff6"]
+[ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://ui/sprites/twitch_user_profile_pic.png" id="3_shu15"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjpta"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.189902, 0.189902, 0.189902, 0.388235)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="pnl_user_live" type="PanelContainer"]
+offset_right = 1531.0
+offset_bottom = 909.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+theme = ExtResource("1_shu15")
+script = ExtResource("2_xdaow")
+metadata/_tab_index = 2
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="btn_stream_title" type="Button" parent="vb"]
+unique_name_in_owner = true
+show_behind_parent = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Want to try animating in Krita? This video covers all the basic functions you will need to know to get started in animation! Instructor Josh covers frames, onions skins, exporting, and other important details.
+"
+autowrap_mode = 3
+
+[node name="hb_mid" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="tex_stream_thumbnail" type="TextureRect" parent="vb/hb_mid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+texture = ExtResource("3_dyff6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="pnl_user_chat" type="PanelContainer" parent="vb/hb_mid"]
+visible = false
+layout_mode = 2
+theme = ExtResource("1_shu15")
+
+[node name="vb" type="VBoxContainer" parent="vb/hb_mid/pnl_user_chat"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="pnl_msg" type="PanelContainer" parent="vb/hb_mid/pnl_user_chat/vb"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_jjpta")
+
+[node name="scroll_msg" type="ScrollContainer" parent="vb/hb_mid/pnl_user_chat/vb/pnl_msg"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 4
+
+[node name="vb_messages" type="VBoxContainer" parent="vb/hb_mid/pnl_user_chat/vb/pnl_msg/scroll_msg"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="ln_msg" type="LineEdit" parent="vb/hb_mid/pnl_user_chat/vb"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.160784, 0.764706, 0.65098, 1)
+placeholder_text = "chat"
+
+[node name="bot" type="PanelContainer" parent="vb"]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="vb/bot"]
+layout_mode = 2
+
+[node name="btn_raid_current" type="Button" parent="vb/bot/hb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+text = "Raid!"
+icon = ExtResource("2_e4i56")
+expand_icon = true
+
+[node name="ln_chat_live_streamer" type="LineEdit" parent="vb/bot/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "send chat message"
+
+[node name="lb_stream_time" type="Label" parent="vb/bot/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "00:15:32"
+
+[node name="icon" type="TextureRect" parent="vb/bot/hb"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("3_shu15")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="lb_stream_viewer_count" type="Label" parent="vb/bot/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "15"
+
+[connection signal="pressed" from="vb/btn_stream_title" to="." method="_on_btn_stream_title_pressed"]
+[connection signal="text_submitted" from="vb/hb_mid/pnl_user_chat/vb/ln_msg" to="vb/hb_mid/pnl_user_chat" method="_on_ln_msg_text_submitted"]
+[connection signal="pressed" from="vb/bot/hb/btn_raid_current" to="." method="_on_btn_raid_current_pressed"]
+[connection signal="text_submitted" from="vb/bot/hb/ln_chat_live_streamer" to="." method="_on_ln_chat_live_streamer_text_submitted"]
