@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjy7achs3ybvv"]
+
+[ext_resource type="Script" uid="uid://bnd3fw23tpjbs" path="res://instances/pnl_beans_editor.gd" id="1_dblxp"]
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_jgdhy"]
+
+[node name="pnl_beans_editor" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_jgdhy")
+script = ExtResource("1_dblxp")
+metadata/_tab_index = 1
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="btn_test_beans" type="Button" parent="vb"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "Test beans!"
+
+[node name="hb" type="HBoxContainer" parent="vb"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="pnl_preview" type="PanelContainer" parent="vb/hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="pnl_tools" type="PanelContainer" parent="vb/hb"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="vb/hb/pnl_tools"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="vb/hb/pnl_tools/VBoxContainer"]
+layout_mode = 2
+text = "Tools"
+horizontal_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="vb/hb/pnl_tools/VBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 1
+popup/item_0/text = "test_item"
+popup/item_0/id = 0
+
+[node name="btn_test" type="Button" parent="vb/hb/pnl_tools/VBoxContainer"]
+layout_mode = 2
+text = "Test"
+
+[node name="hb_scale" type="HBoxContainer" parent="vb/hb/pnl_tools/VBoxContainer"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="vb/hb/pnl_tools/VBoxContainer/hb_scale"]
+layout_mode = 2
+text = "Scale"
+
+[node name="sl_scale" type="HSlider" parent="vb/hb/pnl_tools/VBoxContainer/hb_scale"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lb_scale" type="Label" parent="vb/hb/pnl_tools/VBoxContainer/hb_scale"]
+layout_mode = 2
+text = "0.0"
+
+[node name="btn_save" type="Button" parent="vb/hb/pnl_tools/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Save"
