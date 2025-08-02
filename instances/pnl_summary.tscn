@@ -34,6 +34,7 @@ texture_margin_bottom = 1.0
 [sub_resource type="LabelSettings" id="LabelSettings_5mh5a"]
 font = ExtResource("3_wvb8h")
 font_size = 28
+font_color = Color(0.354748, 0.774402, 0.177553, 1)
 
 [node name="pnl_summary" type="PanelContainer"]
 anchors_preset = 15

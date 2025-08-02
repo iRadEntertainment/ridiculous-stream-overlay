@@ -97,6 +97,7 @@ func add_lb_name_to_container(cont: Container, username: String, color := Color.
 	lb_settings_big_names.font_color = color
 	var lb := Label.new()
 	lb.text = username
+	lb.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	lb.label_settings = lb_settings_big_names
 	cont.add_child(lb)
 
