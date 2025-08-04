@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c10luse40ekhw"]
+[gd_scene load_steps=17 format=3 uid="uid://c10luse40ekhw"]
 
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_8bj5e"]
 [ext_resource type="Script" uid="uid://8jh4xihpue7w" path="res://instances/entries/entry_user.gd" id="2_brw8v"]
@@ -37,6 +37,18 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8bj5e"]
+bg_color = Color(0.106436, 0.106436, 0.106436, 0.258824)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.878431, 0.878431, 0.878431, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qd0h3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_51clj"]
@@ -69,6 +81,8 @@ grow_vertical = 2
 focus_mode = 0
 theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1lnvw")
 theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_g2py5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8bj5e")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1lnvw")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_qd0h3")
 
 [node name="btn_user" type="Button" parent="hb"]

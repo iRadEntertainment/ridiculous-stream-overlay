@@ -130,6 +130,7 @@ func _on_live_streamers_updated() -> void:
 #region Buttons
 func _on_btn_open_streamer_page_pressed() -> void:
 	OS.shell_open("https://www.twitch.tv/%s" % user.username)
+	RS.pnl_settings.hide()
 func _on_btn_user_pressed():
 	user_selected.emit(user)
 func _on_btn_shoutout_pressed():
