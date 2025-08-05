@@ -118,6 +118,8 @@ class Cheermote extends RefCounted:
 		cheermote_definition.theme = theme
 		cheermote_definition.type = type
 		var cheer_results: TwitchMediaLoader.CheerResult = await _media_loader.get_cheer_info(cheermote_definition)
+		if not cheer_results:
+			return SpriteFrames.new()
 		return cheer_results.spriteframes
 
 

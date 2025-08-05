@@ -299,6 +299,8 @@ func all_cheermotes() -> Array[TwitchCheermote]:
 ## Can be null when not found.
 func get_cheer_info(cheermote_definition: TwitchCheermoteDefinition) -> CheerResult:
 	await preload_cheemote()
+	if not _cached_cheermotes.has(cheermote_definition.prefix):
+		return null
 	var cheermote : TwitchCheermote = _cached_cheermotes[cheermote_definition.prefix]
 	for cheertier: TwitchCheermote.Tiers in cheermote.tiers:
 		if cheertier.id == cheermote_definition.tier:
