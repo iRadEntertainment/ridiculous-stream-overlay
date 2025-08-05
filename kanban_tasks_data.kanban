@@ -33,7 +33,10 @@
 				"fa9ebd55-d97e-442f-8a82-ae3ee9c996ac",
 				"cf664fb3-b1c7-4d22-b266-878a44753324",
 				"24ff1b9f-af10-4658-8628-1d682ed7c6ba",
-				"77dffa41-094e-4a12-b738-b160a338fb9a"
+				"e4408eeb-c8be-44c0-9ebe-1be8b0efd097",
+				"77dffa41-094e-4a12-b738-b160a338fb9a",
+				"6914f967-4ee4-487b-8d28-dda95a1ebab5",
+				"50405e5f-d98c-476e-b9b7-153f9a380aa2"
 			]
 		},
 		{
@@ -189,7 +192,7 @@
 			"steps": [
 				{
 					"details": "BeanProperties Resource",
-					"done": false
+					"done": true
 				}
 			]
 		},
@@ -361,6 +364,27 @@
 			"title": "Show points in user stats",
 			"description": "",
 			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "e4408eeb-c8be-44c0-9ebe-1be8b0efd097",
+			"title": "fix too many http request at start",
+			"description": "",
+			"category": "5cb6e5bd-6da9-452f-9c5b-285aabd09166",
+			"steps": []
+		},
+		{
+			"uuid": "6914f967-4ee4-487b-8d28-dda95a1ebab5",
+			"title": "names on screen black when no custom color",
+			"description": "",
+			"category": "5cb6e5bd-6da9-452f-9c5b-285aabd09166",
+			"steps": []
+		},
+		{
+			"uuid": "50405e5f-d98c-476e-b9b7-153f9a380aa2",
+			"title": "sort live streamers by viewers or stream time",
+			"description": "",
+			"category": "0d482861-341c-4163-91cf-b5933f641f0f",
 			"steps": []
 		}
 	],

@@ -167,6 +167,21 @@ static func fit_and_center_window_to_display(p_window: Window) -> void:
 	p_window.position = Vector2(current_screen_usable_rect.position) - (target_size - p_window.get_size_with_decorations()) / 2.0
 
 
+static func resize_img_to_max_dim(img: Image, max_dim: int) -> Image:
+	var width: int
+	var height: int
+	var _is_taller: bool = img.get_size().x < img.get_size().y
+	if _is_taller:
+		width = (max_dim * img.get_size().x) / img.get_size().y
+		height = max_dim
+	else:
+		width = max_dim
+		height = (max_dim * img.get_size().y) / img.get_size().x
+	var resized_image: Image = img.duplicate()
+	resized_image.resize(width, height)
+	return resized_image
+
+
 static func opt_btn_from_files_in_folder(folder_paths: Array[String], types: Array[String] = [], full_path := false) -> OptionButton:
 	var new_opt_btn := OptionButton.new()
 	populate_opt_btn_from_files_in_folder(new_opt_btn, folder_paths, types, full_path)

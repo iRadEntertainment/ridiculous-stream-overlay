@@ -1,0 +1,69 @@
+[gd_scene load_steps=6 format=3 uid="uid://df44wkuu2fkve"]
+
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_3ua0t"]
+[ext_resource type="StyleBox" uid="uid://dbp0y34p3gdwo" path="res://ui/styles/panel_light_contour.stylebox" id="1_drlpp"]
+[ext_resource type="Script" uid="uid://bkrndn0wbeqht" path="res://instances/entries/entry_sfx_beans.gd" id="3_v1hvp"]
+[ext_resource type="Texture2D" uid="uid://c23twk8ui0g11" path="res://ui/icons/bootstrap_icons/trash.svg" id="4_mjebb"]
+[ext_resource type="Texture2D" uid="uid://dx3con5uava0s" path="res://ui/icons/bootstrap_icons/speaker-fill.svg" id="4_v1hvp"]
+
+[node name="entry_sfx_beans" type="PanelContainer"]
+offset_right = 315.0
+offset_bottom = 63.0
+theme = ExtResource("1_3ua0t")
+theme_override_styles/panel = ExtResource("1_drlpp")
+script = ExtResource("3_v1hvp")
+
+[node name="hb" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="btn_preview" type="Button" parent="hb"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("4_v1hvp")
+icon_alignment = 1
+expand_icon = true
+
+[node name="vb" type="VBoxContainer" parent="hb"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="hb" type="HBoxContainer" parent="hb/vb"]
+layout_mode = 2
+
+[node name="opt_sfx_path" type="OptionButton" parent="hb/vb/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+
+[node name="hb2" type="HBoxContainer" parent="hb/vb"]
+layout_mode = 2
+
+[node name="sl_volume" type="HSlider" parent="hb/vb/hb2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.1
+step = 0.01
+value = 1.0
+
+[node name="lb_volume" type="Label" parent="hb/vb/hb2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0.0"
+
+[node name="btn_delete_sfx" type="Button" parent="hb"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("4_mjebb")
+icon_alignment = 1
+expand_icon = true
+
+[node name="sfx_preview" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+
+[connection signal="pressed" from="hb/btn_preview" to="." method="_on_btn_preview_pressed"]
+[connection signal="item_selected" from="hb/vb/hb/opt_sfx_path" to="." method="_on_opt_sfx_path_item_selected"]
+[connection signal="value_changed" from="hb/vb/hb2/sl_volume" to="." method="_on_sl_volume_value_changed"]
+[connection signal="pressed" from="hb/btn_delete_sfx" to="." method="_on_btn_delete_sfx_pressed"]

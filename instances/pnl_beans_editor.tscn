@@ -1,7 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjy7achs3ybvv"]
+[gd_scene load_steps=10 format=3 uid="uid://cjy7achs3ybvv"]
 
 [ext_resource type="Script" uid="uid://bnd3fw23tpjbs" path="res://instances/pnl_beans_editor.gd" id="1_dblxp"]
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_jgdhy"]
+[ext_resource type="Texture2D" uid="uid://dqvqwspb3dnv2" path="res://ui/icons/bootstrap_icons/image.svg" id="3_fp0rh"]
+[ext_resource type="StyleBox" uid="uid://dbp0y34p3gdwo" path="res://ui/styles/panel_light_contour.stylebox" id="3_jwwha"]
+[ext_resource type="Texture2D" uid="uid://kxiiuf0d0kip" path="res://ui/icons/bootstrap_icons/plus-circle.svg" id="3_ykgb8"]
+[ext_resource type="Texture2D" uid="uid://c23twk8ui0g11" path="res://ui/icons/bootstrap_icons/trash.svg" id="4_374vp"]
+[ext_resource type="PackedScene" uid="uid://df44wkuu2fkve" path="res://instances/entries/entry_sfx_beans.tscn" id="4_fp0rh"]
+[ext_resource type="Texture2D" uid="uid://btxmsw1wv5ai2" path="res://ui/icons/bootstrap_icons/arrow-repeat.svg" id="4_ua7l5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwwha"]
+bg_color = Color(0, 0, 0, 0.392157)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 7.0
+expand_margin_top = 7.0
+expand_margin_right = 7.0
+expand_margin_bottom = 7.0
 
 [node name="pnl_beans_editor" type="PanelContainer"]
 anchors_preset = 15
@@ -13,63 +30,279 @@ theme = ExtResource("1_jgdhy")
 script = ExtResource("1_dblxp")
 metadata/_tab_index = 1
 
-[node name="vb" type="VBoxContainer" parent="."]
+[node name="split" type="HSplitContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="marg_left" type="MarginContainer" parent="split"]
+custom_minimum_size = Vector2(320, 0)
 layout_mode = 2
 
-[node name="btn_test_beans" type="Button" parent="vb"]
+[node name="vb" type="VBoxContainer" parent="split/marg_left"]
+layout_mode = 2
+
+[node name="pnl_load" type="PanelContainer" parent="split/marg_left/vb"]
+layout_mode = 2
+
+[node name="vb" type="VBoxContainer" parent="split/marg_left/vb/pnl_load"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="split/marg_left/vb/pnl_load/vb"]
+layout_mode = 2
+text = "Load beans"
+horizontal_alignment = 1
+
+[node name="btn_add_bean_definition" type="Button" parent="split/marg_left/vb/pnl_load/vb"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "New beans"
+
+[node name="hb" type="HBoxContainer" parent="split/marg_left/vb/pnl_load/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="split/marg_left/vb/pnl_load/vb/hb"]
+layout_mode = 2
+text = "Load"
+
+[node name="opt_load_bean_definition" type="OptionButton" parent="split/marg_left/vb/pnl_load/vb/hb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+fit_to_longest_item = false
+
+[node name="btn_reload_opt_json" type="Button" parent="split/marg_left/vb/pnl_load/vb/hb"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("4_ua7l5")
+icon_alignment = 1
+expand_icon = true
+
+[node name="btn_delete_json" type="Button" parent="split/marg_left/vb/pnl_load/vb/hb"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("4_374vp")
+icon_alignment = 1
+expand_icon = true
+
+[node name="sep" type="HSeparator" parent="split/marg_left/vb"]
+visible = false
+layout_mode = 2
+
+[node name="pnl_param" type="PanelContainer" parent="split/marg_left/vb"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="vb" type="VBoxContainer" parent="split/marg_left/vb/pnl_param"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ln_name" type="LineEdit" parent="split/marg_left/vb/pnl_param/vb"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "beans name"
+
+[node name="hb" type="HBoxContainer" parent="split/marg_left/vb/pnl_param/vb"]
+layout_mode = 2
+
+[node name="ico" type="TextureRect" parent="split/marg_left/vb/pnl_param/vb/hb"]
+self_modulate = Color(0.843137, 0.705882, 0.784314, 1)
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_fp0rh")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="opt_img_path" type="OptionButton" parent="split/marg_left/vb/pnl_param/vb/hb"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+
+[node name="btn_reload_opt_img" type="Button" parent="split/marg_left/vb/pnl_param/vb/hb"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("4_ua7l5")
+icon_alignment = 1
+expand_icon = true
+
+[node name="hb_scale" type="HBoxContainer" parent="split/marg_left/vb/pnl_param/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="split/marg_left/vb/pnl_param/vb/hb_scale"]
+layout_mode = 2
+text = "Scale"
+
+[node name="sl_scale" type="HSlider" parent="split/marg_left/vb/pnl_param/vb/hb_scale"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 0.01
+max_value = 40.0
+step = 0.01
+value = 1.0
+exp_edit = true
+
+[node name="lb_scale" type="Label" parent="split/marg_left/vb/pnl_param/vb/hb_scale"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0.0"
+
+[node name="hb_coll_offset" type="HBoxContainer" parent="split/marg_left/vb/pnl_param/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="split/marg_left/vb/pnl_param/vb/hb_coll_offset"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "Collision Offset"
+
+[node name="sl_coll_offset" type="HSlider" parent="split/marg_left/vb/pnl_param/vb/hb_coll_offset"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+
+[node name="lb_coll_offset" type="Label" parent="split/marg_left/vb/pnl_param/vb/hb_coll_offset"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0.0"
+
+[node name="hb_pick_offset" type="HBoxContainer" parent="split/marg_left/vb/pnl_param/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="split/marg_left/vb/pnl_param/vb/hb_pick_offset"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "Pick Offset"
+
+[node name="sl_pick_offset" type="HSlider" parent="split/marg_left/vb/pnl_param/vb/hb_pick_offset"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+
+[node name="lb_pick_offset" type="Label" parent="split/marg_left/vb/pnl_param/vb/hb_pick_offset"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0.0"
+
+[node name="pnl_sfx" type="PanelContainer" parent="split/marg_left/vb/pnl_param/vb"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("3_jwwha")
+
+[node name="vb" type="VBoxContainer" parent="split/marg_left/vb/pnl_param/vb/pnl_sfx"]
+layout_mode = 2
+
+[node name="hb" type="HBoxContainer" parent="split/marg_left/vb/pnl_param/vb/pnl_sfx/vb"]
+layout_mode = 2
+
+[node name="lb" type="Label" parent="split/marg_left/vb/pnl_param/vb/pnl_sfx/vb/hb"]
+layout_mode = 2
+text = "Impact sounds"
+horizontal_alignment = 1
+
+[node name="btn_reload_opt_sfx" type="Button" parent="split/marg_left/vb/pnl_param/vb/pnl_sfx/vb/hb"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 10
+icon = ExtResource("4_ua7l5")
+icon_alignment = 1
+expand_icon = true
+
+[node name="scroll" type="ScrollContainer" parent="split/marg_left/vb/pnl_param/vb/pnl_sfx/vb"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="vb_sfx_list" type="VBoxContainer" parent="split/marg_left/vb/pnl_param/vb/pnl_sfx/vb/scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="pnl_sfx_entry" parent="split/marg_left/vb/pnl_param/vb/pnl_sfx/vb/scroll/vb_sfx_list" instance=ExtResource("4_fp0rh")]
+layout_mode = 2
+
+[node name="btn_add_sfx" type="Button" parent="split/marg_left/vb/pnl_param/vb/pnl_sfx/vb"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+icon = ExtResource("3_ykgb8")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ck_is_destroy" type="CheckButton" parent="split/marg_left/vb/pnl_param/vb"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Destructible
+"
+
+[node name="ck_is_pickable" type="CheckButton" parent="split/marg_left/vb/pnl_param/vb"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Pickable"
+
+[node name="ck_is_poly_fracture" type="CheckButton" parent="split/marg_left/vb/pnl_param/vb"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Poly Fracture"
+
+[node name="btn_save_definition" type="Button" parent="split/marg_left/vb/pnl_param/vb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+text = "Save beans"
+
+[node name="pnl_block" type="PanelContainer" parent="split/marg_left/vb/pnl_param"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jwwha")
+
+[node name="vb_right" type="VBoxContainer" parent="split"]
+layout_mode = 2
+
+[node name="btn_test_beans" type="Button" parent="split/vb_right"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 32
 text = "Test beans!"
 
-[node name="hb" type="HBoxContainer" parent="vb"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="pnl_preview" type="PanelContainer" parent="vb/hb"]
+[node name="pnl_preview" type="PanelContainer" parent="split/vb_right"]
+clip_children = 2
+custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="pnl_tools" type="PanelContainer" parent="vb/hb"]
-custom_minimum_size = Vector2(260, 0)
+[node name="preview" type="Control" parent="split/vb_right/pnl_preview"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="vb/hb/pnl_tools"]
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="vb/hb/pnl_tools/VBoxContainer"]
-layout_mode = 2
-text = "Tools"
-horizontal_alignment = 1
-
-[node name="OptionButton" type="OptionButton" parent="vb/hb/pnl_tools/VBoxContainer"]
-layout_mode = 2
-selected = 0
-item_count = 1
-popup/item_0/text = "test_item"
-popup/item_0/id = 0
-
-[node name="btn_test" type="Button" parent="vb/hb/pnl_tools/VBoxContainer"]
-layout_mode = 2
-text = "Test"
-
-[node name="hb_scale" type="HBoxContainer" parent="vb/hb/pnl_tools/VBoxContainer"]
-layout_mode = 2
-
-[node name="lb" type="Label" parent="vb/hb/pnl_tools/VBoxContainer/hb_scale"]
-layout_mode = 2
-text = "Scale"
-
-[node name="sl_scale" type="HSlider" parent="vb/hb/pnl_tools/VBoxContainer/hb_scale"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="lb_scale" type="Label" parent="vb/hb/pnl_tools/VBoxContainer/hb_scale"]
-layout_mode = 2
-text = "0.0"
-
-[node name="btn_save" type="Button" parent="vb/hb/pnl_tools/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 10
-text = "Save"
+[connection signal="pressed" from="split/marg_left/vb/pnl_load/vb/btn_add_bean_definition" to="." method="_on_btn_add_bean_definition_pressed"]
+[connection signal="item_selected" from="split/marg_left/vb/pnl_load/vb/hb/opt_load_bean_definition" to="." method="_on_opt_load_bean_definition_item_selected"]
+[connection signal="pressed" from="split/marg_left/vb/pnl_load/vb/hb/btn_reload_opt_json" to="." method="_on_btn_reload_opt_json_pressed"]
+[connection signal="pressed" from="split/marg_left/vb/pnl_load/vb/hb/btn_delete_json" to="." method="_on_btn_delete_json_pressed"]
+[connection signal="text_changed" from="split/marg_left/vb/pnl_param/vb/ln_name" to="." method="_on_ln_name_text_changed"]
+[connection signal="item_selected" from="split/marg_left/vb/pnl_param/vb/hb/opt_img_path" to="." method="_on_opt_img_path_item_selected"]
+[connection signal="pressed" from="split/marg_left/vb/pnl_param/vb/hb/btn_reload_opt_img" to="." method="_on_btn_reload_opt_img_pressed"]
+[connection signal="value_changed" from="split/marg_left/vb/pnl_param/vb/hb_scale/sl_scale" to="." method="_on_sl_scale_value_changed"]
+[connection signal="value_changed" from="split/marg_left/vb/pnl_param/vb/hb_coll_offset/sl_coll_offset" to="." method="_on_sl_coll_offset_value_changed"]
+[connection signal="value_changed" from="split/marg_left/vb/pnl_param/vb/hb_pick_offset/sl_pick_offset" to="." method="_on_sl_pick_offset_value_changed"]
+[connection signal="pressed" from="split/marg_left/vb/pnl_param/vb/pnl_sfx/vb/hb/btn_reload_opt_sfx" to="." method="_on_btn_reload_opt_sfx_pressed"]
+[connection signal="pressed" from="split/marg_left/vb/pnl_param/vb/pnl_sfx/vb/btn_add_sfx" to="." method="_on_btn_add_sfx_pressed"]
+[connection signal="toggled" from="split/marg_left/vb/pnl_param/vb/ck_is_destroy" to="." method="_on_ck_is_destroy_toggled"]
+[connection signal="toggled" from="split/marg_left/vb/pnl_param/vb/ck_is_pickable" to="." method="_on_ck_is_pickable_toggled"]
+[connection signal="toggled" from="split/marg_left/vb/pnl_param/vb/ck_is_poly_fracture" to="." method="_on_ck_is_poly_fracture_toggled"]
+[connection signal="pressed" from="split/marg_left/vb/pnl_param/vb/btn_save_definition" to="." method="_on_btn_save_definition_pressed"]
