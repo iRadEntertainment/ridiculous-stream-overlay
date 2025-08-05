@@ -110,7 +110,7 @@ func start_new_summary() -> void:
 		save_stored_summary()
 		delete_current_summary_file()
 	summary = RSSummary.new()
-	summary.stream_start = Time.get_unix_time_from_system()
+	summary.stream_start = int(Time.get_unix_time_from_system())
 	_log.i("New summary started on %s" % [RSUtl.unix_to_string(summary.stream_start)])
 
 
@@ -128,7 +128,7 @@ func save_current_summary() -> void:
 		RSUtl.make_path(RSSettings.get_summaries_path())
 	if summary:
 		_log.i("Saving summary file to %s" % current_summary_file_path)
-		summary.stream_stopped = Time.get_unix_time_from_system()
+		summary.stream_stopped = int(Time.get_unix_time_from_system())
 		RSUtl.save_to_json(current_summary_file_path, summary.to_dict())
 	else:
 		_log.w("Cannot save summary. Summary not present.")

@@ -59,8 +59,8 @@ func update_dropdown_fields() -> void:
 #region Inspector signals
 func _on_btn_custom_color_color_changed(color: Color) -> void:
 	if user: user.custom_chat_color = color
-func _on_opt_custom_sfx_item_selected(index: int) -> void:
-	if user: user.custom_notification_sfx = %opt_custom_sfx.get_item_text(index)
-func _on_opt_custom_actions_item_selected(index: int) -> void:
-	if user: user.custom_action = %opt_custom_actions.get_item_text(index)
+func _on_opt_custom_sfx_item_selected(_index: int) -> void:
+	if user: user.custom_notification_sfx = %opt_custom_sfx.text
+func _on_opt_custom_actions_item_selected(_index: int) -> void:
+	if user: user.custom_action = %opt_custom_actions.text
 #endregion

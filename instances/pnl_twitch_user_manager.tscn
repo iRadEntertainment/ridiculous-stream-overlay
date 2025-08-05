@@ -48,6 +48,7 @@ metadata/_tab_index = 1
 
 [node name="pnl_beans_editor" parent="vb/tabs" instance=ExtResource("7_104ra")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 

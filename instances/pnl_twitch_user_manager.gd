@@ -35,8 +35,8 @@ func _on_btn_open_folder_pressed():
 	OS.shell_open(RSSettings.get_users_path())
 
 
-func _on_opt_custom_sfx_item_selected(index):
+func _on_opt_custom_sfx_item_selected(_index) -> void:
 	%sfx_prev.stop()
-	var sfx_name = %opt_custom_sfx.get_item_text(index)
+	var sfx_name = %opt_custom_sfx.text
 	%sfx_prev.stream = RS.loader.load_sfx_from_sfx_folder(sfx_name)
 	%sfx_prev.play()

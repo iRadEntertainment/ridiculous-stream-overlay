@@ -85,7 +85,7 @@ func _on_ln_msg_text_submitted(new_text: String) -> void:
 	await get_tree().process_frame
 	%ln_msg.edit()
 func _on_ln_announce_text_submitted(new_text: String) -> void:
-	var key: String = %opt_announce_color.get_item_text(%opt_announce_color.selected)
+	var key: String = %opt_announce_color.text
 	var color: TwitchAnnouncementColor = TwitchAnnouncementColor.new(key)
 	RS.twitcher.announcement(new_text, color)
 	%ln_announce.clear()

@@ -68,9 +68,9 @@ func is_allowed(data: RSTwitchEventData) -> bool:
 		_log.d("%s --- THIS THING" % broadcaster_login)
 		var allowed = RS.user_mng.is_username_known(broadcaster_login)
 		if allowed:
-			_log.i("Impersonate allowed (to [color=#f00]{streamer}[/color]). {user}: {msg}".format({"streamer": broadcaster_login, "user": data.username, "msg": data.user_input}))
+			_log.i("Impersonate allowed (to [color=#f00]{broadcaster}[/color]). {user}: {msg}".format({"broadcaster": broadcaster_login, "user": data.username, "msg": data.user_input}))
 		else:
-			_log.w("Impersonate blocked (unknown broadcaster). {user}: {msg}".format({"user": data.username, "msg": data.user_input}))
+			_log.w("Impersonate blocked (unknown broadcaster {broadcaster}). {user}: {msg}".format({"broadcaster": broadcaster_login, "user": data.username, "msg": data.user_input}))
 		return allowed
 		
 	return true

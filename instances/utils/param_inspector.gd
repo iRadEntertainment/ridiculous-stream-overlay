@@ -43,11 +43,11 @@ func populate_fields():
 func params_from_fields() -> RSBeansParam:
 	var new_params = RSBeansParam.new()
 	for opt_btn : OptionButton in %tex_list.get_children():
-		var path = opt_btn.get_item_text(opt_btn.selected)
+		var path = opt_btn.text
 		if path.is_empty(): continue
 		new_params.img_paths.append(path)
 	for opt_btn : OptionButton in %sfx_list.get_children():
-		var path = opt_btn.get_item_text(opt_btn.selected)
+		var path = opt_btn.text
 		if path.is_empty(): continue
 		new_params.sfx_paths.append(path)
 
@@ -93,6 +93,7 @@ func get_params() -> RSBeansParam:
 func clear_custom_lists():
 	for child in %sfx_list.get_children() + %tex_list.get_children():
 		child.queue_free()
+
 
 func set_item_opt_btn_from_string(opt_btn : OptionButton, value : String):
 	for i in opt_btn.item_count:

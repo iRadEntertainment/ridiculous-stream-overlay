@@ -52,7 +52,7 @@ func save_settings(p_settings: RSSettings = null) -> void:
 	])
 
 
-func load_sfx_from_sfx_folder(sfx_name: String) -> AudioStreamOggVorbis:
+func load_sfx_from_sfx_folder(sfx_name: String) -> AudioStream:
 	if sfx_name in cached.keys():
 		return cached[sfx_name]
 	var audio: AudioStream
