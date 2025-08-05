@@ -98,14 +98,14 @@ func _on_btn_yt_promo_pressed() -> void:
 	var msg: String = "Check out {user}'s YouTube channel: {link}"
 	var param: Dictionary = {
 		"user": user.display_name,
-		"link": "youtube.com/" + user.youtube_handle,
+		"link": user.youtube_link,
 	}
 	RS.twitcher.announcement(msg.format(param))
 func _on_btn_bsky_promo_pressed() -> void:
 	var msg: String = "Follow {user} on BlueSky: {link}"
 	var param: Dictionary = {
 		"user": user.display_name,
-		"link": "bsky.app/profile/" + user.bluesky_handle.trim_prefix("@") + ".bsky.social",
+		"link": user.bluesky_link,
 	}
 	RS.twitcher.announcement(msg.format(param))
 func _on_btn_web_promo_pressed() -> void:
@@ -115,6 +115,18 @@ func _on_btn_web_promo_pressed() -> void:
 		"link": user.website,
 	}
 	RS.twitcher.announcement(msg.format(param))
+
+
+func _on_btn_yt_link_pressed() -> void:
+	OS.shell_open(user.youtube_link)
+	RS.pnl_settings.hide()
+func _on_btn_bsky_link_pressed() -> void:
+	OS.shell_open(user.bluesky_link)
+	RS.pnl_settings.hide()
+func _on_btn_web_link_pressed() -> void:
+	OS.shell_open(user.website)
+	RS.pnl_settings.hide()
+
 
 func _on_te_so_focus_exited() -> void:
 	if user: user.shoutout_description = %te_so.text

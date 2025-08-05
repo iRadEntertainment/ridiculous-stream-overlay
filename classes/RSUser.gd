@@ -47,7 +47,11 @@ var steam_app_ids: Dictionary[int, SteamAppData] # {int: SteamAppData} # TODO
 var itchio_app_urls: Dictionary[String, ItchIOAppData] # {String: ItchIOAppData}
 var work_with: WorkWith
 var youtube_handle: String
+var youtube_link: String:
+	get: return "https://youtube.com".path_join(youtube_handle)
 var bluesky_handle: String
+var bluesky_link: String:
+	get: return "https://bsky.app/profile/" + bluesky_handle.trim_prefix("@") + ".bsky.social"
 var website: String
 var shoutout_description: String
 var promotion_description: String
