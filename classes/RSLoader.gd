@@ -112,6 +112,8 @@ func load_profile_pic_from_url(url: String, use_cached := true) -> ImageTexture:
 	if use_cached and FileAccess.file_exists(cache_path):
 		var tex := _load_texture_from_disk(cache_path)
 		if tex:
+			if not texture_cache.has(url):
+				texture_cache[url] = tex
 			return tex
 	# 2) Fetch via generic loader (RAM cache unaffected)
 	var tex2 := await load_texture_from_url(url, use_cached)
