@@ -6,15 +6,28 @@ var user: RSUser
 var tw_hidden: Tween
 var is_expanded: bool = false
 
+var scroll: ScrollContainer
+var is_visible_in_scroll: bool:
+	get:
+		if not scroll: return false
+		return scroll.get_global_rect().intersects(get_global_rect())
+var is_profile_picture_loaded: bool = false
+
+
 signal user_selected(user: RSUser)
 
 
 func _ready() -> void:
+	scroll = get_parent().get_parent()
+	scroll.get_v_scroll_bar().scrolling.connect(check_update_profile_picture)
+	visibility_changed.connect(check_update_profile_picture)
 	update()
 	toggle_buttons(false)
 	%pnl_delete.hide()
 	RS.user_mng.live_streamers_updated.connect(_on_live_streamers_updated)
 	RS.user_mng.user_updated.connect(_on_user_updated)
+	await get_tree().process_frame
+	check_update_profile_picture()
 
 
 #region Update
@@ -42,8 +55,13 @@ func update() -> void:
 		rect_itchio.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		rect_itchio.custom_minimum_size = Vector2.ONE * 4.0 # px
 		%hb_games_count.add_child(rect_itchio)
-	
+
+
+func update_profile_picture() -> void:
+	if not user.profile_image_url: return
+	%loading_user_pic.show()
 	%user_pic.texture = await RS.loader.load_texture_from_url(user.profile_image_url)
+	%loading_user_pic.hide()
 
 
 func reload_profile_pic() -> void:
@@ -109,6 +127,16 @@ func _process(_delta: float) -> void:
 	toggle_buttons(false)
 	is_expanded = false
 	set_process(false)
+
+
+func check_update_profile_picture() -> void:
+	if is_profile_picture_loaded: return
+	if not user: return
+	await get_tree().process_frame
+	if not is_visible_in_scroll: return
+	is_profile_picture_loaded = true
+	await update_profile_picture()
+	if not %user_pic.texture: is_profile_picture_loaded = false
 #endregion
 
 

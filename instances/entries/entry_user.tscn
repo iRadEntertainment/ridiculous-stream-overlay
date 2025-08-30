@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://c10luse40ekhw"]
+[gd_scene load_steps=18 format=3 uid="uid://c10luse40ekhw"]
 
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_8bj5e"]
 [ext_resource type="Script" uid="uid://8jh4xihpue7w" path="res://instances/entries/entry_user.gd" id="2_brw8v"]
 [ext_resource type="Texture2D" uid="uid://bwsg8be7ife7b" path="res://ui/sprites/twitch_user_profile_pic.png" id="3_1ennu"]
+[ext_resource type="PackedScene" uid="uid://biy3s0e3yb44c" path="res://instances/utils/pnl_loading_simple.tscn" id="4_g2qwm"]
 [ext_resource type="Texture2D" uid="uid://1ndihbuunqkm" path="res://ui/icons/bootstrap_icons/megaphone-fill.svg" id="4_kitly"]
 [ext_resource type="Texture2D" uid="uid://eowifokyak3b" path="res://ui/icons/bootstrap_icons/megaphone.svg" id="5_a5qrl"]
 [ext_resource type="Texture2D" uid="uid://hqibc1sfinhq" path="res://ui/icons/bootstrap_icons/stars.svg" id="6_kbpjk"]
@@ -70,6 +71,13 @@ layout_mode = 2
 texture = ExtResource("3_1ennu")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="loading_user_pic" parent="hb/user_pic" instance=ExtResource("4_g2qwm")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+offset_right = 0.0
+offset_bottom = 0.0
 
 [node name="btn_open_streamer_page" type="Button" parent="hb/user_pic"]
 layout_mode = 1
