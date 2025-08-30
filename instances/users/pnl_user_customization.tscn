@@ -1,11 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://d2aoepdqbkr13"]
+[gd_scene load_steps=3 format=3 uid="uid://d2aoepdqbkr13"]
 
 [ext_resource type="Script" uid="uid://b8tsfnqu8o3sd" path="res://instances/users/pnl_user_customization.gd" id="1_6p7es"]
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_ylhbj"]
 
 [node name="pnl_user_customization" type="PanelContainer"]
-offset_right = 719.0
-offset_bottom = 90.0
+offset_right = 952.0
+offset_bottom = 124.0
 size_flags_horizontal = 3
+theme = ExtResource("1_ylhbj")
 script = ExtResource("1_6p7es")
 
 [node name="hb" type="HBoxContainer" parent="."]

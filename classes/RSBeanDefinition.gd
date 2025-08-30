@@ -9,8 +9,9 @@ class_name RSBeanDefinition
 #var destroy_shard_params: RSBeansParam
 
 
-var name: String
-var img_path: String
+var name: String = ""
+var filename: String = ""
+var img_path: String = ""
 var scale: float = 1.0
 var collision_offset: float = 0.0 # normalized
 var pick_offset: float = 0.0 # normalized
@@ -23,6 +24,7 @@ var is_poly_fracture: bool = false
 func to_dict() -> Dictionary:
 	var d = {}
 	d["name"] = name
+	d["filename"] = filename
 	d["img_path"] = img_path
 	d["scale"] = scale
 	d["collision_offset"] = collision_offset
@@ -37,6 +39,7 @@ func to_dict() -> Dictionary:
 static func from_json(d: Dictionary) -> RSBeanDefinition:
 	var param := RSBeanDefinition.new()
 	param.name = d.get("name", "")
+	param.filename = d.get("filename", "")
 	param.img_path = d.get("img_path", "")
 	param.scale = d.get("scale", 1.0)
 	param.collision_offset = d.get("collision_offset", 0.0)

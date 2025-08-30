@@ -33,7 +33,6 @@
 				"fa9ebd55-d97e-442f-8a82-ae3ee9c996ac",
 				"cf664fb3-b1c7-4d22-b266-878a44753324",
 				"24ff1b9f-af10-4658-8628-1d682ed7c6ba",
-				"e4408eeb-c8be-44c0-9ebe-1be8b0efd097",
 				"77dffa41-094e-4a12-b738-b160a338fb9a",
 				"6914f967-4ee4-487b-8d28-dda95a1ebab5",
 				"50405e5f-d98c-476e-b9b7-153f9a380aa2"
@@ -43,15 +42,18 @@
 			"uuid": "3fe624ce-48d2-4324-b6ea-2d2777a8a52f",
 			"title": "Doing",
 			"tasks": [
-				"a8451136-d02c-4d8f-8664-da43ed9d19fe",
 				"dfb7b16f-4d85-4f1c-b5c7-1c841cab7875",
-				"abf505fe-ac5c-48dc-84ba-733cc8db45e1"
+				"abf505fe-ac5c-48dc-84ba-733cc8db45e1",
+				"ed84a71a-cc55-4da2-95aa-aa6edd8770e1",
+				"b1ad4f38-ce82-42b8-8888-71fa829e3c5f",
+				"e4408eeb-c8be-44c0-9ebe-1be8b0efd097"
 			]
 		},
 		{
 			"uuid": "3056a553-9c8d-4864-8288-fac01ba7416d",
 			"title": "Done",
 			"tasks": [
+				"a8451136-d02c-4d8f-8664-da43ed9d19fe",
 				"c3d37036-c250-487c-9ab6-f2b60a21f4d9",
 				"5edc89dd-a894-4fb9-bd56-9cd88a2f01a2",
 				"65524419-1536-4e36-93fa-a96773b51a3f",
@@ -385,6 +387,20 @@
 			"title": "sort live streamers by viewers or stream time",
 			"description": "",
 			"category": "0d482861-341c-4163-91cf-b5933f641f0f",
+			"steps": []
+		},
+		{
+			"uuid": "ed84a71a-cc55-4da2-95aa-aa6edd8770e1",
+			"title": "count new followers and mods per stream (summary)",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "b1ad4f38-ce82-42b8-8888-71fa829e3c5f",
+			"title": "Cache profile pictures on disk",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
 			"steps": []
 		}
 	],
