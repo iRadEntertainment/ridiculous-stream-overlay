@@ -60,12 +60,15 @@ func update() -> void:
 func update_profile_picture() -> void:
 	if not user.profile_image_url: return
 	%loading_user_pic.show()
-	%user_pic.texture = await RS.loader.load_texture_from_url(user.profile_image_url)
+	%user_pic.texture = await RS.loader.load_profile_pic_from_url(user.profile_image_url, true)
 	%loading_user_pic.hide()
 
 
 func reload_profile_pic() -> void:
-	%user_pic.texture = await RS.loader.load_texture_from_url(user.profile_image_url, false)
+	if not user.profile_image_url: return
+	%loading_user_pic.show()
+	%user_pic.texture = await RS.loader.load_profile_pic_from_url(user.profile_image_url, false)
+	%loading_user_pic.hide()
 
 
 func reload_all_info_from_twitch() -> void:

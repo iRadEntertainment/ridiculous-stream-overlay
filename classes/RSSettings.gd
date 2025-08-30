@@ -29,6 +29,7 @@ static var data_dir: String = OS.get_user_data_dir():
 # UTILITIES
 static func get_settings_filepath() -> String: return data_dir.path_join(RS_SETTINGS_FILE_NAME)
 static func get_users_path() -> String: return data_dir.path_join(RS_USER_FOLDER)
+static func get_profile_pics_path() -> String: return data_dir.path_join(RS_PROFILE_PICS_FOLDER)
 static func get_redeems_path() -> String: return data_dir.path_join(RS_REDEEMS_FOLDER)
 static func get_obj_path() -> String: return data_dir.path_join(RS_OBJ_FOLDER)
 static func get_sfx_path() -> String: return data_dir.path_join(RS_SFX_FOLDER)
@@ -68,20 +69,11 @@ const RS_VETTING_FILE_NAME = "user_vetting_list.json"
 const RS_LOG_FOLDER = "logs/"
 const RS_SUMMARIES = "summaries/"
 const RS_USER_FOLDER = "users/"
+const RS_PROFILE_PICS_FOLDER = "users/profile_pics/"
 const RS_REDEEMS_FOLDER = "redeems/"
 const RS_OBJ_FOLDER = "obj/"
 const RS_SFX_FOLDER = "sfx/"
 
-## RS Loggers
-#const LOGGER_NAME_MAIN = &"RS Main"
-#const LOGGER_NAME_SETTINGS = &"RS Settings"
-#const LOGGER_NAME_USER_MNG = &"RS User Manager"
-#const LOGGER_NAME_LOADER = &"RS Loader"
-#const LOGGER_NAME_DISPLAY = &"RS Display"
-#const LOGGER_NAME_NOOBSWS = &"OBS Websocket"
-#const LOGGER_NAME_SHOUTOUT = &"Shoutout Manager"
-#const LOGGER_NAME_CUSTOM = &"RS Custom"
-#const LOGGER_NAME_VETTING = &"RS Vetting"
 
 @export var welcome_version: String = &""
 

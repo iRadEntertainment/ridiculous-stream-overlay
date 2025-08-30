@@ -451,7 +451,6 @@ metadata/_edit_lock_ = true
 [node name="BufferedHTTPClient" type="Node" parent="Modules"]
 unique_name_in_owner = true
 script = ExtResource("11_4dc0s")
-max_clients = 4
 metadata/_custom_type_script = "uid://b7i5j62lmuh71"
 
 [node name="RSMouseTracker" type="Node" parent="Modules"]
