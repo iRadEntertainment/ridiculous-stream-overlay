@@ -1,24 +1,17 @@
 extends Resource
 class_name RSBeanDefinition
 
-# external wrap class
-#var spawn_count_min: int = 1
-#var spawn_count_max: int = 1
-#var coll_layer: int = 0b100
-#var coll_mask: int = 0b101
-#var destroy_shard_params: RSBeansParam
 
-
-var name: String = ""
-var filename: String = ""
-var img_path: String = ""
-var scale: float = 1.0
-var collision_offset: float = 0.0 # normalized
-var pick_offset: float = 0.0 # normalized
-var sfx_dict: Dictionary[String, float] = {} # {sfx_filename: volume_linear}
-var is_destroy: bool = true
-var is_pickable: bool = true
-var is_poly_fracture: bool = false
+@export var name: String = ""
+@export var filename: String = "" # the filename of the image file to be used
+@export var img_path: String = ""
+@export var scale: float = 1.0
+@export var collision_offset: float = 0.0 # normalized
+@export var pick_offset: float = 0.0 # normalized
+@export var sfx_dict: Dictionary[String, float] = {} # {sfx_filename: volume_linear}
+@export var is_destroy: bool = true
+@export var is_pickable: bool = true
+@export var is_poly_fracture: bool = false
 
 
 func to_dict() -> Dictionary:

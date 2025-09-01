@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="RSBeanDefinition" load_steps=2 format=3 uid="uid://6tpo2hw71jqj"]
+
+[ext_resource type="Script" uid="uid://cnk5fobuqtfal" path="res://classes/RSBeanDefinition.gd" id="1_vc2x3"]
+
+[resource]
+script = ExtResource("1_vc2x3")
+name = "Bean_04"
+filename = ""
+img_path = "bean_04.png"
+scale = 1.0
+collision_offset = 0.0
+pick_offset = 0.0
+sfx_dict = Dictionary[String, float]({
+"sfx_notification_00.ogg": 1.0
+})
+is_destroy = true
+is_pickable = true
+is_poly_fracture = false
+metadata/_custom_type_script = "uid://cnk5fobuqtfal"

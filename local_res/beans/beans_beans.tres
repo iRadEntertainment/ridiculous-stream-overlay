@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="RSBeans" load_steps=7 format=3 uid="uid://tyy8kt1e1j6s"]
+
+[ext_resource type="Script" uid="uid://cnk5fobuqtfal" path="res://classes/RSBeanDefinition.gd" id="1_6e34f"]
+[ext_resource type="Resource" uid="uid://dxemkg8j1jaym" path="res://local_res/beans/definition_bean_01.tres" id="2_ktwgu"]
+[ext_resource type="Resource" uid="uid://bdhux6b4ymgk4" path="res://local_res/beans/definition_bean_02.tres" id="3_k7rpg"]
+[ext_resource type="Resource" uid="uid://calcahbevdb0e" path="res://local_res/beans/definition_bean_03.tres" id="4_v8iu3"]
+[ext_resource type="Resource" uid="uid://6tpo2hw71jqj" path="res://local_res/beans/definition_bean_04.tres" id="5_lqpyu"]
+[ext_resource type="Script" uid="uid://elfkqrvn4m62" path="res://classes/RSBeans.gd" id="6_irvvs"]
+
+[resource]
+script = ExtResource("6_irvvs")
+name = "Beans"
+filename = ""
+scale_modifier = 1.0
+scale_randomness = 0.0
+definitions = Array[ExtResource("1_6e34f")]([ExtResource("2_ktwgu"), ExtResource("3_k7rpg"), ExtResource("4_v8iu3"), ExtResource("5_lqpyu")])
+spawn_count_min = 1
+spawn_count_max = 3
+layer = 1
+metadata/_custom_type_script = "uid://elfkqrvn4m62"

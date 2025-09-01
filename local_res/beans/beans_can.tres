@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="RSBeans" load_steps=5 format=3 uid="uid://dq178y6cufe4b"]
+
+[ext_resource type="Script" uid="uid://cnk5fobuqtfal" path="res://classes/RSBeanDefinition.gd" id="1_bqsdt"]
+[ext_resource type="Resource" uid="uid://tyy8kt1e1j6s" path="res://local_res/beans/beans_beans.tres" id="2_gv0el"]
+[ext_resource type="Script" uid="uid://elfkqrvn4m62" path="res://classes/RSBeans.gd" id="3_8j764"]
+
+[sub_resource type="Resource" id="Resource_ia053"]
+script = ExtResource("1_bqsdt")
+name = "Can"
+filename = ""
+img_path = "can.png"
+scale = 1.0
+collision_offset = 0.0
+pick_offset = 0.0
+sfx_dict = Dictionary[String, float]({
+"sfx_can_01.ogg": 1.0,
+"sfx_can_02.ogg": 1.0,
+"sfx_can_03.ogg": 1.0,
+"sfx_can_04.ogg": 1.0
+})
+is_destroy = true
+is_pickable = true
+is_poly_fracture = false
+metadata/_custom_type_script = "uid://cnk5fobuqtfal"
+
+[resource]
+script = ExtResource("3_8j764")
+name = "Can"
+filename = ""
+scale_modifier = 1.0
+scale_randomness = 0.0
+definitions = Array[ExtResource("1_bqsdt")]([SubResource("Resource_ia053")])
+spawn_count_min = 1
+spawn_count_max = 3
+layer = 1
+on_destroy_shards = ExtResource("2_gv0el")
+metadata/_custom_type_script = "uid://elfkqrvn4m62"

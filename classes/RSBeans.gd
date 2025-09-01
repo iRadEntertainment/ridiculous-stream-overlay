@@ -2,22 +2,22 @@ extends Resource
 class_name RSBeans
 
 
-var name: String = ""
-var filename: String = ""
-var scale_modifier: float = 1.0
-var scale_randomness: float = 0.0
-var definitions: Array[RSBeanDefinition] = []
-var spawn_count_min: int = 1
-var spawn_count_max: int = 3
-var layer: int = 1 # min 1 max 10
-var on_destroy_shards: RSBeans
+@export var name: String = ""
+@export var filename: String = ""
+@export var scale_modifier: float = 1.0
+@export var scale_randomness: float = 0.0
+@export var definitions: Array[RSBeanDefinition] = []
+@export var spawn_count_min: int = 1
+@export var spawn_count_max: int = 3
+@export var layer: int = 1 # min 1 max 10
+@export var on_destroy_shards: RSBeans
 
-
+@warning_ignore_start("unused_private_class_variable")
 var _coll_layer: int: # 0b100
 	get: return 0b0001 << layer
 var _coll_mask: int: # 0b101
 	get: return 0b0001 + _coll_layer
-
+@warning_ignore_restore("unused_private_class_variable")
 
 
 func to_dict() -> Dictionary:
@@ -37,7 +37,7 @@ func to_dict() -> Dictionary:
 
 
 static func from_json(d: Dictionary) -> RSBeans:
-	var new_beans := RSBeans.new()
+	var new_beans: RSBeans = RSBeans.new()
 	new_beans.name = d.get("name", "")
 	new_beans.filename = d.get("filename", "")
 	new_beans.scale_modifier = d.get("scale_modifier", 1.0)
@@ -48,5 +48,6 @@ static func from_json(d: Dictionary) -> RSBeans:
 	new_beans.spawn_count_min = d.get("spawn_count_min", 1)
 	new_beans.spawn_count_max = d.get("spawn_count_max", 3)
 	new_beans.layer = d.get("layer", 1)
-	new_beans.on_destroy_shards = RSBeans.from_json( d.get("on_destroy_shards", {}) )
+	if d.has("on_destroy_shards") and d.get("on_destroy_shards", {}) != {}:
+		new_beans.on_destroy_shards = RSBeans.from_json( d.get("on_destroy_shards", {}) )
 	return new_beans
