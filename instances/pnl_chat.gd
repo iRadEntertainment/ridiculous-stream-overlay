@@ -68,7 +68,7 @@ func format_msg(key, _msg) -> String:
 #region Function Signals
 func _on_chat_entry_username_pressed(
 			parent: EntryChatMessage,
-			t_message: TwitchChatMessage,
+			_t_message: TwitchChatMessage,
 			user: RSUser,
 		) -> void:
 	%context_menu_chat.populate(user)

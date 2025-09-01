@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=3 uid="uid://dhwexcg4happa"]
+
+[ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_lcvlk"]
+[ext_resource type="StyleBox" uid="uid://c0aj4762xvg73" path="res://ui/styles/editor_light_panel.stylebox" id="2_xmv42"]
+[ext_resource type="Script" uid="uid://0gr4nw1r0v6f" path="res://instances/pnl_users_mng.gd" id="3_u7lst"]
+[ext_resource type="PackedScene" uid="uid://dps0a5js2rxa6" path="res://instances/users/pnl_search_user.tscn" id="4_61cc7"]
+[ext_resource type="PackedScene" uid="uid://b0w820dulgunt" path="res://instances/users/pnl_rs_user.tscn" id="5_fylq7"]
+[ext_resource type="PackedScene" uid="uid://diw3w4nhkav5m" path="res://instances/pnl_user_live.tscn" id="6_0jlv0"]
+[ext_resource type="PackedScene" uid="uid://cjy7achs3ybvv" path="res://instances/pnl_beans_editor.tscn" id="7_43hh4"]
+[ext_resource type="Texture2D" uid="uid://b0ojmkb42pnot" path="res://ui/icons/bootstrap_icons/folder2-open.svg" id="8_3a01j"]
+
+[node name="pnl_users_mng" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_lcvlk")
+theme_override_styles/panel = ExtResource("2_xmv42")
+script = ExtResource("3_u7lst")
+
+[node name="vb" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="pnl_search_user" parent="vb" instance=ExtResource("4_61cc7")]
+layout_mode = 2
+
+[node name="sep" type="HSeparator" parent="vb"]
+layout_mode = 2
+
+[node name="tabs" type="TabContainer" parent="vb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="pnl_rs_twitch_user_info" parent="vb/tabs" instance=ExtResource("5_fylq7")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="pnl_user_live" parent="vb/tabs" instance=ExtResource("6_0jlv0")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="pnl_beans_editor" parent="vb/tabs" instance=ExtResource("7_43hh4")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="btn_open_folder" type="Button" parent="vb"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Open users folder"
+icon = ExtResource("8_3a01j")
+expand_icon = true
+
+[node name="sfx_prev" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+
+[connection signal="pressed" from="vb/btn_open_folder" to="." method="_on_btn_open_folder_pressed"]

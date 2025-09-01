@@ -45,7 +45,7 @@ func _on_btn_preview_pressed() -> void:
 	if %sfx_preview.playing:
 		%sfx_preview.stop()
 		return
-	var sfx_filename: String = %opt_sfx_path.text
+	sfx_filename = %opt_sfx_path.text
 	%sfx_preview.stream = RS.loader.load_sfx_from_sfx_folder(sfx_filename)
 	%sfx_preview.play()
 func _on_sl_volume_value_changed(value: float) -> void:

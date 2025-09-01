@@ -51,6 +51,7 @@ folder_colors={
 "res://addons/": "purple",
 "res://classes/": "green",
 "res://instances/": "red",
+"res://local_res/": "pink",
 "res://tools/": "orange",
 "res://ui/": "teal"
 }

@@ -172,10 +172,12 @@ static func resize_img_to_max_dim(img: Image, max_dim: int) -> Image:
 	var height: int
 	var _is_taller: bool = img.get_size().x < img.get_size().y
 	if _is_taller:
+		@warning_ignore("integer_division")
 		width = (max_dim * img.get_size().x) / img.get_size().y
 		height = max_dim
 	else:
 		width = max_dim
+		@warning_ignore("integer_division")
 		height = (max_dim * img.get_size().y) / img.get_size().x
 	var resized_image: Image = img.duplicate()
 	resized_image.resize(width, height)

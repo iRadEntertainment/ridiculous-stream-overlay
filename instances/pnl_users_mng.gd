@@ -2,6 +2,9 @@
 
 # download carbrix now
 extends PanelContainer
+class_name PnlUsersMng
+
+@onready var tabs: TabContainer = %tabs
 
 var user: RSUser
 
