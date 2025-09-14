@@ -454,9 +454,9 @@ func destructibles_names(username := "", quantity: int = 1, font_size := 96):
 		return
 	
 	var col :=  Color("00ec4f")
-	if user.twitch_chat_color != Color.BLACK:
+	if user.twitch_chat_color != Color.TRANSPARENT:
 		col = user.twitch_chat_color
-	elif user.custom_chat_color != Color.BLACK:
+	elif user.custom_chat_color != Color.TRANSPARENT:
 		col = user.custom_chat_color
 	
 	if username == "dawdle":
