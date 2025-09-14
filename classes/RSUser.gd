@@ -250,7 +250,6 @@ static func from_twitcher_user(t_user: TwitchUser) -> RSUser:
 
 class Interactions:
 	enum SubTier {TIER1, TIER2, TIER3} # TODO: update from twitch API
-	
 	var is_global: bool = false
 	var messages_count: int = 0
 	var commands_count: int = 0
@@ -331,7 +330,7 @@ class Interactions:
 		d["raids_out_count"] = raids_out_count
 		d["subscriptions"] = {}
 		for tier: SubTier in subscriptions:
-			d["subscriptions"][tier] = subscriptions[tier]
+			d["subscriptions"][int(tier)] = subscriptions[tier]
 		return d
 	
 	
@@ -376,7 +375,7 @@ class Interactions:
 		new_interactions.raids_in_count = d.get("raids_in_count", 0)
 		new_interactions.raids_out_count = d.get("raids_out_count", 0)
 		new_interactions.subscriptions = {}
-		for key: int in d.get("subscriptions", {}):
-			var tier_key: SubTier = key as SubTier
-			new_interactions.subscriptions[tier_key] = int(d["subscriptions"][key])
+		#for key: int in d.get("subscriptions", {}): # TODO: not working broken. Got only one instead of three subs and one of them was subscriptions{"1000":1} which is wrong
+			#var tier_key: SubTier = key as SubTier
+			#new_interactions.subscriptions[tier_key] = int(d["subscriptions"][key])
 		return new_interactions

@@ -6,14 +6,14 @@ class_name RSPnlSettings
 @onready var tabs = %tabs
 @onready var side_bar = %side_bar
 
+@onready var pnl_users_mng: PnlUsersMng = %pnl_users_mng
 
 func start():
 	reload_panels()
 	connect_tab_buttons_to_tab_container()
 	visibility_changed.connect(update_sidebar_pos)
 	resized.connect(update_sidebar_pos)
-	#draw.connect(update_sidebar_pos)
-	%pnl_twitch_user_list.user_selected.connect(%pnl_twitch_user_fields.populate_fields)
+	%pnl_twitch_user_list.user_selected.connect(%pnl_users_mng.populate_fields)
 
 
 func populate():
@@ -66,6 +66,7 @@ func update_sidebar_pos() -> void:
 	tw_sidebar.parallel().tween_property(side_bar, ^"size", rect.size, 0.15)
 
 
+#region Signals Editor
 func _on_btn_hot_reload_plugin_pressed():
 	RS.reload_plugin()
 func _on_btn_hot_reload_pressed():
@@ -89,3 +90,4 @@ func _on_btn_credits_polygon_pressed():
 
 func _on_btn_close_pressed() -> void:
 	hide()
+#endregion

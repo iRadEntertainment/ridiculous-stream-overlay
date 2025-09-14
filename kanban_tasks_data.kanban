@@ -35,7 +35,9 @@
 				"24ff1b9f-af10-4658-8628-1d682ed7c6ba",
 				"77dffa41-094e-4a12-b738-b160a338fb9a",
 				"6914f967-4ee4-487b-8d28-dda95a1ebab5",
-				"50405e5f-d98c-476e-b9b7-153f9a380aa2"
+				"50405e5f-d98c-476e-b9b7-153f9a380aa2",
+				"814af4d1-627b-4d9e-b09a-b03b3e02ea2b",
+				"4d4b1fdf-83af-4759-913d-d1076dac2838"
 			]
 		},
 		{
@@ -399,6 +401,20 @@
 		{
 			"uuid": "b1ad4f38-ce82-42b8-8888-71fa829e3c5f",
 			"title": "Cache profile pictures on disk",
+			"description": "",
+			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
+			"steps": []
+		},
+		{
+			"uuid": "814af4d1-627b-4d9e-b09a-b03b3e02ea2b",
+			"title": "Subscriptions in summary",
+			"description": "It doesn't update correctly and the key in the json dictionary seems wrong",
+			"category": "5cb6e5bd-6da9-452f-9c5b-285aabd09166",
+			"steps": []
+		},
+		{
+			"uuid": "4d4b1fdf-83af-4759-913d-d1076dac2838",
+			"title": "!fish command to spawn Temptic404 fish",
 			"description": "",
 			"category": "e2fc60de-b9a8-4bcd-84e2-23d6a478ce9f",
 			"steps": []

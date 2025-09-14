@@ -1,13 +1,18 @@
 extends PanelContainer
 class_name EntryBeans
 
-var beans: RSBeans
-var is_editable: bool = true
+@export var beans: RSBeans
+@export var is_editable: bool = true:
+	set(val):
+		if is_editable == val: return
+		is_editable = val
+		_update_is_editable()
 
 signal delete_pressed(entry: EntryBeans)
 
 
 func _ready() -> void:
+	if not RS.is_node_ready(): await RS.ready
 	update_opt_btns()
 	_populate()
 
@@ -27,7 +32,11 @@ func _populate() -> void:
 	%sp_spawn_count_min.value = beans.spawn_count_min # int = 1
 	%sp_spawn_count_max.value = beans.spawn_count_max # int = 3
 	%sp_layer.value = beans.layer # int = 1 # min 1 max 10
-	%opt_on_destroy_shards.select = beans.on_destroy_shards # RSBeans
+	#%opt_on_destroy_shards.select = beans.on_destroy_shards # RSBeans #TODO
+
+
+func _update_is_editable() -> void: # TODO
+	pass
 
 
 func update_opt_btns() -> void:
@@ -39,7 +48,7 @@ func update_opt_btns() -> void:
 		var d: Dictionary = RSUtl.load_json(filepath)
 		if d.has(""):
 			continue
-		var beans: RSBeans = RSBeans.from_json(d)
+		#var beans: RSBeans = RSBeans.from_json(d)
 		
 		%opt_on_destroy_shards.add_item(filename, i)
 	%opt_on_destroy_shards.select(-1)

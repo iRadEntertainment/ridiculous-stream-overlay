@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmi7ew3mtdkgd"]
+[gd_scene load_steps=7 format=3 uid="uid://dmi7ew3mtdkgd"]
 
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_pbgtt"]
 [ext_resource type="Script" uid="uid://0de5vhpbnx" path="res://instances/entries/entry_beans.gd" id="2_8tmad"]
 [ext_resource type="StyleBox" uid="uid://dbp0y34p3gdwo" path="res://ui/styles/panel_light_contour.stylebox" id="2_j36n5"]
 [ext_resource type="Texture2D" uid="uid://ceh17coxgqqnr" path="res://icon.png" id="3_8tmad"]
+[ext_resource type="Resource" uid="uid://dq178y6cufe4b" path="res://local_res/beans/beans_can.tres" id="3_yxql0"]
 [ext_resource type="Texture2D" uid="uid://c23twk8ui0g11" path="res://ui/icons/bootstrap_icons/trash.svg" id="4_yxql0"]
 
 [node name="entry_beans" type="PanelContainer"]
@@ -11,78 +12,126 @@ offset_right = 376.0
 offset_bottom = 122.0
 theme = ExtResource("1_pbgtt")
 script = ExtResource("2_8tmad")
+beans = ExtResource("3_yxql0")
 
-[node name="hb" type="HBoxContainer" parent="."]
+[node name="vb_left" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="hb" type="HBoxContainer" parent="vb_left"]
 layout_mode = 2
 
-[node name="vb_left" type="VBoxContainer" parent="hb"]
-layout_mode = 2
-
-[node name="pnl_prev" type="PanelContainer" parent="hb/vb_left"]
+[node name="pnl_prev" type="Button" parent="vb_left/hb"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_styles/panel = ExtResource("2_j36n5")
 
-[node name="tex_prev" type="TextureRect" parent="hb/vb_left/pnl_prev"]
+[node name="tex_prev" type="TextureRect" parent="vb_left/hb/pnl_prev"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("3_8tmad")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="btn_delete" type="Button" parent="hb/vb_left"]
+[node name="lb_name" type="LineEdit" parent="vb_left/hb"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "name"
+
+[node name="btn_delete" type="Button" parent="vb_left/hb"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"FlatButton"
 icon = ExtResource("4_yxql0")
 icon_alignment = 1
 expand_icon = true
 
-[node name="sep" type="VSeparator" parent="hb"]
+[node name="sep" type="HSeparator" parent="vb_left"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="vb_right" type="VBoxContainer" parent="hb"]
+[node name="vb_expand" type="VBoxContainer" parent="vb_left"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="lb_name" type="LineEdit" parent="hb/vb_right"]
-unique_name_in_owner = true
+[node name="pnl_definitions" type="PanelContainer" parent="vb_left/vb_expand"]
 layout_mode = 2
-placeholder_text = "name"
+size_flags_horizontal = 3
+theme_override_styles/panel = ExtResource("2_j36n5")
 
-[node name="lb_filename" type="LineEdit" parent="hb/vb_right"]
+[node name="flow_definitions" type="HFlowContainer" parent="vb_left/vb_expand/pnl_definitions"]
 unique_name_in_owner = true
 layout_mode = 2
-placeholder_text = "name"
 
-[node name="sl_scale_modifier" type="HSlider" parent="hb/vb_right"]
+[node name="lb_filename" type="LineEdit" parent="vb_left/vb_expand"]
 unique_name_in_owner = true
 layout_mode = 2
+placeholder_text = "filename"
+
+[node name="hb_scale_modifier" type="HBoxContainer" parent="vb_left/vb_expand"]
+layout_mode = 2
+
+[node name="sl_scale_modifier" type="HSlider" parent="vb_left/vb_expand/hb_scale_modifier"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 min_value = 0.01
 max_value = 20.0
 step = 0.01
 value = 0.01
 
-[node name="sl_scale_randomness" type="HSlider" parent="hb/vb_right"]
+[node name="hb_scale_randomness" type="HBoxContainer" parent="vb_left/vb_expand"]
+layout_mode = 2
+
+[node name="sl_scale_randomness" type="HSlider" parent="vb_left/vb_expand/hb_scale_randomness"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 max_value = 1.0
 step = 0.001
 
-[node name="flow_definitions" type="HFlowContainer" parent="hb/vb_right"]
-unique_name_in_owner = true
+[node name="HBoxContainer" type="HBoxContainer" parent="vb_left/vb_expand"]
 layout_mode = 2
 
-[node name="sp_spawn_count_min" type="SpinBox" parent="hb/vb_right"]
+[node name="lb1" type="Label" parent="vb_left/vb_expand/HBoxContainer"]
+layout_mode = 2
+text = "Spawn"
+
+[node name="lb2" type="Label" parent="vb_left/vb_expand/HBoxContainer"]
+layout_mode = 2
+text = "min"
+
+[node name="sp_spawn_count_min" type="SpinBox" parent="vb_left/vb_expand/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+min_value = 1.0
+value = 1.0
 
-[node name="sp_spawn_count_max" type="SpinBox" parent="hb/vb_right"]
+[node name="sp_spawn_count_max" type="SpinBox" parent="vb_left/vb_expand/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+min_value = 1.0
+value = 1.0
 
-[node name="sp_layer" type="SpinBox" parent="hb/vb_right"]
+[node name="lb3" type="Label" parent="vb_left/vb_expand/HBoxContainer"]
+layout_mode = 2
+text = "max"
+
+[node name="sp_layer" type="SpinBox" parent="vb_left/vb_expand"]
 unique_name_in_owner = true
 layout_mode = 2
 min_value = 1.0
@@ -92,8 +141,16 @@ rounded = true
 allow_greater = true
 allow_lesser = true
 
-[node name="opt_on_destroy_shards" type="OptionButton" parent="hb/vb_right"]
-unique_name_in_owner = true
+[node name="hb_on_destroy_shards" type="HBoxContainer" parent="vb_left/vb_expand"]
 layout_mode = 2
 
-[connection signal="pressed" from="hb/vb_left/btn_delete" to="." method="_on_btn_delete_pressed"]
+[node name="lb" type="Label" parent="vb_left/vb_expand/hb_on_destroy_shards"]
+layout_mode = 2
+text = "Shards"
+
+[node name="opt_on_destroy_shards" type="OptionButton" parent="vb_left/vb_expand/hb_on_destroy_shards"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="vb_left/hb/btn_delete" to="." method="_on_btn_delete_pressed"]

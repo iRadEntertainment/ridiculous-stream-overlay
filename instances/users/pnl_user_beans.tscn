@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d2sg73c4hstmj" path="res://instances/users/pnl_user_beans.gd" id="1_cflnw"]
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_chwgi"]
-[ext_resource type="Texture2D" uid="uid://ca6xdmc1afmql" path="res://ui/icons/bootstrap_icons/x.svg" id="3_bjs2q"]
+[ext_resource type="PackedScene" uid="uid://dmi7ew3mtdkgd" path="res://instances/entries/entry_beans.tscn" id="3_chwgi"]
 
 [node name="pnl_user_beans" type="PanelContainer"]
 offset_right = 524.0
@@ -22,6 +22,7 @@ size_flags_vertical = 3
 layout_mode = 2
 
 [node name="opt_available_beans" type="OptionButton" parent="vb/hb/vb_tools"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="btn_add_beans" type="Button" parent="vb/hb/vb_tools"]
@@ -34,32 +35,19 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "Open beans editor"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="vb/hb"]
+[node name="scroll" type="ScrollContainer" parent="vb/hb"]
 layout_mode = 2
 size_flags_horizontal = 3
-horizontal_scroll_mode = 0
+vertical_scroll_mode = 0
 
-[node name="flow" type="HFlowContainer" parent="vb/hb/ScrollContainer"]
+[node name="flow" type="HFlowContainer" parent="vb/hb/scroll"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="entry_beans" type="PanelContainer" parent="vb/hb/ScrollContainer/flow"]
+[node name="entry_beans" parent="vb/hb/scroll/flow" instance=ExtResource("3_chwgi")]
 layout_mode = 2
 
-[node name="hb" type="HBoxContainer" parent="vb/hb/ScrollContainer/flow/entry_beans"]
-layout_mode = 2
-
-[node name="lb" type="Label" parent="vb/hb/ScrollContainer/flow/entry_beans/hb"]
-layout_mode = 2
-text = "name of the beans"
-
-[node name="sp_custom_scale" type="SpinBox" parent="vb/hb/ScrollContainer/flow/entry_beans/hb"]
-layout_mode = 2
-
-[node name="btn_delete" type="Button" parent="vb/hb/ScrollContainer/flow/entry_beans/hb"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-icon = ExtResource("3_bjs2q")
-icon_alignment = 1
-expand_icon = true
+[connection signal="pressed" from="vb/hb/vb_tools/btn_add_beans" to="." method="_on_btn_add_beans_pressed"]
+[connection signal="pressed" from="vb/hb/vb_tools/btn_open_bean_editor" to="." method="_on_btn_open_bean_editor_pressed"]

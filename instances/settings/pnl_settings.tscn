@@ -6,7 +6,7 @@
 [ext_resource type="StyleBox" uid="uid://c0aj4762xvg73" path="res://ui/styles/editor_light_panel.stylebox" id="2_1hi6d"]
 [ext_resource type="Texture2D" uid="uid://ca6xdmc1afmql" path="res://ui/icons/bootstrap_icons/x.svg" id="2_m57c4"]
 [ext_resource type="Texture2D" uid="uid://cfs6apvwuggtt" path="res://ui/icons/bootstrap_icons/person-bounding-box.svg" id="3_7xqlq"]
-[ext_resource type="PackedScene" uid="uid://dhwexcg4happa" path="res://instances/pnl_twitch_user_manager.tscn" id="3_tus6h"]
+[ext_resource type="PackedScene" uid="uid://dhwexcg4happa" path="res://instances/pnl_users_mng.tscn" id="3_tus6h"]
 [ext_resource type="Texture2D" uid="uid://boa5ns6c4c07k" path="res://ui/icons/bootstrap_icons/twitch.svg" id="4_7hk7t"]
 [ext_resource type="PackedScene" uid="uid://bext4in78rfy6" path="res://instances/users/pnl_rs_user_list.tscn" id="4_j0n41"]
 [ext_resource type="Texture2D" uid="uid://ctpfh3qqwicqq" path="res://ui/sprites/btn_settings.png" id="5_574cn"]
@@ -119,7 +119,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
 
-[node name="pnl_twitch_user_fields" parent="vb/hb/tabs/users" instance=ExtResource("3_tus6h")]
+[node name="pnl_users_mng" parent="vb/hb/tabs/users" instance=ExtResource("3_tus6h")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
