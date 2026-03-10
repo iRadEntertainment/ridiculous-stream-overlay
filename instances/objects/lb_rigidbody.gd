@@ -26,5 +26,5 @@ func start():
 
 func destroy():
 	if physics_scene:
-		RSPhysicsShardGenerator.generate_shards(physics_scene, self, poly_points, tex, 20, 50.0)
+		RSPhysicsShardGenerator.generate_shards(physics_scene, self, poly_points, tex, 5, 50.0)
 	queue_free()

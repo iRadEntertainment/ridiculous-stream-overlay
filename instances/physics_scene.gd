@@ -102,7 +102,9 @@ func _add_rigid(new_body : RigidBody2D, pos := Vector2(), linear_velocity := Vec
 func remove_obj_from_count():
 	obj_count -= 1
 
+
 func generate_text_rigidbody(text : String, col : Color, lb_font_size : int):
+	if obj_count > SHARD_BODIES_CAP: return
 	var lb_body : RigidBody2D = await $label_renderer.generate_text_rigidbody(text, col, lb_font_size)
 	lb_body.mass = 0.3
 	var safe = 120
@@ -128,7 +130,7 @@ func add_image_bodies(params : RSBeansParam, pos = null, linear_velocity = null,
 	
 	var num = range(params.spawn_count_min, params.spawn_count_max+1).pick_random()
 	for i in num:
-		if obj_count > SHARD_BODIES_CAP: continue
+		if obj_count > SHARD_BODIES_CAP: break
 		var tex = texs.pick_random()
 		var body := RSImageToRigid.new(tex, params, sfx_streams)
 		body.rotation = randf_range(0, TAU)
@@ -196,6 +198,7 @@ func add_rigid_body_from_image(tex: Texture2D, body_scale: float = 1.0) -> Rigid
 	new_body.position = size / 2.0
 	bodies.add_child(new_body)
 	return new_body
+
 
 func zero_g() -> void:
 	interpolate_gravity(0)
@@ -292,9 +295,20 @@ func unpin_bodies():
 	pin.node_b = NodePath()
 
 
+const MAX_GRANADES = 69
+var current_granades: Array[RigidBody2D] = []
 func spawn_grenade():
-	var granade = RS.globals.granade_pack.instantiate()
+	if current_granades.size() >= MAX_GRANADES:
+		return
+	var granade: RigidBody2D = RS.globals.granade_pack.instantiate()
 	_add_rigid(granade, Vector2(), Vector2(), randf_range(-5.0, 5.0), true)
+	granade.tree_exited.connect(_on_granade_tree_exited.bind(granade))
+	current_granades.append(granade)
+
+
+func _on_granade_tree_exited(granade: RigidBody2D) -> void:
+	if current_granades.has(granade):
+		current_granades.erase(granade)
 
 
 func nuke():

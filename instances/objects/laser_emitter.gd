@@ -26,7 +26,7 @@ func play(angle: float):
 	space = get_world_2d().direct_space_state
 	query = PhysicsRayQueryParameters2D.create(Vector2(), Vector2())
 	query.collide_with_bodies = true
-	query.collision_mask = 1+2+4+8+16+32
+	query.collision_mask = 0b111111 #1+2+4+8+16+32
 	
 	var passes = 5
 	set_process(true)

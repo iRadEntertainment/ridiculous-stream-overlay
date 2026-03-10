@@ -5,6 +5,7 @@ class_name RSPhysicsShardGenerator
 
 
 static func generate_shards(physics_scene : RSPhysicsScene, body : PhysicsBody2D, poly : Array[Vector2], tex : Texture2D, fracture_number : int, min_discard_area : float):
+	if physics_scene.obj_count >= physics_scene.SHARD_BODIES_CAP: return
 	var shards = []
 	var poly_rect := get_rect_from_poly(poly)
 	var size = poly_rect.size
@@ -20,7 +21,7 @@ static func generate_shards(physics_scene : RSPhysicsScene, body : PhysicsBody2D
 		
 		var shard_body = RigidBody2D.new()
 		shard_body.global_position = frac_spawn_pos
-		shard_body.collision_layer = 2
+		shard_body.collision_layer = 0b1000000
 		shard_body.collision_mask = 1
 		
 		var new_poly = Polygon2D.new()
@@ -52,10 +53,10 @@ static func generate_shards(physics_scene : RSPhysicsScene, body : PhysicsBody2D
 		var m = physics_scene.get_global_mouse_position()
 		var dir = (shard.global_position - m).normalized()
 		shard.apply_central_impulse(dir*1000)
-		var tw = physics_scene.create_tween()
-		tw.bind_node(shard)
-		tw.tween_interval(10.0)
-		tw.tween_property(shard, "scale", Vector2(0.01, 0.01), 1).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+		var tw = shard.create_tween()
+		#tw.bind_node(shard)
+		tw.tween_interval(1.0)
+		tw.tween_property(shard.get_child(0), "scale", Vector2(0.01, 0.01), 1).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		tw.tween_callback(shard.queue_free)
 
 
