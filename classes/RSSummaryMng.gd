@@ -6,6 +6,7 @@ var current_summary_file_path: String:
 var stored_summary_file_path: String:
 	get(): return RSSettings.get_summaries_path().path_join("stream_summary_%s.json")
 
+var _tmr_autosave: Timer
 var summary: RSSummary
 
 static var _log: TwitchLogger = TwitchLogger.new(&"RSSummaryMng")
@@ -17,7 +18,11 @@ signal user_interactions_updated(user_id: int)
 
 #region Init
 func _ready() -> void:
-	pass
+	_tmr_autosave = Timer.new()
+	_tmr_autosave.wait_time = 180
+	_tmr_autosave.one_shot = false
+	_tmr_autosave.timeout.connect(save_current_summary)
+	add_child(_tmr_autosave)
 
 
 func start() -> void:
@@ -25,6 +30,7 @@ func start() -> void:
 	_log.i("Starting...")
 	load_summary()
 	connect_twitcher_events()
+	_tmr_autosave.start()
 
 
 func connect_twitcher_events() -> void:
