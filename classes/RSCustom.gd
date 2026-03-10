@@ -20,14 +20,24 @@ func start():
 
 
 func add_commands() -> void:
+	var cmd_wishlist: TwitchCommand = RS.twitcher.add_command("wishlist", wishlist)
+	cmd_wishlist.description = "Check out our game on steam! Typing Tower Defence Game: A Few of US: Operation Nightshade."
+	var cmd_steam: TwitchCommand = RS.twitcher.add_command("steam", steam)
+	cmd_steam.description = "Check out my steam page."
+	var cmd_itch: TwitchCommand = RS.twitcher.add_command("itch", itch)
+	cmd_itch.description = "Check out my itch page."
 	var cmd_add_me: TwitchCommand = RS.twitcher.add_command("add_me", RS.user_mng._on_user_request_add)
 	cmd_add_me.description = "Adds you to the known users of the Ridiculous Stream."
 	var cmd_discord: TwitchCommand = RS.twitcher.add_command("discord", discord)
 	cmd_discord.description = "Get an invite to the best discord server ever, with so many channels!"
+	var cmd_c_source: TwitchCommand = RS.twitcher.add_command("c_source", c_source)
+	cmd_c_source.description = "Get a link to Finisfine voice acting master class."
+	var cmd_jam: TwitchCommand = RS.twitcher.add_command("jam", jam)
+	cmd_jam.description = "Doing the Jern Jam 2025, get link and info."
 	var cmd_commands: TwitchCommand = RS.twitcher.add_command("commands", chat_commands_help)
 	cmd_commands.description = "This need to be updated, it's not correct. Don't trust it!"
 	var cmd_pandano: TwitchCommand = RS.twitcher.add_command("pandano", pandano)
-	cmd_pandano.description = "Complain about pandacoder with our tryly Jern!"
+	cmd_pandano.description = "Complain about pandacoder with our truly Jern!"
 	var cmd_whostream: TwitchCommand = RS.twitcher.add_command("whostream", whostream)
 	cmd_whostream.description = "Shows who, in the known users, is streaming at the moment."
 	var cmd_b: TwitchCommand = RS.twitcher.add_command("b", spawn_fake_beans, 0, 1)
@@ -44,6 +54,14 @@ func add_commands() -> void:
 	cmd_toggle_music.description = "Vex667 can toggle the music on stream. You too!"
 	var cmd_mika: TwitchCommand = RS.twitcher.add_command("mika", play_mika_system_of_a_down)
 	cmd_mika.description = "System of a down is like... by Mika_Shiyu"
+	var cmd_scawy: TwitchCommand = RS.twitcher.add_command("scawy", play_scawy_dunkaccino)
+	cmd_scawy.description = "What's my name? Scawy Pastry!"
+	var cmd_irad: TwitchCommand = RS.twitcher.add_command("irad", play_irad_being_irad)
+	cmd_irad.description = "How it is to be like the streamer?"
+	var cmd_beginning: TwitchCommand = RS.twitcher.add_command("beginning", play_beginning)
+	cmd_beginning.description = "Plays \"In the beginning\"."
+	var cmd_yippee: TwitchCommand = RS.twitcher.add_command("yippee", play_yippee)
+	cmd_yippee.description = "Plays \"Yippee!\"."
 	var cmd_snow: TwitchCommand = RS.twitcher.add_command("snow", let_it_snow)
 	cmd_snow.description = "Manadono has snow on stream, we have our snow at home!"
 	var cmd_laser: TwitchCommand = RS.twitcher.add_command("laser", laser, 0, 1)
@@ -62,7 +80,6 @@ func add_commands() -> void:
 	cmd_zero_g.add_alias("zerog")
 	cmd_zero_g.add_alias("0g")
 	cmd_zero_g.add_alias("0G")
-	
 	#RS.twitcher.add_command("tts", parse_tts_command, 1, 256)
 	#RS.twitcher.add_command("tts_gb", parse_tts_command.bind("en_GB"), 1, 256)
 	#RS.twitcher.add_command("tts_us", parse_tts_command.bind("en_US"), 1, 256)
@@ -105,7 +122,7 @@ func on_first_session_message(t_message: TwitchChatMessage) -> void:
 	# let the physic name appear in the editor
 
 
-func on_channel_points_redeemed(data: RSTwitchEventData):
+func on_channel_points_redeemed(data: RSTwitchEventData) -> void:
 	_log.i("Channel points redeemed. %s -> %s" % [data.username, data.reward_title] )
 	var user: RSUser = await RS.user_mng.get_any_user_from_username(data.username)
 	#if await !RS.no_obs_ws.is_stream_on: chat_on_stream_off(data.username); return
@@ -122,7 +139,14 @@ func on_channel_points_redeemed(data: RSTwitchEventData):
 		"Impersonate iRadDev": RS.vetting.custom_rewards_vetting(impersonate_iRad, data)
 		"Change Stream Title": RS.vetting.custom_rewards_vetting(change_stream_title, data)
 		"Do it!": play_doit()
-		"Toggle mute mic on stream": RS.no_obs_ws.toggle_mic_mute()
+		"Toggle mute mic on stream":
+			if user.username == "trickylady":
+				var messages: Array[String] = [
+					"C'mon Tricky!",
+					"Seems out Tricky has nothing to do in her life. Nothing at all.",
+				]
+				RS.twitcher.chat(messages.pick_random() )
+			RS.no_obs_ws.toggle_mic_mute()
 		"Granades!": RS.physic_scene.spawn_grenade()
 		"Change streamer colour": change_streamer_colour(data.user_input)
 func on_followed(data: RSTwitchEventData):
@@ -171,7 +195,7 @@ func change_streamer_colour(user_input: String) -> void:
 	RS.no_obs_ws.set_item_filter_setting("Cam-composite", "Colour Correction", settings_composite)
 
 
-func impersonate_iRad(data: RSTwitchEventData):
+func impersonate_iRad(data: RSTwitchEventData) -> void:
 	var broadcaster_login = data.user_input.split(" ", false, 1)[0]
 	broadcaster_login = broadcaster_login.strip_edges()
 	broadcaster_login = broadcaster_login.lstrip("@")
@@ -234,6 +258,33 @@ func get_advice(data: RSTwitchEventData) -> void:
 	RS.twitcher.chat(format_string.format(advice_dic) )
 
 
+func wishlist(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
+	var msg = "Check out our game on Steam! Typing Tower Defence Game -> A Few of US: Operation Nightshade https://s.team/a/4326920 . Follow IrishJohnGames curated list of steam games HERE: https://store.steampowered.com/curator/45553695-Games-Developed-Live-by-Streamers/ <- DO IT!"
+	RS.twitcher.chat(msg)
+
+
+func steam(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
+	var msg = "Check out our game on Steam! Typing Tower Defence Game -> A Few of US: Operation Nightshade https://s.team/a/4326920 . Follow IrishJohnGames curated list of steam games HERE: https://store.steampowered.com/curator/45553695-Games-Developed-Live-by-Streamers/ <- DO IT!"
+	RS.twitcher.chat(msg)
+
+
+func itch(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
+	var msg = "Check out our game on itch.io! Typing Tower Defence Game -> A Few of US: Operation Nightshade https://vhoyer.itch.io/operation-nightshade ."
+	RS.twitcher.chat(msg)
+
+
 func discord(
 			_from_username: String = "",
 			_info: TwitchCommandInfo = null,
@@ -241,6 +292,27 @@ func discord(
 		) -> void:
 	RS.play_sfx("discord")
 	var msg = "Join Discord: https://discord.gg/4YhKaHkcMb"
+	RS.twitcher.chat(msg)
+
+
+func c_source(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
+	$sfx_custom.stop()
+	$sfx_custom.stream = RS.loader.load_sfx_from_sfx_folder("sfx_scissors.ogg")
+	$sfx_custom.play()
+	var msg = "Check out Trickylady first published game with finisfine special guest: https://trickylady.itch.io/the-exam-scam"
+	RS.twitcher.chat(msg)
+
+
+func jam(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
+	var msg = "Not doing any jam now after winning this one! https://itch.io/jam/jern-jam-2025 . Also go check trickylady and camsdono game jam game I helped with: https://trickylady.itch.io/bam"
 	RS.twitcher.chat(msg)
 
 
@@ -271,12 +343,16 @@ func beans(username: String) -> void:
 func zero_g(
 			_from_username: String = "",
 			_info: TwitchCommandInfo = null,
-			_args: PackedStringArray = [],
-			duration := 20.0
+			args: PackedStringArray = [],
 		) -> void:
 	if not RS.physic_scene:
 		RS.twitcher.chat("Wait for the physic scene to be in first!")
 		return
+	var duration: float = 30.0
+	if args.size() > 0:
+		if float(args[0]) > 0.0:
+			duration = clamp(float(args[0]), 1.0, 180.0)
+	
 	RS.physic_scene.duration = duration
 	RS.physic_scene.zero_g()
 
@@ -330,7 +406,7 @@ func spawn_fake_beans(
 					"fishGray.png",
 					"fishGreen.png",
 					"fishOrange.png",
-					"fishYellow.png",
+					#"fishYellow.png",
 					"fishRed.png",
 					"fishPink.png",
 					"fishPurple.png",
@@ -338,12 +414,16 @@ func spawn_fake_beans(
 				fake_beans.scale = randf_range(0.6, 0.8)
 				await get_tree().create_timer(1.5).timeout
 				zero_g()
+				var msg = "Say buongiorno to Temptic here -> https://twitch.tv/temptic404 <-"
+				RS.twitcher.chat(msg)
 			"giganzo":
 				count = 100
 			"jake":
 				fake_beans.img_paths = ["pickle.png", "pickle_jar.png"]
-				fake_beans.scale = randf_range(0.3, 0.6)
+				fake_beans.scale = randf_range(0.05, 0.25)
 				count = 69
+				var msg = "Wishlist Amelorn! by Jake RetroBright <3 -> https://s.team/a/3642760 <-"
+				RS.twitcher.chat(msg)
 			"anihan":
 				var rand_idx: int = randi_range(0,1)
 				fake_beans.img_paths = [
@@ -371,8 +451,14 @@ func spawn_fake_beans(
 			"vex":
 				fake_beans.img_paths = ["vex.png"]
 				fake_beans.scale = randf_range(0.25, 0.35)
-				count = 667
+				count = 67
 				var msg = "BUY Zooika! by Vex667 <3 -> https://s.team/a/2994730 <-"
+				RS.twitcher.chat(msg)
+			"mrwho":
+				fake_beans.img_paths = ["Benji1.png", "Benji2.png"]
+				fake_beans.scale = randf_range(0.45, 0.65)
+				count = 42
+				var msg = "Wishlist Benjumping Hopkins! by MrWhoMan (that has average pickels) <3 -> https://s.team/a/4091420 <-"
 				RS.twitcher.chat(msg)
 	
 	for i: int in count:
@@ -422,6 +508,8 @@ func toggle_music(
 			_info: TwitchCommandInfo = null,
 			_args: PackedStringArray = []
 		) -> void:
+	if _from_username == "gingerc4t":
+		RS.twitcher.chat("C'mon gingerc4t!")
 	var is_mozilla_input_mute: bool = await RS.no_obs_ws.get_input_mute("Mozilla")
 	RS.no_obs_ws.set_input_mute("Mozilla", !is_mozilla_input_mute)
 
@@ -431,8 +519,50 @@ func play_mika_system_of_a_down(
 			_info: TwitchCommandInfo = null,
 			_args: PackedStringArray = []
 		) -> void:
+	RS.twitcher.chat("Ask spaghetti recipes to Mika: twitch.tv/mika_shiyu")
 	$sfx_custom.stop()
 	$sfx_custom.stream = RS.loader.load_sfx_from_sfx_folder("sfx_chop_suey_by_Mika.ogg")
+	$sfx_custom.play()
+
+
+func play_scawy_dunkaccino(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
+	RS.twitcher.chat("This is scawy fault, ge tell the dude: twitch.tv/scarypastry")
+	$sfx_custom.stop()
+	$sfx_custom.stream = RS.loader.load_sfx_from_sfx_folder("mus_dunk-acino-song.mp3")
+	$sfx_custom.play()
+
+
+func play_irad_being_irad(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
+	RS.twitcher.chat("I'm going to be on a cigarette break, BRB!")
+	RS.twitcher.chat("Also ask spaghetti's recipes to Mika: twitch.tv/mika_shiyu")
+
+
+func play_beginning(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
+	var path: String = "sfx_jacob_zuma_in_the_beginning_0%d.ogg" % randi_range(1,3)
+	$sfx_custom.stop()
+	$sfx_custom.stream = RS.loader.load_sfx_from_sfx_folder(path)
+	$sfx_custom.play()
+
+
+func play_yippee(
+			_from_username: String = "",
+			_info: TwitchCommandInfo = null,
+			_args: PackedStringArray = []
+		) -> void:
+	$sfx_custom.stop()
+	$sfx_custom.stream = RS.loader.load_sfx_from_sfx_folder("sfx_yippee.ogg")
 	$sfx_custom.play()
 
 
@@ -616,6 +746,8 @@ func let_it_snow(
 		) -> void:
 	if RS.manadono_snow.visible:
 		return
+	
+	RS.twitcher.chat("Manadono has snow in the overlay, check it out: twitch.tv/manadono")
 	RS.manadono_snow.show()
 	await get_tree().create_timer(10.0).timeout
 	RS.manadono_snow.hide()

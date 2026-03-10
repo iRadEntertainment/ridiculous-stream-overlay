@@ -47,6 +47,8 @@ func initialize_raid(user: RSUser, to_user : RSUser, message: String = "") -> vo
 
 
 func wheel_of_random_raid(launched_by: RSUser, message: String = "") -> void:
+	RS.twitcher.chat("Raid random wheel is broken! I will fix it when I can!")
+	return # TODO: fix wheel of random
 	await RS.user_mng.refresh_live_streamers()
 	var online: PackedStringArray = (RS.user_mng.known.keys())
 	if online.is_empty():
