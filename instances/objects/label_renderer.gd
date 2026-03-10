@@ -2,23 +2,31 @@
 extends SubViewport
 
 
-func generate_text_rigidbody(text : String, col : Color, lb_font_size : int):
+func generate_text_rigidbody(text: String, col: Color, lb_font_size: int):
+	if not col:
+		col = RSGlobals.DEFAULT_RIGID_LABEL_COLOR
 	# texture
 	$lb.text = text
 	$lb.size = Vector2()
-	$lb.set("theme_override_colors/font_color", col)
-	$lb.set("theme_override_font_sizes/font_size", lb_font_size)
-	var outline_size = $lb.get("theme_override_constants/outline_size")
+	$lb.add_theme_color_override(&"font_color", col)
+	$lb.add_theme_font_size_override(&"font_size", lb_font_size)
+	var outline_size = $lb.get_theme_constant(&"outline_size")
 	var outline_off := Vector2(outline_size/2, 0)
-	var lb_size = $lb.get_rect().size + outline_off
 	
 	$lb.position = outline_off/2.0
-	size = lb_size
 	$lb.queue_redraw()
 	await get_tree().process_frame
+	var font: Font = $lb.get_theme_font(&"font")
+	var lb_size: Vector2 = font.get_string_size(text, HORIZONTAL_ALIGNMENT_CENTER, -1, lb_font_size)
+	lb_size += outline_off
+	#var lb_size = $lb.get_rect().size + outline_off
+	size = lb_size
+	$lb.queue_redraw()
 	
 	# generate polygon and texture
 	var poly_points = [Vector2(0,0), Vector2(lb_size.x, 0), Vector2(lb_size.x, lb_size.y), Vector2(0, lb_size.y)]
+	
+	await get_tree().process_frame
 	var view_tex = get_texture() as ViewportTexture
 	var tex : Texture2D = ImageTexture.create_from_image( view_tex.get_image() )
 	
