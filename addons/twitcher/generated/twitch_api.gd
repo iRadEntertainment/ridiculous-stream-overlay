@@ -418,8 +418,6 @@ func get_channel_followers(opt: TwitchGetChannelFollowers.Opt, broadcaster_id: S
 	path += "broadcaster_id=" + str(broadcaster_id) + "&"
 	
 	var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_GET, "", "")
-	if response.response_data.is_empty():
-		return
 	
 	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
 	var parsed_result: TwitchGetChannelFollowers.Response = TwitchGetChannelFollowers.Response.from_json(result)
@@ -878,8 +876,6 @@ func get_user_chat_color(user_id: Array[String]) -> TwitchGetUserChatColor.Respo
 		path += "user_id=" + str(param) + "&" 
 	
 	var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_GET, "", "")
-	if response.response_data.is_empty():
-		return null
 	
 	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
 	var parsed_result: TwitchGetUserChatColor.Response = TwitchGetUserChatColor.Response.from_json(result)
@@ -929,8 +925,10 @@ func create_clip(opt: TwitchCreateClip.Opt, broadcaster_id: String) -> TwitchCre
 	var path = "/clips?"
 	var optionals: Dictionary[StringName, Variant] = {}
 	if opt != null: optionals = opt.to_dict()
-	if optionals.has("has_delay"):
-		path += "has_delay=" + str(optionals.has_delay) + "&"
+	if optionals.has("duration"):
+		path += "duration=" + str(optionals.duration) + "&"
+	if optionals.has("title"):
+		path += "title=" + str(optionals.title) + "&"
 	path += "broadcaster_id=" + str(broadcaster_id) + "&"
 	
 	var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_POST, "", "")
@@ -981,6 +979,58 @@ func get_clips(opt: TwitchGetClips.Opt) -> TwitchGetClips.Response:
 		if not opt: opt = TwitchGetClips.Opt.new()
 		opt.after = cursor
 		parsed_result._next_page = get_clips.bind(opt)
+	return parsed_result
+
+	
+## BETA Creates a clip from the broadcaster’s VOD.
+## 
+## editor_id - The user ID of the editor for the channel you want to create a clip for. If using the broadcaster’s auth token, this is the same as broadcaster\_id. This must match the user\_id in the user access token. 
+## broadcaster_id - The user ID for the channel you want to create a clip for. 
+## vod_id - ID of the VOD the user wants to clip. 
+## vod_offset - Offset in the VOD to create the clip. See notes above. 
+## title - The title of the clip. 
+##
+## https://dev.twitch.tv/docs/api/reference#create-clip-from-vod
+#func create_clip_from_vod(opt: TwitchCreateClipFromVod.Opt, editor_id: String, title: String, vod_id: String, vod_offset: int, broadcaster_id: String) -> TwitchCreateClipFromVOD.Response:
+	#var path = "/videos/clips?"
+	#var optionals: Dictionary[StringName, Variant] = {}
+	#if opt != null: optionals = opt.to_dict()
+	#path += "editor_id=" + str(editor_id) + "&"
+	#path += "title=" + str(title) + "&"
+	#path += "vod_id=" + str(vod_id) + "&"
+	#path += "vod_offset=" + str(vod_offset) + "&"
+	#if optionals.has("duration"):
+		#path += "duration=" + str(optionals.duration) + "&"
+	#path += "broadcaster_id=" + str(broadcaster_id) + "&"
+	#
+	#var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_POST, "", "")
+	#
+	#var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
+	#var parsed_result: TwitchCreateClipFromVOD.Response = TwitchCreateClipFromVOD.Response.from_json(result)
+	#parsed_result.response = response
+	#return parsed_result
+
+	
+## NEW Provides URLs to download the video file(s) for the specified clips.
+## 
+## editor_id - The User ID of the editor for the channel you want to download a clip for. If using the broadcaster’s auth token, this is the same as `broadcaster_id`. This must match the `user_id` in the user access token. 
+## broadcaster_id - The ID of the broadcaster you want to download clips for. 
+## clip_id - The ID that identifies the clip you want to download. Include this parameter for each clip you want to download, up to a maximum of 10 clips. For example, `clip_id=SleepyGiftedPeppermintNerfRedBlaster-KbkBXYt3lOk3jy8-&clip_id=WimpyAltruisticKleeKeyboardCat-EiY5yMrEwZ4i4gwC`. 
+##
+## https://dev.twitch.tv/docs/api/reference#get-clips-download
+func get_clips_download(clip_id: Array[String], editor_id: String, broadcaster_id: String) -> TwitchGetClipsDownload.Response:
+	var path = "/clips/downloads?"
+	
+	for param in clip_id:
+		path += "clip_id=" + str(param) + "&" 
+	path += "editor_id=" + str(editor_id) + "&"
+	path += "broadcaster_id=" + str(broadcaster_id) + "&"
+	
+	var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_GET, "", "")
+	
+	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
+	var parsed_result: TwitchGetClipsDownload.Response = TwitchGetClipsDownload.Response.from_json(result)
+	parsed_result.response = response
 	return parsed_result
 
 	
@@ -1392,12 +1442,7 @@ func update_extension_bits_product(body: TwitchUpdateExtensionBitsProduct.Body) 
 func create_eventsub_subscription(body: TwitchCreateEventSubSubscription.Body) -> TwitchCreateEventSubSubscription.Response:
 	var path = "/eventsub/subscriptions?"
 	
-	var response: BufferedHTTPClient.ResponseData
-	var tries: int = 0
-	while tries < 5:
-		response = await request(path, HTTPClient.METHOD_POST, body, "application/json")
-		if !response.error and not response.response_data.is_empty():
-			break
+	var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_POST, body, "application/json")
 	
 	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
 	var parsed_result: TwitchCreateEventSubSubscription.Response = TwitchCreateEventSubSubscription.Response.from_json(result)
@@ -1431,6 +1476,8 @@ func get_eventsub_subscriptions(opt: TwitchGetEventsubSubscriptions.Opt) -> Twit
 		path += "after=" + str(optionals.after) + "&"
 	if optionals.has("status"):
 		path += "status=" + str(optionals.status) + "&"
+	if optionals.has("subscription_id"):
+		path += "subscription_id=" + str(optionals.subscription_id) + "&"
 	if optionals.has("type"):
 		path += "type=" + str(optionals.type) + "&"
 	if optionals.has("user_id"):
@@ -1599,13 +1646,17 @@ func create_guest_star_session(broadcaster_id: String) -> TwitchCreateGuestStarS
 ## session_id - ID for the session to end on behalf of the broadcaster. 
 ##
 ## https://dev.twitch.tv/docs/api/reference#end-guest-star-session
-func end_guest_star_session(session_id: String, broadcaster_id: String) -> BufferedHTTPClient.ResponseData:
+func end_guest_star_session(session_id: String, broadcaster_id: String) -> TwitchEndGuestStarSession.Response:
 	var path = "/guest_star/session?"
 	path += "session_id=" + str(session_id) + "&"
 	path += "broadcaster_id=" + str(broadcaster_id) + "&"
 	
 	var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_DELETE, "", "")
-	return response
+	
+	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
+	var parsed_result: TwitchEndGuestStarSession.Response = TwitchEndGuestStarSession.Response.from_json(result)
+	parsed_result.response = response
+	return parsed_result
 
 	
 ## BETA Provides the caller with a list of pending invites to a Guest Star session.
@@ -1765,7 +1816,7 @@ func update_guest_star_slot_settings(opt: TwitchUpdateGuestStarSlotSettings.Opt,
 	return response
 
 	
-## Gets information about the broadcaster’s current or most recent Hype Train event.
+## DEPRECATED Gets information about the broadcaster’s current or most recent Hype Train event.
 ## 
 ## broadcaster_id - The ID of the broadcaster that’s running the Hype Train. This ID must match the User ID in the user access token. 
 ##
@@ -1790,6 +1841,23 @@ func get_hype_train_events(opt: TwitchGetHypeTrainEvents.Opt, broadcaster_id: St
 		if not opt: opt = TwitchGetHypeTrainEvents.Opt.new()
 		opt.after = cursor
 		parsed_result._next_page = get_hype_train_events.bind(opt, broadcaster_id)
+	return parsed_result
+
+	
+## NEW Gets the status of a Hype Train for the specified broadcaster.
+## 
+## broadcaster_id - The User ID of the channel broadcaster. 
+##
+## https://dev.twitch.tv/docs/api/reference#get-hype-train-status
+func get_hype_train_status(broadcaster_id: String) -> TwitchGetHypeTrainStatus.Response:
+	var path = "/hypetrain/status?"
+	path += "broadcaster_id=" + str(broadcaster_id) + "&"
+	
+	var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_GET, "", "")
+	
+	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
+	var parsed_result: TwitchGetHypeTrainStatus.Response = TwitchGetHypeTrainStatus.Response.from_json(result)
+	parsed_result.response = response
 	return parsed_result
 
 	
@@ -2275,7 +2343,7 @@ func get_shield_mode_status(moderator_id: String, broadcaster_id: String) -> Twi
 	return parsed_result
 
 	
-## NEW Warns a user in the specified broadcaster’s chat room, preventing them from chat interaction until the warning is acknowledged.
+## Warns a user in the specified broadcaster’s chat room, preventing them from chat interaction until the warning is acknowledged.
 ## 
 ## broadcaster_id - The ID of the channel in which the warning will take effect. 
 ## moderator_id - The ID of the twitch user who requested the warning. 
@@ -2290,6 +2358,46 @@ func warn_chat_user(body: TwitchWarnChatUser.Body, moderator_id: String, broadca
 	
 	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
 	var parsed_result: TwitchWarnChatUser.Response = TwitchWarnChatUser.Response.from_json(result)
+	parsed_result.response = response
+	return parsed_result
+
+	
+## BETA Adds a suspicious user status to a chatter on the broadcaster’s channel.
+## 
+## broadcaster_id - The user ID of the broadcaster, indicating the channel where the status is being applied. 
+## moderator_id - The user ID of the moderator who is applying the status. 
+##
+## https://dev.twitch.tv/docs/api/reference#add-suspicious-status-to-chat-user
+func add_suspicious_status_to_chat_user(body: TwitchAddSuspiciousStatusToChatUser.Body, moderator_id: String, broadcaster_id: String) -> TwitchAddSuspiciousStatusToChatUser.Response:
+	var path = "/moderation/suspicious_users?"
+	path += "moderator_id=" + str(moderator_id) + "&"
+	path += "broadcaster_id=" + str(broadcaster_id) + "&"
+	
+	var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_POST, body, "application/json")
+	
+	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
+	var parsed_result: TwitchAddSuspiciousStatusToChatUser.Response = TwitchAddSuspiciousStatusToChatUser.Response.from_json(result)
+	parsed_result.response = response
+	return parsed_result
+
+	
+## BETA Remove a suspicious user status from a chatter on broadcaster’s channel.
+## 
+## broadcaster_id - The user ID of the broadcaster, indicating the channel where the status is being removed. 
+## moderator_id - The user ID of the moderator who is removing the status. 
+## user_id - The ID of the user having the suspicious status removed. 
+##
+## https://dev.twitch.tv/docs/api/reference#remove-suspicious-status-from-chat-user
+func remove_suspicious_status_from_chat_user(moderator_id: String, user_id: String, broadcaster_id: String) -> TwitchRemoveSuspiciousStatusFromChatUser.Response:
+	var path = "/moderation/suspicious_users?"
+	path += "moderator_id=" + str(moderator_id) + "&"
+	path += "user_id=" + str(user_id) + "&"
+	path += "broadcaster_id=" + str(broadcaster_id) + "&"
+	
+	var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_DELETE, "", "")
+	
+	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
+	var parsed_result: TwitchRemoveSuspiciousStatusFromChatUser.Response = TwitchRemoveSuspiciousStatusFromChatUser.Response.from_json(result)
 	parsed_result.response = response
 	return parsed_result
 
@@ -2427,7 +2535,7 @@ func end_prediction(body: TwitchEndPrediction.Body) -> TwitchEndPrediction.Respo
 ## [no required query parameters to describe]
 ##
 ## https://dev.twitch.tv/docs/api/reference#start-a-raid
-func start_a_raid(opt: TwitchStartARaid.Opt) -> TwitchStartRaid.Response:
+func start_a_raid(opt: TwitchStartARaid.Opt) -> TwitchStartARaid.Response:
 	var path = "/raids?"
 	var optionals: Dictionary[StringName, Variant] = {}
 	if opt != null: optionals = opt.to_dict()
@@ -2439,7 +2547,7 @@ func start_a_raid(opt: TwitchStartARaid.Opt) -> TwitchStartRaid.Response:
 	var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_POST, "", "")
 	
 	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
-	var parsed_result: TwitchStartRaid.Response = TwitchStartRaid.Response.from_json(result)
+	var parsed_result: TwitchStartARaid.Response = TwitchStartARaid.Response.from_json(result)
 	parsed_result.response = response
 	return parsed_result
 
@@ -2937,8 +3045,6 @@ func get_users(opt: TwitchGetUsers.Opt) -> TwitchGetUsers.Response:
 			path += "login=" + str(param) + "&" 
 	
 	var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_GET, "", "")
-	if response.response_data.is_empty():
-		return null
 	
 	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
 	var parsed_result: TwitchGetUsers.Response = TwitchGetUsers.Response.from_json(result)
@@ -2962,6 +3068,25 @@ func update_user(opt: TwitchUpdateUser.Opt) -> TwitchUpdateUser.Response:
 	
 	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
 	var parsed_result: TwitchUpdateUser.Response = TwitchUpdateUser.Response.from_json(result)
+	parsed_result.response = response
+	return parsed_result
+
+	
+## NEW Gets the authorization scopes that the specified user has granted the application.
+## 
+## user_id - The ID of the user(s) you want to check authorization for. To specify more than one user, include the user\_id parameter for each user to get. For example, `user_id=1234&user_id=5678`. The maximum number of IDs you may specify is 10. 
+##
+## https://dev.twitch.tv/docs/api/reference#get-authorization-by-user
+func get_authorization_by_user(user_id: Array[String]) -> TwitchGetAuthorizationByUser.Response:
+	var path = "/authorization/users?"
+	
+	for param in user_id:
+		path += "user_id=" + str(param) + "&" 
+	
+	var response: BufferedHTTPClient.ResponseData = await request(path, HTTPClient.METHOD_GET, "", "")
+	
+	var result: Variant = JSON.parse_string(response.response_data.get_string_from_utf8())
+	var parsed_result: TwitchGetAuthorizationByUser.Response = TwitchGetAuthorizationByUser.Response.from_json(result)
 	parsed_result.response = response
 	return parsed_result
 
