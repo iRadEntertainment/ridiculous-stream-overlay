@@ -46,7 +46,11 @@ func load_sfx_from_sfx_folder(sfx_name: String) -> AudioStream:
 		audio = ResourceLoader.load(RSSettings.LOCAL_RES_FOLDER + sfx_name)
 	else:
 		var sfx_global_path = RSSettings.get_sfx_path()
-		audio = AudioStreamOggVorbis.load_from_file(sfx_global_path + sfx_name)
+		var ext: String = sfx_name.get_extension()
+		match ext:
+			"ogg": audio = AudioStreamOggVorbis.load_from_file(sfx_global_path + sfx_name)
+			"mp3": audio = AudioStreamMP3.load_from_file(sfx_global_path + sfx_name)
+		
 	audio_cache[sfx_name] = audio
 	return audio
 
