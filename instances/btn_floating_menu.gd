@@ -118,7 +118,7 @@ func _on_btn_beans_pressed() -> void: RS.custom.beans("")
 func _on_btn_laser_pressed() -> void: RS.custom.laser()
 func _on_btn_nuke_pressed() -> void: RS.physic_scene.nuke()
 func _on_btn_zerog_pressed() -> void: RS.custom.zero_g()
-func _on_btn_names_pressed() -> void: RS.custom.destructibles_names()
+func _on_btn_names_pressed() -> void: RS.custom.destructibles_names("", 5, 48)
 func _on_btn_granade_pressed() -> void: RS.physic_scene.spawn_grenade()
 #endregion
 
