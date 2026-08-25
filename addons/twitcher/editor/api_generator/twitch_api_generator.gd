@@ -493,6 +493,13 @@ func iter_code(component: TwitchGenComponent) -> String:
 	if component._ref == "#/components/schemas/GetChannelStreamScheduleResponse/Data":
 		data_variable_name = "segments"
 		path_to_data = "data."
+
+	# Type of the paged array itself, so that all() can be typed like the field.
+	var data_type: String = "Array"
+	for field: TwitchGenField in component._fields:
+		if field._name == data_variable_name:
+			data_type = get_type(field._type, field._is_array)
+			break
 		
 	var code: String
 	if component._ref == "#/components/schemas/GetExtensionLiveChannelsResponse":
@@ -522,6 +529,20 @@ func next_page() -> {response_type}:
 	return response
 
 
+## Collects every page into a single array.
+## Pagination cannot be done lazily while iterating: neither _iter_next nor
+## _iter_get may suspend, and awaiting inside them leaks a coroutine object
+## into the loop variable and never terminates. Iterating the response
+## directly therefore only walks the first page.
+func all() -> {data_type}:
+	var out: {data_type} = []
+	out.append_array({data_variable_name})
+	while _has_pagination():
+		await next_page()
+		out.append_array({data_variable_name})
+	return out
+
+
 func _iter_init(iter: Array) -> bool:
 	if {data_variable_name}.is_empty(): return false
 	iter[0] = {data_variable_name}[0]
@@ -533,14 +554,11 @@ func _iter_next(iter: Array) -> bool:
 	if {data_variable_name}.size() > _cur_iter:
 		iter[0] = {data_variable_name}[_cur_iter]
 		_cur_iter += 1
-	elif not _has_pagination(): 
-		return false
-	return true
+		return true
+	return false
 	
 	
 func _iter_get(iter: Variant) -> Variant:
-	if {data_variable_name}.size() - 1 == _cur_iter && _has_pagination():
-		await next_page()
 	return iter"""
 	var copy_code: String
 	for field in component._fields:
@@ -548,6 +566,7 @@ func _iter_get(iter: Variant) -> Variant:
 
 	return code.format({
 		"data_variable_name": data_variable_name,
+		"data_type": data_type,
 		"copy_code": copy_code,
 		"path_to_data": path_to_data,
 		"response_type": component.get_root_classname()

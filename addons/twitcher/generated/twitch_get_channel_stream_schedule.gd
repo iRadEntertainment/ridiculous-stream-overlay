@@ -129,6 +129,20 @@ class ResponseData extends TwitchData:
 		return response
 	
 	
+	## Collects every page into a single array.
+	## Pagination cannot be done lazily while iterating: neither _iter_next nor
+	## _iter_get may suspend, and awaiting inside them leaks a coroutine object
+	## into the loop variable and never terminates. Iterating the response
+	## directly therefore only walks the first page.
+	func all() -> Array[TwitchChannelStreamScheduleSegment]:
+		var out: Array[TwitchChannelStreamScheduleSegment] = []
+		out.append_array(segments)
+		while _has_pagination():
+			await next_page()
+			out.append_array(segments)
+		return out
+
+
 	func _iter_init(iter: Array) -> bool:
 		if segments.is_empty(): return false
 		iter[0] = segments[0]
@@ -140,14 +154,11 @@ class ResponseData extends TwitchData:
 		if segments.size() > _cur_iter:
 			iter[0] = segments[_cur_iter]
 			_cur_iter += 1
-		elif not _has_pagination(): 
-			return false
-		return true
+			return true
+		return false
 		
 		
 	func _iter_get(iter: Variant) -> Variant:
-		if segments.size() - 1 == _cur_iter && _has_pagination():
-			await next_page()
 		return iter
 
 

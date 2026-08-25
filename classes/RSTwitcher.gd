@@ -219,8 +219,6 @@ func get_live_streamers_data(user_ids: Array = []) -> Dictionary[int, TwitchStre
 		user_ids_string.append(str(user_id))
 	
 	var streams_data: Dictionary[int, TwitchStream] = {}
-	var opt := TwitchGetStreams.Opt.new()
-	opt.type = "live"
 	
 	var iter: int = 0
 	const MAX_ITER = 100
@@ -232,10 +230,16 @@ func get_live_streamers_data(user_ids: Array = []) -> Dictionary[int, TwitchStre
 		
 		var new_batch: Array[String] = user_ids_string.slice(0, 99)
 		user_ids_string = user_ids_string.slice(99)
+		
+		# NOTE: a fresh Opt per batch. TwitchAPI.get_streams() writes the pagination
+		# cursor back into the Opt it is given, so reusing one would carry the
+		# previous batch's `after` cursor into the next batch's request.
+		var opt := TwitchGetStreams.Opt.new()
+		opt.type = "live"
 		opt.user_id = new_batch
-		var streams_iterator := await api.get_streams(opt)
-		for stream_promise in streams_iterator:
-			var stream_data: TwitchStream = await stream_promise
+		
+		var response := await api.get_streams(opt)
+		for stream_data: TwitchStream in await response.all():
 			if stream_data:
 				streams_data[int(stream_data.user_id)] = stream_data
 	is_get_live_stream_data_processing = false
@@ -249,8 +253,7 @@ func get_subscriptions() -> Dictionary[int, TwitchBroadcasterSubscription]:
 		RS.settings.broadcaster_id
 	)
 	_log.i("Fetching all subscribers...")
-	for subscriber_promise in subscriptions_iterator:
-		var subscriber_data: TwitchBroadcasterSubscription = await subscriber_promise
+	for subscriber_data: TwitchBroadcasterSubscription in await subscriptions_iterator.all():
 		if subscriber_data: # Always good to check
 			results[int(subscriber_data.user_id)] = subscriber_data
 	_log.i("Fetching subscribers finished.")
