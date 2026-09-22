@@ -43,45 +43,71 @@ class Response extends TwitchData:
 	
 	
 	
-	func _has_pagination() -> bool:
-		if pagination == null: return false
-		if pagination.cursor == null || pagination.cursor == "": return false
-		return true
-	
+	func _pagination_cursor() -> String:
+		return pagination.cursor if pagination != null else ""
+
 	var _next_page: Callable
 	var _cur_iter: int = 0
-	
-	
+	var _seen_cursors: Dictionary[String, bool] = {}
+	## Non-empty when paging stopped because a page failed or a cursor repeated.
+	var pagination_error: String = ""
+
+
+	func _has_pagination() -> bool:
+		return pagination_error.is_empty() and not _pagination_cursor().is_empty()
+
+
 	func next_page() -> Response:
+		if not _has_pagination(): return null
+		var cursor := _pagination_cursor()
+		if _seen_cursors.has(cursor):
+			pagination_error = "Pagination cursor repeated."
+			return null
+		if not _next_page.is_valid():
+			pagination_error = "Next-page request is unavailable."
+			return null
+		_seen_cursors[cursor] = true
+		# Keep the main loop responsive even if the page request completes immediately.
+		await Engine.get_main_loop().process_frame
 		var response: Response = await _next_page.call()
+		if response == null:
+			pagination_error = "Next-page request returned no response."
+			return null
+		if response.response != null:
+			var http := response.response
+			if http.error or http.result != HTTPRequest.RESULT_SUCCESS or http.response_code != 200:
+				pagination_error = "Next-page request failed (result %s, HTTP %s)." % [http.result, http.response_code]
+				return null
+
 		_cur_iter = 0
+		response._seen_cursors = _seen_cursors
 		_next_page = response._next_page
 		data = response.data
 		pagination = response.pagination
-	
+
 		return response
-	
-	
+
+
 	func _iter_init(iter: Array) -> bool:
-		if data.is_empty(): return false
-		iter[0] = data[0]
-		_cur_iter = 1
-		return true
+		iter[0] = 0
+		_cur_iter = 0
+		_seen_cursors.clear()
+		pagination_error = ""
+		return not data.is_empty() or _has_pagination()
 		
 		
-	func _iter_next(iter: Array) -> bool:
-		if data.size() > _cur_iter:
-			iter[0] = data[_cur_iter]
-			_cur_iter += 1
-		elif not _has_pagination(): 
-			return false
-		return true
+	func _iter_next(_iter: Array) -> bool:
+		_cur_iter += 1
+		return _cur_iter < data.size() or _has_pagination()
 		
 		
-	func _iter_get(iter: Variant) -> Variant:
-		if data.size() - 1 == _cur_iter && _has_pagination():
-			await next_page()
-		return iter
+	func _iter_get(_iter: Variant) -> Variant:
+		# Fetch at the page boundary, preserving every item of the current page.
+		while _cur_iter >= data.size() and _has_pagination():
+			if await next_page() == null:
+				return null
+		# An empty final page or a failed request yields null; callers should skip it.
+		return data[_cur_iter] if _cur_iter < data.size() else null
 
 
 ## Contains the information used to page through the list of results. The object is empty if there are no more pages left to page through.[Read More](https://dev.twitch.tv/docs/api/guide#pagination)
