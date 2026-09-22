@@ -42,7 +42,7 @@ shape = SubResource("CircleShape2D_0dla5")
 
 [node name="sfx_boom" type="AudioStreamPlayer" parent="." unique_id=477060183]
 stream = ExtResource("3_7x8lf")
-volume_db = -18.0
+volume_db = -36.0
 
 [node name="white_circle" type="Polygon2D" parent="." unique_id=158013000]
 visible = false
