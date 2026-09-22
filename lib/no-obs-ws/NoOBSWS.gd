@@ -23,7 +23,7 @@ signal scenes_updated
 
 var is_state_open : bool:
 	get():
-		return _ws.get_ready_state() == WebSocketPeer.STATE_OPEN
+		return _ws != null and _ws.get_ready_state() == WebSocketPeer.STATE_OPEN
 
 var is_stream_on := true:
 	set(val):

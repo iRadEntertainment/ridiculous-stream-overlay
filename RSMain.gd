@@ -140,7 +140,7 @@ func load_settings():
 			_log.e("Failed to load global configuration from %s: %d" % [RSSettings._CONFIG_PATH, error])
 	else:
 		var error := RSSettings._config.save(RSSettings._CONFIG_PATH)
-		if OK != RSSettings._config.save(RSSettings._CONFIG_PATH):
+		if error != OK:
 			_log.e("Failed to save global configuration from %s: %d" % [RSSettings._CONFIG_PATH, error])
 
 	_log.i("Loading settings from %s..." % RSSettings.data_dir)
