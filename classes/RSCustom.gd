@@ -36,8 +36,8 @@ func add_commands() -> void:
 	cmd_jam.description = "Doing the Jern Jam 2025, get link and info."
 	var cmd_commands: TwitchCommand = RS.twitcher.add_command("commands", chat_commands_help)
 	cmd_commands.description = "This need to be updated, it's not correct. Don't trust it!"
-	var cmd_pandano: TwitchCommand = RS.twitcher.add_command("pandano", pandano)
-	cmd_pandano.description = "Complain about pandacoder with our truly Jern!"
+	#var cmd_pandano: TwitchCommand = RS.twitcher.add_command("pandano", pandano)
+	#cmd_pandano.description = "Complain about pandacoder with our truly Jern!"
 	var cmd_whostream: TwitchCommand = RS.twitcher.add_command("whostream", whostream)
 	cmd_whostream.description = "Shows who, in the known users, is streaming at the moment."
 	var cmd_b: TwitchCommand = RS.twitcher.add_command("b", spawn_fake_beans, 0, 1)
@@ -602,7 +602,8 @@ func pandano(
 			_info: TwitchCommandInfo = null,
 			_args: PackedStringArray = []
 		) -> void:
-	RS.no_obs_ws.restart_media("Panda_no")
+	pass
+	#RS.no_obs_ws.restart_media("Panda_no")
 
 func whostream(
 			_from_username: String = "",
