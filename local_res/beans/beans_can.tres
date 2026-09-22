@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="RSBeans" load_steps=5 format=3 uid="uid://dq178y6cufe4b"]
+[gd_resource type="Resource" script_class="RSBeans" format=3 uid="uid://dq178y6cufe4b"]
 
 [ext_resource type="Script" uid="uid://cnk5fobuqtfal" path="res://classes/RSBeanDefinition.gd" id="1_bqsdt"]
 [ext_resource type="Resource" uid="uid://tyy8kt1e1j6s" path="res://local_res/beans/beans_beans.tres" id="2_gv0el"]
