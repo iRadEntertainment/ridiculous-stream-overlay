@@ -1,53 +1,54 @@
-[gd_scene load_steps=4 format=3 uid="uid://d2aoepdqbkr13"]
+[gd_scene format=3 uid="uid://d2aoepdqbkr13"]
 
 [ext_resource type="Script" uid="uid://b8tsfnqu8o3sd" path="res://instances/users/pnl_user_customization.gd" id="1_6p7es"]
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_ylhbj"]
 [ext_resource type="PackedScene" uid="uid://ca0xs5357oq1u" path="res://instances/users/pnl_user_beans.tscn" id="3_dnb3l"]
 
-[node name="pnl_user_customization" type="PanelContainer"]
+[node name="pnl_user_customization" type="PanelContainer" unique_id=1074731164]
 offset_right = 952.0
 offset_bottom = 124.0
 size_flags_horizontal = 3
 theme = ExtResource("1_ylhbj")
 script = ExtResource("1_6p7es")
 
-[node name="hb" type="HBoxContainer" parent="."]
+[node name="hb" type="HBoxContainer" parent="." unique_id=1960965947]
 layout_mode = 2
 
-[node name="grid" type="GridContainer" parent="hb"]
+[node name="grid" type="GridContainer" parent="hb" unique_id=1057087780]
 layout_mode = 2
 columns = 2
 
-[node name="lb4" type="Label" parent="hb/grid"]
+[node name="lb4" type="Label" parent="hb/grid" unique_id=1436362466]
 layout_mode = 2
 text = "Godot chat colour"
 
-[node name="btn_custom_color" type="ColorPickerButton" parent="hb/grid"]
+[node name="btn_custom_color" type="ColorPickerButton" parent="hb/grid" unique_id=838723069]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="lb5" type="Label" parent="hb/grid"]
+[node name="lb5" type="Label" parent="hb/grid" unique_id=283526822]
 layout_mode = 2
 text = "Notification sfx"
 
-[node name="opt_custom_sfx" type="OptionButton" parent="hb/grid"]
+[node name="opt_custom_sfx" type="OptionButton" parent="hb/grid" unique_id=2109625018]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="lb7" type="Label" parent="hb/grid"]
+[node name="lb7" type="Label" parent="hb/grid" unique_id=1794762244]
 layout_mode = 2
 text = "Custom actions"
 
-[node name="opt_custom_actions" type="OptionButton" parent="hb/grid"]
+[node name="opt_custom_actions" type="OptionButton" parent="hb/grid" unique_id=1790484907]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="pnl_user_beans" parent="hb" instance=ExtResource("3_dnb3l")]
+[node name="pnl_user_beans" parent="hb" unique_id=748908727 instance=ExtResource("3_dnb3l")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [connection signal="color_changed" from="hb/grid/btn_custom_color" to="." method="_on_btn_custom_color_color_changed"]
