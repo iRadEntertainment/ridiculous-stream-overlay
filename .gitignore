@@ -3,10 +3,14 @@
 /android/
 .vscode/
 
-
-# Dario doesn't want this
+# Editor backups and native-library reload files
+*.tscn*.tmp
+*.csproj.old*
 ~*.dll
 ~*.TMP
+~*.tmp
+
+# Dario doesn't want this
 stored.txt
 stored.cfg
 api_steam.key
