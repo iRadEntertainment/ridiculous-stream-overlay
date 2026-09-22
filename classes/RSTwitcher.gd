@@ -219,25 +219,30 @@ func get_live_streamers_data(user_ids: Array = []) -> Dictionary[int, TwitchStre
 		user_ids_string.append(str(user_id))
 	
 	var streams_data: Dictionary[int, TwitchStream] = {}
-	var opt := TwitchGetStreams.Opt.new()
-	opt.type = "live"
-	
-	var iter: int = 0
-	const MAX_ITER = 100
-	while not user_ids_string.is_empty():
-		iter += 1
-		if iter > MAX_ITER:
-			_log.e("Reached max iterations while getting live stream data.")
+	const BATCH_SIZE := 100
+	for offset in range(0, user_ids_string.size(), BATCH_SIZE):
+		# get_streams() updates opt.after; each user batch needs fresh options.
+		var opt := TwitchGetStreams.Opt.new()
+		opt.type = "live"
+		opt.first = BATCH_SIZE
+		opt.user_id = user_ids_string.slice(offset, offset + BATCH_SIZE)
+		await get_tree().process_frame
+		var streams_iterator: TwitchGetStreams.Response = await api.get_streams(opt)
+		if streams_iterator == null:
+			_log.e("Twitch returned no stream response.")
 			break
-		
-		var new_batch: Array[String] = user_ids_string.slice(0, 99)
-		user_ids_string = user_ids_string.slice(99)
-		opt.user_id = new_batch
-		var streams_iterator := await api.get_streams(opt)
+		if streams_iterator.response != null:
+			var http := streams_iterator.response
+			if http.error or http.result != HTTPRequest.RESULT_SUCCESS or http.response_code != 200:
+				_log.e("Twitch stream request failed (result %s, HTTP %s)." % [http.result, http.response_code])
+				break
 		for stream_promise in streams_iterator:
 			var stream_data: TwitchStream = await stream_promise
 			if stream_data != null:
-				streams_data[int(await stream_data.user_id)] = stream_data
+				streams_data[int(stream_data.user_id)] = stream_data
+		if not streams_iterator.pagination_error.is_empty():
+			_log.e(streams_iterator.pagination_error)
+			break
 	is_get_live_stream_data_processing = false
 	return streams_data
 
