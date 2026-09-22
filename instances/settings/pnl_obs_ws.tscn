@@ -108,6 +108,7 @@ horizontal_alignment = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "IPv4, IPv6 or hostname, for example 127.0.0.1, ::1 or ws://[::1]. Enter the port separately."
 text = "test"
 secret = true
 

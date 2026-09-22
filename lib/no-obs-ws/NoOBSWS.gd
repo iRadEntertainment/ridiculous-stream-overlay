@@ -61,7 +61,6 @@ func start():
 
 
 func start_connection() -> void:
-	_log.i("Connecting to %s:%s" % [RS.settings.obs_websocket_url, RS.settings.obs_websocket_port])
 	connect_to_obsws(RS.settings.obs_websocket_port, RS.settings.obs_websocket_password)
 	if !is_state_open:
 		await connection_ready
@@ -197,12 +196,30 @@ func restart_media(media_name) -> void:
 
 
 # ============================ TheYagich OG code ============================
+static func _build_connection_url(server: String, port: int) -> String:
+	var host := server.strip_edges()
+	var scheme := "ws://"
+	if host.begins_with("wss://"):
+		scheme = "wss://"
+		host = host.trim_prefix(scheme)
+	elif host.begins_with("ws://"):
+		host = host.trim_prefix(scheme)
+
+	# IPv6 literals need brackets to separate the address from the port.
+	# Already bracketed addresses, IPv4 addresses and hostnames stay intact.
+	if host.contains(":") and host.is_valid_ip_address():
+		host = "[%s]" % host
+	return "%s%s:%s" % [scheme, host, port]
+
+
 func connect_to_obsws(port: int, password: String = "") -> void:
 	if password.is_empty():
 		_log.e("Websocket password missing.")
 		return
 	_ws = WebSocketPeer.new()
-	var err := _ws.connect_to_url("%s:%s" % [RS.settings.obs_websocket_url, port])
+	var url := _build_connection_url(RS.settings.obs_websocket_url, port)
+	_log.i("Connecting to %s" % url)
+	var err := _ws.connect_to_url(url)
 	if err == OK:
 		if not _auth_required.is_connected(_authenticate):
 			_auth_required.connect(_authenticate.bind(password))
