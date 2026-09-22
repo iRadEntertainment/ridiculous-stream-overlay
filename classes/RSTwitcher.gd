@@ -236,8 +236,8 @@ func get_live_streamers_data(user_ids: Array = []) -> Dictionary[int, TwitchStre
 		var streams_iterator := await api.get_streams(opt)
 		for stream_promise in streams_iterator:
 			var stream_data: TwitchStream = await stream_promise
-			if stream_data:
-				streams_data[int(stream_data.user_id)] = stream_data
+			if stream_data != null:
+				streams_data[int(await stream_data.user_id)] = stream_data
 	is_get_live_stream_data_processing = false
 	return streams_data
 

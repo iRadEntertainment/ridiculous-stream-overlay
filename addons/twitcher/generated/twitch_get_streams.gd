@@ -44,6 +44,7 @@ class Response extends TwitchData:
 	
 	
 	func _has_pagination() -> bool:
+		if not pagination: return false
 		if pagination == null: return false
 		if pagination.cursor == null || pagination.cursor == "": return false
 		return true
