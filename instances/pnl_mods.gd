@@ -2,7 +2,8 @@ extends PanelContainer
 
 
 func _ready() -> void:
-	await RS.all_started
+	if not RS.is_started:
+		await RS.all_started
 	RS.twitcher.connected_to_twitch.connect(refresh_data)
 
 

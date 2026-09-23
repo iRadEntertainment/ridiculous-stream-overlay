@@ -1,30 +1,17 @@
 # ================== #
 #      RSMain.gd     #
 # ================== #
-# Singleton "RS"
+# Main overlay scene; application services live in the RS autoload.
 
 extends Control
 class_name RSMain
 
 @onready var debug_view: Control = %debug_view
 
-var globals := RSGlobals.new()
-var settings := RSSettings.new()
-static var _log: TwitchLogger = TwitchLogger.new(&"RSMain")
-
 # Modules
 @onready var mouse_tracker: RSMouseTracker = %RSMouseTracker
 @onready var mouse_pass: Node = %RSMousePass # C# class
-@onready var loader: RSLoader = %RSLoader
-@onready var user_mng: RSUserMng = %RSUserMng
-@onready var twitcher: RSTwitcher = %RSTwitcher
-@onready var buffered_http_client: BufferedHTTPClient = %BufferedHTTPClient
-@onready var no_obs_ws: NoOBSWS = %NoOBSWS
-@onready var shoutout_mng: RSShoutoutMng = %RSShoutoutMng
 @onready var custom: RSCustom = %RSCustom
-@onready var vetting: RSVetting = %RSVetting
-@onready var display: RSDisplay = %RSDisplay
-@onready var summary_mng: RSSummaryMng = %RSSummaryMng
 
 # Control nodes
 @onready var btn_floating_menu: RSFloatingMenu = %btn_floating_menu
@@ -49,29 +36,15 @@ var wheel_of_random: RSWheelOfRandom
 ]
 
 
-signal all_started
+var is_started := false
 
 # ================================ INIT ========================================
 func _ready() -> void:
 	print_rich("[color=]=================================== RIDICULOS STREAM STARTED ===================================")
-	load_settings()
-	#await welcome_panel_check()
+	# Application settings have already been loaded by RS.
 	
 	setup_mouse_passthrough()
 	start_everything()
-
-
-#func welcome_panel_check() -> void:
-	#if pnl_welcome.should_show():
-		#get_window().always_on_top = false
-		#RSUtl.fit_and_center_window_to_display(get_window())
-		#btn_floating_menu.hide()
-		#pnl_welcome.start()
-		#await pnl_welcome.completed
-		#settings.welcome_version = ProjectSettings.get_setting("application/config/version")
-		#save_settings()
-	#
-	#pnl_welcome.hide()
 
 
 func setup_mouse_passthrough():
@@ -100,71 +73,25 @@ func get_all_control_nodes(node_to_search: Node, found: Array[Control] = []) -> 
 
 
 func start_everything() -> void:
-	await Engine.get_main_loop().process_frame
+	if is_started:
+		return
+	is_started = true
+	await get_tree().process_frame
 	get_window().always_on_top = true
-	
-	display.start()
 
-	btn_floating_menu.show()
-
-	twitcher.start()
-	user_mng.start()
+	RS.start_services()
 	custom.start()
-	vetting.start()
-	shoutout_mng.start()
-	if settings.obs_use_module:
-		no_obs_ws.start()
+	btn_floating_menu.show()
 	btn_floating_menu.start()
 	physic_scene.start()
 	pnl_notifications.start()
 	alert_scene.start()
-	summary_mng.start()
-	
+
 	for pnl: Control in pnls_to_start:
 		if pnl.has_method("start"):
 			pnl.start()
-	
-	all_started.emit()
 
-
-# ========================== LOAD/SAVE CONFIG ==================================
-func load_settings():
-	# The config file is stored into user:// and only holds the custom data directory
-	# where everything else is stored
-	if FileAccess.file_exists(RSSettings._CONFIG_PATH):
-		var error := RSSettings._config.load(RSSettings._CONFIG_PATH)
-		if OK == error:
-			RSSettings.data_dir = RSSettings._config.get_value("RSSettings", "data_dir", OS.get_user_data_dir())
-			_log.i("Data folder: %s" %RSSettings.data_dir)
-		else:
-			_log.e("Failed to load global configuration from %s: %d" % [RSSettings._CONFIG_PATH, error])
-	else:
-		var error := RSSettings._config.save(RSSettings._CONFIG_PATH)
-		if error != OK:
-			_log.e("Failed to save global configuration from %s: %d" % [RSSettings._CONFIG_PATH, error])
-
-	_log.i("Loading settings from %s..." % RSSettings.data_dir)
-	settings = loader.load_settings(settings)
-
-
-func save_settings():
-	_log.i("Saving data dir in settings.ini...")
-	RSSettings._config.set_value("RSSettings", "data_dir", RSSettings.data_dir)
-	RSSettings._config.save(RSSettings._CONFIG_PATH)
-	_log.i("Saving settings...")
-	loader.save_settings()
-
-
-func quit():
-	_log.i("Exiting...")
-
-	# Don't save anything if we haven't finished configuring, the settings may be in a bad state
-	#if !pnl_welcome.should_show():
-	save_settings()
-	user_mng.save_all()
-	summary_mng.save_current_summary()
-	
-	get_tree().quit()
+	RS.start_connections()
 
 
 ## Find the containing overlay without exposing its children through RS.
