@@ -1,6 +1,8 @@
 extends Button
 class_name RSButtonPhysics
 
+@onready var main: RSMain = RSMain.from_node(self)
+
 signal properly_pressed
 
 
@@ -19,7 +21,7 @@ func _ready() -> void:
 
 
 func start() -> void:
-	RS.physic_scene.count_updated.connect(update_obj_count)
+	main.physic_scene.count_updated.connect(update_obj_count)
 	for btn: Button in get_children():
 		btn.focus_mode = Control.FOCUS_NONE
 		btn.custom_minimum_size = MIN_SIZE
@@ -80,9 +82,9 @@ func _pressed() -> void:
 	properly_pressed.emit()
 
 
-func _on_btn_beans_pressed() -> void: RS.custom.beans("")
-func _on_btn_laser_pressed() -> void: RS.custom.laser()
-func _on_btn_nuke_pressed() -> void: RS.physic_scene.nuke()
-func _on_btn_zerog_pressed() -> void: RS.custom.zero_g()
-func _on_btn_names_pressed() -> void: RS.custom.destructibles_names("", 1, 48); print("this")
+func _on_btn_beans_pressed() -> void: main.custom.beans("")
+func _on_btn_laser_pressed() -> void: main.custom.laser()
+func _on_btn_nuke_pressed() -> void: main.physic_scene.nuke()
+func _on_btn_zerog_pressed() -> void: main.custom.zero_g()
+func _on_btn_names_pressed() -> void: main.custom.destructibles_names("", 1, 48); print("this")
 func _on_btn_granade_pressed() -> void: pass

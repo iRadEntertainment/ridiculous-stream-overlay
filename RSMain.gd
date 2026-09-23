@@ -167,6 +167,17 @@ func quit():
 	get_tree().quit()
 
 
+## Find the containing overlay without exposing its children through RS.
+## This also works for nested scene instances and dynamically added entries.
+static func from_node(node: Node) -> RSMain:
+	var ancestor := node.get_parent()
+	while ancestor != null:
+		if ancestor is RSMain:
+			return ancestor as RSMain
+		ancestor = ancestor.get_parent()
+	return null
+
+
 # =============================== UTILS =======================================
 func play_sfx(
 			_from_username: String = "",

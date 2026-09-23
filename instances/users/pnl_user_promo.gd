@@ -1,6 +1,8 @@
 extends PanelContainer
 class_name  PnlUserPromo
 
+@onready var main: RSMain = RSMain.from_node(self)
+
 
 var user: RSUser: set = _set_user
 
@@ -119,13 +121,13 @@ func _on_btn_web_promo_pressed() -> void:
 
 func _on_btn_yt_link_pressed() -> void:
 	OS.shell_open(user.youtube_link)
-	RS.pnl_settings.hide()
+	main.pnl_settings.hide()
 func _on_btn_bsky_link_pressed() -> void:
 	OS.shell_open(user.bluesky_link)
-	RS.pnl_settings.hide()
+	main.pnl_settings.hide()
 func _on_btn_web_link_pressed() -> void:
 	OS.shell_open(user.website)
-	RS.pnl_settings.hide()
+	main.pnl_settings.hide()
 
 
 func _on_te_so_focus_exited() -> void:

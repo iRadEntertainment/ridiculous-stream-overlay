@@ -1,6 +1,8 @@
 extends PanelContainer
 class_name PnlUserLive
 
+@onready var main: RSMain = RSMain.from_node(self)
+
 
 var live_data: TwitchStream
 var _t_user: TwitchUser
@@ -61,13 +63,13 @@ func _process(_delta: float) -> void:
 func _on_btn_raid_current_pressed():
 	if not live_data: return
 	RS.twitcher.raid(live_data.user_id)
-	RS.pnl_settings.hide()
+	main.pnl_settings.hide()
 
 
 func _on_btn_stream_title_pressed() -> void:
 	if not live_data: return
 	OS.shell_open("https://www.twitch.tv/%s" % live_data.user_login)
-	RS.pnl_settings.hide()
+	main.pnl_settings.hide()
 
 
 func _on_ln_chat_live_streamer_text_submitted(new_text: String) -> void:

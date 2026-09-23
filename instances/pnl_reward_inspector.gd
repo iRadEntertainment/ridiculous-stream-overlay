@@ -2,6 +2,8 @@
 extends PanelContainer
 class_name PnlReward
 
+@onready var main: RSMain = null if Engine.is_editor_hint() else RSMain.from_node(self)
+
 @warning_ignore("unused_private_class_variable")
 @export_tool_button("pop") var _pop: Callable = _run_editor_populate
 
@@ -269,7 +271,7 @@ func popup_filepath_selection() -> void:
 		_on_file_dialog_selected
 	)
 	
-	RS.pnl_settings.hide()
+	main.pnl_settings.hide()
 
 
 func _on_file_dialog_selected(
@@ -281,7 +283,7 @@ func _on_file_dialog_selected(
 	var path: String = selected_paths[0]
 	%btn_file_path.text = path
 	%btn_save_to_disk.disabled = not path.get_file().is_valid_filename() or path.is_empty()
-	RS.pnl_settings.show()
+	main.pnl_settings.show()
 
 
 static func filename_from_reward(_reward: TwitchCustomReward) -> String:

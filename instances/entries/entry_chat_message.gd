@@ -1,6 +1,8 @@
 extends PanelContainer
 class_name EntryChatMessage
 
+@onready var main: RSMain = RSMain.from_node(self)
+
 var t_message: TwitchChatMessage
 var user: RSUser
 
@@ -112,7 +114,7 @@ func _get_time() -> String:
 #region Signals
 func _on_lb_msg_meta_clicked(meta: Variant) -> void:
 	OS.shell_open(meta)
-	RS.pnl_chat.hide()
+	main.pnl_chat.hide()
 
 
 func _on_controls_combined_event_input(event: InputEvent) -> void:

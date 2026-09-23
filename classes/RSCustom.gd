@@ -1,6 +1,8 @@
 extends Node
 class_name RSCustom
 
+@onready var main: RSMain = RSMain.from_node(self)
+
 static var _log: TwitchLogger = TwitchLogger.new(&"RSCustom")
 
 const STREAM_OVERLAY_SCENE = "Overlay Stream"
@@ -48,7 +50,7 @@ func add_commands() -> void:
 	cmd_n.description = "Add your smol name to the stream."
 	var cmd_shake: TwitchCommand = RS.twitcher.add_command("shake", shake_bodies)
 	cmd_shake.description = "These beans on stream need shaking!"
-	var cmd_quack: TwitchCommand = RS.twitcher.add_command("quack", RS.play_sfx.bind("quack"))
+	var cmd_quack: TwitchCommand = RS.twitcher.add_command("quack", main.play_sfx.bind("quack"))
 	cmd_quack.description = "Quack!"
 	var cmd_toggle_music: TwitchCommand = RS.twitcher.add_command("toggle_music", toggle_music)
 	cmd_toggle_music.description = "Vex667 can toggle the music on stream. You too!"
@@ -135,7 +137,7 @@ func on_channel_points_redeemed(data: RSTwitchEventData) -> void:
 		"Get advice": get_advice(data)
 		"Shut down stream": alert_on_stop_streaming(user, data)
 		"Raid kani_dev": raid_kani(user, data)
-		"Force raid a random streamer": RS.alert_scene.wheel_of_random_raid(user, data.user_input)
+		"Force raid a random streamer": main.alert_scene.wheel_of_random_raid(user, data.user_input)
 		"Impersonate iRadDev": RS.vetting.custom_rewards_vetting(impersonate_iRad, data)
 		"Change Stream Title": RS.vetting.custom_rewards_vetting(change_stream_title, data)
 		"Do it!": play_doit()
@@ -147,7 +149,7 @@ func on_channel_points_redeemed(data: RSTwitchEventData) -> void:
 				]
 				RS.twitcher.chat(messages.pick_random() )
 			RS.no_obs_ws.toggle_mic_mute()
-		"Granades!": RS.physic_scene.spawn_grenade()
+		"Granades!": main.physic_scene.spawn_grenade()
 		"Change streamer colour": change_streamer_colour(data.user_input)
 func on_followed(data: RSTwitchEventData):
 	destructibles_names(data.username)
@@ -162,7 +164,7 @@ func on_cheered(_data: RSTwitchEventData):
 
 func add_notification_scene(user: RSUser) -> void:
 	var new_notif_inst = RSGlobals.msg_notif_pack.instantiate()
-	RS.add_child(new_notif_inst)
+	main.add_child(new_notif_inst)
 	new_notif_inst.start(user)
 
 
@@ -290,7 +292,7 @@ func discord(
 			_info: TwitchCommandInfo = null,
 			_args: PackedStringArray = []
 		) -> void:
-	RS.play_sfx("discord")
+	main.play_sfx("discord")
 	var msg = "Join Discord: https://discord.gg/4YhKaHkcMb"
 	RS.twitcher.chat(msg)
 
@@ -326,7 +328,7 @@ func chat_commands_help(
 
 
 func beans(username: String) -> void:
-	#if RS.physic_scene.is_closing: return
+	#if main.physic_scene.is_closing: return
 	var user: RSUser
 	if username.is_empty() and !RS.user_mng.known.is_empty():
 		user = RS.user_mng.known.values().pick_random()
@@ -337,7 +339,7 @@ func beans(username: String) -> void:
 	if user:
 		if user.custom_beans_params:
 			beans_param = user.custom_beans_params
-	RS.physic_scene.add_image_bodies(beans_param)
+	main.physic_scene.add_image_bodies(beans_param)
 
 
 func zero_g(
@@ -345,7 +347,7 @@ func zero_g(
 			_info: TwitchCommandInfo = null,
 			args: PackedStringArray = [],
 		) -> void:
-	if not RS.physic_scene:
+	if not main.physic_scene:
 		RS.twitcher.chat("Wait for the physic scene to be in first!")
 		return
 	var duration: float = 30.0
@@ -353,8 +355,8 @@ func zero_g(
 		if float(args[0]) > 0.0:
 			duration = clamp(float(args[0]), 1.0, 180.0)
 	
-	RS.physic_scene.duration = duration
-	RS.physic_scene.zero_g()
+	main.physic_scene.duration = duration
+	main.physic_scene.zero_g()
 
 
 func shake_bodies(
@@ -363,7 +365,7 @@ func shake_bodies(
 			_args: PackedStringArray = []
 		) -> void:
 	for i: int in 10:
-		RS.physic_scene.shake_bodies()
+		main.physic_scene.shake_bodies()
 		await get_tree().create_timer(0.05).timeout
 
 
@@ -372,10 +374,10 @@ func laser(
 			_info: TwitchCommandInfo = null,
 			args: PackedStringArray = []
 		) -> void:
-	if RS.physic_scene.is_closing: return
+	if main.physic_scene.is_closing: return
 	const ANGLE_DEFAULT = PI/2.85
 	var angle: float = float(args[0]) if args.size() >= 1 else ANGLE_DEFAULT
-	RS.physic_scene.add_laser(angle)
+	main.physic_scene.add_laser(angle)
 
 
 func spawn_fake_beans(
@@ -463,8 +465,8 @@ func spawn_fake_beans(
 	
 	for i: int in count:
 		fake_beans.coll_mask = fake_beans.coll_layer + 0b001
-		RS.physic_scene.add_image_bodies(fake_beans)
-		if RS.physic_scene.obj_count > RS.physic_scene.SHARD_BODIES_CAP:
+		main.physic_scene.add_image_bodies(fake_beans)
+		if main.physic_scene.obj_count > main.physic_scene.SHARD_BODIES_CAP:
 			break
 		await get_tree().create_timer(0.03).timeout
 
@@ -481,8 +483,8 @@ func spawn_grenade(
 			count = wrapi(count, 0, 6)
 	
 	for i: int in count:
-		RS.physic_scene.spawn_grenade()
-		if RS.physic_scene.obj_count >= RS.physic_scene.SHARD_BODIES_CAP + 10:
+		main.physic_scene.spawn_grenade()
+		if main.physic_scene.obj_count >= main.physic_scene.SHARD_BODIES_CAP + 10:
 			break
 		await get_tree().create_timer(0.03).timeout
 
@@ -492,7 +494,7 @@ func play_discord_notification(
 			_info: TwitchCommandInfo = null,
 			_args: PackedStringArray = []
 		) -> void:
-	RS.play_sfx("discord")
+	main.play_sfx("discord")
 
 
 func add_name_to_scene(
@@ -571,7 +573,7 @@ func nuke(
 			_info: TwitchCommandInfo = null,
 			_args: PackedStringArray = []
 		) -> void:
-	RS.physic_scene.nuke()
+	main.physic_scene.nuke()
 
 
 func destructibles_names(username := "", quantity: int = 1, font_size := 96):
@@ -595,7 +597,7 @@ func destructibles_names(username := "", quantity: int = 1, font_size := 96):
 	
 	for _i in quantity:
 		await get_tree().process_frame
-		RS.physic_scene.generate_text_rigidbody(user.display_name, col, font_size)
+		main.physic_scene.generate_text_rigidbody(user.display_name, col, font_size)
 
 func pandano(
 			_from_username: String = "",
@@ -641,7 +643,7 @@ func suggest_no_ads(on_cig_break_activation := true) -> void:
 
 
 func alert_on_stop_streaming(user: RSUser, data: RSTwitchEventData):
-	RS.alert_scene.initialize_stop_streaming(user, data.user_input)
+	main.alert_scene.initialize_stop_streaming(user, data.user_input)
 
 
 func stop_streaming():
@@ -650,7 +652,7 @@ func stop_streaming():
 
 func raid_kani(user: RSUser, data: RSTwitchEventData):
 	var kani_rs_user: RSUser = await RS.user_mng.get_any_user_from_username("kani_dev")
-	RS.alert_scene.initialize_raid(user, kani_rs_user, data.user_input)
+	main.alert_scene.initialize_raid(user, kani_rs_user, data.user_input)
 
 
 #func raid_a_random_streamer_from_the_user_list():
@@ -745,10 +747,10 @@ func let_it_snow(
 			_info: TwitchCommandInfo = null,
 			_args: PackedStringArray = []
 		) -> void:
-	if RS.manadono_snow.visible:
+	if main.manadono_snow.visible:
 		return
 	
 	RS.twitcher.chat("Manadono has snow in the overlay, check it out: twitch.tv/manadono")
-	RS.manadono_snow.show()
+	main.manadono_snow.show()
 	await get_tree().create_timer(10.0).timeout
-	RS.manadono_snow.hide()
+	main.manadono_snow.hide()

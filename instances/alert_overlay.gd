@@ -2,6 +2,8 @@
 extends Control
 class_name RSAlertOverlay
 
+@onready var main: RSMain = RSMain.from_node(self)
+
 const BAR_PACK = preload("res://instances/alert_bar.tscn")
 const WHEEL_PACK = preload("res://instances/the_wheel_of_random.tscn")
 const ACCENT_COLOUR = "#f737d0"
@@ -30,7 +32,7 @@ func initialize_stop_streaming(user: RSUser, message: String) -> void:
 		{"user": user.display_name,
 		"message": message})
 	#var callable : Callable = (func(): print("Shut down activated") )
-	var callable : Callable = RS.custom.stop_streaming
+	var callable : Callable = main.custom.stop_streaming
 	instantiate_new_bar(bbcode, callable)
 
 

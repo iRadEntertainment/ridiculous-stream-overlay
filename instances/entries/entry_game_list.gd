@@ -1,6 +1,8 @@
 extends PanelContainer
 class_name EntryGameList
 
+@onready var main: RSMain = RSMain.from_node(self)
+
 const ICONS = [
 	preload("res://ui/icons/bootstrap_icons/steam.png"),
 	preload("res://lib/games_info/itchio_icon.svg"),
@@ -88,7 +90,7 @@ func _on_btn_open_link_pressed() -> void:
 		Type.STEAM: link = "https://s.team/a/%d" % steam_app_id
 		Type.ITCHIO: link = itchio_app_url
 	OS.shell_open(link)
-	RS.pnl_settings.hide()
+	main.pnl_settings.hide()
 func _on_btn_delete_pressed() -> void:
 	queue_free()
 #endregion

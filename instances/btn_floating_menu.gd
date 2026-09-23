@@ -1,6 +1,8 @@
 extends RSSubMenuButton
 class_name RSFloatingMenu
 
+@onready var main: RSMain = RSMain.from_node(self)
+
 const COL_ON := Color.LIGHT_GREEN
 const COL_OFF := Color.LIGHT_SALMON
 
@@ -22,8 +24,8 @@ func start(_main_menu_button: RSSubMenuButton = null) -> void:
 	generate_panels_buttons()
 	super(self)
 	start_indicators()
-	if RS.physic_scene:
-		RS.physic_scene.count_updated.connect(update_obj_count)
+	if main.physic_scene:
+		main.physic_scene.count_updated.connect(update_obj_count)
 
 
 func start_indicators() -> void:
@@ -49,9 +51,9 @@ func start_indicators() -> void:
 	ico_stream.modulate = COL_ON if RS.no_obs_ws.is_stream_on else COL_OFF
 
 func generate_panels_buttons() -> void:
-	if !RS.is_node_ready():
-		await RS.ready
-	for pnl: Control in RS.pnls_to_start:
+	if !main.is_node_ready():
+		await main.ready
+	for pnl: Control in main.pnls_to_start:
 		var btn := Button.new()
 		btn.focus_mode = Control.FOCUS_NONE
 		btn.text = pnl.name.lstrip("pnl_").left(3)
@@ -114,27 +116,27 @@ func calculate_anchored_pos():
 	anchored_position = anchored_position.clamp(Vector2(), Vector2(w_size)-size)
 
 #region Physics Signals
-func _on_btn_beans_pressed() -> void: RS.custom.beans("")
-func _on_btn_laser_pressed() -> void: RS.custom.laser()
-func _on_btn_nuke_pressed() -> void: RS.physic_scene.nuke()
-func _on_btn_zerog_pressed() -> void: RS.custom.zero_g()
-func _on_btn_names_pressed() -> void: RS.custom.destructibles_names("", 5, 48)
-func _on_btn_granade_pressed() -> void: RS.physic_scene.spawn_grenade()
+func _on_btn_beans_pressed() -> void: main.custom.beans("")
+func _on_btn_laser_pressed() -> void: main.custom.laser()
+func _on_btn_nuke_pressed() -> void: main.physic_scene.nuke()
+func _on_btn_zerog_pressed() -> void: main.custom.zero_g()
+func _on_btn_names_pressed() -> void: main.custom.destructibles_names("", 5, 48)
+func _on_btn_granade_pressed() -> void: main.physic_scene.spawn_grenade()
 #endregion
 
 
 #region Panels Signals
 func _on_btn_chat_pressed() -> void:
-	RS.pnl_chat.visible = !RS.pnl_chat.visible
+	main.pnl_chat.visible = !main.pnl_chat.visible
 func _on_btn_user_list_pressed() -> void:
-	RS.pnl_settings.open_tab(1)
-	RS.pnl_settings.visible = !RS.pnl_settings.visible
+	main.pnl_settings.open_tab(1)
+	main.pnl_settings.visible = !main.pnl_settings.visible
 #endregion
 
 
 #region End Stream Signals
 func _on_btn_summary_pressed() -> void:
-	RS.pnl_summary.visible = !RS.pnl_summary.visible
+	main.pnl_summary.visible = !main.pnl_summary.visible
 func _on_btn_summary_start_pressed() -> void:
 	RS.summary_mng.start_new_summary()
 func _on_btn_close_pressed() -> void:
@@ -145,8 +147,8 @@ func _on_btn_close_pressed() -> void:
 	#OS.shell_open("https://www.twitch.tv/team/indiegamedevs")
 #region OBS Signals
 func _on_btn_cig_pressed() -> void:
-	RS.custom.suggest_no_ads()
-	RS.custom.toggle_cig_overlay()
+	main.custom.suggest_no_ads()
+	main.custom.toggle_cig_overlay()
 func _on_btn_mic_pressed() -> void:
 	RS.no_obs_ws.toggle_mic_mute()
 func _on_btn_brave_sound_pressed() -> void:
@@ -161,7 +163,7 @@ func _on_btn_pixelate_pressed() -> void:
 
 #region Settings Signals
 func _on_btn_debug_pressed() -> void:
-	RS.debug_view.visible = !RS.debug_view.visible
+	main.debug_view.visible = !main.debug_view.visible
 func _on_btn_maximize_pressed() -> void:
 	RS.display.set_borderless_maximized(!RS.display.is_maximized)
 func _on_btn_test_pressed() -> void:

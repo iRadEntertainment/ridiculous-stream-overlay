@@ -1,6 +1,8 @@
 
 extends PanelContainer
 
+@onready var main: RSMain = RSMain.from_node(self)
+
 
 
 func start():
@@ -18,7 +20,7 @@ func _on_btn_open_user_dir_pressed():
 func _on_btn_reload_twitcher_pressed():
 	RS.twitcher.connect_to_twitch()
 func _on_btn_reload_commands_pressed():
-	RS.custom.add_commands()
+	main.custom.add_commands()
 
 func _on_btn_open_cache_badges_dir_pressed():
 	OS.shell_open(RS.settings.cache_badge)

@@ -1,6 +1,8 @@
 extends PanelContainer
 class_name PnlUserBeans
 
+@onready var main: RSMain = RSMain.from_node(self)
+
 const entry_bean_pack = preload("res://instances/entries/entry_bean.tscn")
 var user: RSUser: set = _set_user
 
@@ -37,4 +39,4 @@ func _on_btn_add_beans_pressed() -> void:
 
 
 func _on_btn_open_bean_editor_pressed() -> void:
-	RS.pnl_settings.pnl_users_mng.tabs.current_tab = 2
+	main.pnl_settings.pnl_users_mng.tabs.current_tab = 2
