@@ -1,7 +1,8 @@
 extends Button
 class_name RSButtonPhysics
 
-@onready var main: RSMain = RSMain.from_node(self)
+var main: RSMain:
+	get: return RS.main
 
 signal properly_pressed
 

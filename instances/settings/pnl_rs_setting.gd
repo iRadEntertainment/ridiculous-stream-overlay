@@ -1,7 +1,8 @@
 
 extends PanelContainer
 
-@onready var main: RSMain = RSMain.from_node(self)
+var main: RSMain:
+	get: return RS.main
 
 
 

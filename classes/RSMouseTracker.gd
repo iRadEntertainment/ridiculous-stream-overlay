@@ -1,7 +1,8 @@
 extends Node
 class_name RSMouseTracker
 
-@onready var main: RSMain = RSMain.from_node(self)
+var main: RSMain:
+	get: return RS.main
 
 
 var m_pos: Vector2

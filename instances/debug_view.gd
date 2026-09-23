@@ -1,6 +1,7 @@
 extends Control
 
-@onready var main: RSMain = RSMain.from_node(self)
+var main: RSMain:
+	get: return RS.main
 
 @onready var lb_fps: Label = %lb_fps
 @onready var lb_tot_obj: Label = %lb_tot_obj

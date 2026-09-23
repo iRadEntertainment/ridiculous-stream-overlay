@@ -1,7 +1,8 @@
 extends Node
 class_name RSCustom
 
-@onready var main: RSMain = RSMain.from_node(self)
+var main: RSMain:
+	get: return RS.main
 
 static var _log: TwitchLogger = TwitchLogger.new(&"RSCustom")
 

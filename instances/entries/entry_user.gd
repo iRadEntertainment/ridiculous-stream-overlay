@@ -1,7 +1,8 @@
 extends PanelContainer
 class_name RSTwitchUserEntry
 
-@onready var main: RSMain = RSMain.from_node(self)
+var main: RSMain:
+	get: return RS.main
 
 var user: RSUser
 

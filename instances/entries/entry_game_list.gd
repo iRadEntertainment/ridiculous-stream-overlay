@@ -1,7 +1,8 @@
 extends PanelContainer
 class_name EntryGameList
 
-@onready var main: RSMain = RSMain.from_node(self)
+var main: RSMain:
+	get: return RS.main
 
 const ICONS = [
 	preload("res://ui/icons/bootstrap_icons/steam.png"),

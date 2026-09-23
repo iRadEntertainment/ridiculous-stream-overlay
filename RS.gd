@@ -11,10 +11,12 @@ extends Node
 @onready var display: RSDisplay = %RSDisplay
 @onready var summary_mng: RSSummaryMng = %RSSummaryMng
 
+var main: RSMain
 var globals := RSGlobals.new()
 var settings := RSSettings.new()
 var is_started := false
 var _services_started := false
+
 static var _log: TwitchLogger = TwitchLogger.new(&"RS")
 
 signal all_started

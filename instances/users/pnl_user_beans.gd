@@ -1,7 +1,8 @@
 extends PanelContainer
 class_name PnlUserBeans
 
-@onready var main: RSMain = RSMain.from_node(self)
+var main: RSMain:
+	get: return RS.main
 
 const entry_bean_pack = preload("res://instances/entries/entry_bean.tscn")
 var user: RSUser: set = _set_user

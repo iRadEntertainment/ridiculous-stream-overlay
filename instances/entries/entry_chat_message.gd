@@ -1,7 +1,8 @@
 extends PanelContainer
 class_name EntryChatMessage
 
-@onready var main: RSMain = RSMain.from_node(self)
+var main: RSMain:
+	get: return RS.main
 
 var t_message: TwitchChatMessage
 var user: RSUser

@@ -2,7 +2,8 @@
 extends Control
 class_name RSAlertOverlay
 
-@onready var main: RSMain = RSMain.from_node(self)
+var main: RSMain:
+	get: return RS.main
 
 const BAR_PACK = preload("res://instances/alert_bar.tscn")
 const WHEEL_PACK = preload("res://instances/the_wheel_of_random.tscn")

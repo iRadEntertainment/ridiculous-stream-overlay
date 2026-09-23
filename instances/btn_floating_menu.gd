@@ -1,7 +1,8 @@
 extends RSSubMenuButton
 class_name RSFloatingMenu
 
-@onready var main: RSMain = RSMain.from_node(self)
+var main: RSMain:
+	get: return RS.main
 
 const COL_ON := Color.LIGHT_GREEN
 const COL_OFF := Color.LIGHT_SALMON

@@ -39,6 +39,10 @@ var wheel_of_random: RSWheelOfRandom
 var is_started := false
 
 # ================================ INIT ========================================
+func _init() -> void:
+	RS.main = self
+
+
 func _ready() -> void:
 	print_rich("[color=]=================================== RIDICULOS STREAM STARTED ===================================")
 	# Application settings have already been loaded by RS.
