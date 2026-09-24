@@ -6,6 +6,7 @@ const CARET_DOWN = preload("res://ui/icons/bootstrap_icons/caret-down-fill.png")
 
 var user: RSUser: set = _set_user
 var is_global_interactions: bool = true: set = _set_is_global_interactions
+var _displayed_summary_id := ""
 
 
 func _ready() -> void:
@@ -14,10 +15,17 @@ func _ready() -> void:
 		%ck_global.button_pressed = is_global_interactions
 	if !RS.is_node_ready(): await RS.ready
 	RS.summary_mng.user_interactions_updated.connect(_on_user_interactions_updated)
+	RS.summary_mng.summary_changed.connect(_on_summary_changed)
+	_populate.call_deferred()
 
 
 func _populate() -> void:
+	if not is_node_ready():
+		return
+	_displayed_summary_id = RS.summary_mng.summary.id if RS.summary_mng.summary != null else ""
 	clear()
+	if user == null:
+		return
 	%ln_added_on.text = RSUtl.unix_to_string(user.added_on, false, false)
 	
 	var interactions: RSUser.Interactions
@@ -54,22 +62,21 @@ func _populate_from_interactions(interactions: RSUser.Interactions) -> void:
 		var val: int = interactions.redeems[redeem_name]
 		add_counter_entry_to_node(%vb_redeems, redeem_name, val)
 	
-	var sub_count: int = interactions.subscriptions_count
+	var sub_count := interactions.subscriptions_count + interactions.gift_subscriptions_count
 	%ln_subscriptions_count.text = str(sub_count)
-	# interactions.subscriptions # Dictionary[SubTier, int] = {}
-	%btn_expand_subscriptions.disabled = sub_count == 0
+	%ln_subscriptions_count.tooltip_text = "Self subscriptions and gifts sent; announcements and unclassified history are listed separately."
+	%btn_expand_subscriptions.disabled = sub_count + interactions.resubscriptions_count + interactions.legacy_subscriptions_count == 0
 	%btn_expand_subscriptions.icon = CARET_RIGHT
 	%btn_expand_subscriptions.button_pressed = false
 	%vb_subscriptions.hide()
-	for tier: RSUser.Interactions.SubTier in interactions.subscriptions.keys():
-		var val: int = interactions.subscriptions[tier]
-		var tier_name: String
-		match tier:
-			RSUser.Interactions.SubTier.TIER1: tier_name = "Tier 1"
-			RSUser.Interactions.SubTier.TIER2: tier_name = "Tier 2"
-			RSUser.Interactions.SubTier.TIER3: tier_name = "Tier 3"
-		add_counter_entry_to_node(%vb_subscriptions, tier_name, val)
-	
+	var categories := {
+		"subscriptions": "Self", "gift_subscriptions": "Gifted",
+		"resubscriptions": "Resub announcements", "legacy_subscriptions": "Earlier (unclassified)",
+	}
+	for field in categories:
+		var counts: Dictionary = interactions.get(field)
+		for tier in counts:
+			add_counter_entry_to_node(%vb_subscriptions, "%s · Tier %d" % [categories[field], int(tier) + 1], counts[tier])
 	# points
 	%lb_msg_pt.text = str(interactions.messages_points)
 	%lb_commands_pt.text = str(interactions.commands_points)
@@ -101,14 +108,14 @@ func clear() -> void:
 	%btn_expand_redeems.button_pressed = false
 	%vb_redeems.hide()
 	for child in %vb_redeems.get_children():
-		child.queue_free()
+		child.free()
 	
 	%btn_expand_subscriptions.disabled = true
 	%btn_expand_subscriptions.icon = CARET_RIGHT
 	%btn_expand_subscriptions.button_pressed = false
 	%vb_subscriptions.hide()
 	for child in %vb_subscriptions.get_children():
-		child.queue_free()
+		child.free()
 	
 	# points
 	%lb_msg_pt.text = ""
@@ -144,23 +151,27 @@ func _set_is_global_interactions(val: bool) -> void:
 	if is_global_interactions == val:
 		return
 	is_global_interactions = val
+	if not is_node_ready():
+		return
 	_populate()
 	if %ck_global.button_pressed != is_global_interactions:
 		%ck_global.button_pressed = is_global_interactions
 
 
-func _set_user(_user: RSUser) -> void:
-	if user == _user: return
-	clear()
-	if not _user: return
-	user = _user
-	_populate()
+func _set_user(value: RSUser) -> void:
+	user = value
+	if is_node_ready():
+		_populate()
 #endregion
 
 
 func _on_user_interactions_updated(user_id: int) -> void:
-	if !user: return
-	if user.user_id == user_id:
+	if user != null and user.user_id == user_id:
+		_populate()
+
+func _on_summary_changed() -> void:
+	var current_id: String = RS.summary_mng.summary.id if RS.summary_mng.summary != null else ""
+	if current_id != _displayed_summary_id:
 		_populate()
 
 
