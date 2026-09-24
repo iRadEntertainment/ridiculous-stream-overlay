@@ -150,13 +150,13 @@ func _profile_pic_cache_store_original(path: String, tex: Texture2D) -> void:
 				_finalize_tmp(path)
 		"jpg", "jpeg":
 			var tmp := path + ".tmp"
-			# 0..100; pick 90 as a reasonable default
-			if img.save_jpg(tmp, 90) == OK:
+			# Godot uses normalized quality: 0.9 means 90%.
+			if img.save_jpg(tmp, 0.9) == OK:
 				_finalize_tmp(path)
 		"webp":
 			var tmpw := path + ".tmp"
-			# lossless=false, quality 0..100
-			if img.save_webp(tmpw, false, 90) == OK:
+			# lossy=false keeps lossless encoding; quality uses the 0..1 range.
+			if img.save_webp(tmpw, false, 0.9) == OK:
 				_finalize_tmp(path)
 		"bmp":
 			var tmpb := path + ".tmp"
