@@ -50,11 +50,11 @@ func _toggle_btns(val: bool) -> void:
 
 func _set_user(_user: RSUser) -> void:
 	if user == _user: return
-	#clear()
-	_toggle_btns(user != null)
-	if not _user:
-		return
 	user = _user
+	_toggle_btns(user != null)
+	if user == null:
+		clear()
+		return
 	_populate()
 
 
