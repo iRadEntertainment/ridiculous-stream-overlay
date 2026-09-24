@@ -26,12 +26,21 @@ signal channel_points_redeemed(RSTwitchEventData)
 signal followed(RSTwitchEventData)
 signal raided(RSTwitchEventData)
 signal subscribed(RSTwitchEventData)
+signal subscriptions_gifted(RSTwitchEventData)
+signal resubscribed(RSTwitchEventData)
 signal cheered(RSTwitchEventData)
 
 signal connected_to_twitch
 
 
 func start():
+	if is_ready:
+		return
+	# Wire events even when autoconnect is unavailable; manual connection uses them too.
+	twitch_chat.message_received.connect(_on_chat_message_received)
+	eventsub.event.connect(on_event)
+	received_chat_message.connect(check_first_msg)
+	is_ready = true
 	#---------------
 	_log.i("Starting...")
 	if !RS.settings.is_twitcher_setup():
@@ -39,11 +48,6 @@ func start():
 		return
 	#---------------
 	#irc.received_privmsg.connect(_on_irc_received_privmsg)
-	twitch_chat.message_received.connect(_on_chat_message_received)
-	eventsub.event.connect(on_event)
-	received_chat_message.connect(check_first_msg)
-	first_session_message.connect(check_user_twitch_color)
-	is_ready = true
 	if RS.settings.auto_connect:
 		await get_tree().create_timer(2.0).timeout
 		await connect_to_twitch()
@@ -185,6 +189,8 @@ func on_event(type: String, _data: Dictionary) -> void:
 		"channel.raid": raided.emit(data)
 		"channel.cheer": cheered.emit(data)
 		"channel.subscribe": subscribed.emit(data)
+		"channel.subscription.gift": subscriptions_gifted.emit(data)
+		"channel.subscription.message": resubscribed.emit(data)
 
 
 func gather_user_info_from_username(username: String) -> RSUser:

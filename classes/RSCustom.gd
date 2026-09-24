@@ -115,10 +115,8 @@ func on_first_session_message(t_message: TwitchChatMessage) -> void:
 	if !RS.no_obs_ws.is_stream_on: return
 	var user_id: int = int(t_message.chatter_user_id)
 	var user: RSUser = await RS.user_mng.get_any_user_from_user_id(user_id)
-	if RS.user_mng.is_user_id_known(user_id):
-		user.twitch_chat_color = await RS.twitcher.get_user_color(user.user_id)
-		# TODO: move this to user manager
-		RS.user_mng.save_user(user)
+	if user == null:
+		return
 	destructibles_names(t_message.chatter_user_name)
 	if user.auto_shoutout:
 		RS.shoutout_mng.add_shoutout(user)
