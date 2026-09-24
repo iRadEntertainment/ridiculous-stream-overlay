@@ -402,6 +402,14 @@ setting = SubResource("Resource_t8rbm")
 token = SubResource("Resource_34jol")
 metadata/_custom_type_script = "uid://wkh0l2xsyapj"
 
+[node name="TwitchEventsub" type="Node" parent="RSTwitcher/TwitchService" unique_id=1360070534 node_paths=PackedStringArray("api")]
+unique_name_in_owner = true
+script = ExtResource("16_u3fro")
+api = NodePath("../TwitchAPI")
+_subscriptions = Array[ExtResource("17_rkgw8")]([SubResource("Resource_frd2u"), SubResource("Resource_ud7fj"), SubResource("Resource_cp302"), SubResource("Resource_jmoph"), SubResource("Resource_xfrgx"), SubResource("Resource_stwwt"), SubResource("Resource_t7nc8"), SubResource("Resource_vn8cx"), SubResource("Resource_q2h71"), SubResource("Resource_f7hi4"), SubResource("Resource_dt5lr"), SubResource("Resource_ky1pa"), SubResource("Resource_fjdrr"), SubResource("Resource_po7a7"), SubResource("Resource_hpbui"), SubResource("Resource_8xmxy"), SubResource("Resource_5tays"), SubResource("Resource_ap7wn")])
+scopes = SubResource("Resource_mlicr")
+metadata/_custom_type_script = "uid://blmhj3j00yk45"
+
 [node name="TwitchMediaLoader" type="Node" parent="RSTwitcher/TwitchService" unique_id=1413080319 node_paths=PackedStringArray("api")]
 unique_name_in_owner = true
 script = ExtResource("19_7cpug")
@@ -415,7 +423,7 @@ script = ExtResource("22_fs27u")
 broadcaster_user = SubResource("Resource_i7ap6")
 sender_user = SubResource("Resource_ktnjm")
 media_loader = NodePath("../TwitchService/TwitchMediaLoader")
-eventsub = NodePath("../TwitchEventsub")
+eventsub = NodePath("../TwitchService/TwitchEventsub")
 api = NodePath("../TwitchService/TwitchAPI")
 metadata/_custom_type_script = "uid://dcq1bvfrqimqq"
 
@@ -424,14 +432,6 @@ script = ExtResource("23_ft7e0")
 twitch_api = NodePath("../TwitchService/TwitchAPI")
 sender_user = SubResource("Resource_exs3d")
 metadata/_custom_type_script = "uid://ch0rxi1ogjx3q"
-
-[node name="TwitchEventsub" type="Node" parent="RSTwitcher" unique_id=1360070534 node_paths=PackedStringArray("api")]
-unique_name_in_owner = true
-script = ExtResource("16_u3fro")
-api = NodePath("../TwitchService/TwitchAPI")
-_subscriptions = Array[ExtResource("17_rkgw8")]([SubResource("Resource_frd2u"), SubResource("Resource_ud7fj"), SubResource("Resource_cp302"), SubResource("Resource_jmoph"), SubResource("Resource_xfrgx"), SubResource("Resource_stwwt"), SubResource("Resource_t7nc8"), SubResource("Resource_vn8cx"), SubResource("Resource_q2h71"), SubResource("Resource_f7hi4"), SubResource("Resource_dt5lr"), SubResource("Resource_ky1pa"), SubResource("Resource_fjdrr"), SubResource("Resource_po7a7"), SubResource("Resource_hpbui"), SubResource("Resource_8xmxy"), SubResource("Resource_5tays"), SubResource("Resource_ap7wn")])
-scopes = SubResource("Resource_mlicr")
-metadata/_custom_type_script = "uid://blmhj3j00yk45"
 
 [node name="RSUserMng" type="Node" parent="." unique_id=986791360]
 unique_name_in_owner = true
