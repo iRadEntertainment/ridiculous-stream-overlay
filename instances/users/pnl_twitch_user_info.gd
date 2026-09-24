@@ -12,6 +12,7 @@ var tw_expand: Tween
 
 var t_user: TwitchUser
 var user: RSUser
+@onready var btn_update_twitch_info: Button = $hb/tex_profile_pic/btn_update_twitch_info
 
 
 func _ready() -> void:
@@ -95,19 +96,24 @@ func _on_btn_expand_pressed() -> void:
 
 
 func _on_btn_update_twitch_info_pressed() -> void:
-	%pnl_loading_simple.show()
+	if btn_update_twitch_info.disabled:
+		return
 	var user_id: int
 	if user: user_id = user.user_id
 	elif t_user: user_id = int(t_user.id)
 	if not user_id: return
-	
+	var selected_user := user
+	var selected_t_user := t_user
+	btn_update_twitch_info.disabled = true
+	%pnl_loading_simple.show()
 	var new_t_user: TwitchUser = await RS.user_mng.get_t_user_from_twitch_api(user_id)
-	if not new_t_user:
-		clear()
+	btn_update_twitch_info.disabled = false
+	%pnl_loading_simple.hide()
+	if user != selected_user or t_user != selected_t_user:
 		return
+	if not new_t_user:
+		btn_update_twitch_info.tooltip_text = "Refresh failed. Check the Twitch connection and try again."
+		return
+	btn_update_twitch_info.tooltip_text = "Reload Twitch profile"
 	t_user = new_t_user
 	populate_from_twitch_user(t_user)
-	if user:
-		user.update_from_twitch_user(t_user)
-		RS.user_mng.save_user(user)
-	%pnl_loading_simple.hide()

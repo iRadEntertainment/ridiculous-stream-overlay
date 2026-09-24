@@ -15,6 +15,24 @@ var _refreshing_live := false
 var _profiles_loaded: Dictionary[int, bool] = {}
 var _pending_lookups: Dictionary[String, bool] = {}
 
+const PROFILE_START_DELAY := 30.0
+const PROFILE_BATCH_SIZE := 10
+const PROFILE_BATCH_INTERVAL := 5.0
+const PROFILE_RETRY_DELAY := 30.0
+const PROFILE_MAX_ATTEMPTS := 3
+var _profile_timer: Timer
+var _profile_queue: Array[int] = []
+var _profile_in_flight: Dictionary[int, RSUser] = {}
+var _profile_refreshed: Dictionary[int, bool] = {}
+var _profile_attempts: Dictionary[int, int] = {}
+var _profile_due: Dictionary[int, float] = {}
+var _fresh_profiles: Dictionary[int, TwitchUser] = {}
+var _profile_start_after := 0.0
+var _profile_not_before := 0.0
+var _profile_connected_once := false
+var _profile_auth_paused := false
+var _profile_worker_busy := false
+
 signal user_added(user: RSUser)
 signal user_updated(user: RSUser)
 signal user_deleted(user: RSUser)
@@ -22,6 +40,7 @@ signal known_users_updated
 signal live_streamers_updating
 signal live_streamers_updated
 signal profile_lookup_finished(key: String)
+signal profile_refresh_finished(user_id: int, success: bool, message: String)
 
 func start() -> void:
 	if _started:
@@ -31,14 +50,20 @@ func start() -> void:
 	for user: RSUser in known.values():
 		unknown.erase(user.user_id)
 		_index_user(user)
+		_queue_profile_refresh(user.user_id)
 	connect_signals()
 	known_users_updated.emit()
+	if RS.twitcher.is_connected_to_twitch:
+		_resume_profile_refresh()
 
 func connect_signals() -> void:
 	if not RS.twitcher.connected_to_twitch.is_connected(_on_twitch_connected):
 		RS.twitcher.connected_to_twitch.connect(_on_twitch_connected)
 	if not RS.twitcher.first_session_message.is_connected(_on_first_session_message):
 		RS.twitcher.first_session_message.connect(_on_first_session_message)
+	var token: OAuthToken = RS.twitcher.api.token
+	if token != null and not token.authorized.is_connected(_on_profile_authorized):
+		token.authorized.connect(_on_profile_authorized)
 
 static func normalize_username(username: String) -> String:
 	return username.strip_edges().trim_prefix("@").to_lower()
@@ -85,6 +110,8 @@ func save_user(user: RSUser) -> bool:
 	_index_user(user)
 	if is_new:
 		user_added.emit(user)
+		if _started:
+			_queue_profile_refresh(user.user_id)
 	else:
 		user_updated.emit(user)
 	known_users_updated.emit()
@@ -101,6 +128,12 @@ func delete_user(user: RSUser) -> void:
 			_log.e("Could not delete user file: %s" % filename)
 			return
 	known.erase(user.user_id)
+	_profile_queue.erase(user.user_id)
+	_profile_due.erase(user.user_id)
+	_profile_attempts.erase(user.user_id)
+	_profile_refreshed.erase(user.user_id)
+	_fresh_profiles.erase(user.user_id)
+	profile_refresh_finished.emit(user.user_id, false, "User removed from the known list.")
 	# Retain the observed identity for this session, without retaining membership.
 	unknown[user.user_id] = user
 	_index_user(user)
@@ -149,7 +182,13 @@ func get_any_user_from_user_id(user_id: int) -> RSUser:
 	return fetched if fetched != null else user
 
 func get_t_user_from_twitch_api(user_id: int) -> TwitchUser:
-	return await RS.twitcher.get_user_by_id(str(user_id))
+	if known.has(user_id):
+		return _fresh_profiles.get(user_id) if await refresh_known_user(user_id, true) else null
+	var ids: Array[int] = [user_id]
+	var response: TwitchGetUsers.Response = await RS.twitcher.fetch_user_profiles(ids)
+	if response == null or response.response == null or response.response.error or response.response.response_code != 200 or response.data.is_empty():
+		return null
+	return response.data[0]
 
 func user_from_twitch_api(username: String = "", user_id: int = 0) -> RSUser:
 	username = normalize_username(username)
@@ -199,20 +238,167 @@ func is_user_id_known(user_id: int) -> bool:
 func update_known_user_from_twitch(user: RSUser) -> void:
 	if not is_user_known(user):
 		return
-	var refreshed := await user_from_twitch_api("", user.user_id)
-	# A user can be removed while the lookup is pending.
-	if refreshed != null and known.has(user.user_id):
-		save_user(refreshed)
+	await refresh_known_user(user.user_id)
 
 func _on_first_session_message(message: TwitchChatMessage) -> void:
 	var user := observe_user(int(message.chatter_user_id), message.chatter_user_login, message.chatter_user_name, message.color)
 	if is_user_known(user):
 		save_user(user)
-		await update_known_user_from_twitch(user)
+		_queue_profile_refresh(user.user_id)
 
 func _on_twitch_connected() -> void:
 	create_refresh_live_stream_timer()
 	refresh_live_streamers()
+	_resume_profile_refresh()
+
+
+## Automatic requests run once successfully per launch; force is for manual refresh.
+func refresh_known_user(user_id: int, force := false) -> bool:
+	if not known.has(user_id) or not RS.twitcher.is_connected_to_twitch or _profile_auth_paused:
+		return false
+	if not force and _profile_refreshed.has(user_id):
+		return true
+	if not force and _profile_attempts.get(user_id, 0) >= PROFILE_MAX_ATTEMPTS:
+		return false
+	_queue_profile_refresh(user_id, force)
+	while true:
+		var result: Array = await profile_refresh_finished
+		if int(result[0]) == user_id:
+			return bool(result[1])
+	return false
+
+func _profile_now() -> float:
+	return Time.get_ticks_msec() / 1000.0
+
+func _queue_profile_refresh(user_id: int, force := false) -> void:
+	if not known.has(user_id) or _profile_in_flight.has(user_id):
+		return
+	if not force and (_profile_refreshed.has(user_id) or _profile_attempts.get(user_id, 0) >= PROFILE_MAX_ATTEMPTS):
+		return
+	if force:
+		_profile_queue.erase(user_id)
+		_profile_queue.push_front(user_id)
+		_profile_due[user_id] = 0.0
+		_profile_attempts.erase(user_id)
+	elif not _profile_queue.has(user_id):
+		_profile_queue.append(user_id)
+		_profile_due[user_id] = _profile_start_after
+	_schedule_profile_refresh()
+
+func _resume_profile_refresh() -> void:
+	if not _profile_connected_once:
+		_profile_connected_once = true
+		_profile_start_after = _profile_now() + PROFILE_START_DELAY
+		for user_id in _profile_queue:
+			_profile_due[user_id] = _profile_start_after
+	_profile_auth_paused = false
+	_schedule_profile_refresh()
+
+func _on_profile_authorized() -> void:
+	_profile_auth_paused = false
+	_schedule_profile_refresh()
+
+func _schedule_profile_refresh() -> void:
+	if not is_inside_tree() or _profile_worker_busy or _profile_auth_paused or not RS.twitcher.is_connected_to_twitch:
+		return
+	if _profile_queue.is_empty():
+		if _profile_timer != null:
+			_profile_timer.stop()
+		return
+	if _profile_timer == null:
+		_profile_timer = Timer.new()
+		_profile_timer.one_shot = true
+		_profile_timer.ignore_time_scale = true
+		_profile_timer.timeout.connect(_refresh_profile_batch)
+		add_child(_profile_timer)
+	var earliest := INF
+	for user_id in _profile_queue:
+		earliest = minf(earliest, _profile_due.get(user_id, 0.0))
+	_profile_timer.start(maxf(0.01, maxf(earliest, _profile_not_before) - _profile_now()))
+
+func _refresh_profile_batch() -> void:
+	if _profile_worker_busy or _profile_auth_paused or not RS.twitcher.is_connected_to_twitch:
+		return
+	var now := _profile_now()
+	if now < _profile_not_before:
+		_schedule_profile_refresh()
+		return
+	var ids: Array[int] = []
+	for user_id in _profile_queue.duplicate():
+		if not known.has(user_id):
+			_profile_queue.erase(user_id)
+			continue
+		if _profile_due.get(user_id, 0.0) > now:
+			continue
+		_profile_queue.erase(user_id)
+		_profile_in_flight[user_id] = known[user_id]
+		ids.append(user_id)
+		if ids.size() == PROFILE_BATCH_SIZE:
+			break
+	if ids.is_empty():
+		_schedule_profile_refresh()
+		return
+	_profile_worker_busy = true
+	var result: TwitchGetUsers.Response = await RS.twitcher.fetch_user_profiles(ids)
+	var http: BufferedHTTPClient.ResponseData = result.response if result != null else null
+	var code := http.response_code if http != null else 0
+	var success := http != null and not http.error and http.result == HTTPRequest.RESULT_SUCCESS and code == 200
+	_profile_not_before = _profile_now() + PROFILE_BATCH_INTERVAL
+	if code == 429:
+		var delay := PROFILE_RETRY_DELAY
+		for header in http.response_header:
+			if str(header).to_lower() == "ratelimit-reset":
+				delay = maxf(1.0, float(str(http.response_header[header]).strip_edges()) - Time.get_unix_time_from_system() + 1.0)
+		_profile_not_before = maxf(_profile_not_before, _profile_now() + delay)
+	elif code in [401, 403]:
+		_profile_auth_paused = true
+	var profiles: Dictionary[int, TwitchUser] = {}
+	if success:
+		for profile: TwitchUser in result.data:
+			profiles[int(profile.id)] = profile
+	for user_id in ids:
+		var original: RSUser = _profile_in_flight[user_id]
+		_profile_in_flight.erase(user_id)
+		# Never restore a deleted user or overwrite a replacement while awaiting HTTP.
+		if known.get(user_id) != original:
+			profile_refresh_finished.emit(user_id, false, "User changed while refreshing.")
+			if known.has(user_id):
+				_queue_profile_refresh(user_id)
+			continue
+		if _profile_auth_paused:
+			_profile_queue.append(user_id)
+			profile_refresh_finished.emit(user_id, false, "Twitch authentication is required.")
+			continue
+		if success and profiles.has(user_id):
+			var profile: TwitchUser = profiles[user_id]
+			var before := original.to_dict()
+			original.update_from_twitch_user(profile)
+			if before != original.to_dict() and not save_user(original):
+				original.update_from_dict(before)
+				_profile_failed(user_id, "Could not save refreshed profile.", true)
+				continue
+			_index_user(original)
+			_fresh_profiles[user_id] = profile
+			_profiles_loaded[user_id] = true
+			_profile_refreshed[user_id] = true
+			_profile_attempts.erase(user_id)
+			_profile_due.erase(user_id)
+			profile_refresh_finished.emit(user_id, true, "")
+		else:
+			var message := "Twitch did not return this user." if success else "Profile request failed (HTTP %d)." % code
+			_profile_failed(user_id, message, not success and (code == 0 or code == 200 or code == 429 or code >= 500))
+	_profile_worker_busy = false
+	_schedule_profile_refresh()
+
+func _profile_failed(user_id: int, message: String, retry: bool) -> void:
+	var attempts: int = _profile_attempts.get(user_id, 0) + 1
+	_profile_attempts[user_id] = attempts if retry else PROFILE_MAX_ATTEMPTS
+	if retry and attempts < PROFILE_MAX_ATTEMPTS:
+		_profile_queue.append(user_id)
+		_profile_due[user_id] = _profile_now() + PROFILE_RETRY_DELAY * pow(2.0, attempts - 1)
+		return
+	_log.w("Profile refresh for %d: %s" % [user_id, message])
+	profile_refresh_finished.emit(user_id, false, message)
 
 func _on_tmr_refresh_live_timeout() -> void:
 	refresh_live_streamers()

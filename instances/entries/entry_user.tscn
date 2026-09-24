@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c10luse40ekhw"]
+[gd_scene format=3 uid="uid://c10luse40ekhw"]
 
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_8bj5e"]
 [ext_resource type="Script" uid="uid://8jh4xihpue7w" path="res://instances/entries/entry_user.gd" id="2_brw8v"]
@@ -14,8 +14,22 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f1m1r"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qd0h3"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1lnvw"]
 bg_color = Color(0.109804, 0.109804, 0.109804, 0.45098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.878431, 0.878431, 0.878431, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8bj5e"]
+bg_color = Color(0.106436, 0.106436, 0.106436, 0.258824)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -38,33 +52,19 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8bj5e"]
-bg_color = Color(0.106436, 0.106436, 0.106436, 0.258824)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.878431, 0.878431, 0.878431, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qd0h3"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_51clj"]
 
-[node name="entry_user" type="PanelContainer"]
+[node name="entry_user" type="PanelContainer" unique_id=1187365987]
 offset_right = 496.0
 offset_bottom = 48.0
 theme = ExtResource("1_8bj5e")
 theme_override_styles/panel = SubResource("StyleBoxEmpty_f1m1r")
 script = ExtResource("2_brw8v")
 
-[node name="hb" type="HBoxContainer" parent="."]
+[node name="hb" type="HBoxContainer" parent="." unique_id=1136122512]
 layout_mode = 2
 
-[node name="user_pic" type="TextureRect" parent="hb"]
+[node name="user_pic" type="TextureRect" parent="hb" unique_id=2019938929]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
@@ -72,14 +72,14 @@ texture = ExtResource("3_1ennu")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="loading_user_pic" parent="hb/user_pic" instance=ExtResource("4_g2qwm")]
+[node name="loading_user_pic" parent="hb/user_pic" unique_id=1732873920 instance=ExtResource("4_g2qwm")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
 offset_right = 0.0
 offset_bottom = 0.0
 
-[node name="btn_open_streamer_page" type="Button" parent="hb/user_pic"]
+[node name="btn_open_streamer_page" type="Button" parent="hb/user_pic" unique_id=1915291300]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -87,19 +87,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1lnvw")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_g2py5")
-theme_override_styles/hover = SubResource("StyleBoxFlat_8bj5e")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_1lnvw")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_qd0h3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1lnvw")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8bj5e")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_g2py5")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1lnvw")
 
-[node name="btn_user" type="Button" parent="hb"]
+[node name="btn_user" type="Button" parent="hb" unique_id=1919256547]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Seano4D"
 
-[node name="user_live_rect" type="ColorRect" parent="hb/btn_user"]
+[node name="user_live_rect" type="ColorRect" parent="hb/btn_user" unique_id=684821204]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -114,7 +114,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.509804, 0.0196078, 0.705882, 0.254902)
 
-[node name="hb_games_count" type="HBoxContainer" parent="hb/btn_user"]
+[node name="hb_games_count" type="HBoxContainer" parent="hb/btn_user" unique_id=1349470094]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -125,24 +125,24 @@ offset_bottom = -8.0
 grow_vertical = 0
 mouse_filter = 2
 
-[node name="col1" type="ColorRect" parent="hb/btn_user/hb_games_count"]
+[node name="col1" type="ColorRect" parent="hb/btn_user/hb_games_count" unique_id=206145472]
 custom_minimum_size = Vector2(4, 4)
 layout_mode = 2
 color = Color(0.244144, 0.488732, 0.768396, 1)
 
-[node name="col2" type="ColorRect" parent="hb/btn_user/hb_games_count"]
+[node name="col2" type="ColorRect" parent="hb/btn_user/hb_games_count" unique_id=1270824899]
 custom_minimum_size = Vector2(4, 4)
 layout_mode = 2
 
-[node name="col3" type="ColorRect" parent="hb/btn_user/hb_games_count"]
+[node name="col3" type="ColorRect" parent="hb/btn_user/hb_games_count" unique_id=655006854]
 custom_minimum_size = Vector2(4, 4)
 layout_mode = 2
 
-[node name="col4" type="ColorRect" parent="hb/btn_user/hb_games_count"]
+[node name="col4" type="ColorRect" parent="hb/btn_user/hb_games_count" unique_id=1164755188]
 custom_minimum_size = Vector2(4, 4)
 layout_mode = 2
 
-[node name="btn_shoutout" type="Button" parent="hb"]
+[node name="btn_shoutout" type="Button" parent="hb" unique_id=1146815048]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -150,16 +150,16 @@ icon = ExtResource("4_kitly")
 icon_alignment = 1
 expand_icon = true
 
-[node name="pnl_toggle" type="PanelContainer" parent="hb"]
+[node name="pnl_toggle" type="PanelContainer" parent="hb" unique_id=459197534]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_51clj")
 
-[node name="hb_menu" type="HBoxContainer" parent="hb/pnl_toggle"]
+[node name="hb_menu" type="HBoxContainer" parent="hb/pnl_toggle" unique_id=378767785]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="btn_promote" type="Button" parent="hb/pnl_toggle/hb_menu"]
+[node name="btn_promote" type="Button" parent="hb/pnl_toggle/hb_menu" unique_id=1099499486]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -167,7 +167,7 @@ icon = ExtResource("5_a5qrl")
 icon_alignment = 1
 expand_icon = true
 
-[node name="btn_special" type="Button" parent="hb/pnl_toggle/hb_menu"]
+[node name="btn_special" type="Button" parent="hb/pnl_toggle/hb_menu" unique_id=2105577851]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(32, 32)
@@ -176,14 +176,15 @@ icon = ExtResource("6_kbpjk")
 icon_alignment = 1
 expand_icon = true
 
-[node name="btn_reload" type="Button" parent="hb/pnl_toggle/hb_menu"]
+[node name="btn_reload" type="Button" parent="hb/pnl_toggle/hb_menu" unique_id=671639724]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 icon = ExtResource("7_0qgdf")
 icon_alignment = 1
 expand_icon = true
 
-[node name="btn_raid" type="Button" parent="hb/pnl_toggle/hb_menu"]
+[node name="btn_raid" type="Button" parent="hb/pnl_toggle/hb_menu" unique_id=707983765]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -191,7 +192,7 @@ icon = ExtResource("8_htwh4")
 icon_alignment = 1
 expand_icon = true
 
-[node name="btn_delete" type="Button" parent="hb/pnl_toggle/hb_menu"]
+[node name="btn_delete" type="Button" parent="hb/pnl_toggle/hb_menu" unique_id=1115987280]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -199,34 +200,34 @@ icon = ExtResource("9_0lyol")
 icon_alignment = 1
 expand_icon = true
 
-[node name="btn_menu" type="Button" parent="hb/pnl_toggle"]
+[node name="btn_menu" type="Button" parent="hb/pnl_toggle" unique_id=1877928730]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 icon = ExtResource("10_hy24v")
 icon_alignment = 1
 
-[node name="pnl_delete" type="PanelContainer" parent="."]
+[node name="pnl_delete" type="PanelContainer" parent="." unique_id=1155037240]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
-[node name="hb" type="HBoxContainer" parent="pnl_delete"]
+[node name="hb" type="HBoxContainer" parent="pnl_delete" unique_id=665212025]
 layout_mode = 2
 
-[node name="btn_delete_confirm" type="Button" parent="pnl_delete/hb"]
+[node name="btn_delete_confirm" type="Button" parent="pnl_delete/hb" unique_id=1183126721]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 text = "yes"
 
-[node name="lb_delete" type="Label" parent="pnl_delete/hb"]
+[node name="lb_delete" type="Label" parent="pnl_delete/hb" unique_id=1776153179]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Delete user?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="btn_delete_cancel" type="Button" parent="pnl_delete/hb"]
+[node name="btn_delete_cancel" type="Button" parent="pnl_delete/hb" unique_id=1777919855]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 text = "no"

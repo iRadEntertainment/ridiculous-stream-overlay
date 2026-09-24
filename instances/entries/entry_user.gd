@@ -1,6 +1,10 @@
 extends PanelContainer
 class_name RSTwitchUserEntry
 
+@onready var _default_profile_picture: Texture2D = %user_pic.texture
+@onready var btn_reload: Button = %btn_reload
+
+
 var main: RSMain:
 	get: return RS.main
 
@@ -15,7 +19,9 @@ var is_visible_in_scroll: bool:
 		if not is_instance_valid(scroll) or not is_visible_in_tree(): return false
 		return scroll.get_global_rect().intersects(get_global_rect())
 var is_profile_picture_loaded: bool = false
-@onready var _default_profile_picture: Texture2D = %user_pic.texture
+
+
+
 var _profile_picture_loading := false
 var _profile_picture_url := ""
 var _profile_picture_user_id := 0
@@ -110,14 +116,18 @@ func _load_profile_picture(use_cached: bool) -> void:
 
 
 func reload_all_info_from_twitch() -> void:
-	var t_user: TwitchUser = await RS.user_mng.get_t_user_from_twitch_api(user.user_id)
-	if not t_user:
-		_on_btn_delete_pressed()
+	if user == null or btn_reload.disabled:
 		return
-	user.update_from_twitch_user(t_user)
-	RS.user_mng.save_user(user)
-	update()
-	reload_profile_pic()
+	var user_id := user.user_id
+	btn_reload.disabled = true
+	btn_reload.tooltip_text = "Refreshing Twitch profile..."
+	var success: bool = await RS.user_mng.refresh_known_user(user_id, true)
+	if is_queued_for_deletion():
+		return
+	btn_reload.disabled = false
+	btn_reload.tooltip_text = "Reload Twitch profile" if success else "Refresh failed. Check the Twitch connection and try again."
+	if success and user != null and user.user_id == user_id:
+		reload_profile_pic()
 
 
 func toggle_buttons(toggle_on: bool) -> void:

@@ -104,6 +104,43 @@ func get_user_by_id(user_id: String) -> TwitchUser: return await service.get_use
 func get_user(username: String) -> TwitchUser: return await service.get_user(username)
 
 
+## Fresh profile data, retaining HTTP status/headers for the manager's retry policy.
+func fetch_user_profiles(user_ids: Array[int]) -> TwitchGetUsers.Response:
+	var result := TwitchGetUsers.Response.new()
+	if user_ids.is_empty() or user_ids.size() > 100:
+		return result
+	var query := PackedStringArray()
+	for user_id in user_ids:
+		query.append("id=%d" % user_id)
+	var response: BufferedHTTPClient.ResponseData = await api.request("/users?" + "&".join(query), HTTPClient.METHOD_GET)
+	result.response = response
+	if response == null or response.error or response.result != HTTPRequest.RESULT_SUCCESS or response.response_code != 200:
+		return result
+	# The generated get_users parser assumes that even failures contain JSON.
+	var json := JSON.new()
+	if json.parse(response.response_data.get_string_from_utf8()) != OK:
+		response.error = true
+		return result
+	var data: Variant = json.data
+	if not data is Dictionary or not data.get("data") is Array:
+		response.error = true
+		return result
+	for record in data.data:
+		if not record is Dictionary or not str(record.get("id", "")).is_valid_int() or str(record.get("login", "")).is_empty():
+			response.error = true
+			return result
+	result = TwitchGetUsers.Response.from_json(data)
+	result.response = response
+	for profile: TwitchUser in result.data:
+		# Keep convenience lookups consistent with fresh API responses after renames.
+		for key in service._user_cache.keys():
+			if service._user_cache[key].id == profile.id:
+				service._user_cache.erase(key)
+		service._user_cache[profile.id] = profile
+		service._user_cache[profile.login] = profile
+	return result
+
+
 func get_user_color(user_id: int) -> Color:
 	var res_col := await api.get_user_chat_color([str(user_id)])
 	if not res_col: return Color.TRANSPARENT
