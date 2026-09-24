@@ -3,13 +3,41 @@ extends PanelContainer
 
 
 @onready var btn_sort: MenuButton = %btn_sort
+@onready var scroll: ScrollContainer = %user_list.get_parent()
 var entries_list: Array[RSTwitchUserEntry] = []
+var _profile_picture_check_queued := false
 
 signal user_selected(user, live_data)
 
 
 func _ready() -> void:
 	init_menus()
+	%user_list.sort_children.connect(_queue_profile_picture_check)
+	scroll.sort_children.connect(_queue_profile_picture_check)
+	scroll.resized.connect(_queue_profile_picture_check)
+	scroll.visibility_changed.connect(_queue_profile_picture_check)
+	scroll.get_v_scroll_bar().value_changed.connect(_queue_profile_picture_check.unbind(1))
+	scroll.get_h_scroll_bar().value_changed.connect(_queue_profile_picture_check.unbind(1))
+	RS.user_mng.user_updated.connect(_queue_profile_picture_check.unbind(1))
+	_queue_profile_picture_check()
+
+
+func _queue_profile_picture_check() -> void:
+	if _profile_picture_check_queued or not is_inside_tree():
+		return
+	_profile_picture_check_queued = true
+	# Batch layout/scroll changes into one check after the containers settle.
+	await get_tree().process_frame
+	_check_visible_profile_pictures.call_deferred()
+
+
+func _check_visible_profile_pictures() -> void:
+	_profile_picture_check_queued = false
+	if is_queued_for_deletion() or not is_inside_tree() or not scroll.is_visible_in_tree():
+		return
+	for entry: RSTwitchUserEntry in entries_list:
+		if is_instance_valid(entry) and not entry.is_queued_for_deletion():
+			entry.check_update_profile_picture()
 
 
 func start() -> void:
@@ -137,6 +165,7 @@ func populate_user_button_list() -> void:
 	
 	sort_func = sort_by_points
 	sort_and_update_entries()
+	_queue_profile_picture_check()
 
 
 func add_user_btn_entry_from_user_id(user_id: int) -> void:

@@ -12,9 +12,14 @@ var is_expanded: bool = false
 var scroll: ScrollContainer
 var is_visible_in_scroll: bool:
 	get:
-		if not scroll: return false
+		if not is_instance_valid(scroll) or not is_visible_in_tree(): return false
 		return scroll.get_global_rect().intersects(get_global_rect())
 var is_profile_picture_loaded: bool = false
+@onready var _default_profile_picture: Texture2D = %user_pic.texture
+var _profile_picture_loading := false
+var _profile_picture_url := ""
+var _profile_picture_user_id := 0
+var _profile_picture_request_id := 0
 
 
 signal user_selected(user: RSUser)
@@ -22,15 +27,11 @@ signal user_selected(user: RSUser)
 
 func _ready() -> void:
 	scroll = get_parent().get_parent()
-	scroll.get_v_scroll_bar().scrolling.connect(check_update_profile_picture)
-	visibility_changed.connect(check_update_profile_picture)
 	update()
 	toggle_buttons(false)
 	%pnl_delete.hide()
 	RS.user_mng.live_streamers_updated.connect(_on_live_streamers_updated)
 	RS.user_mng.user_updated.connect(_on_user_updated)
-	await get_tree().process_frame
-	check_update_profile_picture()
 
 
 #region Update
@@ -61,17 +62,51 @@ func update() -> void:
 
 
 func update_profile_picture() -> void:
-	if not user.profile_image_url: return
-	%loading_user_pic.show()
-	%user_pic.texture = await RS.loader.load_profile_pic_from_url(user.profile_image_url, true)
-	%loading_user_pic.hide()
+	await _load_profile_picture(true)
 
 
 func reload_profile_pic() -> void:
-	if not user.profile_image_url: return
-	%loading_user_pic.show()
-	%user_pic.texture = await RS.loader.load_profile_pic_from_url(user.profile_image_url, false)
+	await _load_profile_picture(false)
+
+
+func _sync_profile_picture_identity() -> void:
+	if _profile_picture_user_id == user.user_id and _profile_picture_url == user.profile_image_url:
+		return
+	_profile_picture_user_id = user.user_id
+	_profile_picture_url = user.profile_image_url
+	# Invalidate pending results as well as the previously displayed picture.
+	_profile_picture_request_id += 1
+	_profile_picture_loading = false
+	is_profile_picture_loaded = false
+	%user_pic.texture = _default_profile_picture
 	%loading_user_pic.hide()
+
+
+func _load_profile_picture(use_cached: bool) -> void:
+	if user == null or not is_inside_tree() or is_queued_for_deletion():
+		return
+	_sync_profile_picture_identity()
+	if _profile_picture_url.is_empty():
+		return
+	if use_cached and (is_profile_picture_loaded or _profile_picture_loading):
+		return
+	_profile_picture_request_id += 1
+	var request_id := _profile_picture_request_id
+	var requested_user_id := _profile_picture_user_id
+	var requested_url := _profile_picture_url
+	_profile_picture_loading = true
+	%loading_user_pic.show()
+	var texture: ImageTexture = await RS.loader.load_profile_pic_from_url(requested_url, use_cached)
+	if request_id != _profile_picture_request_id or not is_inside_tree() or is_queued_for_deletion():
+		return
+	_profile_picture_loading = false
+	%loading_user_pic.hide()
+	if user == null or user.user_id != requested_user_id or user.profile_image_url != requested_url:
+		check_update_profile_picture()
+		return
+	if texture != null:
+		%user_pic.texture = texture
+		is_profile_picture_loaded = true
 
 
 func reload_all_info_from_twitch() -> void:
@@ -136,13 +171,11 @@ func _process(_delta: float) -> void:
 
 
 func check_update_profile_picture() -> void:
-	if is_profile_picture_loaded: return
-	if not user: return
-	await get_tree().process_frame
+	if user == null or not is_inside_tree() or is_queued_for_deletion(): return
+	_sync_profile_picture_identity()
+	if is_profile_picture_loaded or _profile_picture_loading: return
 	if not is_visible_in_scroll: return
-	is_profile_picture_loaded = true
-	await update_profile_picture()
-	if not %user_pic.texture: is_profile_picture_loaded = false
+	update_profile_picture()
 #endregion
 
 
