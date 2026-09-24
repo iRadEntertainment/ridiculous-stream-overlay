@@ -48,13 +48,28 @@ static func _static_init() -> void:
 	_log.enabled = true
 
 
-static func save_to_json(file_path: String, variant: Variant) -> void:
-	var file := FileAccess.open(file_path, FileAccess.WRITE)
+static func save_to_json(file_path: String, variant: Variant) -> bool:
+	var directory := file_path.get_base_dir()
+	if DirAccess.make_dir_recursive_absolute(directory) != OK:
+		_log.e("Save_to_json: Failed to create %s" % directory)
+		return false
+	# Replace only after the complete document has reached disk.
+	var temporary_path := file_path + ".tmp"
+	var file := FileAccess.open(temporary_path, FileAccess.WRITE)
 	if file == null:
 		_log.e("Save_to_json: Failed to open %s" % [file_path])
-		return
+		return false
 	file.store_string(JSON.stringify(variant, "\t"))
+	file.flush()
+	var error := file.get_error()
 	file.close()
+	if error != OK:
+		_log.e("Save_to_json: Failed to write %s" % file_path)
+		return false
+	error = DirAccess.rename_absolute(temporary_path, file_path)
+	if error != OK:
+		_log.e("Save_to_json: Failed to replace %s: %s" % [file_path, error])
+	return error == OK
 
 
 static func load_json(file_path: String) -> Variant:
