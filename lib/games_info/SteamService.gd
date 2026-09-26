@@ -54,10 +54,28 @@ func _parse_app_details(response_json: Variant, app_id: int) -> SteamAppData:
 		_log.e("Invalid Steam JSON response: app=%d, expected an object." % app_id)
 		return null
 	var record: Variant = response_json.get(str(app_id))
-	if not _record_matches_app(record, app_id):
-		_log.w("Steam returned no successful metadata matching app=%d." % app_id)
+	var game_data: Dictionary = {}
+	if _record_matches_app(record, app_id):
+		game_data = record.data
+	else:
+		# Store responses can use an unrelated outer key. Match the identity in
+		# the metadata, never assume the first record belongs to the requested app.
+		var matched_key := ""
+		for key in response_json:
+			var candidate: Variant = response_json[key]
+			if not _record_matches_app(candidate, app_id):
+				continue
+			if not game_data.is_empty():
+				_log.w("Ambiguous Steam response: multiple records match app=%d. Keeping previous data." % app_id)
+				return null
+			game_data = candidate.data
+			matched_key = str(key)
+		if not game_data.is_empty():
+			_log.w("Steam response key differs: requested app=%d, record key=%s. Using metadata with verified steam_appid=%d." % [app_id, matched_key, app_id])
+	if game_data.is_empty():
+		_log.w("Steam returned no successful metadata matching app=%d (response keys=%s)." % [app_id, str(response_json.keys())])
 		return null
-	var game_data: Dictionary = record.data.duplicate()
+	game_data = game_data.duplicate()
 	game_data["steam_app_id"] = app_id
 	_log.i("Retrieved Steam metadata: app=%d." % app_id)
 	return SteamAppData.from_json(game_data)
