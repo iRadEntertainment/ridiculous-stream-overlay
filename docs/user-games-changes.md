@@ -1,5 +1,7 @@
 # User games: changes and validation
 
+For the later, separate notification fix, see [Vetting toast visibility and positioning](vetting-toast-fix.md).
+
 Completed September 25–26, 2026.
 
 Steam and itch.io game additions, removals, and successful metadata updates now save automatically. Selecting a visible user panel also schedules one automatic refresh attempt per game per application launch, with bounded concurrency and diagnostic logging.
