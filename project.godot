@@ -84,3 +84,6 @@ editor/project_preset=&"Overlay"
 editor/load_current_twitch_user=false
 logs/TwitchAPI="info"
 logs/RSTwitcher="debug"
+logs/RSUserGameRefresh="info"
+logs/SteamService="info"
+logs/ItchIOService="info"

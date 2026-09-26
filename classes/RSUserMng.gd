@@ -14,6 +14,12 @@ var _started := false
 var _refreshing_live := false
 var _profiles_loaded: Dictionary[int, bool] = {}
 var _pending_lookups: Dictionary[String, bool] = {}
+var game_refresh: RSUserGameRefresh:
+	get:
+		if game_refresh == null:
+			game_refresh = RSUserGameRefresh.new()
+			add_child(game_refresh)
+		return game_refresh
 
 const PROFILE_START_DELAY := 30.0
 const PROFILE_BATCH_SIZE := 10

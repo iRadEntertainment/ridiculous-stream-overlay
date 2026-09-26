@@ -24,6 +24,8 @@ var user: RSUser: set = set_user
 
 func _ready() -> void:
 	_toggle_btns(false)
+	visibility_changed.connect(_queue_game_refresh)
+	RS.user_mng.game_refresh.game_refresh_finished.connect(_on_auto_game_refresh_finished)
 
 
 func _populate() -> void:
@@ -65,6 +67,31 @@ func set_user(_user: RSUser) -> void:
 	_toggle_btns(user != null)
 	clear()
 	_populate()
+	_queue_game_refresh()
+
+
+func _queue_game_refresh() -> void:
+	if is_node_ready() and is_visible_in_tree() and not is_queued_for_deletion():
+		RS.user_mng.game_refresh.queue_user(user)
+
+
+func _on_auto_game_refresh_finished(target: RSUser, kind: String, key: Variant, success: bool, message: String) -> void:
+	if target != user:
+		return
+	if not success:
+		_show_error(message)
+		return
+	# Refresh the entry without opening or switching the game details tab.
+	if kind == "steam":
+		var data: SteamAppData = target.steam_app_ids[key]
+		_show_steam_entry(key, data)
+		if pnl_steam_app_info.is_visible_in_tree() and pnl_steam_app_info.data != null and pnl_steam_app_info.data.steam_app_id == key:
+			pnl_steam_app_info.display_app_info(data)
+	else:
+		var data: ItchIOAppData = target.itchio_app_urls[key]
+		_show_itchio_entry(key, data)
+		if pnl_itchio_app_info.is_visible_in_tree() and pnl_itchio_app_info.data != null and pnl_itchio_app_info.data.id == data.id:
+			pnl_itchio_app_info.display_app_info(data)
 
 
 func clear() -> void:
@@ -123,6 +150,10 @@ func _save_game_change(games: Dictionary, key: Variant, data: Resource) -> bool:
 		_show_error("Could not save the game change. The previous data was kept. Try again.")
 		return false
 	%games_error.hide()
+	if data is SteamAppData:
+		RS.user_mng.game_refresh.mark_refreshed(user, "steam", key)
+	elif data is ItchIOAppData:
+		RS.user_mng.game_refresh.mark_refreshed(user, "itch", key)
 	return true
 
 
