@@ -53,7 +53,7 @@ func is_m_pos_in_control_nodes(pos: Vector2) -> bool:
 	if !main.get_rect().has_point(pos):
 		return false
 	for ctr: Control in get_tree().get_nodes_in_group("UI"):
-		if !ctr.is_visible_in_tree(): continue
+		if not _is_control_drawn_at(ctr, pos): continue
 		var pos_rotated = pos
 		var ctr_angle = ctr.get_global_transform().get_rotation()
 		if ctr_angle != 0:
@@ -77,6 +77,24 @@ func is_m_pos_in_control_nodes(pos: Vector2) -> bool:
 			hovered_control_node = ctr
 			return true
 	return false
+
+
+func _is_control_drawn_at(control: Control, pos: Vector2) -> bool:
+	if not control.is_visible_in_tree() or control.is_queued_for_deletion():
+		return false
+	# Split handles are tracked separately even when the container ignores input.
+	if control.mouse_filter == Control.MOUSE_FILTER_IGNORE and not control is HSplitContainer:
+		return false
+	var item: CanvasItem = control
+	while item != null:
+		if item.modulate.a <= 0.0:
+			return false
+		if item is Control and item.clip_contents:
+			var local_pos := item.get_global_transform().affine_inverse() * pos
+			if not Rect2(Vector2.ZERO, item.size).has_point(local_pos):
+				return false
+		item = item.get_parent() as CanvasItem
+	return true
 
 
 func is_m_pos_in_window(pos: Vector2) -> bool:

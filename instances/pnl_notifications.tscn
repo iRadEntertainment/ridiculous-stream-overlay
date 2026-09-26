@@ -7,11 +7,12 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6pqa5"]
 
 [node name="pnl_notifications" type="PanelContainer"]
-anchors_preset = 15
+anchors_preset = 11
+anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1475.0
-grow_horizontal = 2
+offset_left = -337.0
+grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_6pqa5")
@@ -20,13 +21,15 @@ script = ExtResource("1_ur0i4")
 [node name="scroll" type="ScrollContainer" parent="."]
 layout_mode = 2
 mouse_filter = 2
+horizontal_scroll_mode = 0
 
 [node name="vb" type="VBoxContainer" parent="scroll"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 10
+size_flags_vertical = 3
 mouse_filter = 2
+alignment = 2
 
 [node name="notification_vetting_reward" parent="scroll/vb" instance=ExtResource("2_n01tf")]
 layout_mode = 2

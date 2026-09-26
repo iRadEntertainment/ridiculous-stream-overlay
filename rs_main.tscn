@@ -128,11 +128,7 @@ theme = null
 [node name="pnl_notifications" parent="." unique_id=2002899420 instance=ExtResource("17_sodyi")]
 unique_name_in_owner = true
 visible = false
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 1.0
-offset_left = -337.0
-grow_horizontal = 0
+layout_mode = 1
 
 [node name="manadono_snow" type="ColorRect" parent="." unique_id=1120322270]
 unique_name_in_owner = true
