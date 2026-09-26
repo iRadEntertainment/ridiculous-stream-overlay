@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cgfsmadnui1ru"]
+[gd_scene format=3 uid="uid://cgfsmadnui1ru"]
 
 [ext_resource type="Texture2D" uid="uid://45yeungtmxeu" path="res://local_res/laser_emitter_ico.png" id="1_8kuue"]
 [ext_resource type="Script" uid="uid://7xuyejyocvbd" path="res://instances/objects/laser_emitter.gd" id="1_jjfv8"]
@@ -20,7 +20,6 @@ point_count = 2
 curve = SubResource("Curve_ag2oi")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lyrti"]
-particle_flag_disable_z = true
 direction = Vector3(0, -1, 0)
 spread = 30.704
 initial_velocity_min = 216.27
@@ -30,9 +29,6 @@ scale_min = 5.0
 scale_max = 20.0
 scale_curve = SubResource("CurveTexture_htw8j")
 color_ramp = SubResource("GradientTexture1D_3wf0h")
-collision_mode = 1
-collision_friction = 0.0
-collision_bounce = 0.0
 
 [sub_resource type="Shader" id="Shader_efcki"]
 code = "/*
@@ -168,20 +164,20 @@ shader_parameter/y_offset = 0.0
 shader_parameter/fixed_edge_size = 0.05
 shader_parameter/noise_scale = Vector2(1, 1)
 
-[node name="laser_emitter" type="Node2D"]
+[node name="laser_emitter" type="Node2D" unique_id=186388849]
 script = ExtResource("1_jjfv8")
 
-[node name="laser_cannon" type="Sprite2D" parent="."]
+[node name="laser_cannon" type="Sprite2D" parent="." unique_id=222795898]
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_8kuue")
 
-[node name="impact_particles" type="GPUParticles2D" parent="."]
+[node name="impact_particles" type="GPUParticles2D" parent="." unique_id=753503584]
 unique_name_in_owner = true
 emitting = false
 amount = 50
 process_material = SubResource("ParticleProcessMaterial_lyrti")
 
-[node name="line" type="Line2D" parent="."]
+[node name="line" type="Line2D" parent="." unique_id=1100661143]
 unique_name_in_owner = true
 texture_repeat = 2
 material = SubResource("ShaderMaterial_jmwy2")
@@ -191,13 +187,13 @@ width = 30.0
 texture = ExtResource("2_41dh3")
 texture_mode = 1
 
-[node name="ray" type="RayCast2D" parent="."]
+[node name="ray" type="RayCast2D" parent="." unique_id=859735821]
 unique_name_in_owner = true
 visible = false
 position = Vector2(0, 10)
 target_position = Vector2(0, 3000)
 
-[node name="lb_counter" type="Label" parent="."]
+[node name="lb_counter" type="Label" parent="." unique_id=1778018100]
 unique_name_in_owner = true
 z_index = 100
 z_as_relative = false
