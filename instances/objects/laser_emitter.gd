@@ -5,14 +5,12 @@ var duration = 20
 var tw : Tween
 var tmr: Timer
 
-var space : PhysicsDirectSpaceState2D
-
 var query : PhysicsRayQueryParameters2D
 var obj_destroyed_counter : int = 0
 
 
 func _ready():
-	set_process(false)
+	set_physics_process(false)
 	tmr = Timer.new()
 	add_child(tmr)
 	tmr.one_shot = true
@@ -21,16 +19,13 @@ func _ready():
 
 
 func play(angle: float):
-	await get_tree().physics_frame
-	set_process(true)
-	space = get_world_2d().direct_space_state
 	query = PhysicsRayQueryParameters2D.create(Vector2(), Vector2())
 	query.collide_with_bodies = true
 	query.collision_mask = 0b111111 #1+2+4+8+16+32
 	
 	var passes = 5
-	set_process(true)
 	tw = create_tween().bind_node(self)
+	tw.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	tw.set_ease(Tween.EASE_IN_OUT)
 	tw.set_trans(Tween.TRANS_SINE)
 	@warning_ignore("integer_division")
@@ -40,6 +35,7 @@ func play(angle: float):
 	tw.tween_property(self, "rotation", angle, single_duration)
 	tw.tween_property(self, "rotation", -angle, single_duration)
 	tw.tween_property(self, "rotation", 0, single_duration)
+	set_physics_process(true)
 
 
 func replay():
@@ -49,7 +45,7 @@ func replay():
 	# queue_free()
 
 
-func _process(_d):
+func _physics_process(_d):
 	if rotation == 0 and tmr.is_stopped():
 		tmr.start()
 	elif rotation != 0:
@@ -58,12 +54,14 @@ func _process(_d):
 	var firing = not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
 	
 	query.from = %ray.global_position
-	query.to = %ray.global_position + %ray.target_position.rotated(rotation)
+	query.to = %ray.to_global(%ray.target_position)
+	var space := get_world_2d().direct_space_state
 	var coll_dic : Dictionary = space.intersect_ray(query)
 	var colliding = !coll_dic.is_empty()
 	
 	%line.visible = firing #and colliding
-	%line.points[1] = %ray.target_position
+	%line.set_point_position(0, %line.to_local(query.from))
+	%line.set_point_position(1, %line.to_local(query.to))
 	%impact_particles.emitting = colliding and firing
 	
 	if colliding and firing:
@@ -72,7 +70,7 @@ func _process(_d):
 		var n_angle = n.angle()
 		var coll = coll_dic.collider
 		
-		%line.points[1].y = (impact_pos - %line.global_position).length()
+		%line.set_point_position(1, %line.to_local(impact_pos))
 		%impact_particles.global_position = impact_pos
 		%impact_particles.global_rotation = n_angle + PI/2
 		
