@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://jchfk7d78ss5"]
+[gd_scene format=3 uid="uid://jchfk7d78ss5"]
 
 [ext_resource type="Theme" uid="uid://d1rxorbgvgyer" path="res://ui/ridiculous_stream_main.theme" id="1_t6rhf"]
 [ext_resource type="Script" uid="uid://o423163rrbby" path="res://instances/pnl_chat.gd" id="1_x2vuy"]
@@ -65,7 +65,7 @@ width = 24
 height = 24
 fill_to = Vector2(0, 1)
 
-[node name="pnl_chat" type="PanelContainer"]
+[node name="pnl_chat" type="PanelContainer" unique_id=292825538]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -75,16 +75,16 @@ grow_vertical = 2
 theme = ExtResource("1_t6rhf")
 script = ExtResource("1_x2vuy")
 
-[node name="vb" type="VBoxContainer" parent="."]
+[node name="vb" type="VBoxContainer" parent="." unique_id=296681249]
 layout_mode = 2
 
-[node name="top" type="PanelContainer" parent="vb"]
+[node name="top" type="PanelContainer" parent="vb" unique_id=1797443682]
 layout_mode = 2
 
-[node name="hb" type="HBoxContainer" parent="vb/top"]
+[node name="hb" type="HBoxContainer" parent="vb/top" unique_id=221153064]
 layout_mode = 2
 
-[node name="lb_channel" type="Label" parent="vb/top/hb"]
+[node name="lb_channel" type="Label" parent="vb/top/hb" unique_id=2136085406]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -92,55 +92,55 @@ size_flags_vertical = 1
 text = "TheYagich"
 vertical_alignment = 1
 
-[node name="btn_close" type="Button" parent="vb/top/hb"]
+[node name="btn_close" type="Button" parent="vb/top/hb" unique_id=276167948]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 icon = ExtResource("3_t6rhf")
 expand_icon = true
 
-[node name="pnl_mods" parent="vb" instance=ExtResource("4_v34se")]
+[node name="pnl_mods" parent="vb" unique_id=1542860719 instance=ExtResource("4_v34se")]
 layout_mode = 2
 
-[node name="pnl_msg" type="PanelContainer" parent="vb"]
+[node name="pnl_msg" type="PanelContainer" parent="vb" unique_id=1361308378]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_jjpta")
 
-[node name="scroll_msg" type="ScrollContainer" parent="vb/pnl_msg"]
+[node name="scroll_msg" type="ScrollContainer" parent="vb/pnl_msg" unique_id=1120934878]
 unique_name_in_owner = true
 layout_mode = 2
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 4
 
-[node name="vb_messages" type="VBoxContainer" parent="vb/pnl_msg/scroll_msg"]
+[node name="vb_messages" type="VBoxContainer" parent="vb/pnl_msg/scroll_msg" unique_id=510160496]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="entry_chat_message" parent="vb/pnl_msg/scroll_msg/vb_messages" instance=ExtResource("5_4jb8o")]
+[node name="entry_chat_message" parent="vb/pnl_msg/scroll_msg/vb_messages" unique_id=2014118682 instance=ExtResource("5_4jb8o")]
 layout_mode = 2
 
-[node name="ln_msg" type="LineEdit" parent="vb"]
+[node name="ln_msg" type="LineEdit" parent="vb" unique_id=578312516]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.160784, 0.764706, 0.65098, 1)
 placeholder_text = "chat"
 
-[node name="hb_msg" type="HBoxContainer" parent="vb"]
+[node name="hb_msg" type="HBoxContainer" parent="vb" unique_id=849888493]
 layout_mode = 2
 
-[node name="ln_announce" type="LineEdit" parent="vb/hb_msg"]
+[node name="ln_announce" type="LineEdit" parent="vb/hb_msg" unique_id=603215574]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.160784, 0.764706, 0.65098, 1)
 placeholder_text = "announcement"
 
-[node name="opt_announce_color" type="OptionButton" parent="vb/hb_msg"]
+[node name="opt_announce_color" type="OptionButton" parent="vb/hb_msg" unique_id=366509903]
 unique_name_in_owner = true
 layout_mode = 2
 selected = 4
@@ -161,15 +161,17 @@ popup/item_4/text = "purple"
 popup/item_4/icon = SubResource("GradientTexture2D_req1k")
 popup/item_4/id = 4
 
-[node name="chat_msg" type="AudioStreamPlayer" parent="."]
+[node name="chat_msg" type="AudioStreamPlayer" parent="." unique_id=1819432572]
 
-[node name="pnl_connect" parent="." instance=ExtResource("3_e1ino")]
+[node name="pnl_connect" parent="." unique_id=1384756159 instance=ExtResource("3_e1ino")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
-[node name="context_menu_chat" parent="." instance=ExtResource("7_ei1da")]
+[node name="context_menu_chat" parent="." unique_id=222298306 instance=ExtResource("7_ei1da")]
 unique_name_in_owner = true
+oversampling_override = 1.0
+unfocusable = false
 
 [connection signal="pressed" from="vb/top/hb/btn_close" to="." method="_on_btn_close_pressed"]
 [connection signal="text_submitted" from="vb/ln_msg" to="." method="_on_ln_msg_text_submitted"]
