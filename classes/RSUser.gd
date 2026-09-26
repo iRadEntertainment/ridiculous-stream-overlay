@@ -89,7 +89,7 @@ func to_dict() -> Dictionary:
 	d["auto_promotion"] = auto_promotion
 	d["steam_app_ids"] = {}
 	for steam_app_id: int in steam_app_ids.keys():
-		d["steam_app_ids"][steam_app_id] = steam_app_ids[steam_app_id].to_json()
+		d["steam_app_ids"][str(steam_app_id)] = steam_app_ids[steam_app_id].to_json()
 	d["itchio_app_urls"] = {}
 	for itchio_app_url: String in itchio_app_urls.keys():
 		d["itchio_app_urls"][itchio_app_url] = itchio_app_urls[itchio_app_url].to_json()
@@ -199,24 +199,27 @@ func update_from_dict(d: Dictionary) -> void:
 	auto_promotion = d.get("auto_promotion", false)
 	
 	steam_app_ids = {}
-	# TODO: remove the check from Array to Dict
-	if typeof(d.get("steam_app_ids")) == TYPE_ARRAY:
-		pass
-	elif d.get("steam_app_ids", {}) != null:
-		for steam_id: String in d.get("steam_app_ids", {}).keys():
-			var steam_data_dict: Dictionary = d.get("steam_app_ids", {}).get(steam_id, {})
-			if steam_data_dict.is_empty(): continue
-			steam_app_ids[int(steam_id)] = SteamAppData.from_json(steam_data_dict)
+	var steam_records: Variant = d.get("steam_app_ids", {})
+	if steam_records is Dictionary:
+		# JSON keys are strings; older in-memory snapshots use integers.
+		for key in steam_records:
+			if not str(key).is_valid_int() or int(key) <= 0:
+				continue
+			var record: Variant = steam_records[key]
+			if not record is Dictionary or record.is_empty():
+				continue
+			var game := SteamAppData.from_json(record)
+			game.steam_app_id = int(key)
+			steam_app_ids[int(key)] = game
 	
 	itchio_app_urls = {}
-	# TODO: remove the check from Array to Dict
-	if typeof(d.get("itchio_app_urls")) == TYPE_ARRAY:
-		pass
-	elif d.get("itchio_app_urls", []) != null:
-		for itchio_url: String in d.get("itchio_app_urls", {}).keys():
-			var itchio_data_dict: Dictionary = d.get("itchio_app_urls", {}).get(itchio_url, {})
-			if itchio_data_dict.is_empty(): continue
-			itchio_app_urls[itchio_url] = ItchIOAppData.from_json(itchio_data_dict)
+	var itch_records: Variant = d.get("itchio_app_urls", {})
+	if itch_records is Dictionary:
+		for key in itch_records:
+			var record: Variant = itch_records[key]
+			if not key is String or key.is_empty() or not record is Dictionary or record.is_empty():
+				continue
+			itchio_app_urls[key] = ItchIOAppData.from_json(record)
 	
 	work_with = d.get("work_with", WorkWith.UNASSIGNED)
 	youtube_handle = d.get("youtube_handle", "")

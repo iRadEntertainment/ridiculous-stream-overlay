@@ -16,7 +16,12 @@ func _ready() -> void:
 
 
 func get_steam_app_data(app_id: int) -> SteamAppData:
+	if app_id <= 0:
+		_log.w("Cannot fetch Steam metadata: invalid app ID %d." % app_id)
+		return null
+	_log.i("Fetching Steam metadata: app=%d." % app_id)
 	var http_request = HTTPRequest.new()
+	http_request.timeout = 30.0
 	add_child(http_request)
 	
 	var store_request_query: Dictionary = {
@@ -26,25 +31,38 @@ func get_steam_app_data(app_id: int) -> SteamAppData:
 	request_url = request_url.format(store_request_query)
 	var _err = http_request.request(request_url)
 	if _err != OK:
-		_log.e("Error: %s" % error_string(_err))
-		return
+		_log.e("Could not start Steam request for app=%d: %s." % [app_id, error_string(_err)])
+		http_request.queue_free()
+		return null
 	
 	var http_result: Array = await http_request.request_completed
+	http_request.queue_free()
 	var result: int = http_result[0]
 	var response_code: int = http_result[1]
 	var _headers: PackedStringArray = http_result[2]
 	var body: PackedByteArray = http_result[3]
-	_log.d("result: " + str(result) )
-	_log.d("response_code: " + str(response_code) )
-	if response_code != HTTPClient.RESPONSE_OK:
-		_log.e("Request failed. Response code %s" % response_code)
-		return
-	var response_json: Dictionary = JSON.parse_string(body.get_string_from_utf8())
-	if not response_json.has(str(app_id)):
+	_log.d("Steam response: app=%d, transport result=%d, HTTP=%d." % [app_id, result, response_code])
+	if result != HTTPRequest.RESULT_SUCCESS or response_code != HTTPClient.RESPONSE_OK:
+		_log.e("Steam request failed: app=%d, transport result=%d, HTTP=%d." % [app_id, result, response_code])
 		return null
-	if not response_json[str(app_id)].has("data"):
+	var response_json: Variant = JSON.parse_string(body.get_string_from_utf8())
+	return _parse_app_details(response_json, app_id)
+
+
+func _parse_app_details(response_json: Variant, app_id: int) -> SteamAppData:
+	if not response_json is Dictionary:
+		_log.e("Invalid Steam JSON response: app=%d, expected an object." % app_id)
 		return null
-	var game_data: Dictionary = response_json[str(app_id)]["data"]
-	game_data["steam_app_id"] = game_data["steam_appid"]
-	http_request.queue_free()
+	var record: Variant = response_json.get(str(app_id))
+	if not _record_matches_app(record, app_id):
+		_log.w("Steam returned no successful metadata matching app=%d." % app_id)
+		return null
+	var game_data: Dictionary = record.data.duplicate()
+	game_data["steam_app_id"] = app_id
+	_log.i("Retrieved Steam metadata: app=%d." % app_id)
 	return SteamAppData.from_json(game_data)
+
+
+func _record_matches_app(record: Variant, app_id: int) -> bool:
+	return record is Dictionary and record.get("success", false) == true \
+		and record.get("data") is Dictionary and int(record.data.get("steam_appid", 0)) == app_id

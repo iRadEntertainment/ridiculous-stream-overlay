@@ -156,7 +156,7 @@ static func from_json(data: Dictionary) -> SteamAppData:
 	app.type = data.get("type", "")
 	app.name = data.get("name", "")
 	app.steam_app_id = data.get("steam_app_id", 0)
-	app.required_age = data.get("required_age", 0)
+	app.required_age = int(data.get("required_age", 0))
 	app.is_free = data.get("is_free", false)
 	app.short_description = data.get("short_description", "")
 	app.detailed_description = data.get("detailed_description", "")
@@ -207,7 +207,8 @@ static func from_json(data: Dictionary) -> SteamAppData:
 	for h in ach.get("highlighted", []):
 		app.highlighted_achievements.append(h)
 	# System Requirements
-	app.pc_requirements = data.get("pc_requirements", {}).get("minimum", "")
+	var requirements: Variant = data.get("pc_requirements", {})
+	app.pc_requirements = str(requirements.get("minimum", "")) if requirements is Dictionary else ""
 	app.mac_requirements = str(data.get("mac_requirements", ""))
 	app.linux_requirements = str(data.get("linux_requirements", ""))
 	# Support Info

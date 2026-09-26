@@ -136,11 +136,11 @@ func display_app_info(_data: SteamAppData) -> void:
 	data = _data
 	%ln_search.text = str(data.steam_app_id)
 	%lb_name.text = data.name
-	%lb_author.text = "[i]by [b]%s[/b][/i]" % data.developers.front()
+	%lb_author.text = "[i]by [b]%s[/b][/i]" % (data.developers.front() if not data.developers.is_empty() else "Unknown")
 	%tex_capsule_img.texture = await load_texture_from_url(data.header_image)
 	if !data.screenshots_thumbs.is_empty():
 		%bg_img.texture = await load_texture_from_url(data.screenshots_thumbs.front())
-	%lb_release_date.text = "[b]%s[/b]" % data.release_date.date
+	%lb_release_date.text = "[b]%s[/b]" % data.release_date.get("date", "")
 	# price
 	%lb_price_descr.visible = !data.is_free
 	%hb_price.visible = data.price_final_formatted != "" or data.is_free
@@ -173,6 +173,8 @@ func clear() -> void:
 
 #region Utils
 func load_texture_from_url(url: String) -> ImageTexture:
+	if url.is_empty():
+		return null
 	var http_request: HTTPRequest = HTTPRequest.new()
 	add_child(http_request)
 	var url_no_query: String = url.split("?")[0]
